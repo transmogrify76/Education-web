@@ -5,8 +5,9 @@ import './Home.css';
 
 const Home = () => {
   return (
-    <div className="home-container">
-      <Header />
+    <div>
+       <Header />
+    <div className="home-container"> 
       <div className="home-content">
         <div className="home-text">
           <h1 className="home-heading">Learn without Limits</h1>
@@ -28,6 +29,7 @@ const Home = () => {
         </div>
         <p className="rating-description">Rated by 1000+ users</p>
       </div>
+    </div>
     </div>
   );
 };

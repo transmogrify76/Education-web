@@ -11,12 +11,12 @@ const Header = () => {
 
   return (
     <div className="navbar">
-      <div className="navbar-left">EDU WEb</div>
+      <div className="navbar-left">EDU Web</div>
       <div className="navbar-right">
-      <a href="/Infrastructure">Infrastructure</a>
-      <a href="/Curriculum">Curriculum</a>
-      <a href="#">Award</a>
-      <a href="/Event">event</a>
+        <a href="/Infrastructure">Infrastructure</a>
+        <a href="/Curriculum">Curriculum</a>
+        <a href="#">Award</a>
+        <a href="/Event">Event</a>
         <a href="#">Contact Us</a>
         <a href="/timeofrequest">About Us</a>
         <div className="dropdown">
