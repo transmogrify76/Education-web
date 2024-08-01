@@ -1,5 +1,6 @@
 import React from 'react';
 import './Event.css';
+import Header from '../Header/Header';
 
 const events = [
     {
@@ -39,6 +40,8 @@ const holidays = [
 
 const Event = () => {
     return (
+        <div>
+           <Header />
         <div className="events-page-container">
             <div className="header-container-event">
                 <h1 className="header-title">Upcoming Events & Holidays</h1>
@@ -71,6 +74,7 @@ const Event = () => {
                     <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
                 </p>
             </footer>
+        </div>
         </div>
     );
 };

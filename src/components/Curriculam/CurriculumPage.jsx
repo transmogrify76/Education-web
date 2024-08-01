@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './CurriculumPage.css';
+import Header from '../Header/Header';
+
+
 
 const subjects = {
     prePrimary: {
@@ -48,6 +51,8 @@ const CurriculumPage = () => {
     const [activeCourse, setActiveCourse] = useState('robotics');
 
     return (
+        <div>
+            <Header/>
         <div className="curriculum-page-container">
             <div className="header-containers">
                 <h1 className="header-title">Our Curriculum</h1>
@@ -89,6 +94,7 @@ const CurriculumPage = () => {
                     <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
                 </p>
             </footer>
+        </div>
         </div>
     );
 };

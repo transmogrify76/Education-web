@@ -10,8 +10,8 @@ const Header = () => {
   };
 
   return (
-    <div className="navbar">
-      <div className="navbar-left">EDU Web</div>
+    <div href="/" className="navbar">
+      <div className="navbar-left"> EDU Web </div>
       <div className="navbar-right">
         <a href="/Infrastructure">Infrastructure</a>
         <a href="/Curriculum">Curriculum</a>
