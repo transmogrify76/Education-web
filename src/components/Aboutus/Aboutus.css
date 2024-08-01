@@ -1,0 +1,115 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+.about-us-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #f0f4f8, #ffffff);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.about-us-header {
+    text-align: center;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../Assets/curriculum1.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    border-radius: 10px 10px 0 0;
+}
+
+.about-us-header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+.about-us-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    color: #333;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    background-color: #f0f0f0;
+}
+
+.card h2 {
+    color: #00c6ff;
+    margin-top: 0;
+}
+
+.card p, .card ul {
+    font-size: 1.1em;
+}
+
+.card ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.additional-content {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+}
+
+.additional-content h2 {
+    color: #00c6ff;
+}
+
+.additional-content p, .additional-content ul, .additional-content blockquote {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.additional-content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.additional-content blockquote {
+    font-style: italic;
+    color: #555;
+    border-left: 4px solid #00c6ff;
+    padding-left: 16px;
+    margin: 20px 0;
+}
+
+.about-us-footer {
+    text-align: center;
+    padding: 10px 0;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    border-radius: 0 0 10px 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.about-us-footer p {
+    margin: 0;
+    font-size: 0.9em;
+}

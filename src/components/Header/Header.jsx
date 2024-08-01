@@ -15,10 +15,10 @@ const Header = () => {
       <div className="navbar-right">
         <a href="/Infrastructure">Infrastructure</a>
         <a href="/Curriculum">Curriculum</a>
-        <a href="#">Award</a>
+        <a href="Award">Award</a>
         <a href="/Event">Event</a>
-        <a href="#">Contact Us</a>
-        <a href="/timeofrequest">About Us</a>
+        <a href="Contactus">Contact Us</a>
+        <a href="/Aboutus">About Us</a>
         <div className="dropdown">
           <div onClick={toggleDropdown} className="dropbtn">Log In</div>
           {isDropdownOpen && (

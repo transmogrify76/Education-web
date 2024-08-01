@@ -35,6 +35,8 @@ import StudentRegisterPage from './components/StudentRegisterPage/StudentRegiste
 import ParentRegisterPage from './components/ParentRegisterPage/ParentRegisterPage';
 import Medical from './components/Medical/Medical';
 import AdminRegister from './components/AdminRegister/AdminRegister';
+import AboutUs from './components/Aboutus/Aboutus';
+import Award from './components/Award/Award'
 // App component
 function App() {
   return (
@@ -76,6 +78,8 @@ function App() {
           <Route path="/ParentRegisterpage" element={<ParentRegisterPage/>} />
           <Route path="/Medical" element={<Medical/>} />
           <Route path="/AdminRegister" element={<AdminRegister/>} />
+          <Route path="/Aboutus" element={<AboutUs/>} />
+          <Route path="/Award" element={<Award/>} />
 
 
 
