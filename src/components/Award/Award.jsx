@@ -1,5 +1,8 @@
 import React from 'react';
 import './Award.css';
+import award1 from '../Assets/best.jpg';
+import award2 from '../Assets/teacherex.jpg';
+import award3 from '../Assets/studentAw.jpg';
 
 const Award = () => {
     return (
@@ -32,21 +35,21 @@ const Award = () => {
                 <h2>Award Highlights</h2>
                 <div className="gallery-grid">
                     <div className="gallery-item">
-                        <img src="/path/to/image1.jpg" alt="Award Ceremony 1" />
+                        <img src={award1} alt="Award Ceremony 1" />
                         <p>Annual Awards Ceremony 2023</p>
                     </div>
                     <div className="gallery-item">
-                        <img src="/path/to/image2.jpg" alt="Award Ceremony 2" />
+                        <img src={award2} alt="Award Ceremony 2" />
                         <p>Community Service Recognition 2022</p>
                     </div>
                     <div className="gallery-item">
-                        <img src="/path/to/image3.jpg" alt="Award Ceremony 3" />
+                        <img src={award3} alt="Award Ceremony 3" />
                         <p>Academic Achievement Celebration 2021</p>
                     </div>
                 </div>
             </section>
             <footer className="awards-footer">
-                <p>&copy; 2024 Our School. All rights reserved.</p>
+                <p>&copy; 2024 Edu-Web. All rights reserved.</p>
             </footer>
         </div>
     );
