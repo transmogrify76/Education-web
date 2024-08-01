@@ -222,3 +222,11 @@ body {
     margin: 0;
     font-size: 0.9em;
 }
+
+.Toastify__toast--success {
+    background: green;
+}
+
+.Toastify__toast--error {
+    background: red;
+}
