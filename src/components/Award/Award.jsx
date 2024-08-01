@@ -1,8 +1,12 @@
 import React from 'react';
 import './Award.css';
+import Header from '../Header/Header';
+
 
 const Award = () => {
     return (
+        <div>
+            <Header />
         <div className="awards-container">
             <header className="awards-header">
                 <h1>Awards & Achievements</h1>
@@ -48,6 +52,7 @@ const Award = () => {
             <footer className="awards-footer">
                 <p>&copy; 2024 Our School. All rights reserved.</p>
             </footer>
+        </div>
         </div>
     );
 };
