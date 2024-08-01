@@ -1,8 +1,11 @@
 import React from 'react';
 import './Contactus.css';
+import Header from '../Header/Header';
 
 const Contactus = () => {
     return (
+        <div>
+            <Header/>
         <div className="contact-us-container">
             <header className="contact-us-header">
                 <h1>Contact Us</h1>
@@ -34,6 +37,7 @@ const Contactus = () => {
             <footer className="contact-us-footer">
                 <p>&copy; 2024 Wdu-web. All rights reserved.</p>
             </footer>
+        </div>
         </div>
     );
 };

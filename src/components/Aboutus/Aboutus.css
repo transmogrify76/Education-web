@@ -8,23 +8,27 @@ body {
 .about-us-container {
     max-width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    /* padding: 20px; */
     background: linear-gradient(135deg, #f0f4f8, #ffffff);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
 .about-us-header {
+    position: relative;
+    top: -10%;
+    margin: 0%;
     text-align: center;
     height: 400px;
-    display: flex;
+    width: 100%;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     background-image: url('../Assets/curriculum1.jpg');
     background-size: cover;
     background-position: center;
     color: white;
-    border-radius: 10px 10px 0 0;
+    /* border-radius: 10px 10px 0 0; */
 }
 
 .about-us-header h1 {

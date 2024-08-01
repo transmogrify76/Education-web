@@ -1,11 +1,16 @@
 import React from 'react';
 import './Award.css';
+
+import Header from '../Header/Header';
 import award1 from '../Assets/best.jpg';
 import award2 from '../Assets/teacherex.jpg';
 import award3 from '../Assets/studentAw.jpg';
 
+
 const Award = () => {
     return (
+        <div>
+            <Header />
         <div className="awards-container">
             <header className="awards-header">
                 <h1>Awards & Achievements</h1>
@@ -51,6 +56,7 @@ const Award = () => {
             <footer className="awards-footer">
                 <p>&copy; 2024 Edu-Web. All rights reserved.</p>
             </footer>
+        </div>
         </div>
     );
 };

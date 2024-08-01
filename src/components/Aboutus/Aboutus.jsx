@@ -1,8 +1,11 @@
 import React from 'react';
 import './Aboutus.css';
+import Header from '../Header/Header';
 
 const Aboutus = () => {
     return (
+        <div>
+            <Header/>
         <div className="about-us-container">
             <header className="about-us-header">
                 <h1>About Our School</h1>
@@ -83,6 +86,7 @@ const Aboutus = () => {
             <footer className="about-us-footer">
                 <p>&copy; 2024 Edu-web. All rights reserved.</p>
             </footer>
+        </div>
         </div>
     );
 };
