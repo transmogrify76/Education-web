@@ -35,7 +35,7 @@ const Contactus = () => {
                 </form>
             </section>
             <footer className="contact-us-footer">
-                <p>&copy; 2024 Our School. All rights reserved.</p>
+                <p>&copy; 2024 Wdu-web. All rights reserved.</p>
             </footer>
         </div>
         </div>

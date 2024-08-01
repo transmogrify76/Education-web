@@ -103,13 +103,16 @@ body {
     background: #fff;
     border-radius: 10px;
     padding: 10px;
-    width: 250px;
+    width: 250px; /* Fixed width */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     font-family: 'Roboto', sans-serif;
+    overflow: hidden; /* Ensures that any overflow is hidden */
 }
 
 .gallery-item img {
     width: 100%;
+    height: auto; /* Maintains the aspect ratio */
+    display: block; /* Removes any extra space below the image */
     border-radius: 10px;
 }
 
