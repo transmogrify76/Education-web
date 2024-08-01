@@ -1,0 +1,58 @@
+.admin-panel {
+    display: grid;
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "content"
+      "footer";
+    grid-template-columns: auto;
+    grid-template-rows: auto 1fr auto auto;
+    min-height: 100vh;
+  }
+  
+  .header-one {
+    grid-area: header;
+    background-color: #8d5ddb; 
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .sidebar {
+    grid-area: sidebar;
+    background-color: #2ecc71; 
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .sidebar ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .content {
+    grid-area: content;
+    padding: 20px;
+  }
+  
+  .footer {
+    grid-area: footer;
+    background-color: #333; 
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  

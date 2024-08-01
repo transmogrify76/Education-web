@@ -1,0 +1,173 @@
+/* Infrastructure.css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+}
+
+.infrastructure-page-container {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin-top: 6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.header-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(to right, rgba(255, 0, 25, 0.85), rgba(0, 0, 255, 0.88)), /* Gradient overlay */
+        url('../Assets/schooltwo.jpg'); /* Background image */
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    filter: blur(8px); /* Apply blur effect */
+    z-index: 1;
+}
+
+.header-title {
+    color: white !important;
+    position: relative;
+    z-index: 2;
+    font-size: 3rem;
+    font-family: 'Merriweather', serif; /* New font family */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Updated text shadow */
+}
+
+.main-content {
+    display: flex;
+    flex-direction: row;
+    margin: 2rem auto;
+    max-width: 1200px;
+    padding: 1rem;
+    flex: 1;
+}
+
+.slideshow-container {
+    flex: 1;
+    position: relative;
+    height: 400px; /* Reduced height */
+    width: 40%; /* Adjusted width */
+    overflow: hidden;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-right: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.slide {
+    display: none;
+    height: 100%;
+    width: 100%;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 2s;
+}
+
+@keyframes fade {
+    from { opacity: 0.4; } 
+    to { opacity: 1; }
+}
+
+.description-container {
+    flex: 1;
+    width: 55%; /* Adjusted width */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    background-color: #f0f0f0; /* Background color for cards */
+    opacity: 0; /* Start as invisible */
+    transform: translateX(50px); /* Start position for animation */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    overflow: hidden; /* Ensure pseudo-element doesn't overflow */
+}
+
+.info-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -20px; /* Position the tag-like element to the left */
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-right: 20px solid #f0f0f0; /* Match the card's background color */
+    border-bottom: 20px solid transparent;
+    z-index: 0;
+}
+
+.info-card.animate {
+    opacity: 1; /* Fully visible */
+    transform: translateX(0); /* End position for animation */
+}
+
+@keyframes scrollAnimation {
+    0% { opacity: 0; transform: translateX(50px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+.info-card.scroll-animate {
+    animation: scrollAnimation 0.6s ease-out forwards;
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #444;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer p {
+    margin: 0.5rem 0;
+}

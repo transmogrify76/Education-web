@@ -1,0 +1,43 @@
+.parent-view {
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .header h1 {
+    color: white;
+    background: linear-gradient(135deg, #0c8be6, #d000ff); /* Purple to Blue gradient */
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  .main {
+    padding: 20px;
+    background: linear-gradient(199deg, #d000ff, #0c8be6,#cbf901, #f901d4);
+  }
+  
+  .child-list, .events {
+    margin-bottom: 40px;
+    
+  }
+  
+  .child-list h2, .events h2 {
+    margin-bottom: 10px;
+  }
+  
+  .child-list ul li, .events ul li {
+    background-color: #f2f2f2;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .footer {
+    background-color: #333; /* Dark gray */
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  

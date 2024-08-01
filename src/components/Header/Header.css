@@ -1,0 +1,65 @@
+/* Header.css */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  padding: 14px 16px;
+  color: rgb(0, 0, 0);
+  /* background-color: #4caf4f; */
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  color: rgb(0, 0, 0);
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  right: 0; /* Align dropdown content to the right */
+}
+
+.dropdown-content a {
+  background: fixed;
+  background-color: aqua;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: burlywood;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Additional navbar styles */
+.navbar {
+  /* overflow: hidden; */
+  background-color: #dad5cf;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar-left {
+  float: left;
+  padding: 14px 16px;
+  color: rgb(255, 18, 18);
+}
+
+.navbar-right {
+  float: right;
+}
+
+.navbar-right a {
+  padding: 14px 16px;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}

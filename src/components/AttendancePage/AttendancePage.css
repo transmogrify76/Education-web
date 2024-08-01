@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Arial:wght@700&display=swap');
+
+.attendance-page {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.page-title {
+  text-align: center;
+  color: #333;
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.section-title {
+  color: #555;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.child-selection {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.child-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.child-item {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.child-item:hover {
+  background-color: #0056b3;
+}
+
+.scan-section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.scan-button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.scan-button:hover {
+  background-color: #218838;
+}
+
+.attendance-list {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.attendance-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.attendance-entry:last-child {
+  border-bottom: none;
+}

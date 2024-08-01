@@ -1,0 +1,24 @@
+.head{
+    text-align: left;
+    background-color: rgb(211, 213, 215);
+    width: 90%;
+    height: 60px;
+    display: flex;
+    margin-left: 80px;
+    padding-top: 15px;
+    padding-left: 10px;
+    font-family: "Playfair Display", serif;
+}
+/* .consent-letter{
+    margin-left: 90px;
+} */
+.para{
+    margin-left: 90px;
+}
+.drop{
+    width: 80%;
+    margin-left: 90px;
+    text-align: left;
+    /* justify-content: center; */
+    
+}

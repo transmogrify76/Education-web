@@ -1,0 +1,111 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.register-page-containers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #fff;
+    padding: 2rem;
+    position: relative; /* Ensure notification can be positioned correctly */
+}
+
+.register-title {
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.register-forms {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.register-form label {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.register-form input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+}
+
+.register-form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.popup {
+    position: absolute;
+    top: 20px; /* Position above the form */
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid blue;
+    background: #28a745;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    border: 2px solid #218838; /* Adding a border to the popup */
+}
+
+.popup-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.popup-message {
+    display: flex;
+    align-items: center;
+}
+
+.popup-message span {
+    margin-right: 0.5rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .register-form {
+        padding: 1rem;
+    }
+
+    .register-title {
+        font-size: 1.5rem;
+    }
+
+    .popup {
+        top: 10px; /* Adjust position for smaller screens */
+    }
+}

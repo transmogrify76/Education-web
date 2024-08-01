@@ -1,0 +1,79 @@
+.tlogin-container {
+    display: flex;
+    background-image: url('../Assets/parentl.jpg');
+    background-size: cover;
+    justify-content: center;
+  align-items: center;
+  height: 100vh;
+  /* background: linear-gradient(120deg, #4CAF50, #5bc0ec); */
+}
+
+.tlogin-card {
+    /* margin-left: 780px; */
+  width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #54bdff;
+  transition: all 0.3s ease;
+}
+.login-container {
+    background-size: 90%; /* Width: 800px, Height: 600px */
+    background-position: -90%;
+}
+
+.login-card:hover {
+  transform: scale(1.05);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+input[type="text"],
+input[type="password"],
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+button:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px #4CAF50;
+}
+
+button {
+  /* background-color: #4CAF50; */
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.message {
+  text-align: center;
+  color: #FF0000;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    width: 90%;
+  }
+}
+.submit{
+  background-color: #45a049;
+}

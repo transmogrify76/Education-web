@@ -1,0 +1,51 @@
+.student-container {
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+background: linear-gradient(135deg, #0c8be6, #d000ff);  /* Purple to Blue gradient */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .navbar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .navbar ul li {
+    display: inline;
+    margin-right: 20px;
+  }
+  
+  .navbar ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .main {
+    padding: 20px;
+  }
+  
+  .course-list, .grades {
+    margin-bottom: 40px;
+  }
+  
+  .course-list h2, .grades h2 {
+    margin-bottom: 10px;
+  }
+  
+  .course-list ul li, .grades table {
+    background-color: #f2f2f2; /* Light gray */
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .footer {
+    background: linear-gradient(135deg, #a200e7, #1282f3); /* Red to Yellow gradient */
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+  }
+  

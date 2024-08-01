@@ -1,0 +1,29 @@
+.report-container {
+    margin-top: 20px;
+  }
+  
+  .report-head {
+    text-align: left;
+    margin-left: 60px;
+    text-decoration: underline;
+  }
+  
+  .report-para {
+    margin-left: 60px;
+  }
+  
+  .dropdowns-container {
+    display: flex;
+    align-items: center;
+    margin-left: 60px;
+  }
+  
+  .dropdown {
+    margin-left: 30px;
+  }
+  
+  .dropdown-select {
+    height: 30px;
+    width: 150px;
+  }
+  
