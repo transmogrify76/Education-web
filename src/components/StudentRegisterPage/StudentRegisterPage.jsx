@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Use useNavigate instead of useHistory
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom'; // Use useLocation to get query parameters
 import './StudentRegisterPage.css';
 
 const StudentRegisterPage = () => {
@@ -11,6 +11,8 @@ const StudentRegisterPage = () => {
         studentId: '',
         email: '',
         password: '',
+        parentId: '', // Add parentId to form data
+        address: '', // Add address to form data
     });
 
     const [showPopup, setShowPopup] = useState(false);
@@ -24,17 +26,43 @@ const StudentRegisterPage = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle form submission, e.g., send data to server
-        console.log('Form submitted:', formData);
 
-        setShowPopup(true); // Show popup on form submission
+        try {
+            const response = await fetch('http://localhost:3000/student/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: `${formData.firstName} ${formData.lastName}`,
+                    enrollmentNo: formData.studentId,
+                    email: formData.email,
+                    parentId: formData.parentId,
+                    dob: formData.dob,
+                    password: formData.password,
+                    address: formData.address,
+                    roleType: 'student', // RoleType is hardcoded to 'student'
+                }),
+            });
 
-        // Redirect to parent registration page after a short delay to show the popup
-        setTimeout(() => {
-            navigate(`/ParentRegisterPage?studentId=${formData.studentId}`);
-        }, 1500); // Adjust the delay as needed
+            if (response.ok) {
+                setShowPopup(true);
+
+                // Redirect to another page after a short delay to show the popup
+                setTimeout(() => {
+                    navigate('/success'); // Adjust this as needed
+                }, 1500); // Adjust the delay as needed
+            } else {
+                const errorData = await response.json();
+                console.error('Registration failed:', errorData.message);
+                // Handle error message appropriately
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            // Handle fetch error appropriately
+        }
     };
 
     return (
@@ -107,6 +135,26 @@ const StudentRegisterPage = () => {
                         type="password"
                         name="password"
                         value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Address:
+                    <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Parent ID:
+                    <input
+                        type="text"
+                        name="parentId"
+                        value={formData.parentId}
                         onChange={handleChange}
                         required
                     />

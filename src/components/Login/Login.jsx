@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import './Login.css'; 
+
 export default function Login() {
- 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -18,7 +17,7 @@ export default function Login() {
   }
 
   return (
-    <div className="login-container">
+    <div className="logins-container">
       <div className="login-card">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
@@ -42,7 +41,7 @@ export default function Login() {
               required
             />
           </div>
-          <button className= "submit" type="submit">Login</button>
+          <button className="submit" type="submit">Login</button>
         </form>
         <div className="button-group">
           <button className="forgot-password-button">Forgot Password?</button>

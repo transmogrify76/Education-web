@@ -37,10 +37,14 @@ import Medical from './components/Medical/Medical';
 import AdminRegister from './components/AdminRegister/AdminRegister';
 import AboutUs from './components/Aboutus/Aboutus';
 import Award from './components/Award/Award'
+<<<<<<< Updated upstream
 import ForgetPassword from './components/ForgetPassword/ForgetPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 
 
+=======
+import TeacherRegister from './components/TeacherRegister/TeacherRegister'
+>>>>>>> Stashed changes
 // App component
 function App() {
   return (
@@ -84,8 +88,12 @@ function App() {
           <Route path="/AdminRegister" element={<AdminRegister/>} />
           <Route path="/Aboutus" element={<AboutUs/>} />
           <Route path="/Award" element={<Award/>} />
+<<<<<<< Updated upstream
           <Route path="/forget-password" element={<ForgetPassword />} />
           <Route path="/reset-password/" element={<ResetPassword />} />
+=======
+          <Route path="/TeacherRegister" element={<TeacherRegister/>} />
+>>>>>>> Stashed changes
 
 
 
@@ -96,3 +104,6 @@ function App() {
 }
 
 export default App; // Export the App component
+
+
+
