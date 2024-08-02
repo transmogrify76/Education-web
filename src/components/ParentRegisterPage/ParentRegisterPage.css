@@ -1,11 +1,11 @@
-.parent-register-page-container {
+.parent-register-page-containers {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 2rem;
 }
 
-.parent-register-title {
+.parent-register-titles {
     font-size: 2rem;
     margin-bottom: 1rem;
     color: #007bff;
@@ -17,7 +17,7 @@
     margin-bottom: 1rem;
 }
 
-.parent-register-form {
+.parent-register-forms {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -28,12 +28,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.parent-register-form label {
+.parent-register-forms label {
     margin-bottom: 1rem;
 }
 
-.parent-register-form input,
-.parent-register-form textarea {
+.parent-register-forms input,
+.parent-register-forms textarea {
     width: 100%;
     padding: 0.75rem;
     margin-top: 0.25rem;
@@ -41,7 +41,7 @@
     border-radius: 4px;
 }
 
-.parent-register-form button {
+.parent-register-forms button {
     margin-top: 1rem;
     padding: 0.75rem;
     border: none;

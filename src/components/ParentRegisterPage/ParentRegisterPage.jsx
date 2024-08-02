@@ -10,7 +10,7 @@ const ParentRegisterPage = () => {
         phoneNo: '',
         address: '',
         password: '',
-        roleType: 'parent',
+        roleType: 'parent', // Ensure this matches your API expectations
     });
 
     const [message, setMessage] = useState('');
@@ -66,7 +66,7 @@ const ParentRegisterPage = () => {
 
     return (
         <div className="register-page-containers">
-            <h1 className="register-title">Parent Registration</h1>
+            <h1 className="register-titles">Parent Registration</h1>
             <form className="register-forms" onSubmit={handleSubmit}>
                 <label>
                     Name:

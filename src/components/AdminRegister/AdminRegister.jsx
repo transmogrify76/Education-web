@@ -34,9 +34,11 @@ const AdminRegister = () => {
                     name: formData.fullName,
                     employeeNo: formData.employeeId,
                     email: formData.email,
-                    password: formData.password
+                    password: formData.password,
+                    roleType: "admin" // Ensure roleType matches your backend's expected field name
                 })
             });
+
             if (response.ok) {
                 setShowPopup(true);
                 setTimeout(() => {

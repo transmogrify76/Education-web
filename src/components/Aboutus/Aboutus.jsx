@@ -92,3 +92,8 @@ const Aboutus = () => {
 };
 
 export default Aboutus;
+// app.enableCors({
+//         origin: 'http://localhost:3001', // Your frontend URL
+//         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+//         allowedHeaders: 'Content-Type, Authorization',
+//     });
