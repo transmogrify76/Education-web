@@ -52,7 +52,7 @@ const StudentRegisterPage = () => {
 
                 // Redirect to another page after a short delay to show the popup
                 setTimeout(() => {
-                    navigate('/success'); // Adjust this as needed
+                    navigate('/login'); // Adjust this as needed
                 }, 1500); // Adjust the delay as needed
             } else {
                 const errorData = await response.json();
