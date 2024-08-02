@@ -39,8 +39,9 @@ import AboutUs from './components/Aboutus/Aboutus';
 import Award from './components/Award/Award'
 import ForgetPassword from './components/ForgetPassword/ForgetPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword';
-
-
+import TeacherRegister from './components/TeacherRegister/TeacherRegister'
+import TransportRequest from './components/TransportRequest/TransportRequest'
+import PaymentPage from './components/PaymentPage/PaymentPage'
 // App component
 function App() {
   return (
@@ -84,8 +85,11 @@ function App() {
           <Route path="/AdminRegister" element={<AdminRegister/>} />
           <Route path="/Aboutus" element={<AboutUs/>} />
           <Route path="/Award" element={<Award/>} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
-          <Route path="/reset-password/" element={<ResetPassword />} />
+          <Route path="/ForgetPassword" element={<ForgetPassword />} />
+          <Route path="/ResetPassword" element={<ResetPassword />} />
+          <Route path="/TeacherRegister" element={<TeacherRegister/>} />
+          <Route path="/TransportRequest" element={<TransportRequest/>} />
+          <Route path="/PaymentPage" element={<PaymentPage/>} />
 
 
 
@@ -96,3 +100,6 @@ function App() {
 }
 
 export default App; // Export the App component
+
+
+

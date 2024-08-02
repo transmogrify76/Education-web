@@ -1,35 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; // Use useNavigate instead of useHistory
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ParentRegisterPage.css';
 
 const ParentRegisterPage = () => {
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        phone: '',
+        name: '',
+        studentName: '',
         email: '',
-        dob: '',
-        aadharNo: '',
+        phoneNo: '',
+        address: '',
         password: '',
-        studentId: '', // This will be populated from URL params
-        studentName: '', // Add student name
-        address: '', // Add address
+        roleType: 'parent', // Ensure this matches your API expectations
     });
 
-    const location = useLocation(); // Use location to get query params
-    const navigate = useNavigate(); // Use useNavigate for navigation
-
-    useEffect(() => {
-        // Extract studentId from query parameters
-        const queryParams = new URLSearchParams(location.search);
-        const studentId = queryParams.get('studentId');
-        if (studentId) {
-            setFormData(prevState => ({
-                ...prevState,
-                studentId,
-            }));
-        }
-    }, [location.search]);
+    const [message, setMessage] = useState('');
+    const [showPopup, setShowPopup] = useState(false);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,99 +35,45 @@ const ParentRegisterPage = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: formData.firstName + ' ' + formData.lastName,
-                    studentName: formData.studentName, // Include student name
+                    name: formData.name,
+                    studentName: formData.studentName,
                     email: formData.email,
-                    phoneNo: formData.phone,
-                    address: formData.address, // Include address
+                    phoneNo: formData.phoneNo,
+                    address: formData.address,
                     password: formData.password,
+                    roleType: formData.roleType,
                 }),
             });
 
             if (response.ok) {
-                const data = await response.json();
-                // Assuming the API returns the generated ID
-                console.log('Parent registration successful:', data);
-                // Navigate to the StudentRegisterPage with the generated ID
-                navigate(`/studentregisterpage?parentId=${data.id}`);
+                const responseData = await response.json();
+                const parentId = responseData.id; // Assuming API response contains `id`
+
+                setShowPopup(true);
+                setTimeout(() => {
+                    setShowPopup(false);
+                    navigate(`/plogin?parentId=${parentId}`); // Redirect to Plogin with parentId
+                }, 2000); // Adjust the delay as needed
             } else {
-                console.error('Registration failed:', response.statusText);
+                const errorData = await response.json();
+                setMessage(`Registration failed: ${errorData.message}`);
             }
         } catch (error) {
-            console.error('Error during registration:', error);
+            console.error('Fetch error:', error);
+            setMessage(`Error: ${error.message}`);
         }
     };
 
     return (
-        <div className="parent-register-page-container">
-            <h1 className="register-title">Parent Registration</h1>
+        <div className="register-page-containers">
+            <h1 className="register-titles">Parent Registration</h1>
             <form className="register-forms" onSubmit={handleSubmit}>
                 <label>
-                    First Name:
+                    Name:
                     <input
                         type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Last Name:
-                    <input
-                        type="text"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Phone:
-                    <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Date of Birth:
-                    <input
-                        type="date"
-                        name="dob"
-                        value={formData.dob}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Aadhar Number:
-                    <input
-                        type="text"
-                        name="aadharNo"
-                        value={formData.aadharNo}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
+                        name="name"
+                        value={formData.name}
                         onChange={handleChange}
                         required
                     />
@@ -157,6 +89,26 @@ const ParentRegisterPage = () => {
                     />
                 </label>
                 <label>
+                    Email:
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Phone Number:
+                    <input
+                        type="tel"
+                        name="phoneNo"
+                        value={formData.phoneNo}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
                     Address:
                     <input
                         type="text"
@@ -166,8 +118,25 @@ const ParentRegisterPage = () => {
                         required
                     />
                 </label>
+                <label>
+                    Password:
+                    <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
                 <button type="submit" className="submit-button">Register</button>
             </form>
+            {showPopup && (
+                <div className="popup">
+                    <span className="popup-icon">✔</span>
+                    <span className="popup-message">Parent registered successfully!</span>
+                </div>
+            )}
+            {message && <p className="message">{message}</p>}
         </div>
     );
 };

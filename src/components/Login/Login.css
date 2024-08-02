@@ -1,64 +1,99 @@
-.login-container {
+/* html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}*/
+
+.logins-container {
   display: flex;
-  background-image: url(./stu-log.jpg);
+  background-image: url('../Assets/login.jpg');
+  background-size: cover;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+align-items: center;
+height: 100vh;
 }
 
+
 .login-card {
-    margin-left: 780px;
-  width: 300px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-  transition: all 0.3s ease;
-}
-.login-container {
-    background-size: 90%; /* Width: 800px, Height: 600px */
-    background-position: -90%;
+  width: 350px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .login-card:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 h2 {
   text-align: center;
   color: #333;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
 }
 
 input[type="text"],
-input[type="password"],
-button {
-  width: 100%;
+input[type="password"] {
+  width: calc(100% - 20px);
   padding: 10px;
   margin: 8px 0;
-  display: inline-block;
+  display: block;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
   box-sizing: border-box;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus,
-button:focus {
+input[type="password"]:focus {
   border-color: #4CAF50;
   box-shadow: 0 0 5px #4CAF50;
 }
 
 button {
-  /* background-color: #4CAF50; */
-  color: white;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
   border: none;
-  cursor: pointer;
+  border-radius: 5px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
+.submit {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.submit:hover {
   background-color: #45a049;
 }
+
+.forgot-password-button {
+  background-color: transparent;
+  color: #af4c4c;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* .forgot-password-button:hover {
+  color: #45a049;
+} */
 
 .message {
   text-align: center;
@@ -71,7 +106,4 @@ button:hover {
   .login-card {
     width: 90%;
   }
-}
-.submit{
-  background-color: #45a049;
 }

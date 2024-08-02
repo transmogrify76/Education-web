@@ -1,24 +1,50 @@
 import React, { useState } from 'react';
 import './Login.css'; 
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 export default function Login() {
- 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (username === '' || password === '') {
       setMessage('Please enter both username and password.');
     } else {
-      setMessage(`Login successful! Welcome, ${username}.`);
+      try {
+        const response = await fetch('http://localhost:3000/student/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            enrollmentNo: username,
+            password: password,
+          }),
+        });
+
+        if (response.ok) {
+          const responseData = await response.json();
+          // Handle successful login
+          setMessage(`Login successful! Welcome, ${responseData.name}.`); // Assuming response contains a name field
+          // Redirect to a different page after successful login
+          navigate('/studentdashboard'); // Adjust this route as needed
+        } else {
+          const errorData = await response.json();
+          setMessage(`Login failed: ${errorData.message}`);
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+        setMessage(`Error: ${error.message}`);
+      }
     }
   }
 
   return (
-    <div className="login-container">
+    <div className="logins-container">
       <div className="login-card">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
@@ -42,10 +68,10 @@ export default function Login() {
               required
             />
           </div>
-          <button className= "submit" type="submit">Login</button>
+          <button className="submit" type="submit">Login</button>
         </form>
-        <div className="button-group">
-          <button className="forgot-password-button">Forgot Password?</button>
+        <div className="button-bottom">
+          <button className="forgot-password-buttons" onClick={() => navigate('/forgot-password')}>Forgot Password?</button>
         </div>
         <p className="message">{message}</p>
       </div>

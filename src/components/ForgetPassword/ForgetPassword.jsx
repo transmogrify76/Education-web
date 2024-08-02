@@ -28,7 +28,7 @@ const ForgetPassword = () => {
           draggable: true,
           progress: undefined,
         });
-        navigate('/reset-password'); // Navigate to the reset password page
+        navigate('/resetpassword'); // Navigate to the reset password page
       } else {
         toast.error('Failed to send OTP. Please try again later.', {
           position: "top-right",
