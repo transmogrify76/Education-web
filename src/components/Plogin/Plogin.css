@@ -55,9 +55,9 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+/* button:hover {
   background-color: #45a049;
-}
+} */
 
 .message {
   text-align: center;
@@ -71,6 +71,6 @@ button:hover {
     width: 90%;
   }
 }
-.submit{
+/* .submit{
   background-color: #45a049;
-}
+} */

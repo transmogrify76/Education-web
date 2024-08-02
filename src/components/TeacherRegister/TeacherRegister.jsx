@@ -19,6 +19,7 @@ const TeacherRegister = () => {
     e.preventDefault();
     const teacherData = {
       ...formData,
+      roleType: 'teacher', // Include the roleType in the request
       id: 1, // Assuming id is static for this example
       password: await hashPassword(formData.password)
     };
@@ -45,6 +46,7 @@ const TeacherRegister = () => {
 
   const hashPassword = async (password) => {
     // Simulating hashing function, replace with actual implementation
+    // For example, you might use a library like bcrypt on the server-side
     return password;
   };
 

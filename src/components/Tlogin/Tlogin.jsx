@@ -41,6 +41,9 @@ export default function Tlogin() {
         setMessage(`Error: ${error.message}`);
       }
     }
+    const handleForgotPasswordClick = () => {
+      navigate('/forgot-password'); // Navigate to the forgot password page
+  };
   }
 
   return (
@@ -71,7 +74,7 @@ export default function Tlogin() {
           <button className="submit" type="submit">Login</button>
         </form>
         <div className="button-group">
-          <button className="forgot-password-button">Forgot Password?</button>
+          <button className="forgot-password-buttons">Forgot Password?</button>
         </div>
         <p className="message">{message}</p>
       </div>

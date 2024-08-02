@@ -84,16 +84,16 @@ button {
 
 .forgot-password-button {
   background-color: transparent;
-  color: #4CAF50;
+  color: #af4c4c;
   border: none;
   text-align: center;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
-.forgot-password-button:hover {
+/* .forgot-password-button:hover {
   color: #45a049;
-}
+} */
 
 .message {
   text-align: center;

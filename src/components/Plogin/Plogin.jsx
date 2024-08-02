@@ -1,53 +1,79 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './Plogin.css'; 
+
 export default function Plogin() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-  
-    
-    const handleSubmit = (event) => {
-      event.preventDefault();
-  
-      if (username === '' || password === '') {
-        setMessage('Please enter both username and password.');
-      } else {
-        setMessage(`Login successful! Welcome, ${username}.`);
-      }
+    const navigate = useNavigate(); // Initialize useNavigate
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (email === '' || password === '') {
+            setMessage('Please enter both email and password.');
+        } else {
+            try {
+                const response = await fetch('http://localhost:3000/parent/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+
+                if (response.ok) {
+                    setMessage(`Login successful! Welcome.`);
+                    setTimeout(() => {
+                        navigate('/dashboard'); // Redirect to parent dashboard after successful login
+                    }, 2000); // Adjust the delay as needed
+                } else {
+                    const errorData = await response.json();
+                    setMessage(`Login failed: ${errorData.message}`);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                setMessage(`Error: ${error.message}`);
+            }
+        }
     }
-  
+
     return (
-      <div className="plogin-container">
-        <div className="plogin-card">
-          <h2>Parents Login</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="input-group">
-              <label htmlFor="name">Parents Name</label>
-              <input
-                type="text"
-                id="name"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
+        <div className="plogin-container">
+            <div className="plogin-card">
+                <h2>Parents Login</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="input-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button className="submit" type="submit">Login</button>
+                </form>
+                <div className="button-bottom">
+                    <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
+                </div>
+                <p className="message">{message}</p>
             </div>
-            <div className="input-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button className= "submit" type="submit">Login</button>
-          </form>
-          <div className="button-group">
-            <button className="forgot-password-button">Forgot Password?</button>
-          </div>
-          <p className="message">{message}</p>
         </div>
-      </div>
     );
-  }
+}

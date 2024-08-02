@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom'; // Use useLocation to get query parameters
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Initialize useNavigate
 import './StudentRegisterPage.css';
 
 const StudentRegisterPage = () => {
@@ -11,8 +11,8 @@ const StudentRegisterPage = () => {
         studentId: '',
         email: '',
         password: '',
-        parentId: '', // Add parentId to form data
-        address: '', // Add address to form data
+        parentEmail: '', // Replace parentId with parentEmail
+        address: '',
     });
 
     const [showPopup, setShowPopup] = useState(false);
@@ -39,7 +39,7 @@ const StudentRegisterPage = () => {
                     name: `${formData.firstName} ${formData.lastName}`,
                     enrollmentNo: formData.studentId,
                     email: formData.email,
-                    parentId: formData.parentId,
+                    parentEmail: formData.parentEmail, // Use parentEmail instead of parentId
                     dob: formData.dob,
                     password: formData.password,
                     address: formData.address,
@@ -150,11 +150,11 @@ const StudentRegisterPage = () => {
                     />
                 </label>
                 <label>
-                    Parent ID:
+                    Parent Email:
                     <input
-                        type="text"
-                        name="parentId"
-                        value={formData.parentId}
+                        type="email"
+                        name="parentEmail"
+                        value={formData.parentEmail}
                         onChange={handleChange}
                         required
                     />
