@@ -67,8 +67,9 @@ const StudentRegisterPage = () => {
 
     return (
         <div className="register-page-containers">
-            <h1 className="register-title">Student Registration</h1>
+           
             <form className="register-forms" onSubmit={handleSubmit}>
+            <h1 className="register-title">Student Registration</h1>
                 <label>
                     First Name:
                     <input

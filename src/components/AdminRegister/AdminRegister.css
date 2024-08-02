@@ -1,10 +1,10 @@
 .register-page-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url('../Assets/parentl.jpg');
+    background-image: url('../Assets/login.jpg');
     background-size: cover;
+    justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .register-form {
@@ -12,7 +12,7 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #54bdff;
+    background-color: rgba(255, 255, 255, 0.9);
     transition: all 0.3s ease;
 }
 
