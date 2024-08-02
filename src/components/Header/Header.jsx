@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
-
+import logo from '../Assets/logo.png';
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -11,7 +11,12 @@ const Header = () => {
 
   return (
     <div href="/" className="navbar">
-      <div className="navbar-left"> EDU Web </div>
+      <div className="navbar-left">
+        <Link to="/">
+          <img src={logo} alt="EDU Web Logo" className="navbar-logo" />
+          <p className='tagline '>"padhega india tabhi toh badhega india"</p>
+        </Link>
+      </div>
       <div className="navbar-right">
         <a href="/Infrastructure">Infrastructure</a>
         <a href="/Curriculum">Curriculum</a>
