@@ -100,3 +100,17 @@ body, html {
 .dropdown .dropdown-content {
   display: block;
 }
+.navbar-logo{
+  padding-top: 35px;
+  padding-left: 10px;
+  height: 140px;
+  width : 150px;
+}
+.tagline{
+  position: absolute;
+  top: 26px;
+  left: 150px;
+  font-style: italic;
+  color: #f1f1f1;
+  font-size: smaller;
+}
