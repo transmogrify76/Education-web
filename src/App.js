@@ -37,6 +37,10 @@ import Medical from './components/Medical/Medical';
 import AdminRegister from './components/AdminRegister/AdminRegister';
 import AboutUs from './components/Aboutus/Aboutus';
 import Award from './components/Award/Award'
+import ForgetPassword from './components/ForgetPassword/ForgetPassword';
+import ResetPassword from './components/ResetPassword/ResetPassword';
+
+
 // App component
 function App() {
   return (
@@ -80,6 +84,8 @@ function App() {
           <Route path="/AdminRegister" element={<AdminRegister/>} />
           <Route path="/Aboutus" element={<AboutUs/>} />
           <Route path="/Award" element={<Award/>} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route path="/reset-password/" element={<ResetPassword />} />
 
 
 
