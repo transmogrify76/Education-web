@@ -1,0 +1,42 @@
+.teacher-register {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .teacher-register h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .teacher-register form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .teacher-register label {
+    margin-bottom: 10px;
+  }
+  
+  .teacher-register input {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .teacher-register button {
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .teacher-register button:hover {
+    background-color: #45a049;
+  }
+  
