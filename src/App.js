@@ -42,6 +42,7 @@ import ResetPassword from './components/ResetPassword/ResetPassword';
 import TeacherRegister from './components/TeacherRegister/TeacherRegister'
 import TransportRequest from './components/TransportRequest/TransportRequest'
 import PaymentPage from './components/PaymentPage/PaymentPage'
+import ParentProfilePage from './components/ParentProfilePage/ParentProfilePage'
 // App component
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
           
           <Route path="/parentview" element={<ParentView />} />
           <Route path="/plogin" element={<Plogin />} />
+          <Route path="/dashboard/:parentId" element={<Dashboard />} />
           <Route path="/Alogin" element={<Alogin/>} />
           <Route path="/Consent" element={<Consent/>}/>
           <Route path="/Reportc" element={<Reportc/>}/>
@@ -90,6 +92,9 @@ function App() {
           <Route path="/TeacherRegister" element={<TeacherRegister/>} />
           <Route path="/TransportRequest" element={<TransportRequest/>} />
           <Route path="/PaymentPage" element={<PaymentPage/>} />
+          <Route path="/ParentProfilePage" element={<ParentProfilePage/>} />
+          <Route path="/dashboard/:parentId" element={<Dashboard />} />
+          <Route path="/ParentProfilePage/:parentId" element={<ParentProfilePage />} />
 
 
 

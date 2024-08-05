@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
-import './Plogin.css'; 
+import { useNavigate } from 'react-router-dom';
+import './Plogin.css';
 
 export default function Plogin() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,10 +27,13 @@ export default function Plogin() {
                 });
 
                 if (response.ok) {
+                    const data = await response.json(); // Parse JSON response
+                    const parentId = data.parentId; // Extract parentId from response
+
                     setMessage(`Login successful! Welcome.`);
                     setTimeout(() => {
-                        navigate('/dashboard'); // Redirect to parent dashboard after successful login
-                    }, 2000); // Adjust the delay as needed
+                        navigate(`/dashboard/${parentId}`); // Redirect with parentId in URL
+                    }, 2000);
                 } else {
                     const errorData = await response.json();
                     setMessage(`Login failed: ${errorData.message}`);

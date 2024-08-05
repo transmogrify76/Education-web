@@ -1,6 +1,7 @@
 // Dashboard.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import informedConsentIcon from '../Assets/accept.png';
 import timeIcon from '../Assets/time.png';
 import menuIcon from '../Assets/menu.png';
@@ -28,19 +29,20 @@ import learningIcon from '../Assets/reading.png';
 import './Dashboard.css';
 import Header from '../Header/Header';
 const Dashboard = () => {
+  const { parentId } = useParams();
   // Assuming icons is an array of objects with name and icon properties
   const icons = [
     { name: 'Consent forms', image: informedConsentIcon, className: 'btn-1', link: '/consent' },
     { name: 'Time Table', image: timeIcon, className: 'btn-2', link: '/TimeTable'},
     { name: 'Exit Slip Request', image: menuIcon, className: 'btn-3' },
-    { name: 'Registration Info', image: registrationIcon, className: 'btn-4' },
+    { name: 'Registration Info', image: registrationIcon, className: 'btn-4', link: `/ParentProfilePage/${parentId}` },
     { name: 'Report Card PDF', image: resultIcon, className: 'btn-5',link: '/reportc' },
     { name: 'TC Request', image: tcIcon, className: 'btn-6', link:'/TimeOfRequest' },
     { name: 'Transport request', image: roadIcon, className: 'btn-7', link:'/TransportRequest' },
     { name: 'Student profile', image: studentIcon, className: 'btn-8' },
     { name: 'External report', image: externalIcon, className: 'btn-9', link: '/Externalr' },
     { name: 'Notifications', image: notilIcon, className: 'btn-10', link:'/Notification' },
-    { name: 'Third Party Optinal Services', image: thirdIcon, className:'btn-11'},
+    { name: 'Third Party Optional Services', image: thirdIcon, className:'btn-11'},
     { name: 'Parent Profile', image: childIcon, className: 'btn-12' },
     { name: 'Circular', image: circularIcon, className: 'btn-13', link: '/Circular' },
     { name: 'H2H', image: chatIcon, className: 'btn-14' },

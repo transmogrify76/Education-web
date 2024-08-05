@@ -97,3 +97,64 @@ export default Aboutus;
 //         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 //         allowedHeaders: 'Content-Type, Authorization',
 //     });
+// DB_HOST=localhost
+// DB_PORT=3306
+// DB_USERNAME=root
+// DB_PASSWORD=Signature880@
+// DB_NAME=edu_web
+
+// EMAIL_HOST=smtp.gmail.com
+// EMAIL_PORT=587
+// EMAIL_SECURE=false
+// EMAIL_USER=transev76@gmail.com
+// EMAIL_PASS=bjyr fcvy qewd iadx
+// import { Module } from '@nestjs/common';
+// import { TypeOrmModule } from '@nestjs/typeorm';
+// import { AdminModule } from './admin/admin.module';
+// import { StudentModule } from './student/student.module';
+// import { ParentModule } from './parent/parent.module';
+// import { RoleModule } from './role/role.module';
+// import { TeacherModule } from './teacher/teacher.module';
+// import { ContactModule } from './contact/contact.module';
+// import { MailerModule } from '@nestjs-modules/mailer';
+// import * as dotenv from 'dotenv';
+// import { AuthModule } from './auth/auth.module';
+
+
+
+
+// dotenv.config();
+
+// @Module({
+//   imports: [
+//     TypeOrmModule.forRoot({
+//       type: 'mysql',
+//       host: 'localhost',
+//       port: 3306,
+//       username: 'root',
+//       password: 'Signature880@',
+//       database: 'edu_web',
+//       autoLoadEntities: true,
+//       synchronize: true,
+//     }),
+//     MailerModule.forRoot({
+//       transport: {
+//         host: process.env.EMAIL_HOST,
+//         port: parseInt(process.env.EMAIL_PORT),
+//         secure: process.env.EMAIL_SECURE === 'true',
+//         auth: {
+//           user: process.env.EMAIL_USER,
+//           pass: process.env.EMAIL_PASS,
+//         },
+//       },
+//     }),
+//     AdminModule,
+//     StudentModule,
+//     ParentModule,
+//     RoleModule,
+//     TeacherModule,
+//     ContactModule,
+//     AuthModule,
+//   ],
+// })
+// export class AppModule {}
