@@ -73,11 +73,8 @@ const PaymentPage = () => {
 
                     {paymentMethod === 'google-pay' ? (
                         <>
-                            <label htmlFor="google-email">Google Pay Email:</label>
-                            <input type="email" id="google-email" name="googleEmail" required />
-
-                            <label htmlFor="google-phone">Google Pay Phone Number:</label>
-                            <input type="tel" id="google-phone" name="googlePhone" required />
+                            <label htmlFor="google-upi">Google Pay UPI ID:</label>
+                            <input type="text" id="google-upi" name="googleUpi" required />
                         </>
                     ) : null}
 
@@ -95,7 +92,7 @@ const PaymentPage = () => {
                 </form>
             </section>
             <footer className="payment-footer">
-                <p>&copy; 2024 Our School. All rights reserved.</p>
+                <p>&copy; 2024 Edu_Web. All rights reserved.</p>
             </footer>
         </div>
     );
