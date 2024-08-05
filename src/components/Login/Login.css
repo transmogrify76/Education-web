@@ -84,16 +84,26 @@ button {
 
 .forgot-password-button {
   background-color: transparent;
+<<<<<<< Updated upstream
   color: #af4c4c;
+=======
+  color: #4CAF50;
+>>>>>>> Stashed changes
   border: none;
   text-align: center;
   cursor: pointer;
   transition: color 0.3s ease;
 }
 
+<<<<<<< Updated upstream
 /* .forgot-password-button:hover {
   color: #45a049;
 } */
+=======
+.forgot-password-button:hover {
+  color: #45a049;
+}
+>>>>>>> Stashed changes
 
 .message {
   text-align: center;

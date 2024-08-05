@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Initialize useNavigate
+=======
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom'; // Use useLocation to get query parameters
+>>>>>>> Stashed changes
 import './StudentRegisterPage.css';
 
 const StudentRegisterPage = () => {
@@ -11,8 +16,13 @@ const StudentRegisterPage = () => {
         studentId: '',
         email: '',
         password: '',
+<<<<<<< Updated upstream
         parentEmail: '', // Replace parentId with parentEmail
         address: '',
+=======
+        parentId: '', // Add parentId to form data
+        address: '', // Add address to form data
+>>>>>>> Stashed changes
     });
 
     const [showPopup, setShowPopup] = useState(false);
@@ -39,7 +49,11 @@ const StudentRegisterPage = () => {
                     name: `${formData.firstName} ${formData.lastName}`,
                     enrollmentNo: formData.studentId,
                     email: formData.email,
+<<<<<<< Updated upstream
                     parentEmail: formData.parentEmail, // Use parentEmail instead of parentId
+=======
+                    parentId: formData.parentId,
+>>>>>>> Stashed changes
                     dob: formData.dob,
                     password: formData.password,
                     address: formData.address,
@@ -52,7 +66,11 @@ const StudentRegisterPage = () => {
 
                 // Redirect to another page after a short delay to show the popup
                 setTimeout(() => {
+<<<<<<< Updated upstream
                     navigate('/login'); // Adjust this as needed
+=======
+                    navigate('/success'); // Adjust this as needed
+>>>>>>> Stashed changes
                 }, 1500); // Adjust the delay as needed
             } else {
                 const errorData = await response.json();
@@ -151,11 +169,19 @@ const StudentRegisterPage = () => {
                     />
                 </label>
                 <label>
+<<<<<<< Updated upstream
                     Parent Email:
                     <input
                         type="email"
                         name="parentEmail"
                         value={formData.parentEmail}
+=======
+                    Parent ID:
+                    <input
+                        type="text"
+                        name="parentId"
+                        value={formData.parentId}
+>>>>>>> Stashed changes
                         onChange={handleChange}
                         required
                     />

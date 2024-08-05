@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './Login.css'; 
+<<<<<<< Updated upstream
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+=======
+>>>>>>> Stashed changes
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -8,7 +11,11 @@ export default function Login() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
 
+<<<<<<< Updated upstream
   const handleSubmit = async (event) => {
+=======
+  const handleSubmit = (event) => {
+>>>>>>> Stashed changes
     event.preventDefault();
 
     if (username === '' || password === '') {
