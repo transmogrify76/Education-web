@@ -1,24 +1,72 @@
-.head{
-    text-align: left;
-    background-color: rgb(211, 213, 215);
-    width: 90%;
-    height: 60px;
+.consent-form {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .head {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .para {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .form-container {
     display: flex;
-    margin-left: 80px;
-    padding-top: 15px;
-    padding-left: 10px;
-    font-family: "Playfair Display", serif;
-}
-/* .consent-letter{
-    margin-left: 90px;
-} */
-.para{
-    margin-left: 90px;
-}
-.drop{
-    width: 80%;
-    margin-left: 90px;
-    text-align: left;
-    /* justify-content: center; */
-    
-}
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus {
+    border-color: #4CAF50;
+  }
+  
+  .submit-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #45a049;
+  }
+  
