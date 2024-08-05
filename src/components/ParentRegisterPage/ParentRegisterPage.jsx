@@ -10,11 +10,7 @@ const ParentRegisterPage = () => {
         phoneNo: '',
         address: '',
         password: '',
-<<<<<<< Updated upstream
         roleType: 'parent', // Ensure this matches your API expectations
-=======
-        roleType: 'parent',
->>>>>>> Stashed changes
     });
 
     const [message, setMessage] = useState('');
@@ -70,11 +66,7 @@ const ParentRegisterPage = () => {
 
     return (
         <div className="register-page-containers">
-<<<<<<< Updated upstream
             
-=======
-            <h1 className="register-title">Parent Registration</h1>
->>>>>>> Stashed changes
             <form className="register-forms" onSubmit={handleSubmit}>
             <h1 className="register-title">Parent Registration</h1>
                 <label>

@@ -41,12 +41,9 @@ export default function Tlogin() {
         setMessage(`Error: ${error.message}`);
       }
     }
-<<<<<<< Updated upstream
     const handleForgotPasswordClick = () => {
       navigate('/forgot-password'); // Navigate to the forgot password page
   };
-=======
->>>>>>> Stashed changes
   }
 
   return (
@@ -76,7 +73,6 @@ export default function Tlogin() {
           </div>
           <button className="submit" type="submit">Login</button>
         </form>
-<<<<<<< Updated upstream
         <div className="button-bottom">
                     <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
                 </div>
@@ -87,18 +83,6 @@ export default function Tlogin() {
           <span className="popup-icon">✔</span>
           <span className="popup-message">Login successful!</span>
         </div>
-=======
-        <div className="button-group">
-          <button className="forgot-password-button">Forgot Password?</button>
-        </div>
-        <p className="message">{message}</p>
-      </div>
-      {showPopup && (
-        <div className="popup">
-          <span className="popup-icon">✔</span>
-          <span className="popup-message">Login successful!</span>
-        </div>
->>>>>>> Stashed changes
       )}
     </div>
   );

@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './ParentProfilePage.css';
 
-const ParentProfilePage = ({ parentId }) => {
+const ParentProfilePage = () => {
+  const { parentId } = useParams();
   const [parentData, setParentData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchParentData = async () => {
+      console.log('Fetching data for parentId:', parentId); // Debug log
       try {
-        const response = await fetch(`http://localhost:3000/parent/1`);
+        const response = await fetch(`http://localhost:3000/parent/${parentId}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        console.log('Fetched data:', data); // Debug log
         setParentData(data);
       } catch (error) {
         console.error('Error fetching parent data:', error);

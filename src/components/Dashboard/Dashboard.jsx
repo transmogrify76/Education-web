@@ -35,7 +35,7 @@ const Dashboard = () => {
     { name: 'Consent forms', image: informedConsentIcon, className: 'btn-1', link: '/consent' },
     { name: 'Time Table', image: timeIcon, className: 'btn-2', link: '/TimeTable'},
     { name: 'Exit Slip Request', image: menuIcon, className: 'btn-3' },
-    { name: 'Registration Info', image: registrationIcon, className: 'btn-4' },
+    { name: 'Registration Info', image: registrationIcon, className: 'btn-4', link: `/ParentProfilePage/${parentId}` },
     { name: 'Report Card PDF', image: resultIcon, className: 'btn-5',link: '/reportc' },
     { name: 'TC Request', image: tcIcon, className: 'btn-6', link:'/TimeOfRequest' },
     { name: 'Transport request', image: roadIcon, className: 'btn-7', link:'/TransportRequest' },

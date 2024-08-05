@@ -1,0 +1,18 @@
+/* StudentProfilePage.css */
+.student-profile-container {
+    padding: 20px;
+  }
+  
+  .student-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .student-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  

@@ -37,16 +37,12 @@ import Medical from './components/Medical/Medical';
 import AdminRegister from './components/AdminRegister/AdminRegister';
 import AboutUs from './components/Aboutus/Aboutus';
 import Award from './components/Award/Award'
-<<<<<<< Updated upstream
 import ForgetPassword from './components/ForgetPassword/ForgetPassword';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import TeacherRegister from './components/TeacherRegister/TeacherRegister'
 import TransportRequest from './components/TransportRequest/TransportRequest'
 import PaymentPage from './components/PaymentPage/PaymentPage'
 import ParentProfilePage from './components/ParentProfilePage/ParentProfilePage'
-=======
-import TeacherRegister from './components/TeacherRegister/TeacherRegister'
->>>>>>> Stashed changes
 // App component
 function App() {
   return (
@@ -91,16 +87,14 @@ function App() {
           <Route path="/AdminRegister" element={<AdminRegister/>} />
           <Route path="/Aboutus" element={<AboutUs/>} />
           <Route path="/Award" element={<Award/>} />
-<<<<<<< Updated upstream
           <Route path="/ForgetPassword" element={<ForgetPassword />} />
           <Route path="/ResetPassword" element={<ResetPassword />} />
           <Route path="/TeacherRegister" element={<TeacherRegister/>} />
           <Route path="/TransportRequest" element={<TransportRequest/>} />
           <Route path="/PaymentPage" element={<PaymentPage/>} />
           <Route path="/ParentProfilePage" element={<ParentProfilePage/>} />
-=======
-          <Route path="/TeacherRegister" element={<TeacherRegister/>} />
->>>>>>> Stashed changes
+          <Route path="/dashboard/:parentId" element={<Dashboard />} />
+          <Route path="/ParentProfilePage/:parentId" element={<ParentProfilePage />} />
 
 
 
