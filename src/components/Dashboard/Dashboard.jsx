@@ -48,7 +48,7 @@ const Dashboard = () => {
     { name: 'Student ID Card', image: idIcon, className: 'btn-16'},
     { name: 'Calendar', image: calcIcon, className: 'btn-17', link: '/Calen' },
     { name: 'Attendance', image: attenIcon, className: 'btn-18', link: "/Attendance" },
-    { name: 'Online Fee Payment', image: feeIcon, className: 'btn-19' },
+    { name: 'Online Fee Payment', image: feeIcon, className: 'btn-19', link: '/Paymentpage' },
     { name: 'Fee Reminder', image: feeremIcon, className: 'btn-20' },
     { name: 'Student Leave Application', image: leaveIcon, className: 'btn-21', link: '/Leave'},
     { name: 'Parent counselling request', image: counIcon, className: 'btn-22' },

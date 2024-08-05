@@ -70,9 +70,9 @@ export default function Alogin() {
           </div>
           <button className="btn submit" type="submit">Login</button>
         </form>
-        <div className="button-group">
-          <button className="btn forgot-password-button">Forgot Password?</button>
-        </div>
+        <div className="button-bottom">
+                    <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
+                </div>
         <p className="message">{message}</p>
       </div>
       {showPopup && (

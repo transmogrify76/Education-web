@@ -3,8 +3,8 @@ import './TimeOffRequest.css';
 
 const TimeOffRequest = () => {
   const [name, setName] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [currentClass, setCurrentClass] = useState('');
+  const [newClass, setNewClass] = useState('');
   const [reason, setReason] = useState('');
 
   const handleSubmit = (e) => {
@@ -12,8 +12,8 @@ const TimeOffRequest = () => {
     // Handle form submission logic here
     console.log({
       name,
-      startDate,
-      endDate,
+      currentClass,
+      newClass,
       reason
     });
   };
@@ -21,7 +21,7 @@ const TimeOffRequest = () => {
   return (
     <div className="container">
       <div className="form_main">
-        <h1 className="heading">Time-Off Request</h1>
+        <h1 className="heading">Transfer Request</h1>
         <form onSubmit={handleSubmit}>
           <div className="inputContainer">
             <span className="inputIcon">
@@ -32,31 +32,33 @@ const TimeOffRequest = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="inputField textarea"
-              placeholder="Name"
+              placeholder="Student Name"
             ></textarea>
           </div>
           <div className="inputContainer">
             <span className="inputIcon">
-              <i className="fas fa-calendar-alt"></i>
+              <i className="fas fa-school"></i>
             </span>
             <input
-              type="date"
-              id="startDate"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
+              type="text"
+              id="currentClass"
+              value={currentClass}
+              onChange={(e) => setCurrentClass(e.target.value)}
               className="inputField"
+              placeholder="Current Class"
             />
           </div>
           <div className="inputContainer">
             <span className="inputIcon">
-              <i className="fas fa-calendar-alt"></i>
+              <i className="fas fa-school"></i>
             </span>
             <input
-              type="date"
-              id="endDate"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
+              type="text"
+              id="newClass"
+              value={newClass}
+              onChange={(e) => setNewClass(e.target.value)}
               className="inputField"
+              placeholder="New Class"
             />
           </div>
           <div className="inputContainer">
@@ -68,7 +70,7 @@ const TimeOffRequest = () => {
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               className="inputField textarea"
-              placeholder="Reason"
+              placeholder="Reason for Transfer"
             ></textarea>
           </div>
           <button type="submit" id="button">Submit</button>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import './ForgetPassword.css'; // Import the CSS file
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
@@ -57,21 +58,23 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div>
+    <div className="forget-password-container">
       <h2>Forget Password</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="forget-password-form">
+        <div className="form-group">
           <label>Email:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            className="form-input"
           />
         </div>
         <button 
           type="submit" 
           disabled={loading}
+          className="submit-button"
         >
           {loading ? 'Sending...' : 'Send Reset Link'}
         </button>
