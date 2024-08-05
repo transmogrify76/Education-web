@@ -51,31 +51,33 @@ const TeacherRegister = () => {
   };
 
   return (
-    <div className="teacher-register">
-      <h2>Teacher Registration</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-        </label>
-        <label>
-          Email:
-          <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-        </label>
-        <label>
-          Phone No:
-          <input type="tel" name="phoneNo" value={formData.phoneNo} onChange={handleChange} required />
-        </label>
-        <label>
-          Address:
-          <input type="text" name="address" value={formData.address} onChange={handleChange} required />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-        </label>
-        <button type="submit">Register</button>
-      </form>
+    <div className="teacher-register-container">
+      <div className="teacher-register-card">
+        <h2>Teacher Registration</h2>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Name:
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+          </label>
+          <label>
+            Email:
+            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+          </label>
+          <label>
+            Phone No:
+            <input type="tel" name="phoneNo" value={formData.phoneNo} onChange={handleChange} required />
+          </label>
+          <label>
+            Address:
+            <input type="text" name="address" value={formData.address} onChange={handleChange} required />
+          </label>
+          <label>
+            Password:
+            <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+          </label>
+          <button type="submit">Register</button>
+        </form>
+      </div>
     </div>
   );
 };

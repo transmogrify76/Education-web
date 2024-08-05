@@ -2,37 +2,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import informedConsentIcon from '../Assets/accept.png';
-import timeIcon from '../Assets/time.png';
-import menuIcon from '../Assets/menu.png';
-import registrationIcon from '../Assets/registration.png';
-import resultIcon from '../Assets/result.png';
-import tcIcon from '../Assets/tc.png';
-import roadIcon from '../Assets/bus.png';
-import studentIcon from '../Assets/student.png';
-import externalIcon from '../Assets/external.png';
-import notilIcon from '../Assets/noti.png';
-import thirdIcon from '../Assets/third.png';
-import childIcon from '../Assets/child.png';
-import circularIcon from '../Assets/circular.png';
-import chatIcon from '../Assets/chat.png';
-import medIcon from '../Assets/hospital.png';
-import idIcon from '../Assets/student-id.png';
-import calcIcon from '../Assets/schedule.png';
-import attenIcon from '../Assets/attendence.png';
-import feeIcon from '../Assets/fee.png';
-import feeremIcon from '../Assets/payday.png';
-import leaveIcon from '../Assets/exit.png';
-import counIcon from '../Assets/discussion.png';
-import behavIcon from '../Assets/persuasive.png';
-import learningIcon from '../Assets/reading.png';
+// import timeIcon from '../Assets/time.png';
+// import menuIcon from '../Assets/menu.png';
+// import registrationIcon from '../Assets/registration.png';
+// import resultIcon from '../Assets/result.png';
+// import tcIcon from '../Assets/tc.png';
+// import roadIcon from '../Assets/bus.png';
+// import studentIcon from '../Assets/student.png';
+// import externalIcon from '../Assets/external.png';
+// import notilIcon from '../Assets/noti.png';
+// import thirdIcon from '../Assets/third.png';
+// import childIcon from '../Assets/child.png';
+// import circularIcon from '../Assets/circular.png';
+// import chatIcon from '../Assets/chat.png';
+// import medIcon from '../Assets/hospital.png';
+// import idIcon from '../Assets/student-id.png';
+// import calcIcon from '../Assets/schedule.png';
+// import attenIcon from '../Assets/attendence.png';
+// import feeIcon from '../Assets/fee.png';
+// import feeremIcon from '../Assets/payday.png';
+// import leaveIcon from '../Assets/exit.png';
+// import counIcon from '../Assets/discussion.png';
+// import behavIcon from '../Assets/persuasive.png';
+// import learningIcon from '../Assets/reading.png';
 import './AdminPage.css';
 import Header from '../Header/Header';
 const AdminPage = () => {
   // Assuming icons is an array of objects with name and icon properties
   const icons = [
-    { name: 'Consent forms', image: informedConsentIcon, className: 'btn-1', link: '/StudentRegisterPage' },]
-//     { name: 'Time Table', image: timeIcon, className: 'btn-2'},
-//     { name: 'Exit Slip Request', image: menuIcon, className: 'btn-3' },
+    { name: 'Parent Registration', image: informedConsentIcon, className: 'btn-1', link: '/Parentregisterpage' },
+    { name: 'Student Registration', image: informedConsentIcon, className: 'btn-2', link: '/studentregisterpage'},
+    { name: 'Teacher Registration', image: informedConsentIcon, className: 'btn-3', link: '/teacherregister' },]
 //     { name: 'Registration Info', image: registrationIcon, className: 'btn-4' },
 //     { name: 'Report Card PDF', image: resultIcon, className: 'btn-5',link: '/reportc' },
 //     { name: 'TC Request', image: tcIcon, className: 'btn-6' },

@@ -161,3 +161,6 @@
 .btn:where(:hover, :focus) {
     color: #fff;
 }
+.login-link{
+    text-align: center;
+}

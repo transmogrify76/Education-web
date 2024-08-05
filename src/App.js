@@ -7,7 +7,7 @@ import Alogin from './components/Alogin/Alogin'
 import Adminview from './components/Adminview/Adminview';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
-import Header from './components/Header/Header';
+// import Header from './components/Header/Header';
 import Signup from './components/Signup/Signup';
 // import Student from './components/Studentview/Student'
 import ParentView from './components/Parentview/Parentview';
@@ -28,7 +28,7 @@ import AttendancePage  from './components/AttendancePage/AttendancePage'
 import Attendance   from './components/Attendance/Attendance'
 import Infrastructure   from './components/Infrastructure/Infrastructure'
 import  Event   from './components/Event/Event'
-import  curriculum   from './components/Curriculam/CurriculumPage'
+// import  curriculum   from './components/Curriculam/CurriculumPage'
 import CurriculumPage from './components/Curriculam/CurriculumPage';
 import AdminPage from './components/AdminPage/AdminPage';
 import StudentRegisterPage from './components/StudentRegisterPage/StudentRegisterPage';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate, Link } from 'react-router-dom'; // Import Link
 import './AdminRegister.css';
 
 const AdminRegister = () => {
@@ -104,6 +104,9 @@ const AdminRegister = () => {
                     />
                 </div>
                 <button type="submit" className="btn">Register</button>
+                <p className="login-link">
+                Already have an account? <Link to="/alogin">Login here</Link>
+            </p>
                 {message && <p className="message">{message}</p>}
             </form>
             {showPopup && (
@@ -112,6 +115,7 @@ const AdminRegister = () => {
                     <span className="popup-message">Registration successful!</span>
                 </div>
             )}
+            
         </div>
     );
 };
