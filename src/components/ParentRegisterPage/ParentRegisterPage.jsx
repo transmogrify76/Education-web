@@ -66,8 +66,9 @@ const ParentRegisterPage = () => {
 
     return (
         <div className="register-page-containers">
-            <h1 className="register-titles">Parent Registration</h1>
+            
             <form className="register-forms" onSubmit={handleSubmit}>
+            <h1 className="register-title">Parent Registration</h1>
                 <label>
                     Name:
                     <input

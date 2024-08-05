@@ -73,9 +73,9 @@ export default function Tlogin() {
           </div>
           <button className="submit" type="submit">Login</button>
         </form>
-        <div className="button-group">
-          <button className="forgot-password-buttons">Forgot Password?</button>
-        </div>
+        <div className="button-bottom">
+                    <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
+                </div>
         <p className="message">{message}</p>
       </div>
       {showPopup && (
