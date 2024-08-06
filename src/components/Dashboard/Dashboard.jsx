@@ -34,7 +34,7 @@ const Dashboard = () => {
   const icons = [
     { name: 'Consent forms', image: informedConsentIcon, className: 'btn-1', link: '/consent' },
     { name: 'Time Table', image: timeIcon, className: 'btn-2', link: '/TimeTable'},
-    { name: 'Exit Slip Request', image: menuIcon, className: 'btn-3' },
+    { name: 'Exit Slip Request', image: menuIcon, className: 'btn-3', link: '/ExitSlipRequest' },
     { name: 'Registration Info', image: registrationIcon, className: 'btn-4', link: `/ParentProfilePage/${parentId}` },
     { name: 'Report Card PDF', image: resultIcon, className: 'btn-5',link: '/reportc' },
     { name: 'TC Request', image: tcIcon, className: 'btn-6', link:'/TimeOfRequest' },
@@ -42,7 +42,7 @@ const Dashboard = () => {
     { name: 'Student profile', image: studentIcon, className: 'btn-8', link: `/StudentProfilePage/${parentId}` },
     { name: 'External report', image: externalIcon, className: 'btn-9', link: '/Externalr' },
     { name: 'Notifications', image: notilIcon, className: 'btn-10', link:'/Notification' },
-    { name: 'Third Party Optional Services', image: thirdIcon, className:'btn-11'},
+    { name: 'Third Party Optional Services', image: thirdIcon, className:'btn-11', link : '/ThirdPartyServices'},
     { name: 'Parent Profile', image: childIcon, className: 'btn-12' },
     { name: 'Circular', image: circularIcon, className: 'btn-13', link: '/Circular' },
     { name: 'H2H', image: chatIcon, className: 'btn-14' },
@@ -53,8 +53,8 @@ const Dashboard = () => {
     { name: 'Online Fee Payment', image: feeIcon, className: 'btn-19', link: '/Paymentpage' },
     { name: 'Fee Reminder', image: feeremIcon, className: 'btn-20' },
     { name: 'Student Leave Application', image: leaveIcon, className: 'btn-21', link: '/Leave'},
-    { name: 'Parent counselling request', image: counIcon, className: 'btn-22' },
-    { name: 'Behaviour assesment tool', image: behavIcon, className: 'btn-23' },
+    { name: 'Parent counselling request', image: counIcon, className: 'btn-22', link: '/CounselingRequest' },
+    { name: 'Behaviour assessment tool', image: behavIcon, className: 'btn-23', link:'/BehaviorAssessmentTool' },
     { name: 'The learning that was', image: learningIcon, className: 'btn-24' },
   ];
 

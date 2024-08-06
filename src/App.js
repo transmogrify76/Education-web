@@ -45,7 +45,10 @@ import PaymentPage from './components/PaymentPage/PaymentPage'
 import ParentProfilePage from './components/ParentProfilePage/ParentProfilePage'
 import StudentProfilePage from './components/StudentProfilePage/StudentProfilePage';
 import StudentIdCardPage from './components/StudentIdCardPage/StudentIdCardPage';
-// App component
+import CounselingRequest from './components/CounselingRequest/CounselingRequest';
+import ExitSlipRequest from './components/ExitSlipRequest/ExitSlipRequest';
+import ThirdPartyServices from './components/ThirdPartyServices/ThirdPartyServices';
+import BehaviorAssessmentTool from './components/BehaviorAssessmentTool/BehaviorAssessmentTool';
 function App() {
   return (
     <Router>
@@ -100,6 +103,10 @@ function App() {
           <Route path='/StudentProfilePage' element={<StudentProfilePage/>}/>
           <Route path="/StudentProfilePage/:parentId" element={<StudentProfilePage />} />
           <Route path="/StudentIdCardPage/:parentId" element={<StudentIdCardPage />} />
+          <Route path="/CounselingRequest" element={<CounselingRequest/>} />
+          <Route path="/ExitSlipRequest" element={<ExitSlipRequest/>} />
+          <Route path="/ThirdPartyServices" element={<ThirdPartyServices/>} />
+          <Route path="/BehaviorAssessmentTool" element={<BehaviorAssessmentTool/>} />
 
           
 

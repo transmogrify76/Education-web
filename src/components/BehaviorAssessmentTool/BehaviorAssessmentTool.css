@@ -33,67 +33,67 @@ body, html {
     padding: 20px;
   }
   
-  .fee-details,
-  .payment-options {
+  .behavior-list {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .behavior-item {
     background: white;
     border: none;
     padding: 15px 20px;
     border-radius: 20px;
-    margin-top: 15px;
     box-shadow: #cff0ff 0px 10px 10px -5px;
     border-inline: 2px solid transparent;
     font-size: 16px;
-    max-width: 800px;
-    margin: auto;
+    flex: 1 1 calc(50% - 20px);
+    box-sizing: border-box;
   }
   
-  .fee-details h2,
-  .payment-options h2 {
+  .behavior-category {
     font-weight: bold;
     font-size: 18px;
     color: #1089d3;
   }
   
-  .fee-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+  .behavior-description {
+    margin: 10px 0;
+    color: #555;
   }
   
-  .fee-table th,
-  .fee-table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .status.due {
-    color: #dc3545;
+  .behavior-status {
     font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-align: center;
   }
   
-  .status.paid {
-    color: #28a745;
-    font-weight: bold;
+  .behavior-status.excellent {
+    background-color: #28a745;
+    color: white;
   }
   
-  .payment-options ul {
-    list-style-type: none;
-    padding: 0;
+  .behavior-status.good {
+    background-color: #ffc107;
+    color: black;
   }
   
-  .payment-options li {
-    padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+  .behavior-status.satisfactory {
+    background-color: #17a2b8;
+    color: white;
   }
   
-  .payment-options li:last-child {
-    border-bottom: none;
+  .behavior-status.needs-improvement {
+    background-color: #dc3545;
+    color: white;
   }
   
   /* Footer */
   .footer {
-    background-color: #f1f1f1;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
     text-align: center;
     padding: 10px 20px;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
@@ -101,6 +101,6 @@ body, html {
   
   .footer-text {
     margin: 0;
-    color: #888;
+    color: #ffffff;
   }
   
