@@ -39,7 +39,7 @@ const Dashboard = () => {
     { name: 'Report Card PDF', image: resultIcon, className: 'btn-5',link: '/reportc' },
     { name: 'TC Request', image: tcIcon, className: 'btn-6', link:'/TimeOfRequest' },
     { name: 'Transport request', image: roadIcon, className: 'btn-7', link:'/TransportRequest' },
-    { name: 'Student profile', image: studentIcon, className: 'btn-8' },
+    { name: 'Student profile', image: studentIcon, className: 'btn-8', link: `/StudentProfilePage/${parentId}` },
     { name: 'External report', image: externalIcon, className: 'btn-9', link: '/Externalr' },
     { name: 'Notifications', image: notilIcon, className: 'btn-10', link:'/Notification' },
     { name: 'Third Party Optional Services', image: thirdIcon, className:'btn-11'},
@@ -47,7 +47,7 @@ const Dashboard = () => {
     { name: 'Circular', image: circularIcon, className: 'btn-13', link: '/Circular' },
     { name: 'H2H', image: chatIcon, className: 'btn-14' },
     { name: 'Medical', image: medIcon, className: 'btn-15', link: '/Medical' },
-    { name: 'Student ID Card', image: idIcon, className: 'btn-16'},
+    { name: 'Student ID Card', image: idIcon, className: 'btn-16', link: `/StudentIdCardPage/${parentId}`},
     { name: 'Calendar', image: calcIcon, className: 'btn-17', link: '/Calen' },
     { name: 'Attendance', image: attenIcon, className: 'btn-18', link: "/Attendance" },
     { name: 'Online Fee Payment', image: feeIcon, className: 'btn-19', link: '/Paymentpage' },
@@ -72,6 +72,4 @@ const Dashboard = () => {
     </div>
   );
 }
-
-
 export default Dashboard;

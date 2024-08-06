@@ -43,6 +43,8 @@ import TeacherRegister from './components/TeacherRegister/TeacherRegister'
 import TransportRequest from './components/TransportRequest/TransportRequest'
 import PaymentPage from './components/PaymentPage/PaymentPage'
 import ParentProfilePage from './components/ParentProfilePage/ParentProfilePage'
+import StudentProfilePage from './components/StudentProfilePage/StudentProfilePage';
+import StudentIdCardPage from './components/StudentIdCardPage/StudentIdCardPage';
 // App component
 function App() {
   return (
@@ -95,6 +97,11 @@ function App() {
           <Route path="/ParentProfilePage" element={<ParentProfilePage/>} />
           <Route path="/dashboard/:parentId" element={<Dashboard />} />
           <Route path="/ParentProfilePage/:parentId" element={<ParentProfilePage />} />
+          <Route path='/StudentProfilePage' element={<StudentProfilePage/>}/>
+          <Route path="/StudentProfilePage/:parentId" element={<StudentProfilePage />} />
+          <Route path="/StudentIdCardPage/:parentId" element={<StudentIdCardPage />} />
+
+          
 
 
 

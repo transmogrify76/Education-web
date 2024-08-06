@@ -1,59 +1,54 @@
-// StudentProfilePage.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './StudentProfilePage.css';
+
 const StudentProfilePage = () => {
   const { parentId } = useParams();
-  const [students, setStudents] = useState([]);
+  const [studentData, setStudentData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchStudents = async () => {
+    const fetchStudentData = async () => {
+      console.log('Fetching data for parentId:', parentId); // Debug log
       try {
-        // Ensure you have the correct API endpoint and query parameters
-        const response = await fetch(`http://localhost:3000/students?parentId=${parentId}`);
+        const response = await fetch(`http://localhost:3000/parent/${parentId}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setStudents(data);
-        if (data.length === 0) {
-          setError('No students found.');
-        }
+        console.log('Fetched data:', data); // Debug log
+        setStudentData(data.students || []);
       } catch (error) {
-        console.error('Error fetching students:', error);
-        setError('Error fetching student data.');
+        console.error('Error fetching student data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchStudents();
+    fetchStudentData();
   }, [parentId]);
 
   if (loading) {
     return <p>Loading...</p>;
   }
 
-  if (error) {
-    return <p>{error}</p>;
+  if (studentData.length === 0) {
+    return <p>No student data available.</p>;
   }
 
   return (
     <div className="student-profile-container">
       <h1>Student Profiles</h1>
-      <div className="student-list">
-        {students.map((student) => (
-          <div key={student.id} className="student-card">
-            <p><strong>ID:</strong> {student.id}</p>
-            <p><strong>Name:</strong> {student.name}</p>
-            <p><strong>Grade:</strong> {student.grade}</p>
-            <p><strong>Address:</strong> {student.address}</p>
-            {/* Add more fields as necessary */}
-          </div>
-        ))}
-      </div>
+      {studentData.map(student => (
+        <div className="profile-card" key={student.id}>
+          <div className="profile-field"><strong>ID:</strong> {student.id}</div>
+          <div className="profile-field"><strong>Name:</strong> {student.name}</div>
+          <div className="profile-field"><strong>Enrollment No:</strong> {student.enrollmentNo}</div>
+          <div className="profile-field"><strong>Email:</strong> {student.email}</div>
+          <div className="profile-field"><strong>Date of Birth:</strong> {new Date(student.dob).toLocaleDateString()}</div>
+          <div className="profile-field"><strong>Address:</strong> {student.address}</div>
+        </div>
+      ))}
     </div>
   );
 };
