@@ -1,0 +1,134 @@
+/* StudentIdCardPage.css */
+
+.id-card-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.student-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.student-name-btn {
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.student-name-btn:hover {
+  background: linear-gradient(135deg, #a777e3, #6e8efb);
+  transform: translateY(-2px);
+}
+
+.id-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.id-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  width: 350px;
+  text-align: left;
+  position: relative;
+  overflow: hidden; /* To ensure that the card content does not overflow */
+}
+
+.id-card h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.id-card-field {
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.id-card-field strong {
+  font-weight: 600;
+  color: #333;
+  margin-right: 10px;
+}
+
+.address-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.download-btn, .close-btn {
+  background: #007bff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: block; /* Ensure buttons are block elements */
+  width: 100%; /* Full width for better alignment */
+}
+
+.download-btn {
+  background: #007bff;
+}
+
+.download-btn:hover {
+  background: #0056b3;
+}
+
+.close-btn {
+  background: #f44336;
+}
+
+.close-btn:hover {
+  background: #e53935;
+}
+
+.id-card {
+  position: relative;
+  background: linear-gradient(135deg, #e0eafc, #cfdef3); /* Add a subtle gradient for modern look */
+  padding: 30px; /* Increase padding for better spacing */
+}
+
+.id-card-field {
+  font-size: 16px; /* Increase font size for readability */
+  color: #333;
+}
+
+.id-card-field strong {
+  color: #007bff; /* Highlight labels with primary color */
+}
+

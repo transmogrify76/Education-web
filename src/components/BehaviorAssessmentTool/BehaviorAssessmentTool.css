@@ -1,0 +1,106 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #eef2f7;
+  }
+  
+  /* Page Container */
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  /* Header */
+  .header {
+    background-color: #1089d3;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header-title {
+    margin: 0;
+    font-size: 2em;
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .behavior-list {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .behavior-item {
+    background: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 20px;
+    box-shadow: #cff0ff 0px 10px 10px -5px;
+    border-inline: 2px solid transparent;
+    font-size: 16px;
+    flex: 1 1 calc(50% - 20px);
+    box-sizing: border-box;
+  }
+  
+  .behavior-category {
+    font-weight: bold;
+    font-size: 18px;
+    color: #1089d3;
+  }
+  
+  .behavior-description {
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .behavior-status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .behavior-status.excellent {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .behavior-status.good {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  .behavior-status.satisfactory {
+    background-color: #17a2b8;
+    color: white;
+  }
+  
+  .behavior-status.needs-improvement {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  /* Footer */
+  .footer {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    text-align: center;
+    padding: 10px 20px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .footer-text {
+    margin: 0;
+    color: #ffffff;
+  }
+  

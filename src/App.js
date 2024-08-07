@@ -43,7 +43,13 @@ import TeacherRegister from './components/TeacherRegister/TeacherRegister'
 import TransportRequest from './components/TransportRequest/TransportRequest'
 import PaymentPage from './components/PaymentPage/PaymentPage'
 import ParentProfilePage from './components/ParentProfilePage/ParentProfilePage'
-// App component
+import StudentProfilePage from './components/StudentProfilePage/StudentProfilePage';
+import StudentIdCardPage from './components/StudentIdCardPage/StudentIdCardPage';
+import CounselingRequest from './components/CounselingRequest/CounselingRequest';
+import ExitSlipRequest from './components/ExitSlipRequest/ExitSlipRequest';
+import ThirdPartyServices from './components/ThirdPartyServices/ThirdPartyServices';
+import BehaviorAssessmentTool from './components/BehaviorAssessmentTool/BehaviorAssessmentTool';
+import FeeReminderPage from './components/FeeReminderPage/FeeReminderPage';
 function App() {
   return (
     <Router>
@@ -95,6 +101,16 @@ function App() {
           <Route path="/ParentProfilePage" element={<ParentProfilePage/>} />
           <Route path="/dashboard/:parentId" element={<Dashboard />} />
           <Route path="/ParentProfilePage/:parentId" element={<ParentProfilePage />} />
+          <Route path='/StudentProfilePage' element={<StudentProfilePage/>}/>
+          <Route path="/StudentProfilePage/:parentId" element={<StudentProfilePage />} />
+          <Route path="/StudentIdCardPage/:parentId" element={<StudentIdCardPage />} />
+          <Route path="/CounselingRequest" element={<CounselingRequest/>} />
+          <Route path="/ExitSlipRequest" element={<ExitSlipRequest/>} />
+          <Route path="/ThirdPartyServices" element={<ThirdPartyServices/>} />
+          <Route path="/BehaviorAssessmentTool" element={<BehaviorAssessmentTool/>} />
+          <Route path="/FeeReminderPage" element={<FeeReminderPage/>} />
+
+          
 
 
 

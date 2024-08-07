@@ -40,12 +40,12 @@ const ParentProfilePage = () => {
     <div className="parent-profile-container">
       <h1>Parent Profile</h1>
       <div className="profile-card">
-        <p><strong>ID:</strong> {parentData.id}</p>
-        <p><strong>Name:</strong> {parentData.name}</p>
-        <p><strong>Student Name:</strong> {parentData.studentName}</p>
-        <p><strong>Email:</strong> {parentData.email}</p>
-        <p><strong>Phone Number:</strong> {parentData.phoneNo}</p>
-        <p><strong>Address:</strong> {parentData.address}</p>
+        <div className="profile-field"><strong>ID:</strong> {parentData.id}</div>
+        <p className="profile-field"><strong>Name:</strong> {parentData.name}</p>
+        <p className="profile-field"><strong>Student Name:</strong> {parentData.studentName}</p>
+        <p className="profile-field"><strong>Email:</strong> {parentData.email}</p>
+        <p className="profile-field"><strong>Phone Number:</strong> {parentData.phoneNo}</p>
+        <p className="profile-field"><strong>Address:</strong> {parentData.address}</p>
       </div>
     </div>
   );

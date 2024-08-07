@@ -1,57 +1,122 @@
-.parent-register-page-containers {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
+.parent-register-page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #e8d9d9;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
 }
 
-.parent-register-titles {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #007bff;
+.parent-register-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #080808;
+  font-family: 'Arial, sans-serif';
+  animation: slideInFromTop 0.8s ease-out;
 }
 
 .student-id-info {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-.parent-register-forms {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 600px;
-    background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.parent-register-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  background: linear-gradient(135deg, rgb(255, 163, 163), rgb(192, 25, 167));
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 1s ease-in-out;
 }
 
-.parent-register-forms label {
-    margin-bottom: 1rem;
+.parent-register-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.parent-register-forms input,
-.parent-register-forms textarea {
-    width: 100%;
-    padding: 0.75rem;
-    margin-top: 0.25rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.parent-register-form label {
+  margin-bottom: 1rem;
+  color: #222;
+  font-family: 'Arial, sans-serif';
 }
 
-.parent-register-forms button {
-    margin-top: 1rem;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
+.parent-register-form input,
+.parent-register-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.parent-register-form button {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .parent-register-form button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .parent-register-page-container {
+    padding: 15px;
+  }
+
+  .parent-register-form {
+    padding: 15px;
+  }
+
+  .parent-register-form label {
+    font-size: 14px;
+  }
 }

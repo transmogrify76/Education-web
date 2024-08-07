@@ -1,18 +1,101 @@
-/* StudentProfilePage.css */
 .student-profile-container {
-    padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #e8d9d9;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.student-profile-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #080808;
+  font-family: 'Arial, sans-serif';
+  animation: slideInFromTop 0.8s ease-out;
+}
+
+.profile-card {
+  /* background: linear-gradient(rgb(242, 255, 4), rgb(252, 7, 7)); */
+  background-color: rgb(100, 147, 218);
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile-field {
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+  font-family: 'Arial, sans-serif';
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.profile-field strong {
+  color: #222;
+}
+
+.profile-field.highlight {
+  background-color: #ffefc1;
+  border-left: 4px solid #ffcc00;
+  padding-left: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  .student-list {
-    display: flex;
-    flex-direction: column;
+  to {
+    opacity: 1;
   }
-  
-  .student-card {
-    border: 1px solid #ddd;
+}
+
+@keyframes slideInFromTop {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .student-profile-container {
     padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
   }
-  
+
+  .profile-card {
+    padding: 15px;
+  }
+
+  .profile-field {
+    font-size: 14px;
+  }
+}
