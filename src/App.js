@@ -1,6 +1,5 @@
 import React from 'react'; // Import React
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import Router and necessary components
-
 // Import your components
 import Contactus from './components/Contactus/Contactus';
 import Alogin from './components/Alogin/Alogin'
