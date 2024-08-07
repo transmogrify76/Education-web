@@ -1,6 +1,5 @@
 import React from 'react'; // Import React
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Import Router and necessary components
-
 // Import your components
 import Contactus from './components/Contactus/Contactus';
 import Alogin from './components/Alogin/Alogin'
@@ -43,6 +42,7 @@ import TeacherRegister from './components/TeacherRegister/TeacherRegister'
 import TransportRequest from './components/TransportRequest/TransportRequest'
 import PaymentPage from './components/PaymentPage/PaymentPage'
 import ParentProfilePage from './components/ParentProfilePage/ParentProfilePage'
+<<<<<<< Updated upstream
 import StudentProfilePage from './components/StudentProfilePage/StudentProfilePage';
 import StudentIdCardPage from './components/StudentIdCardPage/StudentIdCardPage';
 import CounselingRequest from './components/CounselingRequest/CounselingRequest';
@@ -50,6 +50,10 @@ import ExitSlipRequest from './components/ExitSlipRequest/ExitSlipRequest';
 import ThirdPartyServices from './components/ThirdPartyServices/ThirdPartyServices';
 import BehaviorAssessmentTool from './components/BehaviorAssessmentTool/BehaviorAssessmentTool';
 import FeeReminderPage from './components/FeeReminderPage/FeeReminderPage';
+=======
+// import TeacherRegister from './components/TeacherRegister/TeacherRegister'
+// App component
+>>>>>>> Stashed changes
 function App() {
   return (
     <Router>
@@ -99,6 +103,7 @@ function App() {
           <Route path="/TransportRequest" element={<TransportRequest/>} />
           <Route path="/PaymentPage" element={<PaymentPage/>} />
           <Route path="/ParentProfilePage" element={<ParentProfilePage/>} />
+<<<<<<< Updated upstream
           <Route path="/dashboard/:parentId" element={<Dashboard />} />
           <Route path="/ParentProfilePage/:parentId" element={<ParentProfilePage />} />
           <Route path='/StudentProfilePage' element={<StudentProfilePage/>}/>
@@ -111,6 +116,9 @@ function App() {
           <Route path="/FeeReminderPage" element={<FeeReminderPage/>} />
 
           
+=======
+          {/* <Route path="/TeacherRegister" element={<TeacherRegister/>} /> */}
+>>>>>>> Stashed changes
 
 
 
