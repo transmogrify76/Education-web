@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaMale, FaFemale, GiTeacher } from 'react-icons/fa';
 import { GiTeacher as TeacherIcon } from 'react-icons/gi';
 
 const Container = styled.div`

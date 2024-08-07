@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './FeeReminderPage.css';
 
 const FeeReminderPage = () => {
-  const [selectedTerm, setSelectedTerm] = useState('');
+  const [ ,setSelectedTerm] = useState('');
 
   const feeDetails = [
     {
