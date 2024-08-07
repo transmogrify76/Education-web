@@ -49,6 +49,7 @@ import CounselingRequest from './components/CounselingRequest/CounselingRequest'
 import ExitSlipRequest from './components/ExitSlipRequest/ExitSlipRequest';
 import ThirdPartyServices from './components/ThirdPartyServices/ThirdPartyServices';
 import BehaviorAssessmentTool from './components/BehaviorAssessmentTool/BehaviorAssessmentTool';
+import FeeReminderPage from './components/FeeReminderPage/FeeReminderPage';
 function App() {
   return (
     <Router>
@@ -107,6 +108,7 @@ function App() {
           <Route path="/ExitSlipRequest" element={<ExitSlipRequest/>} />
           <Route path="/ThirdPartyServices" element={<ThirdPartyServices/>} />
           <Route path="/BehaviorAssessmentTool" element={<BehaviorAssessmentTool/>} />
+          <Route path="/FeeReminderPage" element={<FeeReminderPage/>} />
 
           
 

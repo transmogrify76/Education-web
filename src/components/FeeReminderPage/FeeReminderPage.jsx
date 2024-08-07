@@ -1,7 +1,9 @@
-import React from 'react';
-import './FeeReminder.css';
+import React, { useState } from 'react';
+import './FeeReminderPage.css';
 
-const FeeReminder = () => {
+const FeeReminderPage = () => {
+  const [selectedTerm, setSelectedTerm] = useState('');
+
   const feeDetails = [
     {
       term: 'Term 1',
@@ -30,6 +32,11 @@ const FeeReminder = () => {
     'PayPal',
   ];
 
+  const handlePayment = (term) => {
+    setSelectedTerm(term);
+    window.open(`https://payment-portal.com/pay?term=${term}`, '_blank');
+  };
+
   return (
     <div className="page-container">
       <header className="header">
@@ -45,6 +52,7 @@ const FeeReminder = () => {
                 <th>Amount</th>
                 <th>Due Date</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -54,6 +62,16 @@ const FeeReminder = () => {
                   <td>{fee.amount}</td>
                   <td>{fee.dueDate}</td>
                   <td className={`status ${fee.status.toLowerCase()}`}>{fee.status}</td>
+                  <td>
+                    {fee.status === 'Due' && (
+                      <button
+                        className="pay-button"
+                        onClick={() => handlePayment(fee.term)}
+                      >
+                        Pay Now
+                      </button>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -67,6 +85,9 @@ const FeeReminder = () => {
             ))}
           </ul>
         </section>
+        <div className="caution">
+          <p>Please ensure all fee payments are made by the due dates to avoid any late fees. For any queries, contact the school administration.</p>
+        </div>
       </main>
       <footer className="footer">
         <p className="footer-text">© 2024 School Management System. All rights reserved.</p>
@@ -75,4 +96,4 @@ const FeeReminder = () => {
   );
 };
 
-export default FeeReminder;
+export default FeeReminderPage;

@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const navigate = useNavigate(); // useNavigate hook
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +21,6 @@ const ResetPassword = () => {
         newPassword
       });
 
-      
       if (response.status === 201) {
         toast.success('Password reset successfully!', {
           position: "top-right",
@@ -29,6 +30,7 @@ const ResetPassword = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
+          onClose: () => navigate('/plogin') // Redirect to Plogin page on toast close
         });
       } else {
         toast.error('Failed to reset password. Please try again later.', {

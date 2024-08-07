@@ -62,7 +62,7 @@ const BehaviorAssessmentTool = () => {
         </div>
       </main>
       <footer className="footer">
-        <p className="footer-text">© 2024 School Management System. All rights reserved.</p>
+        <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
       </footer>
     </div>
   );
