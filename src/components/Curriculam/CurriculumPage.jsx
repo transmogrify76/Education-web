@@ -55,11 +55,11 @@ const CurriculumPage = () => {
             <Header/>
         <div className="curriculum-page-container">
             <div className="header-containers">
-                <h1 className="header-title">Our Curriculum</h1>
+                <h1 className="header-titles">Our Curriculum</h1>
             </div>
             <h2 className='heading-course'>All CLASSES </h2>
             <div className="main-content-curiculum">
-                <div className="sidebar">
+                <div className="sidebars">
                     <ul>
                         <li onClick={() => setSelectedOption('prePrimary')}>Pre-Primary</li>
                         <li onClick={() => setSelectedOption('primary')}>Primary</li>

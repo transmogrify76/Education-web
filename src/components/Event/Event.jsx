@@ -44,9 +44,9 @@ const Event = () => {
            <Header />
         <div className="events-page-container">
             <div className="header-container-event">
-                <h1 className="header-title">Upcoming Events & Holidays</h1>
+                <h1 className="header-titles">Upcoming Events & Holidays</h1>
             </div>
-            <div className="main-content">
+            <div className="main-contenter">
                 <div className="events-container">
                     <h2 className="section-title">Upcoming Events</h2>
                     {events.map((event, index) => (

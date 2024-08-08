@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { FaMale, FaFemale, GiTeacher } from 'react-icons/fa';
+import axios from 'axios';
 import { GiTeacher as TeacherIcon } from 'react-icons/gi';
 
+// Styled components
 const Container = styled.div`
   font-family: 'Montserrat', sans-serif;
   padding: 20px;
@@ -67,194 +68,126 @@ const Subject = styled.div`
   text-align: center;
 `;
 
+const Dropdown = styled.select`
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+`;
+
 const TimeTable = () => {
+  const [students, setStudents] = useState([]);
+  const [selectedStudentId, setSelectedStudentId] = useState('');
+  const [timetable, setTimetable] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const parentId = 1; // Replace with actual parent ID
+
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const timings = [
+    '9:00 AM - 10:00 AM',
+    '10:00 AM - 11:00 AM',
+    '11:00 AM - 12:00 PM',
+    '1:00 PM - 2:00 PM',
+    '2:00 PM - 3:00 PM',
+    '3:00 PM - 4:00 PM'
+  ];
+
+  useEffect(() => {
+    // Fetch students data
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/parent/${parentId}`);
+        setStudents(response.data.students); // Adjust according to your API response
+        setSelectedStudentId(response.data.students[0]?.id || '');
+      } catch (err) {
+        setError('Failed to fetch students.');
+      }
+    };
+
+    fetchStudents();
+  }, [parentId]);
+
+  useEffect(() => {
+    const fetchTimetable = async () => {
+      if (!selectedStudentId) return;
+
+      setLoading(true);
+      setError(null);
+
+      const tempTimetable = {};
+
+      for (let time of timings) {
+        tempTimetable[time] = {};
+
+        for (let day of days) {
+          try {
+            const response = await axios.post('http://localhost:3000/timetable', {
+              day,
+              time,
+              studentId: selectedStudentId
+            });
+
+            tempTimetable[time][day] = response.data;
+          } catch (err) {
+            setError(`Error fetching timetable for ${day} at ${time}: ${err.message}`);
+          }
+        }
+      }
+
+      setTimetable(tempTimetable);
+      setLoading(false);
+    };
+
+    fetchTimetable();
+  }, [selectedStudentId]);
+
+  if (loading) return <Container>Loading...</Container>;
+  if (error) return <Container>{error}</Container>;
+
   return (
     <Container>
       <Title>Student Time Table</Title>
+      <Dropdown
+        value={selectedStudentId}
+        onChange={(e) => setSelectedStudentId(e.target.value)}
+      >
+        {students.map((student) => (
+          <option key={student.id} value={student.id}>
+            {student.name}
+          </option>
+        ))}
+      </Dropdown>
       <Table>
         <thead>
           <tr>
             <TableHeader></TableHeader>
-            <TableHeader>Monday</TableHeader>
-            <TableHeader>Tuesday</TableHeader>
-            <TableHeader>Wednesday</TableHeader>
-            <TableHeader>Thursday</TableHeader>
-            <TableHeader>Friday</TableHeader>
+            {days.map((day) => (
+              <TableHeader key={day}>{day}</TableHeader>
+            ))}
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <TableData>9:00 AM - 10:00 AM</TableData>
-            <TableData>
-              <SubjectIcon>📚</SubjectIcon>
-              <Subject>Mathematics</Subject>
-              <Professor><TeacherIcon /> Dr. John Doe</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🔬</SubjectIcon>
-              <Subject>Physics</Subject>
-              <Professor><TeacherIcon /> Dr. Jane Smith</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🧪</SubjectIcon>
-              <Subject>Chemistry</Subject>
-              <Professor><TeacherIcon /> Dr. Michael Johnson</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🌱</SubjectIcon>
-              <Subject>Biology</Subject>
-              <Professor><TeacherIcon /> Dr. Emily Davis</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>💻</SubjectIcon>
-              <Subject>Computer Science</Subject>
-              <Professor><TeacherIcon /> Dr. David Wilson</Professor>
-            </TableData>
-          </tr>
-          <tr>
-            <TableData>10:00 AM - 11:00 AM</TableData>
-            <TableData>
-              <SubjectIcon>🔬</SubjectIcon>
-              <Subject>Physics</Subject>
-              <Professor><TeacherIcon /> Dr. Jane Smith</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>📚</SubjectIcon>
-              <Subject>Mathematics</Subject>
-              <Professor><TeacherIcon /> Dr. John Doe</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🌱</SubjectIcon>
-              <Subject>Biology</Subject>
-              <Professor><TeacherIcon /> Dr. Emily Davis</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>💻</SubjectIcon>
-              <Subject>Computer Science</Subject>
-              <Professor><TeacherIcon /> Dr. David Wilson</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🧪</SubjectIcon>
-              <Subject>Chemistry</Subject>
-              <Professor><TeacherIcon /> Dr. Michael Johnson</Professor>
-            </TableData>
-          </tr>
-          <tr>
-            <TableData>11:00 AM - 12:00 PM</TableData>
-            <TableData>
-              <SubjectIcon>🧪</SubjectIcon>
-              <Subject>Chemistry</Subject>
-              <Professor><TeacherIcon /> Dr. Michael Johnson</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>💻</SubjectIcon>
-              <Subject>Computer Science</Subject>
-              <Professor><TeacherIcon /> Dr. David Wilson</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>📚</SubjectIcon>
-              <Subject>Mathematics</Subject>
-              <Professor><TeacherIcon /> Dr. John Doe</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🔬</SubjectIcon>
-              <Subject>Physics</Subject>
-              <Professor><TeacherIcon /> Dr. Jane Smith</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🌱</SubjectIcon>
-              <Subject>Biology</Subject>
-              <Professor><TeacherIcon /> Dr. Emily Davis</Professor>
-            </TableData>
-          </tr>
-          <tr>
-            <TableData>12:00 PM - 1:00 PM</TableData>
-            <TableData colSpan={5}>Lunch Break</TableData>
-          </tr>
-          <tr>
-            <TableData>1:00 PM - 2:00 PM</TableData>
-            <TableData>
-              <SubjectIcon>📚</SubjectIcon>
-              <Subject>Mathematics</Subject>
-              <Professor><TeacherIcon /> Dr. John Doe</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🔬</SubjectIcon>
-              <Subject>Physics</Subject>
-              <Professor><TeacherIcon /> Dr. Jane Smith</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🧪</SubjectIcon>
-              <Subject>Chemistry</Subject>
-              <Professor><TeacherIcon /> Dr. Michael Johnson</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🌱</SubjectIcon>
-              <Subject>Biology</Subject>
-              <Professor><TeacherIcon /> Dr. Emily Davis</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>💻</SubjectIcon>
-              <Subject>Computer Science</Subject>
-              <Professor><TeacherIcon /> Dr. David Wilson</Professor>
-            </TableData>
-          </tr>
-          <tr>
-            <TableData>2:00 PM - 3:00 PM</TableData>
-            <TableData>
-              <SubjectIcon>🔬</SubjectIcon>
-              <Subject>Physics</Subject>
-              <Professor><TeacherIcon /> Dr. Jane Smith</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>📚</SubjectIcon>
-              <Subject>Mathematics</Subject>
-              <Professor><TeacherIcon /> Dr. John Doe</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🌱</SubjectIcon>
-              <Subject>Biology</Subject>
-              <Professor><TeacherIcon /> Dr. Emily Davis</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>💻</SubjectIcon>
-              <Subject>Computer Science</Subject>
-              <Professor><TeacherIcon /> Dr. David Wilson</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🧪</SubjectIcon>
-              <Subject>Chemistry</Subject>
-              <Professor><TeacherIcon /> Dr. Michael Johnson</Professor>
-            </TableData>
-          </tr>
-          <tr>
-            <TableData>3:00 PM - 4:00 PM</TableData>
-            <TableData>
-              <SubjectIcon>🧪</SubjectIcon>
-              <Subject>Chemistry</Subject>
-              <Professor><TeacherIcon /> Dr. Michael Johnson</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>💻</SubjectIcon>
-              <Subject>Computer Science</Subject>
-              <Professor><TeacherIcon /> Dr. David Wilson</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>📚</SubjectIcon>
-              <Subject>Mathematics</Subject>
-              <Professor><TeacherIcon /> Dr. John Doe</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🔬</SubjectIcon>
-              <Subject>Physics</Subject>
-              <Professor><TeacherIcon /> Dr. Jane Smith</Professor>
-            </TableData>
-            <TableData>
-              <SubjectIcon>🌱</SubjectIcon>
-              <Subject>Biology</Subject>
-              <Professor><TeacherIcon /> Dr. Emily Davis</Professor>
-            </TableData>
-          </tr>
+          {timings.map((time) => (
+            <tr key={time}>
+              <TableData>{time}</TableData>
+              {days.map((day) => (
+                <TableData key={`${day}-${time}`}>
+                  {timetable[time] && timetable[time][day] ? (
+                    <>
+                      <SubjectIcon>💻</SubjectIcon>
+                      <Subject>{timetable[time][day].subject}</Subject>
+                      <Professor><TeacherIcon /> {timetable[time][day].professor}</Professor>
+                    </>
+                  ) : (
+                    'No Class'
+                  )}
+                </TableData>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </Table>
     </Container>

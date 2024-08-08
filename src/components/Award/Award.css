@@ -1,11 +1,12 @@
-body {
+/* Award.css */
+.award-page body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f0f4f8;
 }
 
-.awards-container {
+.award-page .awards-container {
     max-width: 100%;
     margin: 0 auto;
     padding: 20px;
@@ -14,7 +15,7 @@ body {
     border-radius: 10px;
 }
 
-.awards-header {
+.award-page .awards-header {
     text-align: center;
     padding: 40px;
     background: linear-gradient(135deg, #4A00E0, #8E2DE2);
@@ -22,31 +23,32 @@ body {
     border-radius: 10px 10px 0 0;
 }
 
-.awards-header h1 {
+.award-page .awards-header h1 {
+    color: #fff;
     margin: 0;
     font-size: 2.5em;
     font-family: 'Montserrat', sans-serif;
 }
 
-.awards-intro {
+.award-page .awards-intro {
     text-align: center;
     margin: 20px 0;
 }
 
-.awards-intro h2 {
+.award-page .awards-intro h2 {
     font-size: 2em;
     color: #00c6ff;
     font-family: 'Montserrat', sans-serif;
 }
 
-.awards-intro p {
+.award-page .awards-intro p {
     font-size: 1.1em;
     line-height: 1.6;
     color: #555;
     font-family: 'Roboto', sans-serif;
 }
 
-.awards-list {
+.award-page .awards-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
@@ -54,7 +56,7 @@ body {
     margin-bottom: 20px;
 }
 
-.award-card {
+.award-page .award-card {
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -65,41 +67,41 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-.award-card:hover {
+.award-page .award-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
 
-.award-card h3 {
+.award-page .award-card h3 {
     margin-top: 0;
     color: #333;
     font-family: 'Montserrat', sans-serif;
 }
 
-.award-card p {
+.award-page .award-card p {
     font-size: 1em;
     color: #777;
 }
 
-.awards-gallery {
+.award-page .awards-gallery {
     text-align: center;
     margin-top: 40px;
 }
 
-.awards-gallery h2 {
+.award-page .awards-gallery h2 {
     font-size: 2em;
     color: #00c6ff;
     font-family: 'Montserrat', sans-serif;
 }
 
-.gallery-grid {
+.award-page .gallery-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
 }
 
-.gallery-item {
+.award-page .gallery-item {
     background: #fff;
     border-radius: 10px;
     padding: 10px;
@@ -109,20 +111,20 @@ body {
     overflow: hidden; /* Ensures that any overflow is hidden */
 }
 
-.gallery-item img {
+.award-page .gallery-item img {
     width: 100%;
     height: auto; /* Maintains the aspect ratio */
     display: block; /* Removes any extra space below the image */
     border-radius: 10px;
 }
 
-.gallery-item p {
+.award-page .gallery-item p {
     margin: 10px 0 0;
     font-size: 1em;
     color: #555;
 }
 
-.awards-footer {
+.award-page .awards-footer {
     margin-top: 1%;
     text-align: center;
     padding: 10px 0;
@@ -131,7 +133,7 @@ body {
     border-radius: 0 0 10px 10px;
 }
 
-.awards-footer p {
+.award-page .awards-footer p {
     margin: 0;
     font-size: 0.9em;
     font-family: 'Roboto', sans-serif;

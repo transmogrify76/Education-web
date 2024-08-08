@@ -42,28 +42,29 @@ body {
 .main-content-curiculum{
     display: flex;
 }
-.sidebar {
+.sidebars {
     width: 250px; /* Fixed width for sidebar */
     background: #1a2d7b;
     border-right: 1px solid #ddd;
+    color: aliceblue;
     padding: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-height: 50vh; /* Adjust for header height and margin */
     overflow-y: auto; /* Allows scrolling if content overflows */
 }
 
-.sidebar ul {
+.sidebars ul {
     list-style: none;
     padding: 0;
 }
 
-.sidebar li {
+.sidebars li {
     padding: 10px;
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease;
 }
 
-.sidebar li:hover {
+.sidebars li:hover {
     background: #007bff;
     color: white;
 }
@@ -99,7 +100,7 @@ body {
 }
 
 .footer a {
-    color: #00bcd4;
+    color: #000000;
     text-decoration: none;
 }
 
