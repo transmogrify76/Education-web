@@ -42,7 +42,7 @@ const Dashboard = () => {
     { name: 'Student profile', image: studentIcon, className: 'btn-8', link: `/StudentProfilePage/${parentId}` },
     { name: 'External report', image: externalIcon, className: 'btn-9', link: '/Externalr' },
     { name: 'Notifications', image: notilIcon, className: 'btn-10', link:'/Notification' },
-    { name: 'Third Party Optional Services', image: thirdIcon, className:'btn-11', link : '/ThirdPartyServices'},
+    { name: 'Third Party Optional Services', image: thirdIcon, className:'btn-11', link : `/ThirdPartyServices/${parentId}`},
     { name: 'Parent Profile', image: childIcon, className: 'btn-12' },
     { name: 'Circular', image: circularIcon, className: 'btn-13', link: '/Circular' },
     { name: 'Clubs', image: chatIcon, className: 'btn-14', link: '/ClubPage' },

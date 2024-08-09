@@ -1,13 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './ThirdPartyServices.css';
 
 const ThirdPartyServices = () => {
+  const { parentId } = useParams();
   const [formData, setFormData] = useState({
     studentName: '',
     email: '',
     phoneNo: '',
     selectedServices: [],
   });
+  const [students, setStudents] = useState([]);
+  const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [cachedData, setCachedData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch parent data
+        const parentResponse = await fetch(`http://localhost:3000/parent/${parentId}`);
+        if (!parentResponse.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const parentData = await parentResponse.json();
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          email: parentData.email || '',
+          phoneNo: parentData.phoneNo || '',
+        }));
+
+        // Fetch student names
+        const studentResponse = await fetch(`http://localhost:3000/parent/${parentId}`);
+        if (!studentResponse.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const studentData = await studentResponse.json();
+        setStudents(studentData.students || []);
+
+        // Fetch existing service requests for caching
+        const cachedResponse = await fetch(`http://localhost:3000/third-party-services?parentId=${parentId}`);
+        if (cachedResponse.ok) {
+          const cachedData = await cachedResponse.json();
+          setCachedData(cachedData);
+          setStatus(cachedData.status || '');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError('Failed to fetch data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [parentId]);
 
   const handleChange = (e) => {
     const { name, value, checked } = e.target;
@@ -26,25 +74,57 @@ const ThirdPartyServices = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would send formData to your API endpoint
-    console.log('Form submitted', formData);
+    try {
+      const response = await fetch('http://localhost:3000/third-party-services', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      const result = await response.json();
+      setStatus(result.status || '');
+      console.log('Form submitted', result);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setError('Failed to submit form.');
+    }
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div className="container">
       <h2 className="heading">Third Party Optional Services</h2>
       <form className="form" onSubmit={handleSubmit}>
-        <input
-          type="text"
+        <label htmlFor="studentName">Student's Name:</label>
+        <select
           name="studentName"
           value={formData.studentName}
           onChange={handleChange}
-          placeholder="Student's Name"
           className="input"
           required
-        />
+        >
+          <option value="">Select a student</option>
+          {students.map((student) => (
+            <option key={student.id} value={student.name}>
+              {student.name}
+            </option>
+          ))}
+        </select>
         <input
           type="email"
           name="email"
@@ -86,20 +166,12 @@ const ThirdPartyServices = () => {
             />
             <label>Meal Plan</label>
           </div>
-          <div className="service-option">
-            <input
-              type="checkbox"
-              name="selectedServices"
-              value="Extra-Curricular Activities"
-              onChange={handleChange}
-              className="checkbox"
-            />
-            <label>Extra-Curricular Activities</label>
-          </div>
+          {/* Extra-Curricular Activities field removed */}
         </div>
 
         <button type="submit" className="submit-button">Submit Request</button>
       </form>
+      {status && <p className="status-message">Status: {status}</p>}
     </div>
   );
 };

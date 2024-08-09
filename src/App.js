@@ -102,7 +102,7 @@ function App() {
           <Route path="/StudentIdCardPage/:parentId" element={<StudentIdCardPage />} />
           <Route path="/CounselingRequest" element={<CounselingRequest />} />
           <Route path="/ExitSlipRequest/:parentId" element={<ExitSlipRequest />} />
-          <Route path="/ThirdPartyServices" element={<ThirdPartyServices />} />
+          <Route path="/ThirdPartyServices/:parentId" element={<ThirdPartyServices />} />
           <Route path="/BehaviorAssessmentTool" element={<BehaviorAssessmentTool />} />
           <Route path="/FeeReminderPage/:parentId" element={<FeeReminderPage />} />
           <Route path="/ClubPage" element={<ClubPage />} />
