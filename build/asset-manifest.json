@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.467a3313.css",
-    "main.js": "/static/js/main.f306f855.js",
+    "main.js": "/static/js/main.adfa3c68.js",
     "static/js/213.5a6e92f6.chunk.js": "/static/js/213.5a6e92f6.chunk.js",
     "static/js/455.66f93772.chunk.js": "/static/js/455.66f93772.chunk.js",
     "static/media/schoolfour.jpg": "/static/media/schoolfour.62f12c0c70fd3e4df1b3.jpg",
@@ -14,7 +14,6 @@
     "static/media/medical3.jpg": "/static/media/medical3.66b8304c4d90828cc8d4.jpg",
     "static/media/ayan.jpg": "/static/media/ayan.af091aa96d850cdd2723.jpg",
     "static/media/event.jpg": "/static/media/event.0e02296e11f2dae52c58.jpg",
-    "static/media/potr.jpg": "/static/media/potr.32ab8471c3b6dea17293.jpg",
     "static/media/logo.png": "/static/media/logo.5da32b221cca89507ef9.png",
     "static/media/best.jpg": "/static/media/best.c5466b26ba5e07cda831.jpg",
     "static/media/fee.png": "/static/media/fee.e2c1dd205cf1b420fafc.png",
@@ -41,12 +40,12 @@
     "static/media/bus.png": "/static/media/bus.d282feae39c0fd89ed4a.png",
     "index.html": "/index.html",
     "main.467a3313.css.map": "/static/css/main.467a3313.css.map",
-    "main.f306f855.js.map": "/static/js/main.f306f855.js.map",
+    "main.adfa3c68.js.map": "/static/js/main.adfa3c68.js.map",
     "213.5a6e92f6.chunk.js.map": "/static/js/213.5a6e92f6.chunk.js.map",
     "455.66f93772.chunk.js.map": "/static/js/455.66f93772.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.467a3313.css",
-    "static/js/main.f306f855.js"
+    "static/js/main.adfa3c68.js"
   ]
 }

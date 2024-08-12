@@ -10,16 +10,6 @@ const Circular = () => {
   const [selectedAcademicYear, setSelectedAcademicYear] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleToggle = () => {
-    setCurrentVisible(!currentVisible);
-    setFromDate('');
-    setToDate('');
-    setSelectedMonth('');
-    setSelectedQuantity(1);
-    setSelectedAcademicYear('');
-    setSearchTerm('');
-    // Additional logic to reset or initialize other state variables if needed
-  };
 
   const handleFromDateChange = (event) => {
     setFromDate(event.target.value);

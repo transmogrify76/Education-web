@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Contactus = () => {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-    const [status, setStatus] = useState('');
+    const [, setStatus] = useState('');
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

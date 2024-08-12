@@ -24,11 +24,6 @@ export default function Externalr(){
     // Add more options as needed
   ];
 
-  const handleViewPDF = () => {
-    // Logic to handle viewing PDF
-    console.log('View PDF button clicked');
-  };
-
   return (
     <div className='report-container'>
       <h2 className='report-head'>External Report</h2>
