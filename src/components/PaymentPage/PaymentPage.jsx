@@ -3,9 +3,47 @@ import './PaymentPage.css';
 
 const PaymentPage = () => {
     const [paymentMethod, setPaymentMethod] = useState('credit-card');
+    const [razorpayOrderId, setRazorpayOrderId] = useState('');
 
     const handlePaymentMethodChange = (event) => {
         setPaymentMethod(event.target.value);
+    };
+
+    const handleRazorpayPayment = async () => {
+        // You need to create a Razorpay order from your server and pass the order id to this function
+        const options = {
+            key: 'YOUR_RAZORPAY_KEY_ID', // Enter the Key ID generated from the Dashboard
+            amount: 50000, // Amount is in the smallest currency unit. For example, 50000 paise = INR 500.
+            currency: 'INR',
+            name: 'Edu_Web',
+            description: 'School Fees Payment',
+            order_id: razorpayOrderId, // This is a sample Order ID. Replace it with the actual Order ID from your server
+            handler: function (response) {
+                alert('Payment Successful!');
+                // You can handle the successful payment response here
+                // For example, you could send this response to your server for further processing
+            },
+            prefill: {
+                email: '', // Prefill user's email address
+                contact: '' // Prefill user's phone number
+            },
+            theme: {
+                color: '#3399cc'
+            }
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (paymentMethod === 'razorpay') {
+            handleRazorpayPayment();
+        } else {
+            // Handle other payment methods here
+            alert('Payment Method is not Razorpay.');
+        }
     };
 
     return (
@@ -54,7 +92,7 @@ const PaymentPage = () => {
                     </label>
                 </div>
 
-                <form className="payment-form">
+                <form className="payment-form" onSubmit={handleSubmit}>
                     {paymentMethod === 'credit-card' || paymentMethod === 'debit-card' ? (
                         <>
                             <label htmlFor="card-number">Card Number:</label>

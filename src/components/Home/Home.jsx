@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from '../Header/Header';
-import potr from './potr.jpg';
 import './Home.css';
 
 const Home = () => {

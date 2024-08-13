@@ -41,9 +41,6 @@ export default function Tlogin() {
         setMessage(`Error: ${error.message}`);
       }
     }
-    const handleForgotPasswordClick = () => {
-      navigate('/forgot-password'); // Navigate to the forgot password page
-  };
   }
 
   return (
