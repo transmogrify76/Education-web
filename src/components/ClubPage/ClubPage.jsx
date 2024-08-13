@@ -20,8 +20,8 @@ const ClubPage = () => {
 
   return (
     <div className="club-page">
-      <header className="club-page-header">
-        <h1>Our Clubs</h1>
+      <header className="club-page-headers">
+        <h1 className="our">Our Clubs</h1>
       </header>
       <div className='half-page'>
       <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>

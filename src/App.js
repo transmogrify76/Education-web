@@ -76,12 +76,13 @@ function App() {
           <Route path='/Leave' element={<Leave />} />
           <Route path='/Calen' element={<Calen />} />
           <Route path='/TimeTable/:parentId' element={<TimeTable />} />
-          <Route path='/TimeOfRequest' element={<TimeOffRequest />} />
+          <Route path='/TimeOfRequest/:parentId' element={<TimeOffRequest />} />
           <Route path='/Notification' element={<Notification />} />
           <Route path='/AttendancePage' element={<AttendancePage />} />
           <Route path='/Attendance' element={<Attendance />} />
           <Route path='/Infrastructure' element={<Infrastructure />} />
-          <Route path='/Event' element={<Event />} />
+          <Route path="/event/:id" element={<Event />} />
+          <Route path="/event" element={<Event />} />
           <Route path='/curriculum' element={<CurriculumPage />} />
           <Route path='/AdminPage' element={<AdminPage />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />

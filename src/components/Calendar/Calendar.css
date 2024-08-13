@@ -1,110 +1,81 @@
-/* Calendar.css */
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-.calendar-container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-}
-
-.calendar-top {
-  width: 100%;
-  padding: 10px;
-  background-color: #00ccaa; /* Blue background color for the top bar */
-  display: flex;
-  justify-content: center; /* Center aligns items horizontally */
-  align-items: center; /* Center aligns items vertically */
-  border-bottom: 1px solid #ccc;
-}
-
-.calendar-month-year {
-  margin: 0;
-  color: white; /* White text color for the month and year */
-}
-
-.calendar-navigation {
-  display: flex;
-  justify-content: flex-start; /* Aligns buttons to the left */
-  padding: 5px;
-  background-color: #f0f0f0; /* Light background color for navigation area */
-}
-
-.calendar-navigation-button {
-  padding: 8px; /* Increased padding */
-  font-size: 14px;
-  border: none;
-  background-color: #0066cc; /* Blue background color for buttons */
-  color: white; /* White text color for buttons */
-  cursor: pointer;
-  width: auto; /* Adjusted width */
-}
-
-.calendar-navigation-button:hover {
-  background-color: #0059b3; /* Darker blue on hover */
-}
-
 .calendar {
-  flex: 1;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+  background-color: #f4f4f4;
+  padding: 20px;
   display: flex;
-  flex-direction: column;
+  justify-content: center; /* Centers the header text */
   align-items: center;
-  justify-content: center;
+  position: relative;
 }
 
-.calendar-days {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 10px 0;
-  font-weight: bold;
+.calendar-controls {
+  position: absolute;
+  bottom: 10px; /* Moves the buttons to the bottom */
+  left: 10px;   /* Aligns the buttons to the left */
 }
 
-.calendar-week {
-  display: flex;
-  flex-direction: row;
+.calendar-controls button {
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.calendar-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.calendar-body {
+  padding: 10px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
 }
 
 .calendar-day {
-  width: 80px; /* Increased width */
-  height: 80px; /* Increased height */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 4px; /* Increased margin for spacing */
-  border: 1px solid #ccc;
   background-color: #fff;
-}
-
-.calendar-day-number {
-  font-size: 20px; /* Adjusted font size */
-}
-
-.calendar-day-name {
-  font-size: 16px; /* Adjusted font size */
-  color: #666;
-}
-
-.empty {
-  background-color: #f0f0f0;
-}
-
-.calendar-info {
-  display: flex;
-  justify-content: flex-end; /* Aligns items to the right */
+  border: 1px solid #ddd;
   padding: 10px;
-  background-color: #00ccaa; /* Blue background color */
-  position: absolute;
-  top: 60px; /* Adjust this value based on your layout */
-  right: 10px; /* Adjust this value based on your layout */
+  text-align: center;
+  position: relative;
 }
 
-.calendar-info-item {
-  margin-left: 20px; /* Adds space between items */
-  color: white; /* White text color */
+.calendar-day.day-name {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.calendar-day.sunday {
+  color: red;
+}
+
+.calendar-day.holiday {
+  background-color: #ffe0e0;
+}
+
+.holiday-name {
+  display: block;
+  font-size: 0.8rem;
+  color: red;
+  margin-top: 5px;
+}
+
+.calendar-day.empty {
+  background-color: #f9f9f9;
 }

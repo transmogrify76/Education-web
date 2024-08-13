@@ -3,36 +3,11 @@ import { useParams } from 'react-router-dom';
 import './FeeReminderPage.css';
 
 const FeeReminderPage = () => {
-<<<<<<< HEAD
   const { parentId } = useParams();
   const [studentData, setStudentData] = useState([]);
   const [feeData, setFeeData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-=======
-  const [ ,setSelectedTerm] = useState('');
-
-  const feeDetails = [
-    {
-      term: 'Term 1',
-      amount: '$500',
-      dueDate: '2024-09-15',
-      status: 'Due',
-    },
-    {
-      term: 'Term 2',
-      amount: '$500',
-      dueDate: '2025-01-15',
-      status: 'Paid',
-    },
-    {
-      term: 'Term 3',
-      amount: '$500',
-      dueDate: '2025-05-15',
-      status: 'Due',
-    },
-  ];
->>>>>>> b320e788c85201d91adaa6317892e61f919a0a0c
 
   const paymentOptions = [
     'Credit Card',

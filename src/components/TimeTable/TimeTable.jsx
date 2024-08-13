@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-<<<<<<< HEAD
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-=======
-import { GiTeacher as TeacherIcon } from 'react-icons/gi';
->>>>>>> b320e788c85201d91adaa6317892e61f919a0a0c
 
 const Container = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -74,12 +70,17 @@ const TimeTable = () => {
 
       try {
         setLoading(true);
-        console.log('Fetching timetable for student ID:', selectedStudentId);
         const response = await axios.get('http://localhost:3000/timetable', {
           params: { studentId: selectedStudentId }, // Sending studentId as query parameter
         });
+
         console.log('Timetable response:', response.data); // Debugging
-        setTimetable(response.data || []); // Set timetable for the selected student
+
+        if (response.data && response.data.length > 0) {
+          setTimetable(response.data); // Assuming the data is an array of timetable slots
+        } else {
+          setTimetable([]); // No timetable available
+        }
       } catch (err) {
         console.error('Error fetching timetable:', err.response ? err.response.data : err.message);
         setError('Failed to fetch timetable.');
@@ -113,8 +114,8 @@ const TimeTable = () => {
 
       {selectedStudentId && timetable.length > 0 && (
         <TimetableContainer>
-          {timetable.map((slot, index) => (
-            <TimetableSlot key={index}>
+          {timetable.map((slot) => (
+            <TimetableSlot key={slot.id}>
               <p><strong>Day:</strong> {slot.day}</p>
               <p><strong>Time:</strong> {slot.time}</p>
               <p><strong>Subject:</strong> {slot.subject}</p>

@@ -14,7 +14,7 @@ body {
     border-radius: 10px;
 }
 
-.about-us-header {
+.about-us-headers {
     position: relative;
     top: -10%;
     margin: 0%;
@@ -27,11 +27,11 @@ body {
     background-image: url('../Assets/curriculum1.jpg');
     background-size: cover;
     background-position: center;
-    color: white;
+    color: rgb(255, 255, 255);
     /* border-radius: 10px 10px 0 0; */
 }
 
-.about-us-header h1 {
+.about-us-headers h1 {
     margin: 0;
     font-size: 2.5em;
 }
