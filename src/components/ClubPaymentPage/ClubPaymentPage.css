@@ -1,0 +1,67 @@
+/* ClubPaymentPage.css */
+.payment-page-container {
+    padding: 20px;
+    background-color: #f7f9fc;
+}
+
+.payment-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.payment-content {
+    max-width: 600px;
+    margin: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-methods {
+    margin-bottom: 20px;
+}
+
+.payment-methods label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-top: 10px;
+}
+
+.payment-form label {
+    display: block;
+    margin-top: 10px;
+}
+
+.payment-form input {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn {
+    display: block;
+    padding: 10px 20px;
+    background-color: #1089d3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #0d74a8;
+}
+
+.payment-footer {
+    text-align: center;
+    margin-top: 20px;
+}

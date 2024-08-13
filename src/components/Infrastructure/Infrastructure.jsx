@@ -49,7 +49,7 @@ const Infrastructure = () => {
             <div className="header-container">
                 <h1 className="header-title">Our School Infrastructure</h1>
             </div>
-            <div className="main-content">
+            <div className="main-contentaer">
     <div className="slideshow-container">
         <div className="slide fade show">
             <img src={sc1} alt="School Infrastructure 1" className="slide-image" />

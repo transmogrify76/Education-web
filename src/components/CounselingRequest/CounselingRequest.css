@@ -1,79 +1,120 @@
-/* From Uiverse.io by Smit-Prajapati */
-.container {
-    max-width: 400px;
-    background: #F8F9FD;
-    background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
-    border-radius: 40px;
-    padding: 25px 35px;
-    border: 5px solid rgb(255, 255, 255);
-    box-shadow: rgba(133, 189, 215, 0.8) 0px 30px 30px -20px;
-    margin: 20px auto;
-  }
-  
-  .heading {
-    text-align: center;
-    font-weight: 900;
-    font-size: 28px;
-    color: rgb(16, 137, 211);
-  }
-  
-  .form {
-    margin-top: 20px;
-  }
-  
-  .form .input,
-  .form .textarea,
-  .submit-button {
-     /* Ensures all fields and button are the same width */
-    background: white;
-    border: none;
-    padding: 15px 20px;
-    border-radius: 20px;
-    margin-top: 15px;
-    box-shadow: #cff0ff 0px 10px 10px -5px;
-    border-inline: 2px solid transparent;
-    font-size: 16px;
-  }
-  
-  .form .input::-moz-placeholder {
-    color: rgb(0, 0, 0);
-  }
-  
-  .form .input::placeholder {
-    color: rgb(0, 0, 0);
-  }
-  
-  .form .input:focus,
-  .form .textarea:focus {
-    outline: none;
-    border-inline: 2px solid #12B1D1;
-  }
-  
-  .form .textarea {
-    resize: vertical;
-    height: 120px;
-  }
-  
-  .submit-button {
-    font-weight: bold;
-    background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
-    color: white;
-    padding: 15px;
-    margin: 20px auto;
-    border-radius: 20px;
-    box-shadow: rgba(133, 189, 215, 0.8) 0px 20px 10px -15px;
-    border: none;
-    transition: all 0.2s ease-in-out;
-    font-size: 16px;
-  }
-  
-  .submit-button:hover {
-    transform: scale(1.03);
-    box-shadow: rgba(133, 189, 215, 0.8) 0px 23px 10px -20px;
-  }
-  
-  .submit-button:active {
-    transform: scale(0.95);
-    box-shadow: rgba(133, 189, 215, 0.8) 0px 15px 10px -10px;
-  }
-  
+.counseling-form-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.counseling-form-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.left {
+  grid-column: 1;
+}
+
+.right {
+  grid-column: 2;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  font-size: 16px;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+textarea {
+  height: 100px;
+}
+
+.upload-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.upload-btn-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  width: 120px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.upload-btn-wrapper input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.upload-btn-wrapper input[type="file"]::before {
+  content: 'Choose File';
+  display: inline-block;
+  background: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.upload-btn-wrapper span {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.save-btn,
+.cancel-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+}
