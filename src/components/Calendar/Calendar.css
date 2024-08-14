@@ -79,3 +79,8 @@
 .calendar-day.empty {
   background-color: #f9f9f9;
 }
+.calendar-day.current-day {
+  background-color: #216fc2c0;
+  color: #fff;
+  /* border-radius: 50%; */
+}

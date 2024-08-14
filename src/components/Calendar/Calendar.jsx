@@ -1,16 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Calendar.css';
 
-// List of fixed school holidays
-const fixedHolidays = [
-  { month: 0, day: 1, name: 'New Year\'s Day' }, // January 1
-  { month: 0, day: 23, name: 'Netaji Subhas Chandra Bose Jayanti' }, // January 23
-  { month: 0, day: 26, name: 'Republic Day' }, // January 26
-  { month: 7, day: 15, name: 'Independence Day' }, // August 15
-  { month: 9, day: 2, name: 'Gandhi Jayanti' }, // October 2
-  { month: 11, day: 25, name: 'Christmas Day' } // December 25
-];
-
 // Function to calculate Good Friday date
 const calculateGoodFriday = (year) => {
   const getEasterSunday = (year) => {
@@ -30,12 +20,22 @@ const calculateGoodFriday = (year) => {
     const day = ((h + l - 7 * m + 114) % 31) + 1;
     return new Date(year, month - 1, day);
   };
-  
+
   const easterSunday = getEasterSunday(year);
   const goodFriday = new Date(easterSunday);
   goodFriday.setDate(easterSunday.getDate() - 2); // Good Friday is 2 days before Easter Sunday
   return goodFriday;
 };
+
+// List of fixed school holidays
+const fixedHolidays = [
+  { month: 0, day: 1, name: 'New Year\'s Day' }, // January 1
+  { month: 0, day: 23, name: 'Netaji Subhas Chandra Bose Jayanti' }, // January 23
+  { month: 0, day: 26, name: 'Republic Day' }, // January 26
+  { month: 7, day: 15, name: 'Independence Day' }, // August 15
+  { month: 9, day: 2, name: 'Gandhi Jayanti' }, // October 2
+  { month: 11, day: 25, name: 'Christmas Day' } // December 25
+];
 
 const getMonthName = (monthIndex) => {
   const months = [
@@ -67,12 +67,12 @@ const generateCalendarDays = (year, month) => {
 const getHolidaysForMonth = (year, month) => {
   const holidays = [...fixedHolidays];
   const goodFriday = calculateGoodFriday(year);
-  
+
   // Adding Good Friday to holidays list
   if (goodFriday.getMonth() === month) {
     holidays.push({ month: goodFriday.getMonth(), day: goodFriday.getDate(), name: 'Good Friday' });
   }
-  
+
   return holidays
     .filter(holiday => holiday.month === month)
     .map(holiday => ({
@@ -129,11 +129,12 @@ const Calendar = () => {
           {days.map((day, index) => {
             const date = day ? `${year}-${month + 1}-${day < 10 ? `0${day}` : day}` : null;
             const isHoliday = holidays.some(holiday => holiday.date === date);
+            const isCurrentDay = new Date().toDateString() === new Date(year, month, day).toDateString();
 
             return (
               <div
                 key={index}
-                className={`calendar-day${day === null ? ' empty' : ''}${index % 7 === 0 ? ' sunday' : ''}${isHoliday ? ' holiday' : ''}`}
+                className={`calendar-day${day === null ? ' empty' : ''}${index % 7 === 0 ? ' sunday' : ''}${isHoliday ? ' holiday' : ''}${isCurrentDay ? ' current-day' : ''}`}
               >
                 {day || ''}
                 {isHoliday && <span className="holiday-name">{holidays.find(holiday => holiday.date === date).name}</span>}
