@@ -3,36 +3,11 @@ import { useParams } from 'react-router-dom';
 import './FeeReminderPage.css';
 
 const FeeReminderPage = () => {
-<<<<<<< HEAD
   const { parentId } = useParams();
-  const [studentData, setStudentData] = useState([]);
+  const [students, setStudents] = useState([]);
   const [feeData, setFeeData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-=======
-  const [ ,setSelectedTerm] = useState('');
-
-  const feeDetails = [
-    {
-      term: 'Term 1',
-      amount: '$500',
-      dueDate: '2024-09-15',
-      status: 'Due',
-    },
-    {
-      term: 'Term 2',
-      amount: '$500',
-      dueDate: '2025-01-15',
-      status: 'Paid',
-    },
-    {
-      term: 'Term 3',
-      amount: '$500',
-      dueDate: '2025-05-15',
-      status: 'Due',
-    },
-  ];
->>>>>>> b320e788c85201d91adaa6317892e61f919a0a0c
 
   const paymentOptions = [
     'Credit Card',
@@ -49,7 +24,7 @@ const FeeReminderPage = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        setStudentData(data.students || []);
+        setStudents(data.students || []);
 
         // Fetch fee data for each student
         const feeDataMap = {};
@@ -64,7 +39,6 @@ const FeeReminderPage = () => {
               }
               const feeData = await feeResponse.json();
               feeDataMap[student.id] = feeData;
-              console.log(`Fetched fee data for student ${student.id}:`, feeData); // Debug log
             } catch (error) {
               console.error('Error fetching fee data:', error);
               setError('Failed to fetch fee data.');
@@ -102,10 +76,10 @@ const FeeReminderPage = () => {
       if (!response.ok) {
         throw new Error('Failed to update fee status');
       }
+
       // Optionally, you can refetch the data to reflect the changes
       const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder?studentId=${studentId}`);
       const updatedFeeData = await updatedFeeResponse.json();
-      console.log(`Updated fee data for student ${studentId}:`, updatedFeeData); // Debug log
       setFeeData(prevFeeData => ({
         ...prevFeeData,
         [studentId]: updatedFeeData
@@ -124,7 +98,7 @@ const FeeReminderPage = () => {
     return <p>{error}</p>;
   }
 
-  if (studentData.length === 0) {
+  if (students.length === 0) {
     return <p>No student data available for the specified parent.</p>;
   }
 
@@ -134,7 +108,7 @@ const FeeReminderPage = () => {
         <h1 className="header-title">Fee Reminder</h1>
       </header>
       <main className="main-content">
-        {studentData.map((student) => {
+        {students.map((student) => {
           const fees = feeData[student.id] || [];
           return (
             <section key={student.id} className="student-section">
@@ -153,7 +127,7 @@ const FeeReminderPage = () => {
                   {fees.map((fee) => (
                     <tr key={fee.id}>
                       <td>{fee.term}</td>
-                      <td>{fee.amount}</td> {/* Ensure this is being populated */}
+                      <td>{fee.amount}</td>
                       <td>{fee.dueDate}</td>
                       <td className={`status ${fee.status.toLowerCase()}`}>{fee.status}</td>
                       <td>

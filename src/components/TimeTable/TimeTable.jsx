@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-<<<<<<< HEAD
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-=======
-import { GiTeacher as TeacherIcon } from 'react-icons/gi';
->>>>>>> b320e788c85201d91adaa6317892e61f919a0a0c
 
 const Container = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -29,12 +25,26 @@ const Dropdown = styled.select`
 `;
 
 const TimetableContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns for Monday to Friday */
+  gap: 10px;
   background-color: #fff;
   padding: 20px;
   border: 1px solid #ddd;
 `;
 
+const DayHeader = styled.div`
+  text-align: center;
+  font-weight: bold;
+  background-color: #6A5ACD;
+  color: white;
+  padding: 10px;
+`;
+
 const TimetableSlot = styled.div`
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
   margin-bottom: 10px;
 `;
 
@@ -70,16 +80,21 @@ const TimeTable = () => {
 
   useEffect(() => {
     const fetchTimetable = async () => {
-      if (!selectedStudentId) return;
+      if (!selectedStudentId) return; // Exit if no student is selected
 
       try {
         setLoading(true);
-        console.log('Fetching timetable for student ID:', selectedStudentId);
-        const response = await axios.get('http://localhost:3000/timetable', {
-          params: { studentId: selectedStudentId }, // Sending studentId as query parameter
-        });
-        console.log('Timetable response:', response.data); // Debugging
-        setTimetable(response.data || []); // Set timetable for the selected student
+        const response = await axios.get('http://localhost:3000/timetable/student/' + selectedStudentId);
+
+        if (response.data && response.data.length > 0) {
+          const sortedTimetable = response.data.sort((a, b) => {
+            // Assuming `time` is a string in the format 'HH:MM AM/PM'
+            return new Date(`1970/01/01 ${a.time}`).getTime() - new Date(`1970/01/01 ${b.time}`).getTime();
+          });
+          setTimetable(sortedTimetable); // Set sorted timetable data
+        } else {
+          setTimetable([]); // No timetable available
+        }
       } catch (err) {
         console.error('Error fetching timetable:', err.response ? err.response.data : err.message);
         setError('Failed to fetch timetable.');
@@ -99,6 +114,14 @@ const TimeTable = () => {
 
   if (error) return <Container>{error}</Container>;
 
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+  // Organize timetable data by day
+  const timetableByDay = daysOfWeek.reduce((acc, day) => {
+    acc[day] = timetable.filter(slot => slot.day === day);
+    return acc;
+  }, {});
+
   return (
     <Container>
       <Title>Student Timetable</Title>
@@ -111,15 +134,23 @@ const TimeTable = () => {
         ))}
       </Dropdown>
 
-      {selectedStudentId && timetable.length > 0 && (
+      {selectedStudentId && (
         <TimetableContainer>
-          {timetable.map((slot, index) => (
-            <TimetableSlot key={index}>
-              <p><strong>Day:</strong> {slot.day}</p>
-              <p><strong>Time:</strong> {slot.time}</p>
-              <p><strong>Subject:</strong> {slot.subject}</p>
-              <p><strong>Professor:</strong> {slot.professor}</p>
-            </TimetableSlot>
+          {daysOfWeek.map((day) => (
+            <div key={day}>
+              <DayHeader>{day}</DayHeader>
+              {timetableByDay[day].length > 0 ? (
+                timetableByDay[day].map((slot) => (
+                  <TimetableSlot key={slot.id}>
+                    <p><strong>Time:</strong> {slot.time}</p>
+                    <p><strong>Subject:</strong> {slot.subject}</p>
+                    <p><strong>Professor:</strong> {slot.professor}</p>
+                  </TimetableSlot>
+                ))
+              ) : (
+                <p>No classes for this day.</p>
+              )}
+            </div>
           ))}
         </TimetableContainer>
       )}

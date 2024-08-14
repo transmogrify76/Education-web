@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -79,6 +80,13 @@ const Button = styled.button`
   }
 `;
 
+const Description = styled.p`
+  font-size: 1em;
+  color: #333;
+  margin-top: 20px;
+  text-align: center;
+`;
+
 const LearnMoreSection = styled.div`
   margin-top: 20px;
   text-align: center;
@@ -95,27 +103,72 @@ const LearnMoreLink = styled.a`
   }
 `;
 
+const LoadingMessage = styled.p`
+  font-size: 1.2em;
+  color: #666;
+`;
+
+const ErrorMessage = styled.p`
+  font-size: 1.2em;
+  color: #ff4d4d;
+`;
+
 const Notification = () => {
-  const navigateToEventPage = () => {
-    window.location.href = '/event'; // Replace with the actual URL of your event page
+  const [notificationData, setNotificationData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('http://localhost:3000/notification')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setNotificationData(data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleLearnMoreClick = (notificationId) => {
+    navigate(`/event/${notificationId}`); // Navigate to the event page with the specific notification ID
   };
+
+  if (loading) {
+    return <Container><LoadingMessage>Loading...</LoadingMessage></Container>;
+  }
+
+  if (error) {
+    return <Container><ErrorMessage>Error fetching notifications: {error}</ErrorMessage></Container>;
+  }
 
   return (
     <Container>
-      <NotificationCard>
-        <Gradient />
-        <Title>Important Announcement</Title>
-        <Message>
-          Dear students and parents,
-          <br />
-          We are excited to announce that our school will be hosting a special event next week. All students are encouraged to attend and participate in the various activities planned for the occasion.
-        </Message>
-        <Button onClick={navigateToEventPage}>Learn More</Button>
-      </NotificationCard>
+      {notificationData.length > 0 ? (
+        notificationData.map((notification) => (
+          <NotificationCard key={notification.id}>
+            <Gradient />
+            <Title>{notification.title}</Title>
+            <Message>{notification.message}</Message>
+            <Button onClick={() => handleLearnMoreClick(notification.id)}>
+              Learn More
+            </Button>
+          </NotificationCard>
+        ))
+      ) : (
+        <p>No notifications available.</p>
+      )}
       <LearnMoreSection>
-        <h2>Learn More About the Event</h2>
+        <h2>Learn More About the Events</h2>
         <p>
-          For more information about the event, including the schedule, activities, and registration details, please visit our <LearnMoreLink href="#">Event Page</LearnMoreLink>.
+          For more information about the events, including the schedule, activities, and registration details, please visit our <LearnMoreLink href="/event">Event Page</LearnMoreLink>.
         </p>
       </LearnMoreSection>
     </Container>
