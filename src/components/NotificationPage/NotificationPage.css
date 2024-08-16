@@ -1,0 +1,89 @@
+.notification-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .notification-form {
+    margin-bottom: 20px;
+  }
+  
+  .notification-form h2 {
+    margin-bottom: 10px;
+  }
+  
+  .notification-form textarea {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .notification-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .notification-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .notification-list {
+    margin-top: 20px;
+  }
+  
+  .notification-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .notification-item p {
+    margin: 0;
+    flex: 1;
+  }
+  
+  .notification-item button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #dc3545;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .notification-item button:hover {
+    background-color: #c82333;
+  }
+  
+  .notification-item input {
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .notification-item button {
+    background-color: #28a745;
+  }
+  
+  .notification-item button:hover {
+    background-color: #218838;
+  }
+  

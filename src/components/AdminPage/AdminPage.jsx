@@ -32,10 +32,10 @@ const AdminPage = () => {
   const icons = [
     { name: 'Parent Registration', image: informedConsentIcon, className: 'btn-1', link: '/Parentregisterpage' },
     { name: 'Student Registration', image: informedConsentIcon, className: 'btn-2', link: '/studentregisterpage'},
-    { name: 'Teacher Registration', image: informedConsentIcon, className: 'btn-3', link: '/teacherregister' },]
-//     { name: 'Registration Info', image: registrationIcon, className: 'btn-4' },
-//     { name: 'Report Card PDF', image: resultIcon, className: 'btn-5',link: '/reportc' },
-//     { name: 'TC Request', image: tcIcon, className: 'btn-6' },
+    { name: 'Teacher Registration', image: informedConsentIcon, className: 'btn-3', link: '/teacherregister' },
+    { name: 'TimeTable post', image: informedConsentIcon, className: 'btn-4', link: '/AdminTimeTable' },
+    { name: 'Update Transfer Certificate', image: informedConsentIcon, className: 'btn-5',link: '/UpdateTc' },
+    { name: 'Update Exit Slip', image: informedConsentIcon, className: 'btn-6', link: '/ExitSlipUpdate' },]
 //     { name: 'Transport request', image: roadIcon, className: 'btn-7' },
 //     { name: 'Student profile', image: studentIcon, className: 'btn-8' },
 //     { name: 'External report', image: externalIcon, className: 'btn-9', link: '/Externalr' },

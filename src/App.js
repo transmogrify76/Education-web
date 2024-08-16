@@ -49,6 +49,9 @@ import BehaviorAssessmentTool from './components/BehaviorAssessmentTool/Behavior
 import FeeReminderPage from './components/FeeReminderPage/FeeReminderPage';
 import ClubPage from './components/ClubPage/ClubPage';
 import ClubPaymentPage from './components/ClubPaymentPage/ClubPaymentPage';
+import AdminTimeTable from './components/AdminTimeTable/AdminTimeTable';
+import UpdateTc from './components/UpdateTc/UpdateTc';
+import ExitSlipUpdate from './components/ExitSlipUpdate/ExitSlipUpdate';
 
 function App() {
   return (
@@ -109,6 +112,9 @@ function App() {
           <Route path="/ClubPage" element={<ClubPage />} />
           <Route path="/ClubPaymentPage" element={<ClubPaymentPage />} />
           <Route path="/payment/:clubId" element={<ClubPaymentPage />} />
+          <Route path='/AdminTimeTable' element={<AdminTimeTable/>}/>
+          <Route path='/UpdateTc' element={<UpdateTc/>}/>
+          <Route path='/ExitSlipUpdate' element={<ExitSlipUpdate/>}/>
         </Routes>
       </div>
     </Router>

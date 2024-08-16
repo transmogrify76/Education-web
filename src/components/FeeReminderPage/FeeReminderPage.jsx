@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './FeeReminderPage.css';
-
 const FeeReminderPage = () => {
   const { parentId } = useParams();
   const [students, setStudents] = useState([]);
@@ -9,15 +8,12 @@ const FeeReminderPage = () => {
   const [feeData, setFeeData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const paymentOptions = [
+const paymentOptions = [
     'Credit Card',
     'Debit Card',
     'Bank Transfer',
     'PayPal',
   ];
-
-  // Fetch student data
   useEffect(() => {
     const fetchStudentData = async () => {
       setLoading(true);
@@ -27,7 +23,7 @@ const FeeReminderPage = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('Fetched students:', data.students); // Log fetched student data
+        console.log('Fetched students:', data.students); 
         setStudents(data.students || []);
       } catch (error) {
         console.error('Error fetching student data:', error);
@@ -39,8 +35,6 @@ const FeeReminderPage = () => {
 
     fetchStudentData();
   }, [parentId]);
-
-  // Fetch fee data for the selected student
   useEffect(() => {
     const fetchFeeData = async () => {
       if (!selectedStudentId) return;
@@ -52,7 +46,7 @@ const FeeReminderPage = () => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log('Fetched fee data:', data); // Log fetched fee data
+        console.log('Fetched fee data:', data);
         setFeeData(data || []);
       } catch (error) {
         console.error('Error fetching fee data:', error);
@@ -72,8 +66,6 @@ const FeeReminderPage = () => {
         `https://payment-portal.com/pay?studentId=${selectedStudentId}&term=${term}`,
         '_blank'
       );
-
-      // Update the fee status to 'Paid'
       const response = await fetch(`http://localhost:3000/fee-reminder/${feeId}`, {
         method: 'PATCH',
         headers: {
@@ -84,11 +76,9 @@ const FeeReminderPage = () => {
       if (!response.ok) {
         throw new Error('Failed to update fee status');
       }
-
-      // Refetch the fee data to reflect changes
       const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder?studentId=${selectedStudentId}`);
       const updatedFeeData = await updatedFeeResponse.json();
-      console.log('Updated fee data:', updatedFeeData); // Log updated fee data
+      console.log('Updated fee data:', updatedFeeData);
       setFeeData(updatedFeeData);
     } catch (error) {
       console.error('Error updating fee status:', error);

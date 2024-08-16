@@ -38,11 +38,9 @@ const ClubPage = () => {
   const [selectedClub, setSelectedClub] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const navigate = useNavigate();
-
   const handleJoinNow = (club) => {
     navigate(`/Payment/${club.id}`, { state: { club } });
   };
-
   return (
     <div className="club-page">
       <header className="club-page-headers">
@@ -64,7 +62,6 @@ const ClubPage = () => {
       <div className="club-details">
         {selectedClub ? (
           <>
-          
             <h2>{selectedClub.name}</h2>
             <img src={selectedClub.photoUrl} alt={`${selectedClub.name} photo`} className="club-photo" />
             <p>{selectedClub.description}</p>
@@ -82,5 +79,4 @@ const ClubPage = () => {
     </div>
   );
 };
-
 export default ClubPage;

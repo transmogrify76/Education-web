@@ -1,0 +1,44 @@
+.exit-slip-update-page {
+    padding: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f4f4f4;
+  }
+  
+  button {
+    margin-right: 10px;
+  }
+  
+  button:hover {
+    cursor: pointer;
+  }
+  
+  .status {
+    font-weight: bold;
+  }
+  
+  .status.Approved {
+    color: green;
+  }
+  
+  .status.Declined {
+    color: red;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+  
