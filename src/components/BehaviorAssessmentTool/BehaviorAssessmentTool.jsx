@@ -69,3 +69,64 @@ const BehaviorAssessmentTool = () => {
 };
 
 export default BehaviorAssessmentTool;
+// import React, { useState, useEffect } from 'react';
+// import './BehaviorAssessmentTool.css';
+
+// const BehaviorAssessmentTool = () => {
+//   const [behaviorData, setBehaviorData] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchBehaviorData = async () => {
+//       try {
+//         const response = await fetch('http://localhost:3000/behavior-assessment');
+//         if (!response.ok) {
+//           // Log response status and status text
+//           console.error('Network response was not ok:', response.status, response.statusText);
+//           throw new Error('Network response was not ok');
+//         }
+//         const data = await response.json();
+//         setBehaviorData(data);
+//       } catch (error) {
+//         // Log error message
+//         console.error('Fetch error:', error.message);
+//         setError(error.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchBehaviorData();
+//   }, []);
+
+//   if (loading) return <p>Loading...</p>;
+//   if (error) return <p>Error: {error}</p>;
+
+//   return (
+//     <div className="page-container">
+//       <header className="header">
+//         <h1 className="header-title">Behavior Assessment Tool</h1>
+//       </header>
+//       <main className="main-content">
+//         <div className="behavior-list">
+//           {behaviorData.map((behavior, index) => (
+//             <div key={index} className="behavior-item">
+//               <h3 className="behavior-category">{behavior.category}</h3>
+//               <p className="behavior-description">{behavior.description}</p>
+//               <p className={`behavior-status ${behavior.status.replace(' ', '-').toLowerCase()}`}>
+//                 {behavior.status} (Score: {behavior.score})
+//               </p>
+//             </div>
+//           ))}
+//         </div>
+//       </main>
+//       <footer className="footer">
+//         <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
+//       </footer>
+//     </div>
+//   );
+// };
+
+// export default BehaviorAssessmentTool;
+

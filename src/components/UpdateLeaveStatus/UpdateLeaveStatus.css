@@ -1,0 +1,42 @@
+/* Leave.css */
+
+/* Existing styles here */
+
+.leave-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .leave-table th, .leave-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .leave-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .leave-table td {
+    background-color: #fff;
+  }
+  
+  .leave-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .button-submit {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .button-submit:hover {
+    background-color: #45a049;
+  }
+  

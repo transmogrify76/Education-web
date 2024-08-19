@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ExitSlipUpdate.css'; // Make sure to create a corresponding CSS file
+import './ExitSlipUpdate.css'; // Ensure you have the corresponding CSS file
 
 const ExitSlipUpdate = () => {
   const [exitSlips, setExitSlips] = useState([]);
@@ -63,12 +63,12 @@ const ExitSlipUpdate = () => {
               <td>
                 {statusUpdate[request.id] === 'Approved' || statusUpdate[request.id] === 'Declined' || request.status === 'Approved' || request.status === 'Declined' ? null : (
                   <>
-                    <button onClick={() => handleStatusChange(request.id, 'Approved')}>
+                    <div className="action-button" onClick={() => handleStatusChange(request.id, 'Approved')}>
                       Approve
-                    </button>
-                    <button onClick={() => handleStatusChange(request.id, 'Declined')}>
+                    </div>
+                    <div className="action-button decline-button" onClick={() => handleStatusChange(request.id, 'Declined')}>
                       Decline
-                    </button>
+                    </div>
                   </>
                 )}
               </td>

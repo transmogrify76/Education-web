@@ -1,0 +1,61 @@
+.third-party-services-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .status {
+    font-weight: bold;
+  }
+  
+  .status.Approved {
+    color: green;
+  }
+  
+  .status.Rejected {
+    color: red;
+  }
+  
+  .action {
+    display: inline-block;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .action.approve {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .action.reject {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .action:hover {
+    opacity: 0.8;
+  }
+  

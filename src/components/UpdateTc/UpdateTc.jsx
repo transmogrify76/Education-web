@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UpdateTc.css';
-
 const UpdateTc = () => {
   const [transferRequests, setTransferRequests] = useState([]);
   const [statusUpdate, setStatusUpdate] = useState({});
-
   useEffect(() => {
-    // Fetch transfer requests from the API
     axios.get('http://localhost:3000/transfer-requests')
       .then(response => {
-        // Sort requests by updatedAt in descending order
         const sortedRequests = response.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         setTransferRequests(sortedRequests);
       })
@@ -23,13 +19,11 @@ const UpdateTc = () => {
     axios.patch(`http://localhost:3000/transfer-requests/${id}`, { status })
       .then(response => {
         setStatusUpdate(prevState => ({ ...prevState, [id]: status }));
-        // Optionally, refresh the transfer requests list after update
       })
       .catch(error => {
         console.error('Error updating status:', error);
       });
   };
-
   return (
     <div className="transfer-request-page">
       <h2>Transfer Request Management</h2>
@@ -57,15 +51,20 @@ const UpdateTc = () => {
                 {statusUpdate[request.id] || request.status}
               </td>
               <td>
-                {/* Conditionally render buttons based on status */}
-                {statusUpdate[request.id] === 'Accepted' || statusUpdate[request.id] === 'Declined' || request.status === 'Accepted' || request.status === 'Declined' ? null : (
+                {(statusUpdate[request.id] === 'Accepted' || statusUpdate[request.id] === 'Declined' || request.status === 'Accepted' || request.status === 'Declined') ? null : (
                   <>
-                    <button onClick={() => handleStatusChange(request.id, 'Accepted')}>
+                    <div 
+                      className="action accept" 
+                      onClick={() => handleStatusChange(request.id, 'Accepted')}
+                    >
                       Accept
-                    </button>
-                    <button onClick={() => handleStatusChange(request.id, 'Declined')}>
+                    </div>
+                    <div 
+                      className="action decline" 
+                      onClick={() => handleStatusChange(request.id, 'Declined')}
+                    >
                       Decline
-                    </button>
+                    </div>
                   </>
                 )}
               </td>
@@ -76,5 +75,4 @@ const UpdateTc = () => {
     </div>
   );
 };
-
 export default UpdateTc;

@@ -1,86 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './NotificationPage.css';
 
 const NotificationPage = () => {
-  const [notifications, setNotifications] = useState([]);
   const [message, setMessage] = useState('');
-  const [editId, setEditId] = useState(null);
-  const [newMessage, setNewMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    fetchNotifications();
-  }, []);
-
-  const fetchNotifications = async () => {
-    const response = await fetch('http://localhost:3000/notification');
-    const data = await response.json();
-    setNotifications(data);
+  const handleMessageChange = (event) => {
+    setMessage(event.target.value);
   };
 
-  const handlePost = async () => {
-    await fetch('http://localhost:3000/notification', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message }),
-    });
-    setMessage('');
-    fetchNotifications();
-  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
 
-  const handleUpdate = async (id) => {
-    await fetch(`http://localhost:3000/notification/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: newMessage }),
-    });
-    setNewMessage('');
-    setEditId(null);
-    fetchNotifications();
-  };
+    try {
+      const response = await fetch('http://localhost:3000/notification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message }),
+      });
 
-  const handleDelete = async (id) => {
-    await fetch(`http://localhost:3000/notification/${id}`, {
-      method: 'DELETE',
-    });
-    fetchNotifications();
+      if (!response.ok) {
+        throw new Error('Failed to post notification');
+      }
+
+      setMessage('');
+      setSuccess(true);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="notification-page">
-      <h1>Notification Management</h1>
-      <div className="notification-form">
-        <h2>Create Notification</h2>
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Enter notification message"
-        />
-        <button onClick={handlePost}>Post Notification</button>
-      </div>
-      <div className="notification-list">
-        <h2>Notifications</h2>
-        {notifications.map((notification) => (
-          <div key={notification._id} className="notification-item">
-            {editId === notification._id ? (
-              <>
-                <input
-                  type="text"
-                  value={newMessage}
-                  onChange={(e) => setNewMessage(e.target.value)}
-                />
-                <button onClick={() => handleUpdate(notification._id)}>Update</button>
-                <button onClick={() => setEditId(null)}>Cancel</button>
-              </>
-            ) : (
-              <>
-                <p>{notification.message}</p>
-                <button onClick={() => { setEditId(notification._id); setNewMessage(notification.message); }}>Edit</button>
-                <button onClick={() => handleDelete(notification._id)}>Delete</button>
-              </>
-            )}
-          </div>
-        ))}
-      </div>
+    <div className="notification-post-container">
+      <header className="header">
+        <h1 className="header-title">Post Notification</h1>
+      </header>
+      <main className="main-content">
+        <form onSubmit={handleSubmit} className="notification-form">
+          <label htmlFor="message" className="form-label">Notification Message</label>
+          <textarea
+            id="message"
+            value={message}
+            onChange={handleMessageChange}
+            required
+            className="form-textarea"
+          ></textarea>
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? 'Posting...' : 'Post Notification'}
+          </button>
+          {success && <p className="success-message">Notification posted successfully!</p>}
+          {error && <p className="error-message">Error: {error}</p>}
+        </form>
+      </main>
+      <footer className="footer">
+        <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
+      </footer>
     </div>
   );
 };
