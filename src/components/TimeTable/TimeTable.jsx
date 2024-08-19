@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+// import { GiTeacher as TeacherIcon } from 'react-icons/gi';
 
 const Container = styled.div`
   font-family: 'Montserrat', sans-serif;

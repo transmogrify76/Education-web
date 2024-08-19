@@ -8,6 +8,28 @@ const FeeReminderPage = () => {
   const [feeData, setFeeData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [ ,setSelectedTerm] = useState('');
+
+  const feeDetails = [
+    {
+      term: 'Term 1',
+      amount: '$500',
+      dueDate: '2024-09-15',
+      status: 'Due',
+    },
+    {
+      term: 'Term 2',
+      amount: '$500',
+      dueDate: '2025-01-15',
+      status: 'Paid',
+    },
+    {
+      term: 'Term 3',
+      amount: '$500',
+      dueDate: '2025-05-15',
+      status: 'Due',
+    },
+  ];
 const paymentOptions = [
     'Credit Card',
     'Debit Card',
