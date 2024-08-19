@@ -1,0 +1,74 @@
+.transfer-request-page {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.action {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+
+.action.accept {
+  background-color: #007bff;
+}
+
+.action.accept:hover {
+  background-color: #0056b3;
+}
+
+.action.decline {
+  background-color: #dc3545;
+}
+
+.action.decline:hover {
+  background-color: #c82333;
+}
+
+.status {
+  padding: 5px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Status Colors */
+.status.Accepted {
+  color: green;
+}
+
+.status.Declined {
+  color: red;
+}
+
+.statu.Pending {
+  background-color: #ffc107; /* Yellow */
+  color: black;
+}

@@ -1,0 +1,54 @@
+.transport-request-page {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  thead th {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .status {
+    font-weight: bold;
+  }
+  
+  .status.Approved {
+    color: green;
+  }
+  
+  .status.Rejected {
+    color: red;
+  }
+  
+  .action {
+    display: inline-block;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+  }
+  
+  .action.approve {
+    background-color: #28a745;
+  }
+  
+  .action.reject {
+    background-color: #dc3545;
+  }
+  

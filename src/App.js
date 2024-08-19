@@ -49,6 +49,13 @@ import BehaviorAssessmentTool from './components/BehaviorAssessmentTool/Behavior
 import FeeReminderPage from './components/FeeReminderPage/FeeReminderPage';
 import ClubPage from './components/ClubPage/ClubPage';
 import ClubPaymentPage from './components/ClubPaymentPage/ClubPaymentPage';
+import AdminTimeTable from './components/AdminTimeTable/AdminTimeTable';
+import UpdateTc from './components/UpdateTc/UpdateTc';
+import ExitSlipUpdate from './components/ExitSlipUpdate/ExitSlipUpdate';
+import TransportRequestUpdatePage from './components/TransportRequestUpdatePage/TransportRequestUpdatePage';
+import ThirdPartyServicesUpdatePage from './components/ThirdPartyServicesUpdatePage/ThirdPartyServicesUpdatePage';
+import NotificationPage from './components/NotificationPage/NotificationPage';
+import UpdateLeaveStatus from './components/UpdateLeaveStatus/UpdateLeaveStatus';
 
 function App() {
   return (
@@ -67,7 +74,7 @@ function App() {
           <Route path="/plogin" element={<Plogin />} />
           <Route path="/dashboard/:parentId" element={<Dashboard />} />
           <Route path="/Alogin" element={<Alogin />} />
-          <Route path="/Consent" element={<Consent />} />
+          <Route path="/Consent/:parentid" element={<Consent />} />
           <Route path="/Reportc" element={<Reportc />} />
           <Route path='/Externalr' element={<ExternalR />} />
           <Route path='/Tlogin' element={<Tlogin />} />
@@ -109,6 +116,14 @@ function App() {
           <Route path="/ClubPage" element={<ClubPage />} />
           <Route path="/ClubPaymentPage" element={<ClubPaymentPage />} />
           <Route path="/payment/:clubId" element={<ClubPaymentPage />} />
+          <Route path='/AdminTimeTable' element={<AdminTimeTable/>}/>
+          <Route path='/UpdateTc' element={<UpdateTc/>}/>
+          <Route path='/ExitSlipUpdate' element={<ExitSlipUpdate/>}/>
+          <Route path='/TransportRequestUpdatePage' element={<TransportRequestUpdatePage/>}/>
+          <Route path='/ThirdPartyServicesUpdatePage' element={<ThirdPartyServicesUpdatePage/>}/>
+          <Route path='/NotificationPage' element={<NotificationPage/>}/>
+          <Route path='/UpdateLeaveStatus' element={<UpdateLeaveStatus/>}/>          
+
         </Routes>
       </div>
     </Router>

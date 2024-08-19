@@ -32,14 +32,14 @@ const AdminPage = () => {
   const icons = [
     { name: 'Parent Registration', image: informedConsentIcon, className: 'btn-1', link: '/Parentregisterpage' },
     { name: 'Student Registration', image: informedConsentIcon, className: 'btn-2', link: '/studentregisterpage'},
-    { name: 'Teacher Registration', image: informedConsentIcon, className: 'btn-3', link: '/teacherregister' },]
-//     { name: 'Registration Info', image: registrationIcon, className: 'btn-4' },
-//     { name: 'Report Card PDF', image: resultIcon, className: 'btn-5',link: '/reportc' },
-//     { name: 'TC Request', image: tcIcon, className: 'btn-6' },
-//     { name: 'Transport request', image: roadIcon, className: 'btn-7' },
-//     { name: 'Student profile', image: studentIcon, className: 'btn-8' },
-//     { name: 'External report', image: externalIcon, className: 'btn-9', link: '/Externalr' },
-//     { name: 'Notifications', image: notilIcon, className: 'btn-10' },
+    { name: 'Teacher Registration', image: informedConsentIcon, className: 'btn-3', link: '/teacherregister' },
+    { name: 'TimeTable post', image: informedConsentIcon, className: 'btn-4', link: '/AdminTimeTable' },
+    { name: 'Update Transfer Certificate', image: informedConsentIcon, className: 'btn-5',link: '/UpdateTc' },
+    { name: 'Update Exit Slip', image: informedConsentIcon, className: 'btn-6', link: '/ExitSlipUpdate' },
+    { name: 'Transport request Update', image: informedConsentIcon, className: 'btn-7',link:'/TransportRequestUpdatePage' },
+    { name: 'Third Party Service Update', image: informedConsentIcon, className: 'btn-8', link: '/ThirdPartyServicesUpdatePage' },
+    { name: 'Notification Page Update', image: informedConsentIcon, className: 'btn-9', link: '/NotificationPage' },
+    { name: 'Leave Status Update', image: informedConsentIcon, className: 'btn-10', link: '/UpdateLeaveStatus' },]
 //     { name: 'Third Party Optinal Services', image: thirdIcon, className:'btn-11'},
 //     { name: 'Parent Profile', image: childIcon, className: 'btn-12' },
 //     { name: 'Circular', image: circularIcon, className: 'btn-13', link: '/Circular' },
