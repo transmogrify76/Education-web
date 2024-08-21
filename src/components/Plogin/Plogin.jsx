@@ -50,7 +50,7 @@ export default function Plogin() {
             <div className="plogin-card">
                 <h2>Parents Login</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="input-group">
+                    <div className="input-groups">
                         <label htmlFor="email">Email</label>
                         <input
                             type="email"
@@ -60,7 +60,7 @@ export default function Plogin() {
                             required
                         />
                     </div>
-                    <div className="input-group">
+                    <div className="input-groups">
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"

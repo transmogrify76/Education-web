@@ -48,7 +48,7 @@ export default function Alogin() {
       <div className="Alogin-card">
         <h2>Welcome Admin</h2>
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className="input-groups">
             <label htmlFor="employeeId">Employee ID</label>
             <input
               type="text"
@@ -58,7 +58,7 @@ export default function Alogin() {
               required
             />
           </div>
-          <div className="input-group">
+          <div className="input-groups">
             <label htmlFor="password">Password</label>
             <input
               type="password"

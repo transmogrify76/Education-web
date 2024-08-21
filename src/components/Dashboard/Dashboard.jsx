@@ -54,7 +54,7 @@ const Dashboard = () => {
     { name: 'Fee Reminder', image: feeremIcon, className: 'btn-20', link: `/FeeReminderPage/${parentId}` },
     { name: 'Student Leave Application', image: leaveIcon, className: 'btn-21', link: '/Leave'},
     { name: 'Parent counselling request', image: counIcon, className: 'btn-22', link: '/CounselingRequest' },
-    { name: 'Behaviour assessment tool', image: behavIcon, className: 'btn-23', link:'/BehaviorAssessmentTool' },
+    { name: 'Behaviour assessment tool', image: behavIcon, className: 'btn-23', link:`/BehaviorAssessmentTool/${parentId}` },
     { name: 'The learning that was', image: learningIcon, className: 'btn-24' },
   ];
 

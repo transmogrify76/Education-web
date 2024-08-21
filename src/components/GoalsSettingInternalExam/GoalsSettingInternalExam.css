@@ -1,0 +1,101 @@
+.table {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Adjust based on number of columns */
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-header {
+    display: contents; /* Allows the grid container to be used */
+  }
+  
+  .header-cell {
+    background-color: #3498db; /* Change this to your preferred color */
+    color: white; /* Adjust text color for better contrast if needed */
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table-body {
+    display: contents;
+  }
+  
+  .table-row {
+    display: contents;
+  }
+  
+  .table-cell {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .button-g{
+    width: 6%;
+    padding: 10px 20px;
+    background-color: #218b66;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .side-with {
+    display: flex;
+  }
+  
+  form {
+    margin-left: 2%;
+    width: 90%;
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+  }
+  .header-cell-three{
+    /* color: white; Adjust text color for better contrast if needed */
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  
+    /* padding: 2%; */
+    background-color: yellow;
+  }
+  .header-cell-four{
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  
+    /* padding: 2%; */
+    background-color: rgb(94, 252, 36);
+  }
+  .header-cell-five{
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  
+    /* padding: 2%; */
+    background-color: rgba(36, 101, 252, 0.728);
+  }
+  .header-cell-one{
+    /* color: white; Adjust text color for better contrast if needed */
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  
+    /* padding: 2%; */
+    background-color: rgba(180, 179, 179, 0.297);
+  }
+  .header-cell-two{
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  
+    /* padding: 2%; */
+    background-color: rgba(180, 179, 179, 0.297);
+  }
