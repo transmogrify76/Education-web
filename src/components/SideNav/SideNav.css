@@ -1,0 +1,33 @@
+/* Sidebar.css */
+.sidebar {
+    background-color: #501a71;
+    color: white;
+    width: 250px;
+    padding: 20px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar-item {
+    margin-top: 12%;
+    font-size: 18px;
+    margin-bottom: 25px; /* Added margin between items */
+    display: flex;
+    align-items: center;
+  }
+  .sidebar-items {
+    margin-left: 20%;
+    margin-top: 12%;
+    font-size: 18px;
+    margin-bottom: 25px; /* Added margin between items */
+    display: flex;
+    align-items: center;
+  }
+  .sidebar-icon {
+    margin-right: 10px;
+    font-size: 20px;
+  }
+  

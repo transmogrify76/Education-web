@@ -48,7 +48,7 @@ export default function Tlogin() {
       <div className="tlogin-card">
         <h2>Welcome Teacher</h2>
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className="input-groups">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -58,7 +58,7 @@ export default function Tlogin() {
               required
             />
           </div>
-          <div className="input-group">
+          <div className="input-groups">
             <label htmlFor="password">Password</label>
             <input
               type="password"

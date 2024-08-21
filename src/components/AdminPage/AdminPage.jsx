@@ -11,8 +11,8 @@ import informedConsentIcon from '../Assets/accept.png';
 // import studentIcon from '../Assets/student.png';
 // import externalIcon from '../Assets/external.png';
 // import notilIcon from '../Assets/noti.png';
-// import thirdIcon from '../Assets/third.png';
-// import childIcon from '../Assets/child.png';
+import thirdIcon from '../Assets/third.png';
+import childIcon from '../Assets/child.png';
 // import circularIcon from '../Assets/circular.png';
 // import chatIcon from '../Assets/chat.png';
 // import medIcon from '../Assets/hospital.png';
@@ -39,9 +39,9 @@ const AdminPage = () => {
     { name: 'Transport request Update', image: informedConsentIcon, className: 'btn-7',link:'/TransportRequestUpdatePage' },
     { name: 'Third Party Service Update', image: informedConsentIcon, className: 'btn-8', link: '/ThirdPartyServicesUpdatePage' },
     { name: 'Notification Page Update', image: informedConsentIcon, className: 'btn-9', link: '/NotificationPage' },
-    { name: 'Leave Status Update', image: informedConsentIcon, className: 'btn-10', link: '/UpdateLeaveStatus' },]
-//     { name: 'Third Party Optinal Services', image: thirdIcon, className:'btn-11'},
-//     { name: 'Parent Profile', image: childIcon, className: 'btn-12' },
+    { name: 'Leave Status Update', image: informedConsentIcon, className: 'btn-10', link: '/UpdateLeaveStatus' },
+    { name: 'Consent froms', image: thirdIcon, className:'btn-11' , link: '/ConsentFormPage'},
+    { name: 'Report card Update', image: childIcon, className: 'btn-12', link: '/' }]
 //     { name: 'Circular', image: circularIcon, className: 'btn-13', link: '/Circular' },
 //     { name: 'H2H', image: chatIcon, className: 'btn-14' },
 //     { name: 'Medical', image: medIcon, className: 'btn-15' },

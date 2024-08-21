@@ -56,6 +56,11 @@ import TransportRequestUpdatePage from './components/TransportRequestUpdatePage/
 import ThirdPartyServicesUpdatePage from './components/ThirdPartyServicesUpdatePage/ThirdPartyServicesUpdatePage';
 import NotificationPage from './components/NotificationPage/NotificationPage';
 import UpdateLeaveStatus from './components/UpdateLeaveStatus/UpdateLeaveStatus';
+import ConsentFormPage from './components/ConsentFormPage/ConsentFormPage';
+import StudentView from './components/StudentView/Student';
+import SideNav from './components/SideNav/SideNav';
+import GoalsSettingInternalExam from './components/GoalsSettingInternalExam/GoalsSettingInternalExam';
+import GoalSettingView from './components/GoalSettingView/GoalSettingView';
 
 function App() {
   return (
@@ -111,7 +116,7 @@ function App() {
           <Route path="/CounselingRequest" element={<CounselingRequest />} />
           <Route path="/ExitSlipRequest/:parentId" element={<ExitSlipRequest />} />
           <Route path="/ThirdPartyServices/:parentId" element={<ThirdPartyServices />} />
-          <Route path="/BehaviorAssessmentTool" element={<BehaviorAssessmentTool />} />
+          <Route path="/BehaviorAssessmentTool/:parentId" element={<BehaviorAssessmentTool />} />
           <Route path="/FeeReminderPage/:parentId" element={<FeeReminderPage />} />
           <Route path="/ClubPage" element={<ClubPage />} />
           <Route path="/ClubPaymentPage" element={<ClubPaymentPage />} />
@@ -123,6 +128,12 @@ function App() {
           <Route path='/ThirdPartyServicesUpdatePage' element={<ThirdPartyServicesUpdatePage/>}/>
           <Route path='/NotificationPage' element={<NotificationPage/>}/>
           <Route path='/UpdateLeaveStatus' element={<UpdateLeaveStatus/>}/>          
+          <Route path='/ConsentFormPage' element={<ConsentFormPage/>}/>          
+          <Route path='/StudentView' element={<StudentView/>}/>          
+          <Route path='/SideNav' element={<SideNav/>}/>          
+          <Route path='/SideNav' element={<SideNav/>}/>          
+          <Route path='/GoalsSettingInternalExam' element={<GoalsSettingInternalExam/>}/>          
+          <Route path='/GoalSettingView' element={<GoalSettingView/>}/>          
 
         </Routes>
       </div>

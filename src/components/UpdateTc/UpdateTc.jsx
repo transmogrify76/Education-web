@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UpdateTc.css';
+
 const UpdateTc = () => {
   const [transferRequests, setTransferRequests] = useState([]);
-  const [statusUpdate, setStatusUpdate] = useState({});
+
   useEffect(() => {
+    // Fetch the transfer requests and sort them by updatedAt date, with the most recent first
     axios.get('http://localhost:3000/transfer-requests')
       .then(response => {
         const sortedRequests = response.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
@@ -16,14 +18,21 @@ const UpdateTc = () => {
   }, []);
 
   const handleStatusChange = (id, status) => {
+    // Update the status of the transfer request in the database
     axios.patch(`http://localhost:3000/transfer-requests/${id}`, { status })
       .then(response => {
-        setStatusUpdate(prevState => ({ ...prevState, [id]: status }));
+        // Update the status in the transferRequests state to reflect the change immediately
+        setTransferRequests(prevRequests =>
+          prevRequests.map(request =>
+            request.id === id ? { ...request, status } : request
+          )
+        );
       })
       .catch(error => {
         console.error('Error updating status:', error);
       });
   };
+
   return (
     <div className="transfer-request-page">
       <h2>Transfer Request Management</h2>
@@ -47,20 +56,21 @@ const UpdateTc = () => {
               <td>{request.currentClass}</td>
               <td>{request.newClass}</td>
               <td>{request.reason}</td>
-              <td className={`status ${statusUpdate[request.id] || request.status}`}>
-                {statusUpdate[request.id] || request.status}
+              <td className={`status ${request.status}`}>
+                {request.status}
               </td>
               <td>
-                {(statusUpdate[request.id] === 'Accepted' || statusUpdate[request.id] === 'Declined' || request.status === 'Accepted' || request.status === 'Declined') ? null : (
+                {/* Show actions only if the status is not already 'Accepted' or 'Declined' */}
+                {(request.status !== 'Accepted' && request.status !== 'Declined') && (
                   <>
-                    <div 
-                      className="action accept" 
+                    <div
+                      className="action accept"
                       onClick={() => handleStatusChange(request.id, 'Accepted')}
                     >
                       Accept
                     </div>
-                    <div 
-                      className="action decline" 
+                    <div
+                      className="action decline"
                       onClick={() => handleStatusChange(request.id, 'Declined')}
                     >
                       Decline
@@ -75,4 +85,5 @@ const UpdateTc = () => {
     </div>
   );
 };
+
 export default UpdateTc;

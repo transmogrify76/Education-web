@@ -1,0 +1,28 @@
+.consent-form-page {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .consent-form-page h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .consent-form-details {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .consent-form-details p {
+    margin: 10px 0;
+  }
+  
+  .consent-form-details strong {
+    display: inline-block;
+    width: 150px;
+  }
+  

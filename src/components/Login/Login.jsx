@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import './Login.css'; 
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-
+import { useNavigate } from 'react-router-dom'; 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
-
+  const navigate = useNavigate(); 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (username === '' || password === '') {
       setMessage('Please enter both username and password.');
     } else {
@@ -25,13 +22,10 @@ export default function Login() {
             password: password,
           }),
         });
-
         if (response.ok) {
           const responseData = await response.json();
-          // Handle successful login
-          setMessage(`Login successful! Welcome, ${responseData.name}.`); // Assuming response contains a name field
-          // Redirect to a different page after successful login
-          navigate('/studentdashboard'); // Adjust this route as needed
+          setMessage(`Login successful! Welcome, ${responseData.name}.`); 
+          navigate('/StudentView'); 
         } else {
           const errorData = await response.json();
           setMessage(`Login failed: ${errorData.message}`);
@@ -42,13 +36,12 @@ export default function Login() {
       }
     }
   }
-
   return (
     <div className="logins-container">
       <div className="login-card">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
-          <div className="input-group">
+          <div className="input-groups">
             <label htmlFor="username">Student ID</label>
             <input
               type="text"
@@ -58,7 +51,7 @@ export default function Login() {
               required
             />
           </div>
-          <div className="input-group">
+          <div className="input-groups">
             <label htmlFor="password">Password</label>
             <input
               type="password"
