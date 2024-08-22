@@ -4,11 +4,11 @@ import axios from 'axios';
 import './CounselingRequest.css';
 
 const CounselingRequest = () => {
-  const { parentId, parentName, email, phoneNo } = useParams(); // Extract URL parameters
-  const [students, setStudents] = useState([]); // Initialize as an empty array
+  const { parentId, parentName, email, phoneNo } = useParams();
+  const [students, setStudents] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [formData, setFormData] = useState({
-    areaOfConcern: 'Academic', // Default value
+    areaOfConcern: 'Academic',
     description: '',
     frequency: '',
     supportRequiredFrom: '',
@@ -22,7 +22,7 @@ const CounselingRequest = () => {
     // Fetch students based on parentId
     axios.get(`http://localhost:3000/parent/${parentId}`)
       .then((response) => {
-        setStudents(response.data.students || []); // Ensure data.students is an array or set to an empty array
+        setStudents(response.data.students || []);
       })
       .catch((error) => console.error('Error fetching students:', error));
   }, [parentId]);
@@ -47,7 +47,7 @@ const CounselingRequest = () => {
     // Ensure areaOfConcern has a value
     const finalFormData = {
       ...formData,
-      areaOfConcern: formData.areaOfConcern || 'Academic', // Default if empty
+      areaOfConcern: formData.areaOfConcern || 'Academic',
     };
 
     const formDataToSend = new FormData();
@@ -156,8 +156,6 @@ const CounselingRequest = () => {
               onChange={handleChange}
             ></textarea>
           </div>
-
-          {/* Student Dropdown */}
           <div className="form-group left">
             <label htmlFor="studentId">Select Student</label>
             <select
@@ -175,8 +173,6 @@ const CounselingRequest = () => {
             </select>
           </div>
         </div>
-
-        {/* File Uploads */}
         <div className="form-group">
           <label>Upload relevant documents as applicable:</label>
           <div className="upload-buttons">
@@ -203,8 +199,6 @@ const CounselingRequest = () => {
             </div>
           </div>
         </div>
-
-        {/* Submit and Cancel Buttons */}
         <div className="form-actions">
           <button type="submit" className="save-btn">
             Save

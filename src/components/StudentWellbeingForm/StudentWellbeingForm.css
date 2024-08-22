@@ -1,104 +1,106 @@
 .containerss {
-    display: flex;
-    min-height: 100vh;
-  }
-  
-  .student-wellbeing-form {
-    flex: 3;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .form-heading {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  
-  .form-group {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .form-field {
-    flex: 1;
-    margin-right: 10px;
-  }
-  
-  .form-field:last-child {
-    margin-right: 0;
-  }
-  
-  .form-field label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 4px;
-  }
-  
-  .required {
-    color: red;
-  }
-  
-  .input-box {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .checkbox-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .checkbox-group label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  
-  .checkbox-group input[type="checkbox"] {
-    margin-right: 8px;
-  }
-  
-  .difficulty-section, .talk-section {
-    flex: 1;
-  }
-  
-  textarea {
-    width: 100%;
-    height: 100px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-  }
-  
-  .save-button,
-  .cancel-button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  .save-button {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .cancel-button {
-    background-color: #ccc;
-    color: #333;
-  }
-  
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.student-wellbeing-form {
+  flex: 3;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.form-heading {
+  text-align: left;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+.form-fields {
+  margin-right: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 100%; */
+}
+.form-field label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.input-box {
+  width: 80%; /* Set a fixed width for input fields */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap; /* Allows checkboxes to wrap to the next line if there's not enough space */
+  gap: 15%; /* Space between checkboxes */
+  margin-top: 10px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center; /* Centers label text vertically with checkbox */
+  color: #000; /* Checkbox label color */
+   /* Allows labels to grow and shrink equally */
+  min-width: 0; /* Prevents labels from exceeding their container width */
+  white-space: nowrap; /* Prevents label text from wrapping */
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 8px; /* Space between checkbox and label */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.save-button,
+.cancel-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.cancel-button {
+  background-color: #ccc;
+  color: #333;
+}

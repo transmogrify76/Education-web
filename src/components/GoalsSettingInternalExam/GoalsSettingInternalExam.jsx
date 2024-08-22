@@ -1,39 +1,41 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Sidebar from '../SideNav/SideNav';
 import { FaTag } from 'react-icons/fa';
 import './GoalsSettingInternalExam.css';
 
 const GoalsSettingInternalExam = () => {
+  const { studentId } = useParams();
   const [formData, setFormData] = useState({
     arabic: {
-      prevGrade: 0,
-      suggestedTarget: 0,
-      targetForThisGrade: 0
+      prevGrade: '',
+      suggestedTarget: '',
+      targetForThisGrade: ''
     },
     english: {
-      prevGrade: 0,
-      suggestedTarget: 0,
-      targetForThisGrade: 0
+      prevGrade: '',
+      suggestedTarget: '',
+      targetForThisGrade: ''
     },
     hindi: {
-      prevGrade: 0,
-      suggestedTarget: 0,
-      targetForThisGrade: 0
+      prevGrade: '',
+      suggestedTarget: '',
+      targetForThisGrade: ''
     },
     mathematics: {
-      prevGrade: 0,
-      suggestedTarget: 0,
-      targetForThisGrade: 0
+      prevGrade: '',
+      suggestedTarget: '',
+      targetForThisGrade: ''
     },
     'science and technology': {
-      prevGrade: 0,
-      suggestedTarget: 0,
-      targetForThisGrade: 0
+      prevGrade: '',
+      suggestedTarget: '',
+      targetForThisGrade: ''
     },
     'social studies': {
-      prevGrade: 0,
-      suggestedTarget: 0,
-      targetForThisGrade: 0
+      prevGrade: '',
+      suggestedTarget: '',
+      targetForThisGrade: ''
     }
   });
 
@@ -51,196 +53,88 @@ const GoalsSettingInternalExam = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., save the data to a backend or display a success message
+    const dataToSubmit = {
+      studentId,
+      subjects: Object.keys(formData).map((subject) => ({
+        name: subject,
+        myAchievementsForPreviousGrade: formData[subject].prevGrade,
+        suggestedTargetForCurrentGrade: formData[subject].suggestedTarget,
+        myTargetForThisGrade: formData[subject].targetForThisGrade
+      }))
+    };
+    fetch('http://localhost:3000/goal-setting', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataToSubmit)
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   return (
     <div className='side-with'>
-      <Sidebar/>
+      <Sidebar studentId={studentId} />
       <form onSubmit={handleSubmit}>
         <h1>Goals Settings Internal Exam</h1>
         <div className="table">
           <div className="table-header">
             <div className="header-cell-one">
-            <FaTag /> Sr no</div>
-            <div className="header-cell-two"><FaTag /> Subject</div>
-            <div className="header-cell-three"><FaTag /> My achievement for previous grade</div>
-            <div className="header-cell-four"><FaTag /> Suggested target for current grade</div>
-            <div className="header-cell-five"><FaTag /> My target for this grade</div>
+              <FaTag /> Sr no
+            </div>
+            <div className="header-cell-two">
+              <FaTag /> Subject
+            </div>
+            <div className="header-cell-three">
+              <FaTag /> My achievement for previous grade
+            </div>
+            <div className="header-cell-four">
+              <FaTag /> Suggested target for current grade
+            </div>
+            <div className="header-cell-five">
+              <FaTag /> My target for this grade
+            </div>
           </div>
           <div className="table-body">
-            <div className="table-row">
-              <div className="table-cell">1</div>
-              <div className="table-cell">ARABIC</div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="arabic.prevGrade"
-                  value={formData.arabic.prevGrade}
-                  onChange={handleInputChange}
-                />
+            {Object.keys(formData).map((subject, index) => (
+              <div className="table-row" key={subject}>
+                <div className="table-cell">{index + 1}</div>
+                <div className="table-cell">{subject.toUpperCase()}</div>
+                <div className="table-cell">
+                  <input
+                    type="number"
+                    name={`${subject}.prevGrade`}
+                    value={formData[subject].prevGrade}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="table-cell">
+                  <input
+                    type="number"
+                    name={`${subject}.suggestedTarget`}
+                    value={formData[subject].suggestedTarget}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="table-cell">
+                  <input
+                    type="number"
+                    name={`${subject}.targetForThisGrade`}
+                    value={formData[subject].targetForThisGrade}
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="arabic.suggestedTarget"
-                  value={formData.arabic.suggestedTarget}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="arabic.targetForThisGrade"
-                  value={formData.arabic.targetForThisGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <div className="table-row">
-              <div className="table-cell">2</div>
-              <div className="table-cell">ENGLISH</div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="english.prevGrade"
-                  value={formData.arabic.prevGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="english.suggestedTarget"
-                  value={formData.arabic.suggestedTarget}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="english.targetForThisGrade"
-                  value={formData.arabic.targetForThisGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <div className="table-row">
-              <div className="table-cell">3</div>
-              <div className="table-cell">HINDI</div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="hindi.prevGrade"
-                  value={formData.arabic.prevGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="hindi.suggestedTarget"
-                  value={formData.arabic.suggestedTarget}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="hindi.targetForThisGrade"
-                  value={formData.arabic.targetForThisGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <div className="table-row">
-              <div className="table-cell">4</div>
-              <div className="table-cell">MATHEMATICS</div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="mathematics.prevGrade"
-                  value={formData.arabic.prevGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="mathematics.suggestedTarget"
-                  value={formData.arabic.suggestedTarget}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="mathematics.targetForThisGrade"
-                  value={formData.arabic.targetForThisGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <div className="table-row">
-              <div className="table-cell">5</div>
-              <div className="table-cell">SCIENCE AND TECHNOLOGY</div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="scienceandtehnology.prevGrade"
-                  value={formData.arabic.prevGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="scienceandtehnology.suggestedTarget"
-                  value={formData.arabic.suggestedTarget}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="scienceandtehnology.targetForThisGrade"
-                  value={formData.arabic.targetForThisGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            <div className="table-row">
-              <div className="table-cell">6</div>
-              <div className="table-cell">SOCIAL STUDIES</div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="social.prevGrade"
-                  value={formData.arabic.prevGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="social.suggestedTarget"
-                  value={formData.arabic.suggestedTarget}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <div className="table-cell">
-                <input
-                  type="number"
-                  name="social.targetForThisGrade"
-                  value={formData.arabic.targetForThisGrade}
-                  onChange={handleInputChange}
-                />
-              </div>
-            </div>
-            {/* Repeat for other rows */}
+            ))}
           </div>
         </div>
-        <button className= "button-g "type="submit">Submit</button>
+        <button className="button-g" type="submit">Submit</button>
       </form>
     </div>
   );

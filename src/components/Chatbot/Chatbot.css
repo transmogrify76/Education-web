@@ -1,0 +1,42 @@
+.teaching-staff {
+    display: flex;
+    flex-direction: row; /* Arrange items vertically */
+    height: 100vh;
+  }
+  
+  .new-button {
+     /* Align the button at the start of the flex container */
+    width: 7%;
+    background-color: #00B388;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    top: 1.6%;
+    position: absolute;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 40%; /* Add some margin for spacing */
+  }
+  
+  .main-content {
+    background-color: aliceblue;
+    display: flex;
+    /* flex: 1; */
+     /* Uncomment if padding is needed */
+  }
+  
+  .chat-head {
+    width: 30%;
+    background-color: rgb(255, 255, 255);
+    /* padding-left: 4%; */
+    /* display: flex; */
+    /* flex: 1; */
+    /* Uncomment if padding is needed */
+  }
+  .iconssss{
+    width: 20%;
+  }
+  .chat-head h1{
+    padding-left: 8%;
+    background-color: aliceblue;
+  }
