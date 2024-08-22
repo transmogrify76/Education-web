@@ -21,28 +21,28 @@ function SideNav() {
           <Link to="/GoalSettingView">Goal Setting View</Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/external-report">
+          <Link to="/ExternalReport">
             <FaFileAlt className="sidebar-icon" />
             External report
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/third-party-services">
+          <Link to="/ThirdPartyServicesStudent">
             <FaHandsHelping className="sidebar-icon" />
             Third Party Optional Services
           </Link>
         </li>
         <li className="sidebar-items">
-          <Link to="/student-wellbeing-request">Student Wellbeing Request</Link>
+          <Link to="/StudentWellbeingForm">Student Wellbeing Request</Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/chat">
+          <Link to="/Chatbot">
             <FaComments className="sidebar-icon" />
             Chat
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/behavior-assessment-tool">
+          <Link to="/BehaviorAssessmentTool">
             <FaClipboardCheck className="sidebar-icon" />
             Behavior assessment tool
           </Link>

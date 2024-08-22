@@ -1,46 +1,18 @@
 /* Dashboard Container */
-.dashboard-container {
+.dashboard-containers {
+  background-position: top;
   display: flex;
 }
 
 /* Sidebar */
-.sidebar {
-  
-  background-color: #501a71;
-  color: white;
-  width: 250px;
-  padding: 20px;
-}
 
-.sidebar ul {
-  
-  list-style-type: none;
-  padding: 0;
-}
 
-.sidebar-item {
-  margin-top: 12%;
-  font-size: 18px;
-  margin-bottom: 25px; /* Added margin between items */
-  display: flex;
-  align-items: center;
-}
-.sidebar-items {
-  margin-left: 12%;
-  font-size: 18px;
-  margin-bottom: 25px; /* Added margin between items */
-  display: flex;
-  align-items: center;
-}
-.sidebar-icon {
-  margin-right: 10px;
-  font-size: 20px;
-}
+
+
 
 /* Main Content */
-.main-content {
-  margin-bottom: 20%;
-  margin-right: 20%;
+.main-contents {
+
   flex: 1;
   background-color: #F5F5F5;
   padding: 30px;
@@ -105,14 +77,11 @@
 
 /* Alerts Section */
 .alerts-section {
-
-  /* background-color: #1E88E5; */
   margin-top: 20px;
   margin-right: 77%; /* Aligns the alerts section to the left */
 }
 
 .alerts-header {
-  
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;

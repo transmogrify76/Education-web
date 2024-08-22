@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './GoalSettingView.css';
 import SideNav from '../SideNav/SideNav';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTag } from '@fortawesome/free-solid-svg-icons';
 
 const GoalSettingView = () => {
   const [formData, setFormData] = useState({
@@ -61,68 +63,80 @@ const GoalSettingView = () => {
 
   return (
     <div className="goal-setting-view">
-        <SideNav/>
+      <SideNav />
       <form onSubmit={handleSubmit} className="goal-setting-form">
-        <div className='headerofgoal'>
-        <h1>
-            Goal Setting View Application
-        </h1>
+        <div className="goal-header">
+          <h1>Goal Setting View Application</h1>
         </div>
-        <table className="goal-setting-table">
-          <thead>
-            <tr>
-              <th>Sr no</th>
-              <th>Subject</th>
-              <th>My previous grade target</th>
-              <th>My achievement for previous grade</th>
-              <th>Suggested target for current grade</th>
-              <th>My target for this grade</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.keys(formData).map((subject, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{subject.toUpperCase()}</td>
-                <td>
-                  <input
-                    type="number"
-                    name={`${subject}.prevGradeTarget`}
-                    value={formData[subject].prevGradeTarget}
-                    onChange={handleInputChange}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    name={`${subject}.prevGradeAchievement`}
-                    value={formData[subject].prevGradeAchievement}
-                    onChange={handleInputChange}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    name={`${subject}.suggestedTarget`}
-                    value={formData[subject].suggestedTarget}
-                    onChange={handleInputChange}
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    name={`${subject}.targetForThisGrade`}
-                    value={formData[subject].targetForThisGrade}
-                    onChange={handleInputChange}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <button type="submit" className="submit-button">
+        <div className="goal-setting-table">
+          <div className="goal-setting-header">
+            <div className="goal-setting-cell-one">
+              <FontAwesomeIcon className="tag-icon" icon={faTag} />
+              <span className="text-blue">Sr no</span>
+            </div>
+            <div className="goal-setting-cell-two">
+              <FontAwesomeIcon className="tag-icon" icon={faTag} />
+              <span className="text-green">Subject</span>
+            </div>
+            <div className="goal-setting-cell-three">
+              <FontAwesomeIcon className="tag-icon" icon={faTag} />
+              <span className="text-blue">My previous grade target</span>
+            </div>
+            <div className="goal-setting-cell-four">
+              <FontAwesomeIcon className="tag-icon" icon={faTag} />
+              <span className="text-green">My achievement for previous grade</span>
+            </div>
+            <div className="goal-setting-cell-five">
+              <FontAwesomeIcon className="tag-icon" icon={faTag} />
+              <span className="text-blue">Suggested target for current grade</span>
+            </div>
+            <div className="goal-setting-cell-six">
+              <FontAwesomeIcon className="tag-icon" icon={faTag} />
+              <span className="text-green">My target for this grade</span>
+            </div>
+          </div>
+          {Object.keys(formData).map((subject, index) => (
+            <div key={index} className="goal-setting-row">
+              <div className="goal-setting-cell-sr">{index + 1}</div>
+              <div className="goal-setting-cell-sub">{subject.toUpperCase()}</div>
+              <div className="goal-setting-cell">
+                <input
+                  type="number"
+                  name={`${subject}.prevGradeTarget`}
+                  value={formData[subject].prevGradeTarget}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="goal-setting-cell">
+                <input
+                  type="number"
+                  name={`${subject}.prevGradeAchievement`}
+                  value={formData[subject].prevGradeAchievement}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="goal-setting-cell">
+                <input
+                  type="number"
+                  name={`${subject}.suggestedTarget`}
+                  value={formData[subject].suggestedTarget}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="goal-setting-cell">
+                <input
+                  type="number"
+                  name={`${subject}.targetForThisGrade`}
+                  value={formData[subject].targetForThisGrade}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* <div className="submit-button" onClick={handleSubmit}>
           Submit
-        </button>
+        </div> */}
       </form>
     </div>
   );

@@ -13,7 +13,6 @@ const UpdateLeaveStatus = () => {
         console.error('Error fetching leave requests:', error);
       });
   }, []);
-
   const handleStatusChange = (id, status) => {
     axios.patch(`http://localhost:3000/leaves/${id}`, { status })
       .then(() => {
