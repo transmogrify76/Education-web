@@ -1,48 +1,58 @@
-// Sidebar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaTachometerAlt, FaFileAlt, FaHandsHelping, FaComments, FaClipboardCheck } from 'react-icons/fa';
 import './SideNav.css'; // Import the CSS file for Sidebar
 
-function SideNav() {
+function SideNav({ studentId }) {
+  if (!studentId) {
+    console.error('No studentId provided to SideNav');
+    return null; // or handle error appropriately
+  }
+
   return (
     <nav className="sidebar">
       <ul>
         <li className="sidebar-item">
-          <Link to="/StudentView">
+          <Link to={`/StudentView/${studentId}`}>
             <FaTachometerAlt className="sidebar-icon" />
             Dashboard
           </Link>
         </li>
         <li className="sidebar-items">
-          <Link to="/GoalsSettingInternalExam">Goal setting entry</Link>
+          <Link to={`/GoalsSettingInternalExam/${studentId}`}>
+            Goal setting entry
+          </Link>
         </li>
         <li className="sidebar-items">
-          <Link to="/GoalSettingView">Goal Setting View</Link>
+          <Link to={`/GoalSettingView/${studentId}`}>
+            Goal Setting View
+          </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/ExternalReport">
+          <Link to={`/ExternalReport/${studentId}`}>
             <FaFileAlt className="sidebar-icon" />
             External report
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/ThirdPartyServicesStudent">
+          <Link to={`/ThirdPartyServicesStudent/${studentId}`}>
             <FaHandsHelping className="sidebar-icon" />
             Third Party Optional Services
           </Link>
         </li>
         <li className="sidebar-items">
-          <Link to="/StudentWellbeingForm">Student Wellbeing Request</Link>
+          <Link to={`/StudentWellbeingForm/${studentId}`}>
+            Student Wellbeing Request
+          </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/Chatbot">
+          <Link to={`/Chatbot/${studentId}`}>
             <FaComments className="sidebar-icon" />
             Chat
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to="/BehaviorAssessmentTool">
+          <Link to={`/BehaviorAssessmentTool/${studentId}`}>
             <FaClipboardCheck className="sidebar-icon" />
             Behavior assessment tool
           </Link>

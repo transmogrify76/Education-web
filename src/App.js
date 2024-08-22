@@ -133,15 +133,15 @@ function App() {
           <Route path='/NotificationPage' element={<NotificationPage/>}/>
           <Route path='/UpdateLeaveStatus' element={<UpdateLeaveStatus/>}/>          
           <Route path='/ConsentFormPage' element={<ConsentFormPage/>}/>          
-          <Route path='/StudentView' element={<StudentView/>}/>          
-          <Route path='/SideNav' element={<SideNav/>}/>          
-          <Route path='/SideNav' element={<SideNav/>}/>          
-          <Route path='/GoalsSettingInternalExam' element={<GoalsSettingInternalExam/>}/>          
-          <Route path='/GoalSettingView' element={<GoalSettingView/>}/>          
-          <Route path='/ExternalReport' element={<ExternalReport/>}/>          
-          <Route path='/ThirdPartyServicesStudent' element={<ThirdPartyServicesStudent/>}/>          
-          <Route path='/StudentWellbeingForm' element={<StudentWellbeingForm/>}/>          
-          <Route path='/Chatbot' element={<Chatbot/>}/>          
+          <Route path='/StudentView/:studentId' element={<StudentView/>}/>          
+          {/* <Route path='/SideNav/:studentId' element={<SideNav/>}/>           */}
+          <Route path='/SideNav/:studentId' element={<SideNav/>}/>          
+          <Route path='/GoalsSettingInternalExam/:studentId' element={<GoalsSettingInternalExam/>}/>          
+          <Route path='/GoalSettingView/:studentId' element={<GoalSettingView/>}/>          
+          <Route path='/ExternalReport/:studentId' element={<ExternalReport/>}/>          
+          <Route path='/ThirdPartyServicesStudent/:studentId' element={<ThirdPartyServicesStudent/>}/>          
+          <Route path='/StudentWellbeingForm/:studentId' element={<StudentWellbeingForm/>}/>          
+          <Route path='/Chatbot/:studentId' element={<Chatbot/>}/>          
 
         </Routes>
       </div>

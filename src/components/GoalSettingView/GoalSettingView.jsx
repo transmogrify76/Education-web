@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './GoalSettingView.css';
+import { useParams } from 'react-router-dom';
 import SideNav from '../SideNav/SideNav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 
 const GoalSettingView = () => {
+  const { studentId } = useParams();
   const [formData, setFormData] = useState({
     arabic: {
       prevGradeTarget: 0,
@@ -44,6 +46,8 @@ const GoalSettingView = () => {
     }
   });
 
+  // Example studentId, replace with actual logic to fetch or pass the studentId
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const [subject, field] = name.split('.');
@@ -63,7 +67,7 @@ const GoalSettingView = () => {
 
   return (
     <div className="goal-setting-view">
-      <SideNav />
+      <SideNav studentId={studentId} />
       <form onSubmit={handleSubmit} className="goal-setting-form">
         <div className="goal-header">
           <h1>Goal Setting View Application</h1>
@@ -134,9 +138,7 @@ const GoalSettingView = () => {
             </div>
           ))}
         </div>
-        {/* <div className="submit-button" onClick={handleSubmit}>
-          Submit
-        </div> */}
+        <button type="submit" className="submit-button">Submit</button>
       </form>
     </div>
   );

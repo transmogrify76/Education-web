@@ -1,15 +1,17 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import Sidebar from '../SideNav/SideNav';
 import './ExternalReport.css';
 
 const ExternalReport = () => {
+  const { studentId } = useParams();
+  
   return (
-    
     <div className="e-dash">
-      <Sidebar />
+      <Sidebar studentId={studentId} />
       <div className="content">
         <div className="external-report-container">
-          <h3>Dear Parent, View your learner's external report card by selecting the required fields from the dropdown menu below.</h3>
+          <h3>Dear Parent, view your learner's external report card by selecting the required fields from the dropdown menu below.</h3>
           <div className="external-report">
             <div className="report-pair">
               <label htmlFor="academic-year">Academic year:</label>
