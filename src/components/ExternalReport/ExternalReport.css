@@ -1,0 +1,24 @@
+
+.e-dash {
+    background-color:rgb(230, 230, 230);
+    display: flex;
+    height: 25vh;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.external-report {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping if necessary */
+    gap: 20px; /* Space between each label-dropdown pair */
+}
+
+.report-pair {
+    display: flex;
+    flex-direction: column; /* Stack label and dropdown vertically */
+    gap: 5px; /* Space between label and dropdown */
+    flex: 1 1 200px; /* Grow and shrink flexibly with a base width of 200px */
+}

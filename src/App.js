@@ -61,6 +61,10 @@ import StudentView from './components/StudentView/Student';
 import SideNav from './components/SideNav/SideNav';
 import GoalsSettingInternalExam from './components/GoalsSettingInternalExam/GoalsSettingInternalExam';
 import GoalSettingView from './components/GoalSettingView/GoalSettingView';
+import ExternalReport from './components/ExternalReport/ExternalReport';
+import ThirdPartyServicesStudent from './components/ThirdPartyServicesStudent/ThirdPartyServicesStudent';
+import StudentWellbeingForm from './components/StudentWellbeingForm/StudentWellbeingForm';
+import Chatbot from './components/Chatbot/Chatbot-Transmogrify_18'
 
 function App() {
   return (
@@ -113,7 +117,7 @@ function App() {
           <Route path='/StudentProfilePage' element={<StudentProfilePage />} />
           <Route path="/StudentProfilePage/:parentId" element={<StudentProfilePage />} />
           <Route path="/StudentIdCardPage/:parentId" element={<StudentIdCardPage />} />
-          <Route path="/CounselingRequest" element={<CounselingRequest />} />
+          <Route path="/CounselingRequest/:parentId" element={<CounselingRequest />} />
           <Route path="/ExitSlipRequest/:parentId" element={<ExitSlipRequest />} />
           <Route path="/ThirdPartyServices/:parentId" element={<ThirdPartyServices />} />
           <Route path="/BehaviorAssessmentTool/:parentId" element={<BehaviorAssessmentTool />} />
@@ -134,6 +138,10 @@ function App() {
           <Route path='/SideNav' element={<SideNav/>}/>          
           <Route path='/GoalsSettingInternalExam' element={<GoalsSettingInternalExam/>}/>          
           <Route path='/GoalSettingView' element={<GoalSettingView/>}/>          
+          <Route path='/ExternalReport' element={<ExternalReport/>}/>          
+          <Route path='/ThirdPartyServicesStudent' element={<ThirdPartyServicesStudent/>}/>          
+          <Route path='/StudentWellbeingForm' element={<StudentWellbeingForm/>}/>          
+          <Route path='/Chatbot' element={<Chatbot/>}/>          
 
         </Routes>
       </div>

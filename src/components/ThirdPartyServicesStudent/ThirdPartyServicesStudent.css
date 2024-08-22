@@ -1,0 +1,9 @@
+/* Container to hold the entire page layout */
+.page-containerss {
+    display: flex;
+    height: 104vh;
+    background-color: rgb(233, 232, 232);
+  }
+  
+  
+

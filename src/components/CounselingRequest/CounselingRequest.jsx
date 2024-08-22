@@ -1,15 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import './CounselingRequest.css';
 
 const CounselingRequest = () => {
+  const { parentId, parentName, email, phoneNo } = useParams(); // Extract URL parameters
+  const [students, setStudents] = useState([]); // Initialize as an empty array
+  const [selectedStudentId, setSelectedStudentId] = useState('');
   const [formData, setFormData] = useState({
-    areaOfConcern: '',
-    observation: '',
-    concernFrequency: '',
-    supportRequired: '',
-    supportType: '',
-    supportingDocuments: [],
+    areaOfConcern: 'Academic', // Default value
+    description: '',
+    frequency: '',
+    supportRequiredFrom: '',
+    expectedSupport: '',
+    supportingMedicalRecords: null,
+    externalAssessmentReport: null,
+    otherDocuments: null,
   });
+
+  useEffect(() => {
+    // Fetch students based on parentId
+    axios.get(`http://localhost:3000/parent/${parentId}`)
+      .then((response) => {
+        setStudents(response.data.students || []); // Ensure data.students is an array or set to an empty array
+      })
+      .catch((error) => console.error('Error fetching students:', error));
+  }, [parentId]);
 
   const handleChange = (e) => {
     setFormData({
@@ -21,13 +37,54 @@ const CounselingRequest = () => {
   const handleFileUpload = (e, fieldName) => {
     setFormData({
       ...formData,
-      [fieldName]: [...formData[fieldName], e.target.files[0]],
+      [fieldName]: e.target.files[0],
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted', formData);
+
+    // Ensure areaOfConcern has a value
+    const finalFormData = {
+      ...formData,
+      areaOfConcern: formData.areaOfConcern || 'Academic', // Default if empty
+    };
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('areaOfConcern', finalFormData.areaOfConcern);
+    formDataToSend.append('description', finalFormData.description);
+    formDataToSend.append('frequency', finalFormData.frequency);
+    formDataToSend.append('supportRequiredFrom', finalFormData.supportRequiredFrom);
+    formDataToSend.append('expectedSupport', finalFormData.expectedSupport);
+    if (finalFormData.supportingMedicalRecords) {
+      formDataToSend.append('supportingMedicalRecords', finalFormData.supportingMedicalRecords);
+    }
+    if (finalFormData.externalAssessmentReport) {
+      formDataToSend.append('externalAssessmentReport', finalFormData.externalAssessmentReport);
+    }
+    if (finalFormData.otherDocuments) {
+      formDataToSend.append('otherDocuments', finalFormData.otherDocuments);
+    }
+    formDataToSend.append('studentId', selectedStudentId);
+    formDataToSend.append('parentName', parentName);
+    formDataToSend.append('email', email);
+    formDataToSend.append('phoneNo', phoneNo);
+
+    try {
+      const response = await axios.post('http://localhost:3000/counseling-request', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        alert('Counseling request submitted successfully!');
+      } else {
+        console.error('Error submitting form');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error.response ? error.response.data : error.message);
+    }
   };
 
   return (
@@ -35,6 +92,7 @@ const CounselingRequest = () => {
       <h2>Counseling Request Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-grid">
+          {/* Area of Concern */}
           <div className="form-group left">
             <label htmlFor="area-of-concern">Areas of concern</label>
             <select
@@ -43,84 +101,110 @@ const CounselingRequest = () => {
               value={formData.areaOfConcern}
               onChange={handleChange}
             >
-              <option value="">Select an area</option>
               <option value="Academic">Academic</option>
               <option value="Behavioral">Behavioral</option>
               <option value="Social">Social</option>
             </select>
           </div>
+
+          {/* Description */}
           <div className="form-group right">
-            <label htmlFor="observation">
+            <label htmlFor="description">
               Briefly describe your observation of the area of concern and since when you have observed it.
             </label>
             <textarea
-              id="observation"
-              name="observation"
-              value={formData.observation}
+              id="description"
+              name="description"
+              value={formData.description}
               onChange={handleChange}
             ></textarea>
           </div>
+
+          {/* Frequency */}
           <div className="form-group right">
-            <label htmlFor="concern-frequency">
+            <label htmlFor="frequency">
               How frequently do you see your ward facing the concern?
             </label>
             <input
               type="text"
-              id="concern-frequency"
-              name="concernFrequency"
-              value={formData.concernFrequency}
+              id="frequency"
+              name="frequency"
+              value={formData.frequency}
               onChange={handleChange}
             />
           </div>
+
+          {/* Support Required */}
           <div className="form-group left">
-            <label htmlFor="support-required">Support required from</label>
+            <label htmlFor="supportRequiredFrom">Support required from</label>
             <input
               type="text"
-              id="support-required"
-              name="supportRequired"
-              value={formData.supportRequired}
+              id="supportRequiredFrom"
+              name="supportRequiredFrom"
+              value={formData.supportRequiredFrom}
               onChange={handleChange}
             />
           </div>
+
+          {/* Expected Support */}
           <div className="form-group right">
-            <label htmlFor="support-type">What type of support are you expecting?</label>
+            <label htmlFor="expectedSupport">What type of support are you expecting?</label>
             <textarea
-              id="support-type"
-              name="supportType"
-              value={formData.supportType}
+              id="expectedSupport"
+              name="expectedSupport"
+              value={formData.expectedSupport}
               onChange={handleChange}
             ></textarea>
           </div>
+
+          {/* Student Dropdown */}
+          <div className="form-group left">
+            <label htmlFor="studentId">Select Student</label>
+            <select
+              id="studentId"
+              name="studentId"
+              value={selectedStudentId}
+              onChange={(e) => setSelectedStudentId(e.target.value)}
+            >
+              <option value="">Select a student</option>
+              {students.map((student) => (
+                <option key={student.id} value={student.id}>
+                  {student.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
+
+        {/* File Uploads */}
         <div className="form-group">
           <label>Upload relevant documents as applicable:</label>
           <div className="upload-buttons">
             <div className="upload-btn-wrapper">
               <input
                 type="file"
-                name="supportingDocuments"
-                onChange={(e) => handleFileUpload(e, 'supportingDocuments')}
+                onChange={(e) => handleFileUpload(e, 'supportingMedicalRecords')}
               />
               <span>Supporting medical records</span>
             </div>
             <div className="upload-btn-wrapper">
               <input
                 type="file"
-                name="supportingDocuments"
-                onChange={(e) => handleFileUpload(e, 'supportingDocuments')}
+                onChange={(e) => handleFileUpload(e, 'externalAssessmentReport')}
               />
               <span>External assessment report (from a Psychologist/Clinical Psychologist)</span>
             </div>
             <div className="upload-btn-wrapper">
               <input
                 type="file"
-                name="supportingDocuments"
-                onChange={(e) => handleFileUpload(e, 'supportingDocuments')}
+                onChange={(e) => handleFileUpload(e, 'otherDocuments')}
               />
               <span>Any other supportive documents</span>
             </div>
           </div>
         </div>
+
+        {/* Submit and Cancel Buttons */}
         <div className="form-actions">
           <button type="submit" className="save-btn">
             Save
