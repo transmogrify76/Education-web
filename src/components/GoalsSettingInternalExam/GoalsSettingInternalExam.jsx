@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Sidebar from '../SideNav/SideNav';
 import { FaTag } from 'react-icons/fa';
 import './GoalsSettingInternalExam.css';
-
+import Header from '../Header/Header'
 const GoalsSettingInternalExam = () => {
   const { studentId } = useParams();
   const [formData, setFormData] = useState({
@@ -79,6 +79,8 @@ const GoalsSettingInternalExam = () => {
   };
 
   return (
+    <div className='for-header'>
+      <Header/>
     <div className='side-with'>
       <Sidebar studentId={studentId} />
       <form onSubmit={handleSubmit}>
@@ -136,6 +138,7 @@ const GoalsSettingInternalExam = () => {
         </div>
         <button className="button-g" type="submit">Submit</button>
       </form>
+    </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import SideNav from '../SideNav/SideNav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
+import Header from '../Header/Header';
 
 const GoalSettingView = () => {
   const { studentId } = useParams();
@@ -66,6 +67,8 @@ const GoalSettingView = () => {
   };
 
   return (
+    <div className='for-header'>
+      <Header/>
     <div className="goal-setting-view">
       <SideNav studentId={studentId} />
       <form onSubmit={handleSubmit} className="goal-setting-form">
@@ -140,6 +143,7 @@ const GoalSettingView = () => {
         </div>
         <button type="submit" className="submit-button">Submit</button>
       </form>
+    </div>
     </div>
   );
 };

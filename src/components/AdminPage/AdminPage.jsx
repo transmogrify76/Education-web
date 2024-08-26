@@ -14,8 +14,8 @@ import informedConsentIcon from '../Assets/accept.png';
 import thirdIcon from '../Assets/third.png';
 import childIcon from '../Assets/child.png';
 // import circularIcon from '../Assets/circular.png';
-// import chatIcon from '../Assets/chat.png';
-// import medIcon from '../Assets/hospital.png';
+import chatIcon from '../Assets/chat.png';
+import medIcon from '../Assets/hospital.png';
 // import idIcon from '../Assets/student-id.png';
 // import calcIcon from '../Assets/schedule.png';
 // import attenIcon from '../Assets/attendence.png';
@@ -41,10 +41,10 @@ const AdminPage = () => {
     { name: 'Notification Page Update', image: informedConsentIcon, className: 'btn-9', link: '/NotificationPage' },
     { name: 'Leave Status Update', image: informedConsentIcon, className: 'btn-10', link: '/UpdateLeaveStatus' },
     { name: 'Consent froms', image: thirdIcon, className:'btn-11' , link: '/ConsentFormPage'},
-    { name: 'Report card Update', image: childIcon, className: 'btn-12', link: '/' }]
-//     { name: 'Circular', image: circularIcon, className: 'btn-13', link: '/Circular' },
-//     { name: 'H2H', image: chatIcon, className: 'btn-14' },
-//     { name: 'Medical', image: medIcon, className: 'btn-15' },
+    { name: 'Report card Update', image: childIcon, className: 'btn-12', link: '/' },
+    { name: 'Student Messages', image: chatIcon, className: 'btn-13', link: '/Circular' },
+    { name: 'Student Wellbieng Request', image: chatIcon, className: 'btn-14',link:'/AdminWellbeingRequests' },
+    { name: 'Behavior Assesment Tools ', image: informedConsentIcon, className: 'btn-15', link: '/AdminBehaviorAssessment' }]
 //     { name: 'Student ID Card', image: idIcon, className: 'btn-16'},
 //     { name: 'Calendar', image: calcIcon, className: 'btn-17', link: '/Calen' },
 //     { name: 'Attendance', image: attenIcon, className: 'btn-18' },

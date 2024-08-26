@@ -1,41 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import './BehaviorAssessmentTool.css';
+import './BehaviorAssessmentPage.css'; // Ensure you have this CSS file for styling
 
-const BehaviorAssessmentTool = () => {
-  const { parentId } = useParams(); // Get parentId from the URL
-  const [students, setStudents] = useState([]);
-  const [selectedStudentId, setSelectedStudentId] = useState('');
+const BehaviorAssessmentPage = () => {
+  const { studentId } = useParams(); // Get studentId from the URL
   const [behaviorData, setBehaviorData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch students associated with the parentId
-  useEffect(() => {
-    const fetchStudents = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`http://localhost:3000/parent/${parentId}`);
-        setStudents(response.data.students || []);
-      } catch (err) {
-        setError(`Failed to fetch students: ${err.response ? err.response.data.message : err.message}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStudents();
-  }, [parentId]);
-
-  // Fetch behavior data when a student is selected
+  // Fetch behavior data when the student ID is available
   useEffect(() => {
     const fetchBehaviorData = async () => {
-      if (!selectedStudentId) return;
+        
+      if (!studentId) return;
 
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/behavior-assessment/student/${selectedStudentId}`);
+        const response = await axios.get(`http://localhost:3000/behavior-assessment/student/${studentId}`);
         setBehaviorData(response.data || []);
       } catch (err) {
         setError(`Failed to fetch behavior data: ${err.response ? err.response.data.message : err.message}`);
@@ -45,11 +27,7 @@ const BehaviorAssessmentTool = () => {
     };
 
     fetchBehaviorData();
-  }, [selectedStudentId]);
-
-  const handleStudentChange = (e) => {
-    setSelectedStudentId(e.target.value);
-  };
+  }, [studentId]);
 
   if (loading) return <p className="loading-message">Loading...</p>;
 
@@ -58,22 +36,10 @@ const BehaviorAssessmentTool = () => {
   return (
     <div className="behavior-tool-container">
       <header className="behavior-tool-header">
-        <h4 className="behavior-tool-title">Behavior Assessment Tool</h4>
+        <h4 className="behavior-tool-title">Behavior Assessment</h4>
       </header>
       <main className="behavior-tool-main">
-        <div className="student-dropdown">
-          <label htmlFor="student-select">Select Student:</label>
-          <select id="student-select" value={selectedStudentId} onChange={handleStudentChange}>
-            <option value="">Select a student</option>
-            {students.map((student) => (
-              <option key={student.id} value={student.id}>
-                {student.name} (ID: {student.id})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {selectedStudentId && behaviorData.length > 0 ? (
+        {behaviorData.length > 0 ? (
           <div className="behavior-data-container">
             {behaviorData.map((data) => (
               <div key={data.id} className="behavior-data-card">
@@ -123,7 +89,7 @@ const BehaviorAssessmentTool = () => {
             ))}
           </div>
         ) : (
-          selectedStudentId && <p className="no-data-message">No behavior data available for this student.</p>
+          <p className="no-data-message">No behavior data available for this student.</p>
         )}
       </main>
       <footer className="behavior-tool-footer">
@@ -133,4 +99,4 @@ const BehaviorAssessmentTool = () => {
   );
 };
 
-export default BehaviorAssessmentTool;
+export default BehaviorAssessmentPage;

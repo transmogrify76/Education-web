@@ -2,11 +2,13 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../SideNav/SideNav';
 import './ExternalReport.css';
-
+import Header from '../Header/Header';
 const ExternalReport = () => {
   const { studentId } = useParams();
   
   return (
+    <div className='for-header'>
+      <Header/>
     <div className="e-dash">
       <Sidebar studentId={studentId} />
       <div className="content">
@@ -34,6 +36,7 @@ const ExternalReport = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

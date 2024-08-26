@@ -65,6 +65,9 @@ import ExternalReport from './components/ExternalReport/ExternalReport';
 import ThirdPartyServicesStudent from './components/ThirdPartyServicesStudent/ThirdPartyServicesStudent';
 import StudentWellbeingForm from './components/StudentWellbeingForm/StudentWellbeingForm';
 import Chatbot from './components/Chatbot/Chatbot-Transmogrify_18'
+import AdminWellbeingRequests from './components/AdminWellbeingRequests/AdminWellbeingRequests'
+import AdminBehaviorAssessment from './components/AdminBehaviorAssessment/AdminBehaviorAssessment'
+import BehaviorAssessmentPage from './components/BehaviorAssessmentPage/BehaviorAssessmentPage'
 
 function App() {
   return (
@@ -142,6 +145,9 @@ function App() {
           <Route path='/ThirdPartyServicesStudent/:studentId' element={<ThirdPartyServicesStudent/>}/>          
           <Route path='/StudentWellbeingForm/:studentId' element={<StudentWellbeingForm/>}/>          
           <Route path='/Chatbot/:studentId' element={<Chatbot/>}/>          
+          <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
+          <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
+          <Route path='/BehaviorAssessmentPage/:studentId' element={<BehaviorAssessmentPage/>}/>          
 
         </Routes>
       </div>

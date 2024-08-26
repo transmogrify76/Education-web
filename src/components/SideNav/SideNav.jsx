@@ -52,7 +52,7 @@ function SideNav({ studentId }) {
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/BehaviorAssessmentTool/${studentId}`}>
+          <Link to={`/BehaviorAssessmentPage/${studentId}`}>
             <FaClipboardCheck className="sidebar-icon" />
             Behavior assessment tool
           </Link>
