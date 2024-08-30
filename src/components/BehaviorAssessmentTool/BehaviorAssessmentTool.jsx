@@ -56,7 +56,7 @@ const BehaviorAssessmentTool = () => {
   if (error) return <div className="error-message">{error}</div>;
 
   return (
-    <div className="behavior-tool-container">
+    <div className="behavior-container">
       <header className="behavior-tool-header">
         <h4 className="behavior-tool-title">Behavior Assessment Tool</h4>
       </header>

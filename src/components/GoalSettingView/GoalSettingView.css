@@ -1,139 +1,81 @@
+.goal-setting-view-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .goal-setting-view {
   display: flex;
-  height: 100vh;
-  /* background-color: #dddada; */
 }
 
 .goal-setting-form {
-  background-color: white;
-  /* padding: 20px; */
-  height: 50%;
-  /* border-radius: 5px; */
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
 }
 
 .goal-header {
-  color: #f2f2f2;
   margin-bottom: 20px;
-  text-align: left;
 }
 
 .goal-setting-table {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  /* border-collapse: collapse; */
-  font-size: 14px;
 }
 
-.goal-setting-header,
-.goal-setting-row {
+.goal-setting-header {
   display: flex;
+  border-bottom: 2px solid #ccc;
+  background-color: #f4f4f4;
+  padding: 10px 0;
 }
 
 .goal-setting-cell {
-  margin-left: 10%;
-  flex: 1;
+  flex: 1.5;
   padding: 10px;
   text-align: center;
-  /* border-bottom: 1px solid #ddd; */
+  border-right: 1px solid #ddd;
+  box-sizing: border-box;
 }
 
-.goal-setting-header .goal-setting-cell {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-.goal-setting-row .goal-setting-cell input {
-  flex: 1;
-  width: 100%; /* Full width of the cell */
-  border: none; /* Remove default border */
-  padding: 8px; /* Adjust padding for better appearance */
-  box-sizing: border-box; /* Include padding in the width calculation */
-}
-
-.submit-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: center;
-}
-
-.submit-button:hover {
-  background-color: #45a049;
-}
-
-.goal-setting-cell-one {
-  width: 9%;
-  text-align: center;
-  background-color: #f2f2f2;
-  font-weight: bold;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.goal-setting-cell-two {
-  width: 12%;
-  background-color: #f2f2f2;
-  font-weight: bold;
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.goal-setting-cell-three {
-  flex: 1;
-  background-color: #f2f2f2;
-  font-weight: bold;
-  color: blue;
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.goal-setting-cell-four {
-  flex: 1;
-  background-color: #f2f2f2;
-  font-weight: bold;
-  color: blue;
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.goal-setting-cell-five {
-  flex: 1;
-  background-color: #f2f2f2;
-  font-weight: bold;
-  color: #218b66;
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.goal-setting-cell-six {
-  /* flex: 1; */
-  background-color: #f2f2f2;
-  font-weight: bold;
-  color: #218b66;
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.tag-icon {
-  color: black;
-  margin-right: 5px;
+.goal-setting-cell:last-child {
+  border-right: none;
 }
 
 .goal-setting-cell-sr {
-  width: 10%;
-  text-align: center;
+  flex: 0.5;
 }
 
-.goal-setting-cell-sub {
-  width: 7.6%;
-  text-align: center;
+.goal-setting-cell-subject {
+  flex: 2;
+}
+
+.goal-setting-cell-prev-grade,
+.goal-setting-cell-suggested-target,
+.goal-setting-cell-target-for-this-grade {
+  flex: 1.5;
+}
+
+.goal-setting-row {
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+
+input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.text-blue {
+  color: #007bff;
+}
+
+.text-green {
+  color: #28a745;
+}
+
+.tag-icon {
+  margin-right: 5px;
 }

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import SideNav from '../SideNav/SideNav';
 import './Chatbot.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'; // Changed to paper plane for send button
+import { faPaperPlane, faRedo } from '@fortawesome/free-solid-svg-icons'; 
 import Header from '../Header/Header';
 
 function Chatbot() {
@@ -11,30 +11,52 @@ function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [error, setError] = useState(null);
+  const [adminId, setAdminId] = useState(null);
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        // Fetch student messages
+        // Fetch student messages by student ID
         const studentMessagesResponse = await fetch(`http://localhost:3000/messages/student/${studentId}`);
+        if (!studentMessagesResponse.ok) {
+          throw new Error(`Student fetch error: ${studentMessagesResponse.status}`);
+        }
         const studentMessages = await studentMessagesResponse.json();
-        console.log('Student messages:', studentMessages); // Log student messages
 
-        // Fetch admin messages
-        const adminMessagesResponse = await fetch('http://localhost:3000/messages/admin/35');
+        // Fetch admin ID
+        const adminResponse = await fetch('http://localhost:3000/admin');
+        if (!adminResponse.ok) {
+          throw new Error(`Admin fetch error: ${adminResponse.status}`);
+        }
+        const adminData = await adminResponse.json();
+        setAdminId(adminData.id);
+
+        // Fetch admin messages by admin ID
+        const adminMessagesResponse = await fetch(`http://localhost:3000/messages/admin/${adminData.id}`);
+        if (!adminMessagesResponse.ok) {
+          throw new Error(`Admin messages fetch error: ${adminMessagesResponse.status}`);
+        }
         const adminMessages = await adminMessagesResponse.json();
-        console.log('Admin messages:', adminMessages); // Log admin messages
 
-        // Combine messages
-        setMessages([...studentMessages, ...adminMessages]);
+        // Combine and sort messages by createdAt timestamp
+        const combinedMessages = [...studentMessages, ...adminMessages].sort((a, b) =>
+          new Date(a.createdAt) - new Date(b.createdAt)
+        );
+
+        setMessages(combinedMessages);
       } catch (error) {
         console.error('Error fetching messages:', error);
-        setError('Failed to fetch messages');
+        setError('Failed to fetch messages. ' + error.message);
       }
     };
 
     fetchMessages();
   }, [studentId]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const handleSendMessage = async () => {
     if (newMessage.trim() !== '') {
@@ -46,25 +68,68 @@ function Chatbot() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            studentId,
-            message: newMessage,
+            studentId: parseInt(studentId),
+            content: newMessage,
+            senderType: 'student',
           }),
         });
-        const sentMessage = await response.json();
-        console.log('Message sent:', sentMessage); // Log sent message
 
-        // Fetch updated messages
+        if (!response.ok) {
+          throw new Error(`Send message error: ${response.status}`);
+        }
+
+        const sentMessage = await response.json();
+        console.log('Message sent:', sentMessage);
+
+        // Refetch messages after sending a new one
         const studentMessagesResponse = await fetch(`http://localhost:3000/messages/student/${studentId}`);
+        if (!studentMessagesResponse.ok) {
+          throw new Error(`Student fetch error: ${studentMessagesResponse.status}`);
+        }
         const studentMessages = await studentMessagesResponse.json();
-        const adminMessagesResponse = await fetch('http://localhost:3000/messages/admin/35');
+        
+        const adminMessagesResponse = await fetch(`http://localhost:3000/messages/admin/${adminId}`);
+        if (!adminMessagesResponse.ok) {
+          throw new Error(`Admin messages fetch error: ${adminMessagesResponse.status}`);
+        }
         const adminMessages = await adminMessagesResponse.json();
 
-        setMessages([...studentMessages, ...adminMessages]);
-        setNewMessage(''); // Clear input field
+        const combinedMessages = [...studentMessages, ...adminMessages].sort((a, b) =>
+          new Date(a.createdAt) - new Date(b.createdAt)
+        );
+
+        setMessages(combinedMessages);
+        setNewMessage('');
       } catch (error) {
         console.error('Error sending message:', error);
-        setError('Failed to send message');
+        setError('Failed to send message. ' + error.message);
       }
+    }
+  };
+
+  const handleRefresh = async () => {
+    try {
+      const studentMessagesResponse = await fetch(`http://localhost:3000/messages/student/${studentId}`);
+      if (!studentMessagesResponse.ok) {
+        throw new Error(`Student fetch error: ${studentMessagesResponse.status}`);
+      }
+      const studentMessages = await studentMessagesResponse.json();
+      
+      const adminMessagesResponse = await fetch(`http://localhost:3000/messages/admin/${adminId}`);
+      if (!adminMessagesResponse.ok) {
+        throw new Error(`Admin messages fetch error: ${adminMessagesResponse.status}`);
+      }
+      const adminMessages = await adminMessagesResponse.json();
+
+      const combinedMessages = [...studentMessages, ...adminMessages].sort((a, b) =>
+        new Date(a.createdAt) - new Date(b.createdAt)
+      );
+
+      setMessages(combinedMessages);
+      setError(null);
+    } catch (error) {
+      console.error('Error refreshing messages:', error);
+      setError('Failed to refresh messages. ' + error.message);
     }
   };
 
@@ -81,11 +146,15 @@ function Chatbot() {
             {error && <p className="error-message">{error}</p>}
             {messages.length === 0 && !error && <p>No messages found.</p>}
             {messages.map((msg, index) => (
-              <div key={index} className="message">
-                <p>{msg.text}</p>
-                <span>{msg.timestamp}</span>
+              <div 
+                key={index} 
+                className={`message ${msg.senderType === 'student' ? 'student-message' : 'admin-message'}`}
+              >
+                <p>{msg.content}</p>
+                <span>{new Date(msg.createdAt).toLocaleString()}</span>
               </div>
             ))}
+            <div ref={messagesEndRef} /> 
           </div>
           <div className="message-input">
             <input
@@ -94,10 +163,16 @@ function Chatbot() {
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type your message here..."
             />
-            <button className="send-button" onClick={handleSendMessage}>
-              <FontAwesomeIcon icon={faPaperPlane} className="iconssss" />
-              Send
-            </button>
+            <div className="input-buttons">
+              <button className="send-button" onClick={handleSendMessage}>
+                <FontAwesomeIcon icon={faPaperPlane} className="iconssss" />
+                Send
+              </button>
+              <button className="refreshed-button" onClick={handleRefresh}>
+                <FontAwesomeIcon icon={faRedo} className="iconssss" />
+                Refresh
+              </button>
+            </div>
           </div>
         </div>
       </div>

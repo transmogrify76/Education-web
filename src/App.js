@@ -68,6 +68,7 @@ import Chatbot from './components/Chatbot/Chatbot-Transmogrify_18'
 import AdminWellbeingRequests from './components/AdminWellbeingRequests/AdminWellbeingRequests'
 import AdminBehaviorAssessment from './components/AdminBehaviorAssessment/AdminBehaviorAssessment'
 import BehaviorAssessmentPage from './components/BehaviorAssessmentPage/BehaviorAssessmentPage'
+import AdminChat from './components/AdminChat/AdminChat'
 
 function App() {
   return (
@@ -103,7 +104,7 @@ function App() {
           <Route path="/event/:id" element={<Event />} />
           <Route path="/event" element={<Event />} />
           <Route path='/curriculum' element={<CurriculumPage />} />
-          <Route path='/AdminPage' element={<AdminPage />} />
+          <Route path='/AdminPage/:admin_id' element={<AdminPage />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
           <Route path="/ParentRegisterpage" element={<ParentRegisterPage />} />
           <Route path="/Medical" element={<Medical />} />
@@ -148,6 +149,7 @@ function App() {
           <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
           <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
           <Route path='/BehaviorAssessmentPage/:studentId' element={<BehaviorAssessmentPage/>}/>          
+          <Route path='/AdminChat/:admin_id' element={<AdminChat/>}/>          
 
         </Routes>
       </div>

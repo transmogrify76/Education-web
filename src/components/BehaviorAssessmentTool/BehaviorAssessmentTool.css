@@ -1,6 +1,8 @@
 /* BehaviorAssessmentTool.css */
 
-.behavior-tool-container {
+.behavior-container {
+  display: flex;
+  flex-direction: row;
   font-family: 'Arial', sans-serif;
   color: #ffffff;
   background-color: #f5f5f5;
