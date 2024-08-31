@@ -117,6 +117,10 @@ const Notification = () => {
   const [notificationData, setNotificationData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+<<<<<<< Updated upstream
+=======
+  const [expandedNotificationId, setExpandedNotificationId] = useState(null);
+>>>>>>> Stashed changes
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -138,7 +142,13 @@ const Notification = () => {
   }, []);
 
   const handleLearnMoreClick = (notificationId) => {
+<<<<<<< Updated upstream
     navigate(`/event/${notificationId}`); // Navigate to the event page with the specific notification ID
+=======
+    setExpandedNotificationId(
+      expandedNotificationId === notificationId ? null : notificationId
+    );
+>>>>>>> Stashed changes
   };
 
   if (loading) {
@@ -158,8 +168,16 @@ const Notification = () => {
             <Title>{notification.title}</Title>
             <Message>{notification.message}</Message>
             <Button onClick={() => handleLearnMoreClick(notification.id)}>
+<<<<<<< Updated upstream
               Learn More
             </Button>
+=======
+              {expandedNotificationId === notification.id ? 'Show Less' : 'Learn More'}
+            </Button>
+            {expandedNotificationId === notification.id && (
+              <Description>{notification.description || 'No additional description available.'}</Description>
+            )}
+>>>>>>> Stashed changes
           </NotificationCard>
         ))
       ) : (

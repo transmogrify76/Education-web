@@ -104,8 +104,12 @@ function App() {
           <Route path='/AttendancePage' element={<AttendancePage />} />
           <Route path='/Attendance' element={<Attendance />} />
           <Route path='/Infrastructure' element={<Infrastructure />} />
+<<<<<<< Updated upstream
           <Route path="/event/:id" element={<Event />} />
           <Route path="/event" element={<Event />} />
+=======
+          <Route path="/event/:eventId" element={<Event />} />
+>>>>>>> Stashed changes
           <Route path='/curriculum' element={<CurriculumPage />} />
           <Route path='/AdminPage/:admin_id' element={<AdminPage />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
