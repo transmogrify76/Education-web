@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import informedConsentIcon from '../Assets/accept.png';
 // import timeIcon from '../Assets/time.png';
 // import menuIcon from '../Assets/menu.png';
@@ -17,7 +18,7 @@ import childIcon from '../Assets/child.png';
 // import circularIcon from '../Assets/circular.png';
 import chatIcon from '../Assets/chat.png';
 // import medIcon from '../Assets/hospital.png';
-import idIcon from '../Assets/student-id.png';
+// import idIcon from '../Assets/student-id.png';
 // import calcIcon from '../Assets/schedule.png';
 // import attenIcon from '../Assets/attendence.png';
 // import feeIcon from '../Assets/fee.png';
@@ -26,13 +27,14 @@ import idIcon from '../Assets/student-id.png';
 // import counIcon from '../Assets/discussion.png';
 // import behavIcon from '../Assets/persuasive.png';
 // import learningIcon from '../Assets/reading.png';
-import './AdminPage.css';
+import './TeacherDashboard.css';
 import Header from '../Header/Header';
-const AdminPage = () => {
-  const { admin_id,} = useParams();
+const TeacherDashboard = () => {
+    const { teacherId,} = useParams();
+//   const { admin_id,} = useParams();
   // Assuming icons is an array of objects with name and icon properties
   const icons = [
-    { name: 'Parent Registration', image: informedConsentIcon, className: 'btn-1', link: '/Parentregisterpage' },
+    { name: 'Class Management', image: informedConsentIcon, className: 'btn-1', link: `/ClassManagementPage/${teacherId}` },
     { name: 'Student Registration', image: informedConsentIcon, className: 'btn-2', link: '/studentregisterpage'},
     { name: 'Teacher Registration', image: informedConsentIcon, className: 'btn-3', link: '/teacherregister' },
     { name: 'TimeTable post', image: informedConsentIcon, className: 'btn-4', link: '/AdminTimeTable' },
@@ -44,10 +46,10 @@ const AdminPage = () => {
     { name: 'Leave Status Update', image: informedConsentIcon, className: 'btn-10', link: '/UpdateLeaveStatus' },
     { name: 'Consent froms', image: thirdIcon, className:'btn-11' , link: '/ConsentFormPage'},
     { name: 'Report card Update', image: childIcon, className: 'btn-12', link: '/' },
-    { name: 'Student Messages', image: chatIcon, className: 'btn-13', link: `/AdminChat/${admin_id}` },
+    { name: 'Student Messages', image: chatIcon, className: 'btn-13', link: `/AdminChat` },
     { name: 'Student Wellbieng Request', image: chatIcon, className: 'btn-14',link:'/AdminWellbeingRequests' },
-    { name: 'Behavior Assesment Tools ', image: informedConsentIcon, className: 'btn-15', link: '/AdminBehaviorAssessment' },
-    { name: 'Class management Page', image: idIcon, className: 'btn-16', link: '/AdminClassMAnagementPage'}]
+    { name: 'Behavior Assesment Tools ', image: informedConsentIcon, className: 'btn-15', link: '/AdminBehaviorAssessment' }]
+//     { name: 'Student ID Card', image: idIcon, className: 'btn-16'},
 //     { name: 'Calendar', image: calcIcon, className: 'btn-17', link: '/Calen' },
 //     { name: 'Attendance', image: attenIcon, className: 'btn-18' },
 //     { name: 'Online Fee Payment', image: feeIcon, className: 'btn-19' },
@@ -74,4 +76,4 @@ const AdminPage = () => {
 }
 
 
-export default AdminPage;
+export default TeacherDashboard;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import './Tlogin.css';
 
 export default function Tlogin() {
@@ -7,7 +7,7 @@ export default function Tlogin() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [showPopup, setShowPopup] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,11 +26,15 @@ export default function Tlogin() {
             password: password
           })
         });
+
         if (response.ok) {
+          const data = await response.json(); // Get the JSON response
+          const teacherId = data.teacherId; // Extract the teacherId from the response
+
           setShowPopup(true);
           setTimeout(() => {
             setShowPopup(false);
-            navigate('/teacherpage'); // Redirect to teacher page after successful login
+            navigate(`/TeacherDashboard/${teacherId}`); // Pass the teacherId in the URL
           }, 2000);
         } else {
           const errorData = await response.json();
@@ -71,8 +75,8 @@ export default function Tlogin() {
           <button className="submit" type="submit">Login</button>
         </form>
         <div className="button-bottom">
-                    <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
-                </div>
+          <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
+        </div>
         <p className="message">{message}</p>
       </div>
       {showPopup && (

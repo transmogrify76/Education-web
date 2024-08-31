@@ -69,6 +69,9 @@ import AdminWellbeingRequests from './components/AdminWellbeingRequests/AdminWel
 import AdminBehaviorAssessment from './components/AdminBehaviorAssessment/AdminBehaviorAssessment'
 import BehaviorAssessmentPage from './components/BehaviorAssessmentPage/BehaviorAssessmentPage'
 import AdminChat from './components/AdminChat/AdminChat'
+import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard'
+import ClassManagementPage from './components/ClassManagementPage/ClassManagementPage'
+import AdminClassManagementPage from './components/AdminClassManagementPage/AdminClassManagementPage'
 
 function App() {
   return (
@@ -149,7 +152,10 @@ function App() {
           <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
           <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
           <Route path='/BehaviorAssessmentPage/:studentId' element={<BehaviorAssessmentPage/>}/>          
-          <Route path='/AdminChat/:admin_id' element={<AdminChat/>}/>          
+          <Route path='/AdminChat/:admin_id' element={<AdminChat/>}/>            
+          <Route path='/TeacherDashboard/:teacherId' element={<TeacherDashboard/>}/>            
+          <Route path='/ClassManagementPage/:teacherId' element={<ClassManagementPage/>}/>            
+          <Route path='/AdminClassManagementPage' element={<AdminClassManagementPage/>}/>            
 
         </Routes>
       </div>
