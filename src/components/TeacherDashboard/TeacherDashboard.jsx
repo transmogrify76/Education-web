@@ -18,7 +18,7 @@ import childIcon from '../Assets/child.png';
 // import circularIcon from '../Assets/circular.png';
 import chatIcon from '../Assets/chat.png';
 // import medIcon from '../Assets/hospital.png';
-// import idIcon from '../Assets/student-id.png';
+import idIcon from '../Assets/student-id.png';
 // import calcIcon from '../Assets/schedule.png';
 // import attenIcon from '../Assets/attendence.png';
 // import feeIcon from '../Assets/fee.png';
@@ -35,11 +35,11 @@ const TeacherDashboard = () => {
   // Assuming icons is an array of objects with name and icon properties
   const icons = [
     { name: 'Class Management', image: informedConsentIcon, className: 'btn-1', link: `/ClassManagementPage/${teacherId}` },
-    { name: 'Student Registration', image: informedConsentIcon, className: 'btn-2', link: '/studentregisterpage'},
-    { name: 'Teacher Registration', image: informedConsentIcon, className: 'btn-3', link: '/teacherregister' },
-    { name: 'TimeTable post', image: informedConsentIcon, className: 'btn-4', link: '/AdminTimeTable' },
-    { name: 'Update Transfer Certificate', image: informedConsentIcon, className: 'btn-5',link: '/UpdateTc' },
-    { name: 'Update Exit Slip', image: informedConsentIcon, className: 'btn-6', link: '/ExitSlipUpdate' },
+    { name: 'Student Management', image: informedConsentIcon, className: 'btn-2', link: '/TeacherStudentManagementPage'},
+    { name: 'Upload Assignment', image: informedConsentIcon, className: 'btn-3', link: '/AssignmentPostPage' },
+    { name: 'Upload Result for Students', image: idIcon, className: 'btn-16', link: '/UploadTeacherResults'},
+    { name: 'Make Communications', image: informedConsentIcon, className: 'btn-5',link: `/CommunicationPage/${teacherId}` },
+    { name: 'Post Events for students', image: informedConsentIcon, className: 'btn-6', link: '/TeacherPage' },
     { name: 'Transport request Update', image: informedConsentIcon, className: 'btn-7',link:'/TransportRequestUpdatePage' },
     { name: 'Third Party Service Update', image: informedConsentIcon, className: 'btn-8', link: '/ThirdPartyServicesUpdatePage' },
     { name: 'Notification Page Update', image: informedConsentIcon, className: 'btn-9', link: '/NotificationPage' },
@@ -49,7 +49,7 @@ const TeacherDashboard = () => {
     { name: 'Student Messages', image: chatIcon, className: 'btn-13', link: `/AdminChat` },
     { name: 'Student Wellbieng Request', image: chatIcon, className: 'btn-14',link:'/AdminWellbeingRequests' },
     { name: 'Behavior Assesment Tools ', image: informedConsentIcon, className: 'btn-15', link: '/AdminBehaviorAssessment' }]
-//     { name: 'Student ID Card', image: idIcon, className: 'btn-16'},
+    // { name: 'Upload Result for Students', image: idIcon, className: 'btn-16', link: '/UploadTeacherResults'}]
 //     { name: 'Calendar', image: calcIcon, className: 'btn-17', link: '/Calen' },
 //     { name: 'Attendance', image: attenIcon, className: 'btn-18' },
 //     { name: 'Online Fee Payment', image: feeIcon, className: 'btn-19' },

@@ -55,7 +55,7 @@ const CurriculumPage = () => {
             <Header/>
         <div className="curriculum-page-container">
             <div className="header-containers">
-                <h1 className="header-titles">Our Curriculum</h1>
+                <h1 className="header-titless">Our Curriculum</h1>
             </div>
             <h2 className='heading-course'>All CLASSES </h2>
             <div className="main-content-curiculum">
