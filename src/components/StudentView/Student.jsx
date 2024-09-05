@@ -3,16 +3,19 @@ import { useNavigate, useParams } from 'react-router-dom';
 import SideNav from '../SideNav/SideNav'; 
 import { FaFileAlt, FaHandsHelping, FaComments, FaClipboardCheck } from 'react-icons/fa';
 import './Student.css'; // Import the CSS file for Student
+import Header from '../Header/Header';
 
 function Student() {
   const { studentId } = useParams(); 
   const navigate = useNavigate();
 
   return (
+    <div className='for-header'>
+      <Header/>
     <div className="dashboard-containers">
       {/* Pass studentId as a prop to SideNav */}
       <SideNav studentId={studentId} />
-
+      
       {/* Main content */}
       <div className="main-contents">
         <header className="dashboard-header">Dashboard</header>
@@ -35,8 +38,11 @@ function Student() {
           <div onClick={() => navigate(`/Chatbot/${studentId}`)} className="dashboard-button pink">
             <FaComments className="button-icon" /> Chat
           </div>
-          <div onClick={() => navigate(`/BehaviorAssessmentTool/${studentId}`)} className="dashboard-button dark-blue">
+          <div onClick={() => navigate(`/BehaviorAssessmentPage/${studentId}`)} className="dashboard-button dark-blue">
             <FaClipboardCheck className="button-icon" /> Behavior assessment tool
+          </div>
+          <div onClick={() => navigate(`/StudentMessages/${studentId}`)} className="dashboard-button dark-violet">
+            <FaComments className="button-icon" /> Communication With Teacher
           </div>
         </div>
         <div className="alerts-section">
@@ -46,6 +52,7 @@ function Student() {
           {/* Alerts content can be added here */}
         </div>
       </div>
+    </div>
     </div>
   );
 }

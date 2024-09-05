@@ -55,7 +55,7 @@ const Dashboard = () => {
     { name: 'Student Leave Application', image: leaveIcon, className: 'btn-21', link: '/Leave'},
     { name: 'Parent counselling request', image: counIcon, className: 'btn-22', link: `/CounselingRequest/${parentId}` },
     { name: 'Behaviour assessment tool', image: behavIcon, className: 'btn-23', link:`/BehaviorAssessmentTool/${parentId}` },
-    { name: 'The learning that was', image: learningIcon, className: 'btn-24' },
+    { name: 'Communication With Teacher', image: learningIcon, className: 'btn-24',link: `/ParentMessages/${parentId}` },
   ];
 
   return (

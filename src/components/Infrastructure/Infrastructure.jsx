@@ -47,7 +47,7 @@ const Infrastructure = () => {
              <Header />
         <div className="infrastructure-page-container">
             <div className="header-container">
-                <h1 className="header-title">Our School Infrastructure</h1>
+                <h1 className="header-titless">Our School Infrastructure</h1>
             </div>
             <div className="main-contentaer">
     <div className="slideshow-container">

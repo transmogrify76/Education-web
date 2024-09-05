@@ -1,0 +1,7 @@
+.behavior-tool-container{
+  display: flex;
+  flex-direction: row;
+}
+.behavior-tool-header{
+  margin-bottom: 5%;
+}

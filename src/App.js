@@ -65,6 +65,21 @@ import ExternalReport from './components/ExternalReport/ExternalReport';
 import ThirdPartyServicesStudent from './components/ThirdPartyServicesStudent/ThirdPartyServicesStudent';
 import StudentWellbeingForm from './components/StudentWellbeingForm/StudentWellbeingForm';
 import Chatbot from './components/Chatbot/Chatbot-Transmogrify_18'
+import AdminWellbeingRequests from './components/AdminWellbeingRequests/AdminWellbeingRequests'
+import AdminBehaviorAssessment from './components/AdminBehaviorAssessment/AdminBehaviorAssessment'
+import BehaviorAssessmentPage from './components/BehaviorAssessmentPage/BehaviorAssessmentPage'
+import AdminChat from './components/AdminChat/AdminChat'
+import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard'
+import ClassManagementPage from './components/ClassManagementPage/ClassManagementPage'
+import AdminClassManagementPage from './components/AdminClassManagementPage/AdminClassManagementPage'
+import TeacherStudentManagementPage from './components/TeacherStudentManagementPage/TeacherStudentManagementPage'
+import UploadResults from './components/UploadResults/UploadResults'
+import UploadTeacherResults from './components/UploadTeacherResults/UploadTeacherResults'
+import AssignmentPostPage from './components/AssignmentPostPage/AssignmentPostPage'
+import CommunicationPage from './components/CommunicationPage/CommunicationPage'
+import StudentMessages from './components/StudentMessages/StudentMessages'
+import ParentMessages from './components/ParentMessages/ParentMessages'
+import TeacherPage from './components/TeacherPage/TeacherPage'
 
 function App() {
   return (
@@ -100,7 +115,7 @@ function App() {
           <Route path="/event/:id" element={<Event />} />
           <Route path="/event" element={<Event />} />
           <Route path='/curriculum' element={<CurriculumPage />} />
-          <Route path='/AdminPage' element={<AdminPage />} />
+          <Route path='/AdminPage/:admin_id' element={<AdminPage />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
           <Route path="/ParentRegisterpage" element={<ParentRegisterPage />} />
           <Route path="/Medical" element={<Medical />} />
@@ -142,6 +157,21 @@ function App() {
           <Route path='/ThirdPartyServicesStudent/:studentId' element={<ThirdPartyServicesStudent/>}/>          
           <Route path='/StudentWellbeingForm/:studentId' element={<StudentWellbeingForm/>}/>          
           <Route path='/Chatbot/:studentId' element={<Chatbot/>}/>          
+          <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
+          <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
+          <Route path='/BehaviorAssessmentPage/:studentId' element={<BehaviorAssessmentPage/>}/>          
+          <Route path='/AdminChat/:admin_id' element={<AdminChat/>}/>            
+          <Route path='/TeacherDashboard/:teacherId' element={<TeacherDashboard/>}/>            
+          <Route path='/ClassManagementPage/:teacherId' element={<ClassManagementPage/>}/>            
+          <Route path='/AdminClassManagementPage' element={<AdminClassManagementPage/>}/>            
+          <Route path="/TeacherStudentManagementPage" element={<TeacherStudentManagementPage/>} />           
+          <Route path="/UploadResults" element={<UploadResults/>} />           
+          <Route path="/UploadTeacherResults" element={<UploadTeacherResults/>} />           
+          <Route path="/AssignmentPostPage" element={<AssignmentPostPage/>} />           
+          <Route path="/CommunicationPage/:teacherId" element={<CommunicationPage/>} />           
+          <Route path="/StudentMessages/:studentId" element={<StudentMessages/>} />           
+          <Route path="/ParentMessages/:parentId" element={<ParentMessages/>} />           
+          <Route path="/TeacherPage" element={<TeacherPage/>} />           
 
         </Routes>
       </div>
@@ -149,4 +179,4 @@ function App() {
   );
 }
 
-export default App; // Export the App component
+export default App; 

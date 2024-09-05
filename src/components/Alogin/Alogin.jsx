@@ -26,11 +26,14 @@ export default function Alogin() {
             password: password
           })
         });
+
         if (response.ok) {
+          const data = await response.json();
+          const admin_id = data.admin_id; // Extract adminId from response
           setShowPopup(true);
           setTimeout(() => {
             setShowPopup(false);
-            navigate('/adminpage'); // Redirect to admin page after successful login
+            navigate(`/adminpage/${admin_id}`); // Redirect to admin page with adminId in URL
           }, 2000);
         } else {
           const errorData = await response.json();
@@ -71,8 +74,8 @@ export default function Alogin() {
           <button className="btn submit" type="submit">Login</button>
         </form>
         <div className="button-bottom">
-                    <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
-                </div>
+          <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
+        </div>
         <p className="message">{message}</p>
       </div>
       {showPopup && (

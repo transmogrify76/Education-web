@@ -51,17 +51,17 @@ const BehaviorAssessmentTool = () => {
     setSelectedStudentId(e.target.value);
   };
 
-  if (loading) return <p className="loading">Loading...</p>;
+  if (loading) return <p className="loading-message">Loading...</p>;
 
-  if (error) return <div className="error">{error}</div>;
+  if (error) return <div className="error-message">{error}</div>;
 
   return (
-    <div className="page-container">
-      <header className="header">
-        <h1 className="header-title">Behavior Assessment Tool</h1>
+    <div className="behavior-container">
+      <header className="behavior-tool-header">
+        <h4 className="behavior-tool-title">Behavior Assessment Tool</h4>
       </header>
-      <main className="main-content">
-        <div className="dropdown-container">
+      <main className="behavior-tool-main">
+        <div className="student-dropdown">
           <label htmlFor="student-select">Select Student:</label>
           <select id="student-select" value={selectedStudentId} onChange={handleStudentChange}>
             <option value="">Select a student</option>
@@ -74,47 +74,47 @@ const BehaviorAssessmentTool = () => {
         </div>
 
         {selectedStudentId && behaviorData.length > 0 ? (
-          <div className="data-section">
+          <div className="behavior-data-container">
             {behaviorData.map((data) => (
-              <div key={data.id} className="data-card-container">
+              <div key={data.id} className="behavior-data-card">
                 {data.week && (
-                  <div className="data-card week-card">
+                  <div className="behavior-data-item week-item">
                     <h3>Week</h3>
                     <p>{data.week}</p>
                   </div>
                 )}
                 {data.year && (
-                  <div className="data-card year-card">
+                  <div className="behavior-data-item year-item">
                     <h3>Year</h3>
                     <p>{data.year}</p>
                   </div>
                 )}
                 {data.behavior && (
-                  <div className="data-card behavior-card">
+                  <div className="behavior-data-item behavior-item">
                     <h3>Behavior</h3>
                     <p>{data.behavior}</p>
                   </div>
                 )}
                 {data.cleanliness && (
-                  <div className="data-card cleanliness-card">
+                  <div className="behavior-data-item cleanliness-item">
                     <h3>Cleanliness</h3>
                     <p>{data.cleanliness}</p>
                   </div>
                 )}
                 {data.hygiene && (
-                  <div className="data-card hygiene-card">
+                  <div className="behavior-data-item hygiene-item">
                     <h3>Hygiene</h3>
                     <p>{data.hygiene}</p>
                   </div>
                 )}
                 {data.softSkills && (
-                  <div className="data-card soft-skills-card">
+                  <div className="behavior-data-item soft-skills-item">
                     <h3>Soft Skills</h3>
                     <p>{data.softSkills}</p>
                   </div>
                 )}
                 {data.punctuality && (
-                  <div className="data-card punctuality-card">
+                  <div className="behavior-data-item punctuality-item">
                     <h3>Punctuality</h3>
                     <p>{data.punctuality}</p>
                   </div>
@@ -123,10 +123,10 @@ const BehaviorAssessmentTool = () => {
             ))}
           </div>
         ) : (
-          selectedStudentId && <p className="no-data">No behavior data available for this student.</p>
+          selectedStudentId && <p className="no-data-message">No behavior data available for this student.</p>
         )}
       </main>
-      <footer className="footer">
+      <footer className="behavior-tool-footer">
         <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
       </footer>
     </div>

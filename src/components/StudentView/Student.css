@@ -74,6 +74,10 @@
   background-color: #6a95c2ea;
   color: #ffffff;
 }
+.dashboard-button.dark-violet{
+  background-color: #bf6ac2ea;
+  color: #ffffff;
+}
 
 /* Alerts Section */
 .alerts-section {

@@ -1,94 +1,83 @@
-/* Leave.css */
-
-/* Removed body styles */
-
-/* Updated class names and removed styles */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1s ease-in-out;
+.leave-container {
+  max-width: 400px;
+  background: #F8F9FD;
+  background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
+  border-radius: 40px;
+  padding: 25px 35px;
+  border: 5px solid rgb(255, 255, 255);
+  box-shadow: rgba(133, 189, 215, 0.8) 0px 30px 30px -20px;
+  margin: 20px auto;
 }
 
-.page-heading {
+.leave-heading {
   text-align: center;
-  margin-bottom: 30px;
-  color: #080808;
-  font-family: 'Arial', sans-serif;
-  animation: slideInFromTop 0.8s ease-out;
+  font-weight: 900;
+  font-size: 28px;
+  color: rgb(16, 137, 211);
 }
 
-.form-section {
-  background-color: rgb(48, 131, 255);
-  border: 1px solid #ddd;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.leave-form {
+  margin-top: 20px;
 }
 
-.form-section:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.input-group {
-  margin-bottom: 20px;
-}
-
-.input-group label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: #fcfcfc;
-  font-size: 16px;
-}
-
-.input-group input,
-.input-group textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  box-sizing: border-box;
-}
-
-.input-group input:focus,
-.input-group textarea:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-}
-
-.input-group textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.button-submit {
-  background: linear-gradient(90deg, #007bff, #00c6ff);
-  color: #fff;
-  padding: 12px 24px;
+.leave-form .leave-input,
+.leave-form .leave-textarea,
+.leave-form .leave-submit-button { /* Ensures all fields and button are the same width */
+  background: white;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  padding: 15px 20px;
+  border-radius: 20px;
+  margin-top: 15px;
+  box-shadow: #cff0ff 0px 10px 10px -5px;
+  border-inline: 2px solid transparent;
   font-size: 16px;
-  font-weight: 500;
-  transition: background 0.3s ease, transform 0.3s ease;
-  display: block;
-  width: 100%;
 }
 
-.button-submit:hover {
-  background: linear-gradient(90deg, #0056b3, #0099e6);
-  transform: translateY(-2px);
+.leave-form .leave-input::-moz-placeholder {
+  color: rgb(170, 170, 170);
 }
 
-.button-submit:active {
-  transform: translateY(1px);
+.leave-form .leave-input::placeholder {
+  color: rgb(0, 0, 0);
+}
+
+.leave-form .leave-input:focus,
+.leave-form .leave-textarea:focus {
+  outline: none;
+  border-inline: 2px solid #12B1D1;
+}
+
+.leave-form .leave-textarea {
+  resize: vertical;
+  height: 120px;
+}
+
+.leave-submit-button {
+  font-weight: bold;
+  background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
+  color: white;
+  padding: 15px;
+  margin: 20px auto;
+  border-radius: 20px;
+  box-shadow: rgba(133, 189, 215, 0.8) 0px 20px 10px -15px;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.leave-submit-button:hover {
+  transform: scale(1.03);
+  box-shadow: rgba(133, 189, 215, 0.8) 0px 23px 10px -20px;
+}
+
+.leave-submit-button:active {
+  transform: scale(0.95);
+  box-shadow: rgba(133, 189, 215, 0.8) 0px 15px 10px -10px;
+}
+
+.leave-message {
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
 }

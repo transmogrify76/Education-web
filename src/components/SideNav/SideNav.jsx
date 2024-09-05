@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaTachometerAlt, FaFileAlt, FaHandsHelping, FaComments, FaClipboardCheck } from 'react-icons/fa';
+import { FaTachometerAlt, FaFileAlt, FaHandsHelping, FaComments, FaClipboardCheck, FaEnvelope } from 'react-icons/fa';
 import './SideNav.css'; // Import the CSS file for Sidebar
 
 function SideNav({ studentId }) {
@@ -52,9 +52,15 @@ function SideNav({ studentId }) {
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/BehaviorAssessmentTool/${studentId}`}>
+          <Link to={`/BehaviorAssessmentPage/${studentId}`}>
             <FaClipboardCheck className="sidebar-icon" />
             Behavior assessment tool
+          </Link>
+        </li>
+        <li className="sidebar-item">
+          <Link to={`/StudentMessages/${studentId}`}>
+            <FaEnvelope className="sidebar-icon" />
+            Communication With Teacher
           </Link>
         </li>
       </ul>

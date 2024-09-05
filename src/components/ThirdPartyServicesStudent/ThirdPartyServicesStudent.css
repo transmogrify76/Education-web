@@ -1,9 +1,85 @@
 /* Container to hold the entire page layout */
 .page-containerss {
-    display: flex;
-    height: 104vh;
-    background-color: rgb(233, 232, 232);
+  display: flex;
+  flex-direction: row; /* Ensure content is stacked vertically */
+  height: 100vh;
+  background-color: #f4f4f4; /* Light background color for the entire page */
+  padding: 0; /* Remove padding to ensure content starts at the top */
+  box-sizing: border-box;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #ffffff; /* White background for main content */
+  margin: 0; /* Remove margin to align content to the top */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Center the heading in the middle of the page */
+.main-content h1 {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin: 0; /* Remove default margin */
+}
+
+/* Student details section */
+.student-details {
+  height: 104.5vh;
+  width: 100%;
+  max-width: 600px;
+  /* padding: 20px; */
+  border: 2px solid #007BFF; /* Border around the details section */
+  border-radius: 8px;
+  background-color: #ffffff; /* White background for details section */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* margin-top: 20px; */
+  box-sizing: border-box; /* Ensure padding and border are included in the width/height */
+}
+
+.student-details h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.student-details p {
+  font-size: 16px;
+  color: #555;
+  margin: 8px 0;
+}
+
+.student-details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.student-details ul li {
+  font-size: 16px;
+  color: #007BFF; /* Use a primary color for selected services */
+  padding: 8px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .page-containerss {
+    flex-direction: column;
   }
   
-  
+  .Sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
 
+  .main-content {
+    margin-left: 0;
+  }
+}

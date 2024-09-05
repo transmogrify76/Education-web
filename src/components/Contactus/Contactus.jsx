@@ -63,7 +63,7 @@ const Contactus = () => {
             <Header />
             <div className="contact-us-container">
                 <header className="contact-us-header">
-                <h1 className="header-titles">CONTACT US</h1>
+                <h1 className="header-titless">CONTACT US</h1>
                 </header>
                 <h2 className="connect-heading">Send your Qurries</h2>
                 <section className="contact-us-content">
