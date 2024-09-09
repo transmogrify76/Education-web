@@ -19,7 +19,7 @@ import chatIcon from '../Assets/chat.png';
 // import medIcon from '../Assets/hospital.png';
 import idIcon from '../Assets/student-id.png';
 import calcIcon from '../Assets/schedule.png';
-// import attenIcon from '../Assets/attendence.png';
+import attenIcon from '../Assets/attendence.png';
 // import feeIcon from '../Assets/fee.png';
 // import feeremIcon from '../Assets/payday.png';
 // import leaveIcon from '../Assets/exit.png';
@@ -48,8 +48,8 @@ const AdminPage = () => {
     { name: 'Student Wellbieng Request', image: chatIcon, className: 'btn-14',link:'/AdminWellbeingRequests' },
     { name: 'Behavior Assesment Tools ', image: informedConsentIcon, className: 'btn-15', link: '/AdminBehaviorAssessment' },
     { name: 'Class management Page', image: idIcon, className: 'btn-16', link: '/AdminClassMAnagementPage'},
-    { name: 'Result Upload', image: calcIcon, className: 'btn-17', link: '/UploadResults' }]
-//     { name: 'Attendance', image: attenIcon, className: 'btn-18' },
+    { name: 'Result Upload', image: calcIcon, className: 'btn-17', link: '/UploadResults' },
+    { name: 'Fee Reminder Update', image: attenIcon, className: 'btn-18', link: '/AdminFeeReminderPage' }]
 //     { name: 'Online Fee Payment', image: feeIcon, className: 'btn-19' },
 //     { name: 'Fee Reminder', image: feeremIcon, className: 'btn-20' },
 //     { name: 'Student Leave Application', image: leaveIcon, className: 'btn-21', link: '/Leave'},

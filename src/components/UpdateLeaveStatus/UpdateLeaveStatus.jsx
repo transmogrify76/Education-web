@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UpdateLeaveStatus.css';
+
 const UpdateLeaveStatus = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
+
+  // Fetching leave requests from the server
   useEffect(() => {
     axios.get('http://localhost:3000/leaves')
       .then(response => {
@@ -13,8 +16,10 @@ const UpdateLeaveStatus = () => {
         console.error('Error fetching leave requests:', error);
       });
   }, []);
+
+  // Handle status change by sending PATCH request to the correct endpoint
   const handleStatusChange = (id, status) => {
-    axios.patch(`http://localhost:3000/leaves/${id}`, { status })
+    axios.patch(`http://localhost:3000/leaves/${id}/status`, { status })  // Updated URL
       .then(() => {
         setLeaveRequests(prevRequests =>
           prevRequests.map(request =>

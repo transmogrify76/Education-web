@@ -79,18 +79,17 @@ body {
 }
 
 .content-area h2 {
-    margin-right: 18%;
-    font-size: 2.5rem; /* Increased font size */
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
     color: #007bff;
+    margin-right: 18%;
+    margin-bottom: 1rem;
 }
 
 .content-area p {
-    font-size: 1.1rem; /* Slightly larger font size for readability */
+    font-size: 1.1rem;
     color: #555;
-    line-height: 1.6; /* Improved readability */
+    line-height: 1.6;
 }
-
 .footer {
     background: #333;
     color: #fff;

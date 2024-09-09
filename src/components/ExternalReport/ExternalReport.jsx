@@ -4,14 +4,13 @@ import axios from 'axios';
 import Sidebar from '../SideNav/SideNav';
 import Header from '../Header/Header';
 import './ExternalReport.css';
-
+ 
 const ExternalReport = () => {
   const { studentId } = useParams();
   const [academicYear, setAcademicYear] = useState('');
   const [resultData, setResultData] = useState(null);
   const [error, setError] = useState(null);
-
-  // Fetch result data by year when the search button is clicked
+  
   const fetchResultDataByYear = async (year) => {
     try {
       const response = await axios.get(`http://localhost:3000/results/year/${year}`);
@@ -41,21 +40,18 @@ const ExternalReport = () => {
       const response = await axios({
         url: `http://localhost:3000/${filePath}`,
         method: 'GET',
-        responseType: 'blob', // Important for handling file downloads
+        responseType: 'blob', 
       });
 
-      // Create a Blob from the PDF data
       const blob = new Blob([response.data], { type: 'application/pdf' });
 
-      // Create a link element, set its href to the object URL, and trigger a download
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', filePath.split('/').pop()); // Extract filename from filePath
+      link.setAttribute('download', filePath.split('/').pop()); 
       document.body.appendChild(link);
       link.click();
 
-      // Clean up
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
@@ -82,7 +78,7 @@ const ExternalReport = () => {
                   onChange={handleYearChange}
                   placeholder="Enter Year (e.g., 2021)"
                   min="2000"
-                  max={new Date().getFullYear()} // Limits the input to the current year or earlier
+                  max={new Date().getFullYear()} 
                 />
               </div>
               <button onClick={handleSearch} className="search-btn">Search</button>

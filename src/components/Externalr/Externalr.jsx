@@ -5,23 +5,20 @@ export default function Externalr(){
   const [selectedReportCardLevel, setSelectedReportCardLevel] = useState('');
   const [selectedReportCard, setSelectedReportCard] = useState('');
 
-  // Sample options for academic years, report card levels, and report cards
+
   const academicYears = [
     { value: '2022-2023', label: '2022-2023' },
     { value: '2021-2022', label: '2021-2022' },
-    // Add more options as needed
   ];
 
   const reportCardLevels = [
     { value: 'level1', label: 'Level 1' },
     { value: 'level2', label: 'Level 2' },
-    // Add more options as needed
   ];
 
   const reportCards = [
     { value: 'report1', label: 'Report Card 1' },
     { value: 'report2', label: 'Report Card 2' },
-    // Add more options as needed
   ];
 
   return (

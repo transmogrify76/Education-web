@@ -19,20 +19,18 @@
 }
 
 .goal-setting-table {
-  display: flex;
-  flex-direction: column;
+  display: table;
   width: 100%;
+  table-layout: fixed; /* Ensure fixed width for columns */
 }
 
-.goal-setting-header {
-  display: flex;
-  border-bottom: 2px solid #ccc;
-  background-color: #f4f4f4;
-  padding: 10px 0;
+.goal-setting-header,
+.goal-setting-row {
+  display: table-row;
 }
 
 .goal-setting-cell {
-  flex: 1.5;
+  display: table-cell;
   padding: 10px;
   text-align: center;
   border-right: 1px solid #ddd;
@@ -44,21 +42,20 @@
 }
 
 .goal-setting-cell-sr {
-  flex: 0.5;
+  width: 10%; /* Adjust percentage as needed */
 }
 
 .goal-setting-cell-subject {
-  flex: 2;
+  width: 30%; /* Adjust percentage as needed */
 }
 
 .goal-setting-cell-prev-grade,
 .goal-setting-cell-suggested-target,
 .goal-setting-cell-target-for-this-grade {
-  flex: 1.5;
+  width: 20%; /* Adjust percentage as needed */
 }
 
 .goal-setting-row {
-  display: flex;
   border-bottom: 1px solid #eee;
 }
 

@@ -1,0 +1,65 @@
+.resource-show-container {
+    flex: 1;
+    padding: 20px;
+    background-color: #f4f7f9;
+    border-radius: 8px;
+  }
+  
+  .class-dropdown-container {
+    margin-bottom: 20px;
+  }
+  
+  .class-dropdown-container select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  
+  .resource-list-container {
+    margin-top: 20px;
+  }
+  
+  .resource-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .resource-card h3 {
+    margin-top: 0;
+    color: #007bff;
+  }
+  
+  .resource-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  .resource-card a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .resource-card a:hover {
+    text-decoration: underline;
+  }
+  
+  p {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+  }
+  
+  .error {
+    color: #d9534f;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+  }

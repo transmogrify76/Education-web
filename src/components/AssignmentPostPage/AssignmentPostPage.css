@@ -1,39 +1,43 @@
-/* src/components/AssignmentPostPage.css */
-
 .assignment-post-page {
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.assignment-post-page h2 {
-  text-align: center;
-  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
 }
 
 .form-group {
   margin-bottom: 15px;
 }
 
-.form-group label {
+label {
   display: block;
+  font-weight: bold;
   margin-bottom: 5px;
 }
 
-.form-group input,
-.form-group textarea {
+input[type="text"],
+textarea,
+input[type="date"] {
   width: 100%;
   padding: 8px;
-  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input.link-input {
+  color: blue;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+input.link-input:focus {
+  outline: none;
 }
 
 button {
-  display: block;
-  width: 100%;
-  padding: 10px;
+  padding: 10px 20px;
   background-color: #007bff;
   color: white;
   border: none;

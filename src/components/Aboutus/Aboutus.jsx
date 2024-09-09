@@ -83,9 +83,12 @@ const Aboutus = () => {
                 </div>
                 
             </section>
-            <footer className="about-us-footer">
-                <p>&copy; 2024 Edu-web. All rights reserved.</p>
-            </footer>
+            <footer className="footer">
+          <p>&copy; 2024 Edu-Web. All rights reserved.</p>
+          <p>
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+          </p>
+        </footer>
         </div>
         </div>
     );

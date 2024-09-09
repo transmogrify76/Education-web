@@ -80,6 +80,11 @@ import CommunicationPage from './components/CommunicationPage/CommunicationPage'
 import StudentMessages from './components/StudentMessages/StudentMessages'
 import ParentMessages from './components/ParentMessages/ParentMessages'
 import TeacherPage from './components/TeacherPage/TeacherPage'
+import AdminFeeReminderPage from './components/AdminFeeReminderPage/AdminFeeReminderPage'
+import CreateResourcePage from './components/CreateResourcePage/CreateResourcePage'
+import GradePage from './components/GradePage/GradePage'
+import AssignmentSubmissionPage from './components/AssignmentSubmissionPage/AssignmentSubmissionPage'
+import ResourceShowPage from './components/ResourceShowPage/ResourceShowPage'
 
 function App() {
   return (
@@ -172,6 +177,11 @@ function App() {
           <Route path="/StudentMessages/:studentId" element={<StudentMessages/>} />           
           <Route path="/ParentMessages/:parentId" element={<ParentMessages/>} />           
           <Route path="/TeacherPage" element={<TeacherPage/>} />           
+          <Route path="/AdminFeeReminderPage" element={<AdminFeeReminderPage/>} />           
+          <Route path="/CreateResourcePage/:teacherId" element={<CreateResourcePage/>} />           
+          <Route path="/GradePage" element={<GradePage/>} />           
+          <Route path="/AssignmentSubmissionPage/:studentId" element={<AssignmentSubmissionPage/>} />           
+          <Route path="/ResourceShowPage/:studentId" element={<ResourceShowPage/>} />           
 
         </Routes>
       </div>

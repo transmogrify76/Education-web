@@ -61,7 +61,21 @@ const Message = styled.p`
   font-size: 1.2em;
   color: #666;
   line-height: 1.5;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+  text-align: center;
+`;
+
+const DateText = styled.p`
+  font-size: 1em;
+  color: #999;
+  margin-bottom: 10px;
+  text-align: center;
+`;
+
+const Description = styled.p`
+  font-size: 1em;
+  color: #333;
+  margin-bottom: 20px;
   text-align: center;
 `;
 
@@ -78,13 +92,6 @@ const Button = styled.button`
   &:hover {
     background-color: #ff4d4d;
   }
-`;
-
-const Description = styled.p`
-  font-size: 1em;
-  color: #333;
-  margin-top: 20px;
-  text-align: center;
 `;
 
 const LearnMoreSection = styled.div`
@@ -141,6 +148,15 @@ const Notification = () => {
     navigate(`/event/${notificationId}`); // Navigate to the event page with the specific notification ID
   };
 
+  const formatDate = (dateString) => {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString();
+    } catch (e) {
+      return 'Invalid date';
+    }
+  };
+
   if (loading) {
     return <Container><LoadingMessage>Loading...</LoadingMessage></Container>;
   }
@@ -157,6 +173,8 @@ const Notification = () => {
             <Gradient />
             <Title>{notification.title}</Title>
             <Message>{notification.message}</Message>
+            <DateText>{formatDate(notification.date)}</DateText>
+            <Description>{notification.description || 'No description available.'}</Description>
             <Button onClick={() => handleLearnMoreClick(notification.id)}>
               Learn More
             </Button>

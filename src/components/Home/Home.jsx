@@ -5,30 +5,30 @@ import './Home.css';
 const Home = () => {
   return (
     <div>
-       <Header />
-    <div className="home-container"> 
-      <div className="home-content">
-        <div className="home-text">
-          <h1 className="home-heading">Learn without Limits</h1>
-          <p>
-            Explore a diverse range of courses, from academic subjects to practical skills.
-            <br />
-            Join our community, expand your knowledge, and unlock new opportunities. 
-            <span className="typing-animation">Start your journey with us today!</span>
-          </p>
+      <Header />
+      <div className="homepage-container-home"> 
+        <div className="homepage-content-home">
+          <div className="homepage-text-home">
+            <div className="homepage-heading-home">Learn without Limits</div>
+            <h3>
+              Explore a diverse range of courses, from academic subjects to practical skills.
+              <br />
+              Join our community, expand your knowledge, and unlock new opportunities. 
+              <span className="typing-animation">Start your journey with us today!</span>
+            </h3>
+          </div>
+          {/* <div className="homepage-image">
+            <img src={potr} alt="potr" />
+          </div> */}
         </div>
-        {/* <div className="home-image">
-          <img src={potr} alt="potr" />
-        </div> */}
-      </div>
-      <div className="rating-container">
-        <div className="rating-animation">
-          <span className="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-          <span className="rating-text"> 5.0</span>
+        <div className="rating-section">
+          <div className="rating-animation">
+            <span className="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span className="rating-value"> 5.0</span>
+          </div>
+          <p className="rating-text">Rated by 1000+ users</p>
         </div>
-        <p className="rating-description">Rated by 1000+ users</p>
       </div>
-    </div>
     </div>
   );
 };

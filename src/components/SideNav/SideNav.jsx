@@ -63,6 +63,18 @@ function SideNav({ studentId }) {
             Communication With Teacher
           </Link>
         </li>
+        <li className="sidebar-item">
+          <Link to={`/AssignmentSubmissionPage/${studentId}`}>
+            <FaClipboardCheck className="sidebar-icon" />
+            Assignment Submission
+          </Link>
+        </li>
+        <li className="sidebar-item">
+          <Link to={`/ResourceShowPage/${studentId}`}>
+            <FaFileAlt className="sidebar-icon" />
+            Resource of the Class
+          </Link>
+        </li>
       </ul>
     </nav>
   );

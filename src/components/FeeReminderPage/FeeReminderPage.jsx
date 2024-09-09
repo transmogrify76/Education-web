@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './FeeReminderPage.css';
+
 const FeeReminderPage = () => {
   const { parentId } = useParams();
   const [students, setStudents] = useState([]);
@@ -8,22 +9,20 @@ const FeeReminderPage = () => {
   const [feeData, setFeeData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-const paymentOptions = [
+  const paymentOptions = [
     'Credit Card',
     'Debit Card',
     'Bank Transfer',
     'PayPal',
   ];
+
   useEffect(() => {
     const fetchStudentData = async () => {
       setLoading(true);
       try {
         const response = await fetch(`http://localhost:3000/parent/${parentId}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        console.log('Fetched students:', data.students); 
         setStudents(data.students || []);
       } catch (error) {
         console.error('Error fetching student data:', error);
@@ -35,18 +34,16 @@ const paymentOptions = [
 
     fetchStudentData();
   }, [parentId]);
+
   useEffect(() => {
     const fetchFeeData = async () => {
       if (!selectedStudentId) return;
 
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:3000/fee-reminder?studentId=${selectedStudentId}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        const response = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        console.log('Fetched fee data:', data);
         setFeeData(data || []);
       } catch (error) {
         console.error('Error fetching fee data:', error);
@@ -66,33 +63,30 @@ const paymentOptions = [
         `https://payment-portal.com/pay?studentId=${selectedStudentId}&term=${term}`,
         '_blank'
       );
-      const response = await fetch(`http://localhost:3000/fee-reminder/${feeId}`, {
+
+      // Update fee status to 'paid'
+      const response = await fetch(`http://localhost:3000/fee-reminder/update-latest/${selectedStudentId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status: 'paid' }),
+        body: JSON.stringify({ feeId, status: 'paid' }),
       });
-      if (!response.ok) {
-        throw new Error('Failed to update fee status');
-      }
-      const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder?studentId=${selectedStudentId}`);
+      if (!response.ok) throw new Error('Failed to update fee status');
+
+      // Refresh fee data
+      const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
+      if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');
       const updatedFeeData = await updatedFeeResponse.json();
-      console.log('Updated fee data:', updatedFeeData);
       setFeeData(updatedFeeData);
     } catch (error) {
-      console.error('Error updating fee status:', error);
-      setError('Failed to update fee status.');
+      console.error('Error during payment process:', error);
+      setError('Failed to process payment.');
     }
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="page-container">
@@ -115,7 +109,7 @@ const paymentOptions = [
             ))}
           </select>
         </section>
-        
+
         {selectedStudentId && (
           <section className="student-fee-details">
             <h2>Fee Details for Selected Student</h2>
@@ -158,7 +152,6 @@ const paymentOptions = [
             </table>
           </section>
         )}
-        
         <section className="payment-options">
           <h2>Payment Options</h2>
           <ul>

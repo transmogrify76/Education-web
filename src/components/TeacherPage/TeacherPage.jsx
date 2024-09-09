@@ -17,7 +17,7 @@ const TeacherPage = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:3000/notification'); // Use the notification URL
+      const response = await fetch('http://localhost:3000/notification'); 
       if (!response.ok) throw new Error('Failed to fetch events');
       const data = await response.json();
       console.log('Fetched events:', data);
@@ -81,12 +81,12 @@ const TeacherPage = () => {
     setLoading(true);
     setError(null);
     try {
-      console.log(`Attempting to delete event with ID: ${id}`); // Debugging line
+      console.log(`Attempting to delete event with ID: ${id}`); 
       const response = await fetch(`http://localhost:3000/notification/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
-        const errorText = await response.text(); // Read the response text for more details
+        const errorText = await response.text(); 
         throw new Error(`Failed to delete event: ${errorText}`);
       }
       setEvents((prevEvents) =>
