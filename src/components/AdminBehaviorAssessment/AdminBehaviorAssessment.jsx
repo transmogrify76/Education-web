@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminBehaviorAssessment.css';
+import Header from '../Header/Header';
 
 const AdminBehaviorAssessment = () => {
   const [students, setStudents] = useState([]);
@@ -92,6 +93,8 @@ const AdminBehaviorAssessment = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="admin-page-container">
       {/* <header className="header"> */}
         <h1 className="header-titl">Admin - Behavior Assessment</h1>
@@ -216,6 +219,7 @@ const AdminBehaviorAssessment = () => {
       <footer className="footers">
         <p className="footers-text">© 2024 Edu_Web. All rights reserved.</p>
       </footer>
+    </div>
     </div>
   );
 };

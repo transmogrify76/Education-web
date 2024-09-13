@@ -73,7 +73,10 @@ export default function Plogin() {
                     <button className="submit" type="submit">Login</button>
                 </form>
                 <div className="button-bottom">
-                    <button className="forgot-password-buttonss" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
+                    {/* Replaced button tag with a div tag for "Forgot Password" */}
+                    <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
+                        Forgot Password?
+                    </div>
                 </div>
                 <p className="message">{message}</p>
             </div>

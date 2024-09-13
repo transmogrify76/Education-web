@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './PaymentPage.css';
+import Header from '../Header/Header'
 
 const PaymentPage = () => {
     const [paymentMethod, setPaymentMethod] = useState('credit-card');
@@ -47,6 +48,8 @@ const PaymentPage = () => {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="payment-page-container">
             <header className="payment-header">
                 <h1>School Fees Payment</h1>
@@ -132,6 +135,7 @@ const PaymentPage = () => {
             <footer className="payment-footer">
                 <p>&copy; 2024 Edu_Web. All rights reserved.</p>
             </footer>
+        </div>
         </div>
     );
 };

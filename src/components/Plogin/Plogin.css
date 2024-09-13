@@ -8,7 +8,7 @@
 }
 
 .plogin-card {
-  width: 350px;
+  width: 400px;
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -16,7 +16,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .login-container {
-    background-size: 100%;
+    background-size: 90%;
     background-position: -90%;
 }
 
@@ -71,6 +71,18 @@ button {
     width: 90%;
   }
 }
+.forgot-password-div {
+  color: blue;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+.forgot-password-div:hover {
+  text-decoration: underline;
+}
+
 /* .submit{
   background-color: #45a049;
 } */

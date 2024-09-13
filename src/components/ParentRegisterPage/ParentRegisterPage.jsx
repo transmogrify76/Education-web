@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ParentRegisterPage.css';
-
+import Header from '../Header/Header';
 const ParentRegisterPage = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -65,6 +65,8 @@ const ParentRegisterPage = () => {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="register-page-containers">
             
             <form className="register-forms" onSubmit={handleSubmit}>
@@ -138,6 +140,7 @@ const ParentRegisterPage = () => {
                 </div>
             )}
             {message && <p className="message">{message}</p>}
+        </div>
         </div>
     );
 };

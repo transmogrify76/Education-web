@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UpdateTc.css';
+import Header from '../Header/Header';
 
 const UpdateTc = () => {
   const [transferRequests, setTransferRequests] = useState([]);
@@ -34,6 +35,8 @@ const UpdateTc = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="transfer-request-page">
       <h2>Transfer Request Management</h2>
       <table>
@@ -82,6 +85,7 @@ const UpdateTc = () => {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

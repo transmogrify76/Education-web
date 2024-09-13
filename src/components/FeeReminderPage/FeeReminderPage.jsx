@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './FeeReminderPage.css';
+import Header from '../Header/Header';
+
 const FeeReminderPage = () => {
   const { parentId } = useParams();
   const [students, setStudents] = useState([]);
@@ -8,22 +10,20 @@ const FeeReminderPage = () => {
   const [feeData, setFeeData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-const paymentOptions = [
+  const paymentOptions = [
     'Credit Card',
     'Debit Card',
     'Bank Transfer',
     'PayPal',
   ];
+
   useEffect(() => {
     const fetchStudentData = async () => {
       setLoading(true);
       try {
         const response = await fetch(`http://localhost:3000/parent/${parentId}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        console.log('Fetched students:', data.students); 
         setStudents(data.students || []);
       } catch (error) {
         console.error('Error fetching student data:', error);
@@ -35,18 +35,16 @@ const paymentOptions = [
 
     fetchStudentData();
   }, [parentId]);
+
   useEffect(() => {
     const fetchFeeData = async () => {
       if (!selectedStudentId) return;
 
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:3000/fee-reminder?studentId=${selectedStudentId}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        const response = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
-        console.log('Fetched fee data:', data);
         setFeeData(data || []);
       } catch (error) {
         console.error('Error fetching fee data:', error);
@@ -66,44 +64,43 @@ const paymentOptions = [
         `https://payment-portal.com/pay?studentId=${selectedStudentId}&term=${term}`,
         '_blank'
       );
-      const response = await fetch(`http://localhost:3000/fee-reminder/${feeId}`, {
+
+      // Update fee status to 'paid'
+      const response = await fetch(`http://localhost:3000/fee-reminder/update-latest/${selectedStudentId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ status: 'paid' }),
+        body: JSON.stringify({ feeId, status: 'paid' }),
       });
-      if (!response.ok) {
-        throw new Error('Failed to update fee status');
-      }
-      const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder?studentId=${selectedStudentId}`);
+      if (!response.ok) throw new Error('Failed to update fee status');
+
+      // Refresh fee data
+      const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
+      if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');
       const updatedFeeData = await updatedFeeResponse.json();
-      console.log('Updated fee data:', updatedFeeData);
       setFeeData(updatedFeeData);
     } catch (error) {
-      console.error('Error updating fee status:', error);
-      setError('Failed to update fee status.');
+      console.error('Error during payment process:', error);
+      setError('Failed to process payment.');
     }
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
-    <div className="page-container">
-      <header className="header">
-        <h1 className="header-title">Fee Reminder</h1>
+    <div>
+      <Header/>
+    <div className="fee-reminder-container">
+      <header className="page-header">
+        <div className="header-title">Fee Reminder</div>
       </header>
-      <main className="main-content">
-        <section className="student-selection">
-          <label htmlFor="student-select">Select Student:</label>
+      <main className="content-main">
+        <section className="student-selector">
+          <label htmlFor="student-dropdown">Select Student:</label>
           <select
-            id="student-select"
+            id="student-dropdown"
             value={selectedStudentId}
             onChange={(e) => setSelectedStudentId(e.target.value)}
           >
@@ -115,11 +112,11 @@ const paymentOptions = [
             ))}
           </select>
         </section>
-        
+
         {selectedStudentId && (
-          <section className="student-fee-details">
+          <section className="fee-details-section">
             <h2>Fee Details for Selected Student</h2>
-            <table className="fee-table">
+            <table className="fee-details-table">
               <thead>
                 <tr>
                   <th>Term</th>
@@ -136,11 +133,11 @@ const paymentOptions = [
                       <td>{fee.term}</td>
                       <td>{fee.amount}</td>
                       <td>{new Date(fee.dueDate).toLocaleDateString()}</td>
-                      <td className={`status ${fee.status.toLowerCase()}`}>{fee.status}</td>
+                      <td className={`fee-status ${fee.status.toLowerCase()}`}>{fee.status}</td>
                       <td>
                         {fee.status === 'Due' && (
                           <button
-                            className="pay-button"
+                            className="payment-button"
                             onClick={() => handlePayment(fee.id, fee.term)}
                           >
                             Pay Now
@@ -158,8 +155,7 @@ const paymentOptions = [
             </table>
           </section>
         )}
-        
-        <section className="payment-options">
+        <section className="payment-options-section">
           <h2>Payment Options</h2>
           <ul>
             {paymentOptions.map((option, index) => (
@@ -167,13 +163,18 @@ const paymentOptions = [
             ))}
           </ul>
         </section>
-        <div className="caution">
+        <div className="notice-section">
           <p>Please ensure all fee payments are made by the due dates to avoid any late fees. For any queries, contact the school administration.</p>
         </div>
       </main>
-      <footer className="footer">
+      <footer className="infra-footer">
         <p className="footer-text">© 2024 School Management System. All rights reserved.</p>
+        <p>
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                </p>
       </footer>
+    </div>
+          
     </div>
   );
 };

@@ -40,15 +40,15 @@ const TeacherDashboard = () => {
     { name: 'Upload Result for Students', image: idIcon, className: 'btn-16', link: '/UploadTeacherResults'},
     { name: 'Make Communications', image: informedConsentIcon, className: 'btn-5',link: `/CommunicationPage/${teacherId}` },
     { name: 'Post Events for students', image: informedConsentIcon, className: 'btn-6', link: '/TeacherPage' },
-    { name: 'Transport request Update', image: informedConsentIcon, className: 'btn-7',link:'/TransportRequestUpdatePage' },
-    { name: 'Third Party Service Update', image: informedConsentIcon, className: 'btn-8', link: '/ThirdPartyServicesUpdatePage' },
-    { name: 'Notification Page Update', image: informedConsentIcon, className: 'btn-9', link: '/NotificationPage' },
-    { name: 'Leave Status Update', image: informedConsentIcon, className: 'btn-10', link: '/UpdateLeaveStatus' },
-    { name: 'Consent froms', image: thirdIcon, className:'btn-11' , link: '/ConsentFormPage'},
-    { name: 'Report card Update', image: childIcon, className: 'btn-12', link: '/' },
-    { name: 'Student Messages', image: chatIcon, className: 'btn-13', link: `/AdminChat` },
-    { name: 'Student Wellbieng Request', image: chatIcon, className: 'btn-14',link:'/AdminWellbeingRequests' },
-    { name: 'Behavior Assesment Tools ', image: informedConsentIcon, className: 'btn-15', link: '/AdminBehaviorAssessment' }]
+    { name: 'Reasource Creation Page', image: informedConsentIcon, className: 'btn-7',link:`/CreateResourcePage/${teacherId}` },
+    { name: 'Give Grade or remarks for student', image: informedConsentIcon, className: 'btn-8', link: '/GradePage' },
+    { name: 'Create Assignment for student', image: informedConsentIcon, className: 'btn-9', link: '/AssignmentPostPage' },
+    { name: 'Submitted Assignment by Students', image: informedConsentIcon, className: 'btn-10', link: '/UpdateLeaveStatus' }]
+    // { name: 'Consent froms', image: thirdIcon, className:'btn-11' , link: '/ConsentFormPage'},
+    // { name: 'Report card Update', image: childIcon, className: 'btn-12', link: '/' },
+    // { name: 'Student Messages', image: chatIcon, className: 'btn-13', link: `/AdminChat` },
+    // { name: 'Student Wellbieng Request', image: chatIcon, className: 'btn-14',link:'/AdminWellbeingRequests' },
+    // { name: 'Behavior Assesment Tools ', image: informedConsentIcon, className: 'btn-15', link: '/AdminBehaviorAssessment' }]
     // { name: 'Upload Result for Students', image: idIcon, className: 'btn-16', link: '/UploadTeacherResults'}]
 //     { name: 'Calendar', image: calcIcon, className: 'btn-17', link: '/Calen' },
 //     { name: 'Attendance', image: attenIcon, className: 'btn-18' },

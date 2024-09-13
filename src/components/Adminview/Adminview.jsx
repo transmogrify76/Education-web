@@ -1,8 +1,11 @@
 import React from 'react';
 import './AdminPanel.css';
+import Header from '../Header/Header';
 
 const AdminPanel = () => {
   return (
+    <div>
+      <Header/>
     <div className="admin-panel">
       <header className="header-one">
         <h1>Admin Panel</h1>
@@ -22,6 +25,7 @@ const AdminPanel = () => {
       <footer className="footer">
         <p>&copy; 2024 Admin Panel</p>
       </footer>
+    </div>
     </div>
   );
 }

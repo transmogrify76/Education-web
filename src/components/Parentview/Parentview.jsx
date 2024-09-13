@@ -1,8 +1,11 @@
 import React from 'react';
 import './ParentView.css'; 
+import Header from '../Header/Header'
 
 const ParentView = () => {
   return (
+    <div>
+      <Header/>
     <div className="parent-view">
       <header className="header">
         <h1>Welcome, Parent</h1>
@@ -46,6 +49,7 @@ const ParentView = () => {
       <footer className="footer">
         <p>&copy; 2024 Parent View</p>
       </footer>
+    </div>
     </div>
   );
 }

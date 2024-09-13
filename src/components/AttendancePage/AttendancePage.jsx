@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Header from '../Header/Header'
 
 const AttendancePage = () => {
   const [selectedChild, setSelectedChild] = useState(null);
@@ -15,6 +16,9 @@ const AttendancePage = () => {
   };
 
   return (
+    <div>
+      <Header/>
+
     <div className="attendance-page">
       <h1 className="page-title">Student Attendance</h1>
 
@@ -46,6 +50,7 @@ const AttendancePage = () => {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

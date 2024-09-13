@@ -4,16 +4,15 @@ body {
     padding: 0;
     background-color: #f9f9f9;
 }
-.contact-us-container {
+
+.contactUs-container {
     max-width: 100%;
     margin: 0 auto;
-    /* padding: 20px; */
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.contact-us-header {
-    /* margin-top: 6%; */
+.contactUs-header {
     text-align: center;
     height: 400px;
     display: flex;
@@ -21,14 +20,13 @@ body {
     align-items: center;
     color: white;
     background-image: 
-        linear-gradient(to right, rgba(90, 2, 2, 0.5), rgba(0, 0, 138, 0.5)), /* Gradient overlay */
-        url('../Assets/contact3.jpeg'); /* Background image */
+        linear-gradient(to right, rgba(90, 2, 2, 0.5), rgba(0, 0, 138, 0.5)),
+        url('../Assets/contact3.jpeg');
     background-size: cover;
     background-position: center;
-    /* background-blend-mode: overlay; */
 }
 
-.contact-us-header h1 {
+.header-title {
     margin: 0;
     font-size: 2.5em;
 }
@@ -40,66 +38,66 @@ body {
     color: #0c0c0c;
 }
 
-.contact-us-content {
+.contactUs-content {
     display: flex;
     justify-content: space-between;
     padding: 20px;
     color: #333;
-    max-width: 1200px; /* Set a max width for content alignment */
-    margin: 0 auto; /* Center align the content */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.contact-info {
+.contactInfo {
     flex: 1;
     margin-right: 20px;
 }
 
-.contact-info h3 {
+.contactInfo h3 {
     text-align: center;
     color: #0b0c0b;
     margin-top: 0;
 }
 
-.contact-info ul {
+.contactInfo ul {
     list-style-type: none;
     padding: 0;
     margin: 20px 0;
 }
 
-.contact-info ul li {
+.contactInfo ul li {
     font-size: 1.1em;
     margin: 5px 0;
     font-weight: bold;
 }
 
-.contact-info ul li i {
+.contactInfo ul li i {
     margin-right: 10px;
     color: #4CAF50;
 }
 
-.contact-info p {
+.contactInfo p {
     text-align: center;
     font-size: 1.1em;
     line-height: 1.6;
 }
 
-.contact-form {
+.contactForm {
     flex: 1;
     display: flex;
     flex-direction: column;
     background: linear-gradient(130deg, #fffdff, #c34a9b);
-    padding: 30px; /* Larger padding to create a larger background */
+    padding: 30px;
     border-radius: 8px;
     max-width: 100%;
 }
 
-.contact-form label {
+.contactForm label {
     margin-top: 10px;
     font-weight: bold;
 }
 
-.contact-form input, .contact-form textarea {
-    width: 100%; /* Full width of the container */
+.contactForm input, .contactForm textarea {
+    width: 100%;
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #ddd;
@@ -107,7 +105,7 @@ body {
     background: white;
 }
 
-.contact-form button {
+.submitButton {
     margin-left: 35%;
     margin-top: 10%;
     width: 40%;
@@ -123,30 +121,30 @@ body {
     isolation: isolate;
     display: inline-grid;
     place-content: center;
-    padding: 0.25em 0.75em; /* Smaller padding for a smaller button */
-    font-size: 14px; /* Smaller font size */
+    padding: 0.25em 0.75em;
+    font-size: 14px;
     border: 0;
     text-transform: uppercase;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.6);
     clip-path: polygon(
-        /* Top-left */ 0% var(--curve-size),
+        0% var(--curve-size),
         var(--curve-size) 0,
-        /* top-right */ 100% 0,
+        100% 0,
         100% calc(100% - var(--curve-size)),
-        /* bottom-right 1 */ calc(100% - var(--curve-size)) 100%,
-        /* bottom-right 2 */ 0 100%
+        calc(100% - var(--curve-size)) 100%,
+        0 100%
     );
     transition: color 250ms;
 }
 
-.contact-form button::after,
-.contact-form button::before {
+.submitButton::after,
+.submitButton::before {
     content: "";
     position: absolute;
     inset: 0;
 }
 
-.contact-form button::before {
+.submitButton::before {
     background: var(--border-color);
     background-size: 300% 300%;
     animation: move-bg7234 5s ease infinite;
@@ -157,75 +155,28 @@ body {
     0% {
         background-position: 31% 0%;
     }
-
     50% {
         background-position: 70% 100%;
     }
-
     100% {
         background-position: 31% 0%;
     }
 }
 
-.contact-form button::after {
+.submitButton::after {
     background: var(--bg);
     z-index: -1;
     clip-path: polygon(
-        /* Top-left */ var(--border-width)
+        var(--border-width)
         calc(var(--curve-size) + var(--border-width) * 0.5),
         calc(var(--curve-size) + var(--border-width) * 0.5) var(--border-width),
-        /* top-right */ calc(100% - var(--border-width)) var(--border-width),
-        calc(100% - var(--border-width))
-        calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5)),
-        /* bottom-right 1 */
-        calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5))
-        calc(100% - var(--border-width)),
-        /* bottom-right 2 */ var(--border-width) calc(100% - var(--border-width))
-    );
-    transition: clip-path 500ms;
-}
-
-.contact-form button:where(:hover, :focus)::after {
-    clip-path: polygon(
-        /* Top-left */ calc(100% - var(--border-width))
-        calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5)),
         calc(100% - var(--border-width)) var(--border-width),
-        /* top-right */ calc(100% - var(--border-width)) var(--border-width),
-        calc(100% - var(--border-width))
-        calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5)),
-        /* bottom-right 1 */
-        calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5))
-        calc(100% - var(--border-width)),
-        /* bottom-right 2 */
-        calc(100% - calc(var(--curve-size) + var(--border-width) * 0.5))
-        calc(100% - var(--border-width))
+        calc(100% - var(--border-width)) calc(100% - var(--border-width) - var(--curve-size)),
+        calc(100% - var(--curve-size) - var(--border-width) * 0.5) calc(100% - var(--border-width)),
+        var(--border-width) calc(100% - var(--border-width))
     );
-    transition: 200ms;
 }
 
-.contact-form button:where(:hover, :focus) {
-    color: #fff;
-}
-
-.contact-us-footer {
-    text-align: center;
-    padding: 10px 0;
-    background:linear-gradient(135deg, #00c6ff, #0072ff);
-    color: white;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.contact-us-footer p {
-    margin: 0;
-    font-size: 0.9em;
-}
-
-.Toastify__toast--success {
-    background: green;
-}
-
-.Toastify__toast--error {
-    background: red;
+.submitButton:hover {
+    color: var(--bg);
 }

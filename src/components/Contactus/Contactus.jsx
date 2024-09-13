@@ -61,13 +61,13 @@ const Contactus = () => {
     return (
         <div>
             <Header />
-            <div className="contact-us-container">
-                <header className="contact-us-header">
-                <h1 className="header-titless">CONTACT US</h1>
+            <div className="contactUs-container">
+                <header className="contactUs-header">
+                    <div className="header-title">CONTACT US</div>
                 </header>
-                <h2 className="connect-heading">Send your Qurries</h2>
-                <section className="contact-us-content">
-                    <div className="contact-info">
+                <h2 className="connect-heading">Send your Queries</h2>
+                <section className="contactUs-content">
+                    <div className="contactInfo">
                         <h3>School Information</h3>
                         <ul>
                             <li><i className="fas fa-envelope"></i> <strong>Email:</strong> info@ourschool.edu</li>
@@ -76,7 +76,7 @@ const Contactus = () => {
                         </ul>
                         <p>Feel free to fill out the contact form below, and we will get back to you as soon as possible.</p>
                     </div>
-                    <form className="contact-form" onSubmit={handleSubmit}>
+                    <form className="contactForm" onSubmit={handleSubmit}>
                         <label htmlFor="name">Name:</label>
                         <input
                             type="text"
@@ -107,12 +107,15 @@ const Contactus = () => {
                             required
                         ></textarea>
 
-                        <button type="submit">Send Message</button>
+                        <button type="submit" className="submitButton">Send Message</button>
                     </form>
                 </section>
-                <footer className="contact-us-footer">
-                    <p>&copy; 2024 Edu-web. All rights reserved.</p>
-                </footer>
+                <footer className="infra-footer">
+                <p>
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                </p>
+                <p className="footer-text">© 2024 Edu-Web. All rights reserved.</p>
+            </footer>
             </div>
             <ToastContainer />
         </div>

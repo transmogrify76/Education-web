@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import axios for making HTTP requests
 import './TimeOffRequest.css';
+import Header from '../Header/Header';
 
 const TimeOffRequest = () => {
   const [name, setName] = useState('');
@@ -40,6 +41,8 @@ const TimeOffRequest = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="formContainer">
       <div className="formWrapper">
         <h1 className="formTitle">Transfer Request</h1>
@@ -102,6 +105,7 @@ const TimeOffRequest = () => {
           {errorMessage && <p className="errorMessage">{errorMessage}</p>}
         </form>
       </div>
+    </div>
     </div>
   );
 };

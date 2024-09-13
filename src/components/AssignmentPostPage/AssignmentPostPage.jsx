@@ -1,42 +1,56 @@
-// src/components/AssignmentPostPage.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AssignmentPostPage.css'; // For custom styling
+import Header from '../Header/Header';
 
 const AssignmentPostPage = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
-  const [pdfFile, setPdfFile] = useState(null);
+  const [pdfUrl, setPdfUrl] = useState('');
+  const [classes, setClasses] = useState([]);
+  const [selectedClassId, setSelectedClassId] = useState('');
+  const [error, setError] = useState('');
 
-  const handleFileChange = (e) => {
-    setPdfFile(e.target.files[0]);
-  };
+  // Fetch the class list on component mount
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/class');
+        setClasses(response.data);
+      } catch (error) {
+        console.error('Error fetching classes:', error);
+        setError('Failed to load classes.');
+      }
+    };
+
+    fetchClasses();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('dueDate', dueDate);
-    if (pdfFile) {
-      formData.append('file', pdfFile);
-    }
+    const formData = {
+      title,
+      description,
+      dueDate,
+      pdfUrl: pdfUrl || null,
+      classId: selectedClassId,
+    };
 
     try {
-      const response = await axios.post('http://localhost:3000/assignments', formData, {
+      await axios.post('http://localhost:3000/assignments', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       });
       alert('Assignment created successfully!');
-      // Optionally, reset form fields
+      // Reset form fields
       setTitle('');
       setDescription('');
       setDueDate('');
-      setPdfFile(null);
+      setPdfUrl('');
+      setSelectedClassId('');
     } catch (error) {
       console.error('Error creating assignment:', error);
       alert('Failed to create assignment.');
@@ -44,49 +58,91 @@ const AssignmentPostPage = () => {
   };
 
   return (
-    <div className="assignment-post-page">
-      <h2>Create Assignment</h2>
-      <form onSubmit={handleSubmit}>
+    <div>
+      <Header/>
+    
+    <div className="assignment-form-container">
+      <h2 className="form-title">Create Assignment</h2>
+      {error && <p className="form-error">{error}</p>}
+      <form className="assignment-form" onSubmit={handleSubmit}>
+        
+        {/* Class Selection Dropdown */}
         <div className="form-group">
-          <label htmlFor="title">Title:</label>
+          <label htmlFor="classDropdown" className="form-label">Select a Class:</label>
+          <select
+            id="classDropdown"
+            className="class-select"
+            value={selectedClassId}
+            onChange={(e) => setSelectedClassId(e.target.value)}
+            required
+          >
+            <option value="">Select a class</option>
+            {classes.length > 0 ? (
+              classes.map((classItem) => (
+                <option key={classItem.id} value={classItem.id}>
+                  {classItem.className} (ID: {classItem.id})
+                </option>
+              ))
+            ) : (
+              <option value="" disabled>No classes available</option>
+            )}
+          </select>
+        </div>
+
+        {/* Title Input */}
+        <div className="form-group">
+          <label htmlFor="titleInput" className="form-label">Title:</label>
           <input
             type="text"
-            id="title"
+            id="titleInput"
+            className="title-input"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
+
+        {/* Description Input */}
         <div className="form-group">
-          <label htmlFor="description">Description:</label>
+          <label htmlFor="descriptionTextarea" className="form-label">Description:</label>
           <textarea
-            id="description"
+            id="descriptionTextarea"
+            className="description-textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
+
+        {/* Due Date Input */}
         <div className="form-group">
-          <label htmlFor="dueDate">Due Date:</label>
+          <label htmlFor="dueDateInput" className="form-label">Due Date:</label>
           <input
             type="date"
-            id="dueDate"
+            id="dueDateInput"
+            className="due-date-input"
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
             required
           />
         </div>
+
+        {/* PDF URL Input */}
         <div className="form-group">
-          <label htmlFor="pdf">Upload PDF:</label>
+          <label htmlFor="pdfUrlInput" className="form-label">PDF URL:</label>
           <input
-            type="file"
-            id="pdf"
-            accept=".pdf"
-            onChange={handleFileChange}
+            type="text"
+            id="pdfUrlInput"
+            className="pdf-url-input"
+            value={pdfUrl}
+            onChange={(e) => setPdfUrl(e.target.value)}
+            placeholder="Enter PDF URL"
           />
         </div>
-        <button type="submit">Create Assignment</button>
+
+        <button type="submit" className="submit-button">Create Assignment</button>
       </form>
+    </div>
     </div>
   );
 };

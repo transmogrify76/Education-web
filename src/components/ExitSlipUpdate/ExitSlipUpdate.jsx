@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ExitSlipUpdate.css'; // Ensure you have the corresponding CSS file
+import Header from '../Header/Header';
 
 const ExitSlipUpdate = () => {
   const [exitSlips, setExitSlips] = useState([]);
@@ -32,6 +33,8 @@ const ExitSlipUpdate = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="exit-slip-update-page">
       <h2>Exit Slip Request Management</h2>
       {error && <p className="error-message">{error}</p>}
@@ -76,6 +79,8 @@ const ExitSlipUpdate = () => {
           ))}
         </tbody>
       </table>
+    </div>
+          
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
 import './Consent.css';
+import Header from '../Header/Header';
 
 const Consent = () => {
   const options = [
@@ -36,12 +37,15 @@ const Consent = () => {
   };
 
   return (
+    <div>
+      <Header/>
+
     <div className="consent-form">
       <h2 className="head">Consent Form</h2>
       <p className="para">
         Dear Parent, for the information in the dropdown below, we require your consent.
       </p>
-      <form onSubmit={handleSubmit} className="form-container">
+      <form onSubmit={handleSubmit} className="container">
         <div className="form-group">
           <label>Parent's Name:</label>
           <input
@@ -91,6 +95,7 @@ const Consent = () => {
         </div>
         <button type="submit" className="submit-btn">Submit</button>
       </form>
+    </div>
     </div>
   );
 };

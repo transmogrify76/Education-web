@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './TransportRequest.css';
 import axios from 'axios';
+import Header from '../Header/Header';
 
 const TransportRequest = () => {
     // State to hold form data
@@ -48,6 +49,8 @@ const TransportRequest = () => {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="transport-request-container">
             <header className="transport-request-header">
                 <h1>Transport Request</h1>
@@ -140,6 +143,7 @@ const TransportRequest = () => {
                     </ul>
                 </div>
             </section>
+        </div>
         </div>
     );
 };

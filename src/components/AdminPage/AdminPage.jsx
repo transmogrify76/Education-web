@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import informedConsentIcon from '../Assets/accept.png';
+import Header from '../Header/Header';
 // import timeIcon from '../Assets/time.png';
 // import menuIcon from '../Assets/menu.png';
 // import registrationIcon from '../Assets/registration.png';
@@ -19,7 +20,7 @@ import chatIcon from '../Assets/chat.png';
 // import medIcon from '../Assets/hospital.png';
 import idIcon from '../Assets/student-id.png';
 import calcIcon from '../Assets/schedule.png';
-// import attenIcon from '../Assets/attendence.png';
+import attenIcon from '../Assets/attendence.png';
 // import feeIcon from '../Assets/fee.png';
 // import feeremIcon from '../Assets/payday.png';
 // import leaveIcon from '../Assets/exit.png';
@@ -27,7 +28,7 @@ import calcIcon from '../Assets/schedule.png';
 // import behavIcon from '../Assets/persuasive.png';
 // import learningIcon from '../Assets/reading.png';
 import './AdminPage.css';
-import Header from '../Header/Header';
+// import Header from '../Header/Header';
 const AdminPage = () => {
   const { admin_id,} = useParams();
   // Assuming icons is an array of objects with name and icon properties
@@ -48,8 +49,8 @@ const AdminPage = () => {
     { name: 'Student Wellbieng Request', image: chatIcon, className: 'btn-14',link:'/AdminWellbeingRequests' },
     { name: 'Behavior Assesment Tools ', image: informedConsentIcon, className: 'btn-15', link: '/AdminBehaviorAssessment' },
     { name: 'Class management Page', image: idIcon, className: 'btn-16', link: '/AdminClassMAnagementPage'},
-    { name: 'Result Upload', image: calcIcon, className: 'btn-17', link: '/UploadResults' }]
-//     { name: 'Attendance', image: attenIcon, className: 'btn-18' },
+    { name: 'Result Upload', image: calcIcon, className: 'btn-17', link: '/UploadResults' },
+    { name: 'Fee Reminder Update', image: attenIcon, className: 'btn-18', link: '/AdminFeeReminderPage' }]
 //     { name: 'Online Fee Payment', image: feeIcon, className: 'btn-19' },
 //     { name: 'Fee Reminder', image: feeremIcon, className: 'btn-20' },
 //     { name: 'Student Leave Application', image: leaveIcon, className: 'btn-21', link: '/Leave'},
@@ -68,7 +69,7 @@ const AdminPage = () => {
             {name}
           </Link>
         ))}
-      </div>
+    </div>
     </div>
   );
 }

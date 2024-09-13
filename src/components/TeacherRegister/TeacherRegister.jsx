@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
 import './TeacherRegister.css';
 
 const TeacherRegister = () => {
@@ -9,6 +10,8 @@ const TeacherRegister = () => {
     address: '',
     password: ''
   });
+  const [showPopup, setShowPopup] = useState(false);  // State for popup
+  const navigate = useNavigate();  // Initialize useNavigate
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,6 +42,10 @@ const TeacherRegister = () => {
 
       const result = await response.json();
       console.log('Registration successful:', result);
+      setShowPopup(true);  // Show the popup notification
+      setTimeout(() => {
+        navigate('/tlogin');  // Navigate to login page after 2 seconds
+      }, 2000);
     } catch (error) {
       console.error('Error registering teacher:', error);
     }
@@ -46,7 +53,6 @@ const TeacherRegister = () => {
 
   const hashPassword = async (password) => {
     // Simulating hashing function, replace with actual implementation
-    // For example, you might use a library like bcrypt on the server-side
     return password;
   };
 
@@ -77,6 +83,12 @@ const TeacherRegister = () => {
           </label>
           <button type="submit">Register</button>
         </form>
+        {showPopup && (
+          <div className="popup">
+            <span className="popup-icon">✔</span>
+            <span className="popup-message">Registration successful!</span>
+          </div>
+        )}
       </div>
     </div>
   );

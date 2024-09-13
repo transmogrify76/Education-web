@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './TransportRequestUpdatePage.css';
+import Header from '../Header/Header';
 
 const TransportRequestUpdatePage = () => {
   const [transportRequests, setTransportRequests] = useState([]);
@@ -34,6 +35,8 @@ const TransportRequestUpdatePage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="transport-request-page">
       <h2>Transport Request Management</h2>
       <table>
@@ -83,6 +86,7 @@ const TransportRequestUpdatePage = () => {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

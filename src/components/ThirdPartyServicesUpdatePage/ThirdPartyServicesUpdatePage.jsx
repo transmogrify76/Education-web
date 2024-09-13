@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ThirdPartyServicesUpdatePage.css';
+import Header from '../Header/Header';
 
 const ThirdPartyServicesUpdatePage = () => {
   const [services, setServices] = useState([]);
@@ -35,6 +36,8 @@ const ThirdPartyServicesUpdatePage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="third-party-services-page">
       <h2>Third-Party Services Management</h2>
       <table>
@@ -82,6 +85,7 @@ const ThirdPartyServicesUpdatePage = () => {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

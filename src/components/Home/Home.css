@@ -1,4 +1,4 @@
-.home-container {
+.homepage-container-home {
   display: flex;
   background-image: url(./edu.jpg);
   background-size: cover;
@@ -7,11 +7,12 @@
   height: 100vh;
 }
 
-.home-heading {
+.homepage-heading-home  {
+  font-size: 50px;
   color: rgb(0, 0, 0) !important; /* Ensures the h1 tag in Home component is white */
 }
 
-.home-content {
+.homepage-content-home {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -20,7 +21,7 @@
   justify-content: space-between;
 }
 
-.home-text {
+.homepage-text-home {
   position: absolute;
   max-width: 70%;
   top: 85px;
@@ -29,24 +30,24 @@
   margin: 40px;
 }
 
-.rating-container {
+.rating-section {
   position: absolute;
   left: 150px;
   bottom: 30px;
 }
 
-.stars {
+.rating-stars {
   color: #FFD700; /* Gold color for stars */
   font-size: 24px;
 }
 
-.rating-text {
+.rating-value {
   font-size: 24px;
   color: white;
   font-weight: bold;
 }
 
-.rating-description {
+.rating-text {
   color: #ffffff;
   font-size: 16px;
 }

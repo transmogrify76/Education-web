@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Header from '../Header/Header';
 
 const Container = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -123,6 +124,8 @@ const TimeTable = () => {
   }, {});
 
   return (
+    <div>
+      <Header/>
     <Container>
       <Title>Student Timetable</Title>
       <Dropdown value={selectedStudentId} onChange={handleStudentChange}>
@@ -159,6 +162,7 @@ const TimeTable = () => {
         <p>No timetable available for this student.</p>
       )}
     </Container>
+    </div>
   );
 };
 

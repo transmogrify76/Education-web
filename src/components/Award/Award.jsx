@@ -53,9 +53,12 @@ const Award = () => {
                         </div>
                     </div>
                 </section>
-                <footer className="awards-footer">
-                    <p>&copy; 2024 Edu-Web. All rights reserved.</p>
-                </footer>
+                <footer className="infra-footer">
+                <p>
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                </p>
+                <p className="footer-text">© 2024 Edu-Web. All rights reserved.</p>
+            </footer>
             </div>
         </div>
     );

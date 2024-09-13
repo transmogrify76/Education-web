@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Alogin.css';
+import Header from '../Header/Header';
 
 export default function Alogin() {
   const [employeeId, setEmployeeId] = useState('');
@@ -47,6 +48,8 @@ export default function Alogin() {
   }
 
   return (
+    <div>
+      <Header/>
     <div className="Alogin-container">
       <div className="Alogin-card">
         <h2>Welcome Admin</h2>
@@ -73,9 +76,10 @@ export default function Alogin() {
           </div>
           <button className="btn submit" type="submit">Login</button>
         </form>
-        <div className="button-bottom">
-          <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
-        </div>
+        <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
+                        Forgot Password?
+                    </div>
+
         <p className="message">{message}</p>
       </div>
       {showPopup && (
@@ -84,6 +88,7 @@ export default function Alogin() {
           <span className="popup-message">Login successful!</span>
         </div>
       )}
+    </div>
     </div>
   );
 }

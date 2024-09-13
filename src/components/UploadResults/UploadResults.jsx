@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UploadResults.css';
-
+import Header from '../Header/Header';
 const UploadResults = () => {
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
@@ -57,6 +57,8 @@ const UploadResults = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="upload-results-container">
       <h1>Upload Student Result</h1>
       <form onSubmit={handleSubmit}>
@@ -110,6 +112,7 @@ const UploadResults = () => {
 
         <button type="submit">Upload</button>
       </form>
+    </div>
     </div>
   );
 };

@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './NotificationPage.css';
+import Header from '../Header/Header';
+
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([]);
   const [message, setMessage] = useState('');
+  const [date, setDate] = useState('');
+  const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
   useEffect(() => {
     fetchNotifications();
   }, []);
+
   const fetchNotifications = async () => {
     setLoading(true);
     setError(null);
@@ -24,32 +30,38 @@ const NotificationPage = () => {
       setLoading(false);
     }
   };
-  const handleMessageChange = (event) => {
-    setMessage(event.target.value);
-  };
+
+  const handleMessageChange = (event) => setMessage(event.target.value);
+  const handleDateChange = (event) => setDate(event.target.value);
+  const handleDescriptionChange = (event) => setDescription(event.target.value);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
     setSuccess(false);
-    if (!message.trim()) {
-      setError('Message cannot be empty');
+
+    if (!message.trim() || !date.trim()) {
+      setError('Message and Date cannot be empty');
       setLoading(false);
       return;
     }
+
     try {
       const response = await fetch('http://localhost:3000/notification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message, date, description }),
       });
 
       if (!response.ok) {
         throw new Error('Failed to post notification');
       }
       setMessage('');
+      setDate('');
+      setDescription('');
       setSuccess(true);
       fetchNotifications(); 
     } catch (error) {
@@ -58,6 +70,7 @@ const NotificationPage = () => {
       setLoading(false);
     }
   };
+
   const handleDelete = async (id) => {
     if (!id) {
       setError('Invalid notification ID');
@@ -83,7 +96,10 @@ const NotificationPage = () => {
       setLoading(false);
     }
   };
+
   return (
+    <div>
+      <Header/>
     <div className="notification-post-container">
       <header className="header">
         <h1 className="header-title">Post Notification</h1>
@@ -96,6 +112,22 @@ const NotificationPage = () => {
             value={message}
             onChange={handleMessageChange}
             required
+            className="form-textarea"
+          ></textarea>
+          <label htmlFor="date" className="form-label">Date</label>
+          <input
+            type="date"
+            id="date"
+            value={date}
+            onChange={handleDateChange}
+            required
+            className="form-input"
+          />
+          <label htmlFor="description" className="form-label">Description</label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={handleDescriptionChange}
             className="form-textarea"
           ></textarea>
           <button type="submit" className="submit-button" disabled={loading}>
@@ -115,13 +147,15 @@ const NotificationPage = () => {
               <div key={notification.id} className="notification-item">
                 <p><strong>ID:</strong> {notification.id}</p>
                 <p><strong>Message:</strong> {notification.message}</p>
+                <p><strong>Date:</strong> {new Date(notification.date).toLocaleDateString()}</p>
+                <p><strong>Description:</strong> {notification.description || 'N/A'}</p>
                 <button 
-  onClick={() => handleDelete(notification.id)} 
-  disabled={loading}
-  className="delete-button"
->
-  {loading ? 'Deleting...' : 'Delete'}
-</button>
+                  onClick={() => handleDelete(notification.id)} 
+                  disabled={loading}
+                  className="delete-button"
+                >
+                  {loading ? 'Deleting...' : 'Delete'}
+                </button>
               </div>
             ))
           )}
@@ -131,6 +165,8 @@ const NotificationPage = () => {
         <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
       </footer>
     </div>
+    </div>
   );
 };
+
 export default NotificationPage;

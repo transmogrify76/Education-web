@@ -16,6 +16,7 @@ const GoalsSettingInternalExam = () => {
     { name: 'social studies', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' }
   ]);
   const [student, setStudent] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -63,6 +64,9 @@ const GoalsSettingInternalExam = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (loading) return; // Prevent multiple submissions
+
+    setLoading(true);
     const overallData = calculateOverallAchievements();
 
     const dataToSubmit = {
@@ -90,8 +94,6 @@ const GoalsSettingInternalExam = () => {
       myTargetForThisGrade: overallData.myTargetForThisGrade,
     };
 
-    console.log('Data to submit:', JSON.stringify(dataToSubmit, null, 2));
-
     try {
       const method = student ? 'PATCH' : 'POST';
       const url = student
@@ -114,6 +116,8 @@ const GoalsSettingInternalExam = () => {
       console.log('Success:', data);
     } catch (error) {
       console.error('Error:', error);
+    } finally {
+      setLoading(false); // Re-enable form submission
     }
   };
 
@@ -172,7 +176,9 @@ const GoalsSettingInternalExam = () => {
               ))}
             </div>
           </div>
-          <button className="button-g" type="submit">Submit</button>
+          <button className="button-g" type="submit" disabled={loading}>
+            {loading ? 'Submitting...' : 'Submit'}
+          </button>
         </form>
       </div>
     </div>

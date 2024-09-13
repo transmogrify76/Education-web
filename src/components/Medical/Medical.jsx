@@ -3,6 +3,7 @@ import './Medical.css';
 import doctor1 from '../Assets/ipanwita.jpg';
 import doctor2 from '../Assets/ayan.jpg';
 import doctor3 from '../Assets/barnali.jpg';
+import Header from '../Header/Header'
 
 const doctors = [
     {
@@ -46,6 +47,8 @@ const quotes = [
 
 const Medical = () => {
     return (
+        <div>
+            <Header/>
         <div className="medical-page-containers">
             <div className="header-container-medical">
                 <h1 className="header-title">Our Medical Support</h1>
@@ -87,6 +90,7 @@ const Medical = () => {
                     <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
                 </p>
             </footer>
+        </div>
         </div>
     );
 };

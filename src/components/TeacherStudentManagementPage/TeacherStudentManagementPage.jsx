@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './TeacherStudentManagementPage.css'; 
+import Header from '../Header/Header';
 const TeacherStudentManagementPage = () => {
   const [classNames, setClassNames] = useState([]);
   const [students, setStudents] = useState([]);
@@ -123,6 +124,8 @@ const TeacherStudentManagementPage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="teacher-student-management-page">
       <h1 className="page-title">Teacher Student Management</h1>
 
@@ -210,6 +213,7 @@ const TeacherStudentManagementPage = () => {
           Remove Student
         </button>
       </div>
+    </div>
     </div>
   );
 };
