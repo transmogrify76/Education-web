@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './StudentProfilePage.css';
+import Header from '../Header/Header'
 
 const StudentProfilePage = () => {
   const { parentId } = useParams();
@@ -37,6 +38,8 @@ const StudentProfilePage = () => {
   }
 
   return (
+    <div>
+    <Header/>
     <div className="student-profile-container">
       <h1>Student Profiles</h1>
       {studentData.map(student => (
@@ -49,6 +52,7 @@ const StudentProfilePage = () => {
           <div className="profile-field"><strong>Address:</strong> {student.address}</div>
         </div>
       ))}
+    </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom'; // Import Link
 import './AdminRegister.css';
+import Header from '../Header/Header';
 
 const AdminRegister = () => {
     const [formData, setFormData] = useState({
@@ -56,6 +57,8 @@ const AdminRegister = () => {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="register-page-container">
             <form className="register-form" onSubmit={handleSubmit}>
                 <h1 className="form-title">Admin Register</h1>
@@ -116,6 +119,7 @@ const AdminRegister = () => {
                 </div>
             )}
             
+        </div>
         </div>
     );
 };

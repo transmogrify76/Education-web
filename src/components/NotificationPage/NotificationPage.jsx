@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './NotificationPage.css';
+import Header from '../Header/Header';
 
 const NotificationPage = () => {
   const [notifications, setNotifications] = useState([]);
@@ -97,6 +98,8 @@ const NotificationPage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="notification-post-container">
       <header className="header">
         <h1 className="header-title">Post Notification</h1>
@@ -161,6 +164,7 @@ const NotificationPage = () => {
       <footer className="footer">
         <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
       </footer>
+    </div>
     </div>
   );
 };

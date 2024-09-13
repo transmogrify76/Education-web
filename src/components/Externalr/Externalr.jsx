@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Externalr';
+import Header from '../Header/Header';
 export default function Externalr(){
     const [selectedAcademicYear, setSelectedAcademicYear] = useState('');
   const [selectedReportCardLevel, setSelectedReportCardLevel] = useState('');
@@ -22,6 +23,8 @@ export default function Externalr(){
   ];
 
   return (
+    <div>
+      <Header/>
     <div className='report-container'>
       <h2 className='report-head'>External Report</h2>
       <div className='report-para'>
@@ -68,6 +71,8 @@ export default function Externalr(){
           </select>
         </div>
       </div>
+    </div>
+          
     </div>
   );
 }

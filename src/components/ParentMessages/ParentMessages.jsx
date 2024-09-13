@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './ParentMessages.css';
+import Header from '../Header/Header';
 // Assuming you have a parent-specific SideNav
 
 
@@ -42,10 +43,10 @@ const ParentMessages = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    // <div className='for-header'>
-    //   <Header/>
-    // <div className="dashboard-container">
-    //     <SideNav parentId={parentId} />
+    <div>
+      <Header/>
+    {/* // <div className="dashboard-container">
+    //     <SideNav parentId={parentId} /> */}
     
     <div className="parent-messages-container">
       <h1>Messages for {parentName}</h1>
@@ -66,8 +67,7 @@ const ParentMessages = () => {
         )}
       </ul>
     </div>
-    // </div>
-    // </div>
+    </div>
   );
 };
 

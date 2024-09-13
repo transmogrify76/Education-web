@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ConsentFormPage.css';
-
+import Header from '../Header/Header';
 const ConsentFormPage = () => {
   const [consentForms, setConsentForms] = useState([]);
 
@@ -19,6 +19,8 @@ const ConsentFormPage = () => {
   }, []);
 
   return (
+    <div>
+      <Header/>
     <div className="consent-form-page">
       <h2>Consent Form Management</h2>
       <table>
@@ -45,6 +47,8 @@ const ConsentFormPage = () => {
           ))}
         </tbody>
       </table>
+    </div>
+          
     </div>
   );
 };

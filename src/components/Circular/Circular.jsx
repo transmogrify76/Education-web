@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Circular.css'; // Assuming you have a CSS file named Circular.css
+import Header from '../Header/Header'
 
 const Circular = () => {
   const [currentVisible, setCurrentVisible] = useState(true);
@@ -70,6 +71,8 @@ const Circular = () => {
   ];
 
   return (
+    <div>
+      <Header/>
     <div className="circular-file-container">
       <div className="options-panel">
         <div className="options-top">
@@ -172,7 +175,8 @@ const Circular = () => {
             onChange={handleSearchTermChange}
           />
         </div>
-      </div>
+      </div>     
+    </div>
     </div>
   );
 };

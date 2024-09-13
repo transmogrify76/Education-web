@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import './ResetPassword.css';
 
 const ResetPassword = () => {
   const [email, setEmail] = useState('');
@@ -60,37 +61,43 @@ const ResetPassword = () => {
   };
 
   return (
-    <div>
-      <h2>Reset Password</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
+    <div className="reset-password-container">
+      <h2 className="reset-password-title">Reset Password</h2>
+      <form className="reset-password-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label className="form-label" htmlFor="email">Email:</label>
           <input
+            className="form-input"
             type="email"
+            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>OTP:</label>
+        <div className="form-group">
+          <label className="form-label" htmlFor="otp">OTP:</label>
           <input
+            className="form-input"
             type="text"
+            id="otp"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
             required
           />
         </div>
-        <div>
-          <label>New Password:</label>
+        <div className="form-group">
+          <label className="form-label" htmlFor="newPassword">New Password:</label>
           <input
+            className="form-input"
             type="password"
+            id="newPassword"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Reset Password</button>
+        <button className="reset-password-button" type="submit">Reset Password</button>
       </form>
       <ToastContainer />
     </div>

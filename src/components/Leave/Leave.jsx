@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Leave.css';
+import Header from '../Header/Header';
 
 const Leave = () => {
   const [name, setName] = useState('');
@@ -36,66 +37,75 @@ const Leave = () => {
   };
 
   return (
-    <div className="leave-container">
-      <h1>Student Leave Application</h1>
-      <form onSubmit={handleSubmit} className="leave-form">
-        <div className="form-group">
+    <div>
+      <Header/>
+    <div className="leave-app-container">
+      <h1 className="leave-app-heading">Student Leave Application</h1>
+      <form onSubmit={handleSubmit} className="leave-app-form">
+        <div className="form-control">
           <label htmlFor="name">Name:</label>
           <input
             type="text"
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            className="form-input"
           />
         </div>
-        <div className="form-grou">
+        <div className="form-control">
           <label htmlFor="rollNo">Roll No:</label>
           <input
             type="text"
             id="rollNo"
             value={rollNo}
             onChange={(e) => setRollNo(e.target.value)}
+            className="form-input"
           />
         </div>
-        <div className="form-grou">
+        <div className="form-control">
           <label htmlFor="class">Class:</label>
           <input
             type="text"
             id="class"
             value={class_}
             onChange={(e) => setClass(e.target.value)}
+            className="form-input"
           />
         </div>
-        <div className="form-group">
+        <div className="form-control">
           <label htmlFor="fromDate">From Date:</label>
           <input
             type="date"
             id="fromDate"
             value={fromDate}
             onChange={(e) => setFromDate(e.target.value)}
+            className="form-input"
           />
         </div>
-        <div className="form-group">
+        <div className="form-control">
           <label htmlFor="toDate">To Date:</label>
           <input
             type="date"
             id="toDate"
             value={toDate}
             onChange={(e) => setToDate(e.target.value)}
+            className="form-input"
           />
         </div>
-        <div className="form-group">
+        <div className="form-control">
           <label htmlFor="reason">Reason:</label>
           <textarea
             id="reason"
             value={reason}
             onChange={(e) => setReason(e.target.value)}
+            className="form-textarea"
           ></textarea>
         </div>
-        <button type="submit">Submit</button>
-        {error && <p className="error-message">{error}</p>}
-        {success && <p className="success-message">{success}</p>}
+        <button type="submit" className="submit-button">Submit</button>
+        {error && <p className="error-text">{error}</p>}
+        {success && <p className="success-text">{success}</p>}
       </form>
+    </div>
     </div>
   );
 };

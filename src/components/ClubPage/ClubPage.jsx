@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ClubPage.css';
+import Header from '../Header/Header';
 
 const clubs = [
   {
@@ -42,6 +43,8 @@ const ClubPage = () => {
     navigate(`/Payment/${club.id}`, { state: { club } });
   };
   return (
+    <div>
+      <Header/>
     <div className="club-page">
       <header className="club-page-headers">
         <h3 className="our">Our Clubs</h3>
@@ -76,6 +79,7 @@ const ClubPage = () => {
         )}
       </div>
       </div>
+    </div>
     </div>
   );
 };

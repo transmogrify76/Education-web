@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './GradePage.css';
+import Header from '../Header/Header'
 
 const GradePage = () => {
   const [students, setStudents] = useState([]);
@@ -28,20 +29,28 @@ const GradePage = () => {
   useEffect(() => {
     if (selectedStudent) {
       setLoading(true);
+      setError('');
       fetch(`http://localhost:3000/grading/student/${selectedStudent}`)
-        .then(response => response.json())
+        .then(response => {
+          if (response.status === 404) {
+            setGrades([]);
+            setError('No grades available for this student.');
+            return [];
+          }
+          return response.json();
+        })
         .then(data => {
           setLoading(false);
           if (Array.isArray(data)) {
             setGrades(data);
-          } else {
-            console.error('Expected an array of grades');
           }
         })
         .catch(error => {
           setLoading(false);
           console.error('Error fetching grades:', error);
         });
+    } else {
+      setGrades([]);
     }
   }, [selectedStudent]);
 
@@ -68,7 +77,7 @@ const GradePage = () => {
       }),
     })
       .then(response => response.json())
-      .then(data => {
+      .then(() => {
         setLoading(false);
         setError('');
         setSubject('');
@@ -91,17 +100,16 @@ const GradePage = () => {
       .catch(error => console.error('Error fetching grades:', error));
   };
 
-  const handleUpdate = (gradeId, updatedGrade) => {
+  const handleUpdate = (gradeId, subject, updatedGrade) => {
     setLoading(true);
-    fetch(`http://localhost:3000/grading/student/${selectedStudent}`, {
+    fetch(`http://localhost:3000/grading/student/${selectedStudent}/subject/${subject}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(updatedGrade),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then(() => {
         setLoading(false);
         fetchGrades();
       })
@@ -112,7 +120,9 @@ const GradePage = () => {
   };
 
   return (
-    <div className="grade-page">
+    <div>
+      <Header/>
+    <div className="student-grading-page">
       <h1>Create and Update Grade Remarks</h1>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
@@ -132,37 +142,90 @@ const GradePage = () => {
             ))}
           </select>
         </div>
-        {/* Rest of the form fields */}
+
+        <div className="form-group">
+          <label htmlFor="subject">Subject</label>
+          <input
+            type="text"
+            id="subject"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="assignment">Assignment Name</label>
+          <input
+            type="text"
+            id="assignment"
+            value={assignmentName}
+            onChange={(e) => setAssignmentName(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="grade">Grade</label>
+          <input
+            type="text"
+            id="grade"
+            value={grade}
+            onChange={(e) => setGrade(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="remarks">Remarks</label>
+          <input
+            type="text"
+            id="remarks"
+            value={remarks}
+            onChange={(e) => setRemarks(e.target.value)}
+            required
+          />
+        </div>
+
+        <button type="submit" disabled={loading}>
+          {loading ? 'Submitting...' : 'Submit'}
+        </button>
       </form>
+
       {loading ? (
         <p>Loading...</p>
       ) : (
         selectedStudent && (
           <div>
             <h2>Grades for Student ID: {selectedStudent}</h2>
-            <ul>
-              {grades.map(gradeItem => (
-                <li key={gradeItem.id}>
-                  <strong>Subject:</strong> {gradeItem.subject}, 
-                  <strong> Assignment:</strong> {gradeItem.assignmentName}, 
-                  <strong> Grade:</strong> {gradeItem.grade}, 
-                  <strong> Remarks:</strong> {gradeItem.remarks}
-                  <button
-                    onClick={() =>
-                      handleUpdate(gradeItem.id, {
-                        grade: prompt('New grade:', gradeItem.grade),
-                        remarks: prompt('New remarks:', gradeItem.remarks),
-                      })
-                    }
-                  >
-                    Update
-                  </button>
-                </li>
-              ))}
-            </ul>
+            {grades.length === 0 && !error ? (
+              <p>No grades available for this student.</p>
+            ) : (
+              <ul>
+                {grades.map(gradeItem => (
+                  <li key={gradeItem.id}>
+                    <strong>Subject:</strong> {gradeItem.subject}, 
+                    <strong> Assignment:</strong> {gradeItem.assignmentName}, 
+                    <strong> Grade:</strong> {gradeItem.grade}, 
+                    <strong> Remarks:</strong> {gradeItem.remarks}
+                    <button
+                      onClick={() =>
+                        handleUpdate(gradeItem.id, gradeItem.subject, {
+                          grade: prompt('New grade:', gradeItem.grade),
+                          remarks: prompt('New remarks:', gradeItem.remarks),
+                        })
+                      }
+                    >
+                      Update
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         )
       )}
+    </div>
     </div>
   );
 };

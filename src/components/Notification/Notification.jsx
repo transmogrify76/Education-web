@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import Header from '../Header/Header';
+
 
 const Container = styled.div`
   font-family: 'Montserrat', sans-serif;
@@ -166,6 +168,8 @@ const Notification = () => {
   }
 
   return (
+    <div>
+      <Header/>
     <Container>
       {notificationData.length > 0 ? (
         notificationData.map((notification) => (
@@ -190,6 +194,7 @@ const Notification = () => {
         </p>
       </LearnMoreSection>
     </Container>
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './ClubPaymentPage.css';
+import Header from '../Header/Header';
 
 const paymentOptions = ['Credit Card', 'Debit Card', 'Google Pay', 'Razorpay'];
 
@@ -18,6 +19,8 @@ const ClubPaymentPage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="payment-page-container">
       <header className="payment-header">
         <h1>Payment for {club.name}</h1>
@@ -91,6 +94,8 @@ const ClubPaymentPage = () => {
       <footer className="payment-footer">
         <p>&copy; 2024 Edu_Web. All rights reserved.</p>
       </footer>
+    </div>
+          
     </div>
   );
 };

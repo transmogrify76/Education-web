@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './CounselingRequest.css';
+import Header from '../Header/Header';
 
 const CounselingRequest = () => {
   const { parentId, parentName, email, phoneNo } = useParams();
@@ -88,6 +89,8 @@ const CounselingRequest = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="counseling-form-container">
       <h2>Counseling Request Form</h2>
       <form onSubmit={handleSubmit}>
@@ -209,6 +212,7 @@ const CounselingRequest = () => {
         </div>
       </form>
     </div>
+   </div>
   );
 };
 

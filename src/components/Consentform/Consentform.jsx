@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import Header from '../Header/Header';
 
 const ConsentForm = () => {
   // Sample options for the dropdown
@@ -12,9 +13,12 @@ const ConsentForm = () => {
 
   return (
     <div>
+      <Hedaer/>
+    <div>
       <h2>Dear Parent,</h2>
       <p>For the information in the dropdown below, we require your consent.</p>
       <Select options={options} placeholder="Please select" />
+    </div>  
     </div>
   );
 }

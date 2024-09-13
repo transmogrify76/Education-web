@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import './CurriculumPage.css';
 import Header from '../Header/Header';
 
-
-
 const subjects = {
     prePrimary: {
         title: 'Pre-Primary Education',
@@ -53,48 +51,48 @@ const CurriculumPage = () => {
     return (
         <div>
             <Header/>
-        <div className="curriculum-page-container">
-            <div className="header-containers">
-                <h1 className="header-titless">Our Curriculum</h1>
+            <div className="curriculum-container">
+                <div className="curriculum-header-container">
+                    <h1 className="curriculum-header-title">Our Curriculum</h1>
+                </div>
+                <h2 className='curriculum-heading-classes'>All CLASSES </h2>
+                <div className="curriculum-main-content">
+                    <div className="curriculum-sidebar">
+                        <ul>
+                            <li onClick={() => setSelectedOption('prePrimary')}>Pre-Primary</li>
+                            <li onClick={() => setSelectedOption('primary')}>Primary</li>
+                            <li onClick={() => setSelectedOption('secondary')}>Secondary</li>
+                            <li onClick={() => setSelectedOption('highSecondary')}>High Secondary</li>
+                        </ul>
+                    </div>
+                    <div className="curriculum-content-area">
+                        <h2>{subjects[selectedOption].title}</h2>
+                        <p>{subjects[selectedOption].description}</p>
+                    </div>
+                </div>
+                <h2 className="curriculum-heading-additional">ADDITIONAL COURSE </h2>
+                <div className="curriculum-additional-courses-section">
+                    <div className="curriculum-courses-navbar">
+                        <ul>
+                            <li onClick={() => setActiveCourse('robotics')}>Robotics</li>
+                            <li onClick={() => setActiveCourse('creativeWriting')}>Creative Writing</li>
+                            <li onClick={() => setActiveCourse('musicAppreciation')}>Music Appreciation</li>
+                            <li onClick={() => setActiveCourse('advancedProgramming')}>Advanced Programming</li>
+                            <li onClick={() => setActiveCourse('artDesign')}>Art & Design</li>
+                        </ul>
+                    </div>
+                    <div className="curriculum-course-content">
+                        <h2>{additionalCourses[activeCourse].title}</h2>
+                        <p>{additionalCourses[activeCourse].description}</p>
+                    </div>
+                </div>
+                <footer className="infra-footer">
+                    <p className="footer-text">&copy; 2024 Edu-Web. All rights reserved.</p>
+                    <p>
+                        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                    </p>
+                </footer>
             </div>
-            <h2 className='heading-course'>All CLASSES </h2>
-            <div className="main-content-curiculum">
-                <div className="sidebars">
-                    <ul>
-                        <li onClick={() => setSelectedOption('prePrimary')}>Pre-Primary</li>
-                        <li onClick={() => setSelectedOption('primary')}>Primary</li>
-                        <li onClick={() => setSelectedOption('secondary')}>Secondary</li>
-                        <li onClick={() => setSelectedOption('highSecondary')}>High Secondary</li>
-                    </ul>
-                </div>
-                <div className="content-area">
-                    <h2>{subjects[selectedOption].title}</h2>
-                    <p>{subjects[selectedOption].description}</p>
-                </div>
-            </div>
-            <h2 className="heading-course">ADDITIONAL COURSE </h2>
-            <div className="additional-courses-sections">
-                <div className="courses-navbar">
-                    <ul>
-                        <li onClick={() => setActiveCourse('robotics')}>Robotics</li>
-                        <li onClick={() => setActiveCourse('creativeWriting')}>Creative Writing</li>
-                        <li onClick={() => setActiveCourse('musicAppreciation')}>Music Appreciation</li>
-                        <li onClick={() => setActiveCourse('advancedProgramming')}>Advanced Programming</li>
-                        <li onClick={() => setActiveCourse('artDesign')}>Art & Design</li>
-                    </ul>
-                </div>
-                <div className="course-content">
-                    <h2>{additionalCourses[activeCourse].title}</h2>
-                    <p>{additionalCourses[activeCourse].description}</p>
-                </div>
-            </div>
-            <footer className="footer">
-                <p>&copy; 2024 Edu-Web. All rights reserved.</p>
-                <p>
-                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-                </p>
-            </footer>
-        </div>
         </div>
     );
 };

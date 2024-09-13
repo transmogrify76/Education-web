@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './ExitSlipRequest.css';
+import Header from '../Header/Header';
 
 const ExitSlipRequest = () => {
   const { parentId } = useParams();
@@ -102,6 +103,8 @@ const ExitSlipRequest = () => {
   }
 
   return (
+    <div>
+      <Header/>
     <div className="container">
       <h2 className="heading">Exit Slip Request</h2>
       <form className="form" onSubmit={handleSubmit}>
@@ -153,6 +156,8 @@ const ExitSlipRequest = () => {
         />
         <button type="submit" className="submit-button">Submit Request</button>
       </form>
+    </div>
+          
     </div>
   );
 };

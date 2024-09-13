@@ -75,6 +75,12 @@ function SideNav({ studentId }) {
             Resource of the Class
           </Link>
         </li>
+        <li className="sidebar-item">
+          <Link to={`/StudentGradesPage/${studentId}`}>
+            <FaFileAlt className="sidebar-icon" />
+            Resource of the Class
+          </Link>
+        </li>
       </ul>
     </nav>
   );

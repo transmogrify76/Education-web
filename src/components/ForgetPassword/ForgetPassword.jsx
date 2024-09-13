@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import './ForgetPassword.css'; // Import the CSS file
+import Header from '../Header/Header';
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
@@ -58,6 +59,8 @@ const ForgetPassword = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="forget-password-container">
       <h2>Forget Password</h2>
       <form onSubmit={handleSubmit} className="forget-password-form">
@@ -80,6 +83,7 @@ const ForgetPassword = () => {
         </button>
       </form>
       <ToastContainer />
+    </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './ParentProfilePage.css';
+import Header from '../Header/Header'
 
 const ParentProfilePage = () => {
   const { parentId } = useParams();
@@ -37,6 +38,8 @@ const ParentProfilePage = () => {
   }
 
   return (
+    <div>
+      <Header/>
     <div className="parent-profile-container">
       <h1>Parent Profile</h1>
       <div className="profile-card">
@@ -47,6 +50,7 @@ const ParentProfilePage = () => {
         <p className="profile-field"><strong>Phone Number:</strong> {parentData.phoneNo}</p>
         <p className="profile-field"><strong>Address:</strong> {parentData.address}</p>
       </div>
+    </div>
     </div>
   );
 };

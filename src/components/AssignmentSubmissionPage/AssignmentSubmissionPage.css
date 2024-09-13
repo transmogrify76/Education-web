@@ -1,43 +1,83 @@
 .assignment-submission-page {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-  }
-  
-  .assignment-details {
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input[type="text"],
-  .form-group textarea {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-  
-  .form-group input[type="file"] {
-    padding: 6px;
-  }
-  
-  button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.for-navbar {
+  display: flex;
+  flex-direction: row;
+}
+
+.assignment-submission-container {
+  flex: 1;
+  margin-left: 20px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.class-dropdown-container,
+.assignment-dropdown-container {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+}
+
+select,
+textarea,
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+select {
+  background-color: #fff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.pdf-preview,
+.pdf-url {
+  margin-top: 10px;
+}
+
+.pdf-preview a,
+.pdf-url a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.pdf-preview a:hover,
+.pdf-url a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}

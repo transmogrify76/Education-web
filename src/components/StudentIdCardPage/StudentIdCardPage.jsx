@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import './StudentIdCardPage.css';
+import Header from '../Header/Header'
 
 const StudentIdCardPage = () => {
   const { parentId } = useParams();
@@ -86,6 +87,8 @@ const StudentIdCardPage = () => {
   }
 
   return (
+    <div>
+      <Header/>
     <div className="id-card-page-container">
       <h1>Student ID Cards</h1>
       <div className="student-list">
@@ -116,6 +119,7 @@ const StudentIdCardPage = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

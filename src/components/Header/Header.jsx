@@ -19,9 +19,21 @@ const Header = () => {
   };
 
   const handleLogout = () => {
+    const userType = localStorage.getItem('userType'); // Fetch the user type from storage
+
+    // Remove authentication tokens
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
-    navigate('/', { replace: true });
+    localStorage.removeItem('userType'); // Optionally remove the user type
+
+    // Redirect based on user type
+    if (userType === 'student') {
+      navigate('/Login', { replace: true }); // Redirect student to login page
+    } else if (userType === 'parent') {
+      navigate('/Plogin', { replace: true }); // Redirect parent to parent login page
+    } else {
+      navigate('/', { replace: true }); // Default redirect for other users
+    }
   };
 
   return (
@@ -55,7 +67,6 @@ const Header = () => {
           <div onClick={() => toggleDropdown('logout')} className="dropbtn">Log Out</div>
           {isLogoutConfirmationOpen && (
             <div className="dropdown-content logout-confirmation">
-              {/* <p>Are you sure you want to log out?</p> */}
               <div className="logout-buttons">
                 <button onClick={handleLogout} className="logout-button">Logout</button>
                 <button onClick={() => setIsLogoutConfirmationOpen(false)} className="cancel-button">Cancel</button>

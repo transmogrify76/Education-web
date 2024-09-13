@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './FeeReminderPage.css';
+import Header from '../Header/Header';
 
 const FeeReminderPage = () => {
   const { parentId } = useParams();
@@ -89,15 +90,17 @@ const FeeReminderPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="page-container">
-      <header className="header">
-        <h1 className="header-title">Fee Reminder</h1>
+    <div>
+      <Header/>
+    <div className="fee-reminder-container">
+      <header className="page-header">
+        <div className="header-title">Fee Reminder</div>
       </header>
-      <main className="main-content">
-        <section className="student-selection">
-          <label htmlFor="student-select">Select Student:</label>
+      <main className="content-main">
+        <section className="student-selector">
+          <label htmlFor="student-dropdown">Select Student:</label>
           <select
-            id="student-select"
+            id="student-dropdown"
             value={selectedStudentId}
             onChange={(e) => setSelectedStudentId(e.target.value)}
           >
@@ -111,9 +114,9 @@ const FeeReminderPage = () => {
         </section>
 
         {selectedStudentId && (
-          <section className="student-fee-details">
+          <section className="fee-details-section">
             <h2>Fee Details for Selected Student</h2>
-            <table className="fee-table">
+            <table className="fee-details-table">
               <thead>
                 <tr>
                   <th>Term</th>
@@ -130,11 +133,11 @@ const FeeReminderPage = () => {
                       <td>{fee.term}</td>
                       <td>{fee.amount}</td>
                       <td>{new Date(fee.dueDate).toLocaleDateString()}</td>
-                      <td className={`status ${fee.status.toLowerCase()}`}>{fee.status}</td>
+                      <td className={`fee-status ${fee.status.toLowerCase()}`}>{fee.status}</td>
                       <td>
                         {fee.status === 'Due' && (
                           <button
-                            className="pay-button"
+                            className="payment-button"
                             onClick={() => handlePayment(fee.id, fee.term)}
                           >
                             Pay Now
@@ -152,7 +155,7 @@ const FeeReminderPage = () => {
             </table>
           </section>
         )}
-        <section className="payment-options">
+        <section className="payment-options-section">
           <h2>Payment Options</h2>
           <ul>
             {paymentOptions.map((option, index) => (
@@ -160,13 +163,18 @@ const FeeReminderPage = () => {
             ))}
           </ul>
         </section>
-        <div className="caution">
+        <div className="notice-section">
           <p>Please ensure all fee payments are made by the due dates to avoid any late fees. For any queries, contact the school administration.</p>
         </div>
       </main>
-      <footer className="footer">
+      <footer className="infra-footer">
         <p className="footer-text">© 2024 School Management System. All rights reserved.</p>
+        <p>
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                </p>
       </footer>
+    </div>
+          
     </div>
   );
 };

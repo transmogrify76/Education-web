@@ -1,5 +1,3 @@
-/* Infrastructure.css */
-
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -8,7 +6,7 @@ body {
     background-color: #f5f5f5;
 }
 
-.infrastructure-page-container {
+.infra-page-container {
     margin-top: 0%;
     width: 100%;
     overflow: hidden;
@@ -17,12 +15,11 @@ body {
     min-height: 100vh;
 }
 
-.header-container {
+.infra-header-container {
     position: relative;
     top: 0px;
     width: 100%;
     height: 400px;
-    /* margin-top: 6%; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,7 +30,7 @@ body {
     overflow: hidden;
 }
 
-.header-container::before {
+.infra-header-container::before {
     content: "";
     position: absolute;
     top: 0;
@@ -41,62 +38,59 @@ body {
     width: 100%;
     height: 100%;
     background-image: 
-        linear-gradient(to right, rgba(255, 0, 25, 0.85), rgba(0, 0, 255, 0.88)), /* Gradient overlay */
-        url('../Assets/schooltwo.jpg'); /* Background image */
+        linear-gradient(to right, rgba(253, 76, 94, 0.676), rgba(0, 0, 255, 0.598)),
+        url('../Assets/Newtown-school.jpg');
     background-size: cover;
     background-position: center;
-    background-blend-mode: overlay;
-    filter: blur(8px); /* Apply blur effect */
-    /* z-index: 1; */
+    /* background-blend-mode: overlay; */
+    /* filter: blur(8px); */
 }
 
-.header-titless {
+.infra-header-title {
     color: white !important;
     position: relative;
     z-index: 2;
     font-size: 3rem;
-    font-family: 'Merriweather', serif; /* New font family */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Updated text shadow */
+    font-family: 'Merriweather', serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
-.main-contentaer {
+.infra-main-content {
     display: flex;
     flex-direction: row;
     margin: 2rem auto;
     max-width: 1200px;
     padding: 1rem;
-    gap: 2rem; /* Added gap between slideshow and description */
+    gap: 2rem;
     flex: 1;
 }
 
-.slideshow-container {
+.infra-slideshow-container {
     flex: 1;
     position: relative;
-    margin-left:0%;
-    left: 0%;
-    height: 500px; /* Adjusted height for better visuals */
-    width: 600px; /* Adjusted width */
+    height: 500px;
+    width: 600px;
     overflow: hidden;
     border: 2px solid #ccc;
-    border-radius: 15px; /* Increased border radius */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     margin-right: 1%;
 }
 
-.slide {
+.infra-slide {
     display: none;
     height: 100%;
     width: 100%;
 }
 
-.slide img {
+.infra-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 15px; /* Match container radius */
+    border-radius: 15px;
 }
 
-.fade {
+.infra-fade {
     animation-name: fade;
     animation-duration: 2s;
 }
@@ -106,29 +100,26 @@ body {
     to { opacity: 1; }
 }
 
-.description-container {
+.infra-description-container {
     flex: 1;
-    width: 50%; /* Adjusted width */
+    width: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around; /* Adjusted for better spacing */
-    gap: 1.5rem; /* Added gap between cards */
+    justify-content: space-around;
+    gap: 1rem;
 }
 
-.info-card {
+.infra-info-card {
     position: relative;
     background: rgba(255, 255, 255, 0.95);
-    padding: 1.5rem; /* Increased padding for more breathing space */
-    border-radius: 15px; /* Increased border radius */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
-    border: none; /* Removed border for cleaner look */
-    background-color: #ffffff; /* Pure white background for contrast */
-    opacity: 0; /* Start as invisible */
-    transform: translateY(20px); /* Adjusted start position for animation */
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Adjusted transition */
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-.info-card::before {
+.infra-info-card::before {
     content: "";
     position: absolute;
     top: 0;
@@ -141,9 +132,9 @@ body {
     z-index: 0;
 }
 
-.info-card.scroll-animate {
+.infra-info-card.infra-scroll-animate {
     opacity: 1;
-    transform: translateY(0); /* End position for animation */
+    transform: translateY(0);
 }
 
 @keyframes scrollAnimation {
@@ -151,29 +142,28 @@ body {
     100% { opacity: 1; transform: translateY(0); }
 }
 
-.info-card.scroll-animate {
+.infra-info-card.infra-scroll-animate {
     animation: scrollAnimation 0.6s ease-out forwards;
 }
 
-
-.footer {
-    background-color: #333;
+.infra-footer {
+    background-color: #1b8cfe;
     color: #fff;
     padding: 1rem;
     text-align: center;
     border-top: 1px solid #444;
 }
 
-.footer a {
-    color: #fff;
+.infra-footer a {
+    color: #ff0000;
     text-decoration: none;
     font-weight: bold;
 }
 
-.footer a:hover {
+.infra-footer a:hover {
     text-decoration: underline;
 }
 
-.footer p {
+.infra-footer p {
     margin: 0.5rem 0;
 }

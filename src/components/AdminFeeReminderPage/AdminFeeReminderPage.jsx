@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Header from '../Header/Header';
 
 const AdminFeeReminderPage = () => {
   const [feeReminders, setFeeReminders] = useState([]);
@@ -46,6 +47,8 @@ const AdminFeeReminderPage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="admin-fee-reminder-page">
       <h1>Admin Fee Reminder Management</h1>
 
@@ -147,6 +150,7 @@ const AdminFeeReminderPage = () => {
         </div>
         <button type="submit">Create Fee Reminder</button>
       </form>
+    </div>
     </div>
   );
 };

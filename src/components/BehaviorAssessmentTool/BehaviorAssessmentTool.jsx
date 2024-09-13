@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './BehaviorAssessmentTool.css';
+import Header from '../Header/Header'
 
 const BehaviorAssessmentTool = () => {
   const { parentId } = useParams(); // Get parentId from the URL
@@ -56,6 +57,8 @@ const BehaviorAssessmentTool = () => {
   if (error) return <div className="error-message">{error}</div>;
 
   return (
+    <div>
+      <Header/>
     <div className="behavior-container">
       <header className="behavior-tool-header">
         <h4 className="behavior-tool-title">Behavior Assessment Tool</h4>
@@ -129,6 +132,7 @@ const BehaviorAssessmentTool = () => {
       <footer className="behavior-tool-footer">
         <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
       </footer>
+    </div>
     </div>
   );
 };

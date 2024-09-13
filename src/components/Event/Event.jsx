@@ -25,16 +25,16 @@ const Event = () => {
   return (
     <div>
       <Header />
-      <div className="events-page-container">
-        <div className="header-container-event">
-          <h1 className="header-titless">Upcoming Events & Holidays</h1>
+      <div className="event-page-container">
+        <div className="event-header-container">
+          <h1 className="event-header-title">Upcoming Events & Holidays</h1>
         </div>
-        <div className="main-contenter">
-          <div className="events-container">
-            <h2 className="section-title">Upcoming Events & Holidays</h2>
+        <div className="event-main-content">
+          <div className="event-list-container">
+            <h2 className="event-section-title">Upcoming Events & Holidays</h2>
             {notifications.length > 0 ? (
               notifications.map((notification) => (
-                <div key={notification.id} className="notification-card">
+                <div key={notification.id} className="event-notification-card">
                   <h3>{notification.message}</h3>
                   <p><strong>Date:</strong> {notification.date ? formatDate(notification.date) : 'No date provided'}</p>
                   <p><strong>Description:</strong> {notification.description || 'No description available'}</p>
@@ -45,12 +45,12 @@ const Event = () => {
             )}
           </div>
         </div>
-        <footer className="footer">
-          <p>&copy; 2024 Edu-Web. All rights reserved.</p>
-          <p>
-            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-          </p>
-        </footer>
+        <footer className="infra-footer">
+                <p>
+                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                </p>
+                <p className="footer-text">© 2024 Edu-Web. All rights reserved.</p>
+            </footer>
       </div>
     </div>
   );

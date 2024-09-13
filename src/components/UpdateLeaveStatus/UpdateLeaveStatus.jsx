@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UpdateLeaveStatus.css';
+import Header from '../Header/Header';
 
 const UpdateLeaveStatus = () => {
   const [leaveRequests, setLeaveRequests] = useState([]);
@@ -33,6 +34,8 @@ const UpdateLeaveStatus = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="leave-request-page">
       <h2>Leave Request Management</h2>
       <table>
@@ -84,6 +87,7 @@ const UpdateLeaveStatus = () => {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 };

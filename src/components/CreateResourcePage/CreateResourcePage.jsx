@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './CreateResourcePage.css'; // Import the CSS file
+import Header from '../Header/Header';
 
 const CreateResourcePage = () => {
   const { teacherId } = useParams(); // Get teacherId from URL parameters
@@ -82,6 +83,8 @@ const CreateResourcePage = () => {
   if (error) return <p>{error}</p>;
 
   return (
+    <div>
+      <Header/>
     <div className="create-resource-container">
       <h1>Create and View Resources</h1>
       <form className="create-resource-form" onSubmit={handleSubmit}>
@@ -167,6 +170,7 @@ const CreateResourcePage = () => {
         )}
       </ul>
     </div>
+  </div>
   );
 };
 

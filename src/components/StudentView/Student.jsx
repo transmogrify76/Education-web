@@ -50,6 +50,9 @@ function Student() {
           <div onClick={() => navigate(`/ResourceShowPage/${studentId}`)} className="dashboard-button dark-violet">
             <FaComments className="button-icon" /> Resource of the class
           </div>
+          <div onClick={() => navigate(`/StudentGradesPage/${studentId}`)} className="dashboard-button dark-violet">
+            <FaClipboardCheck className="button-icon" /> All Grades
+          </div>
         </div>
         <div className="alerts-section">
           <h2 className="alerts-header">

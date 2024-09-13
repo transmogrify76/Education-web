@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Calendar.css';
+import Header from '../Header/Header';
 
 // Function to calculate Good Friday date
 const calculateGoodFriday = (year) => {
@@ -105,6 +106,8 @@ const Calendar = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="calendar-container">
       <header className="calendar-header">
         <h1>{monthName} {year}</h1>
@@ -143,6 +146,7 @@ const Calendar = () => {
           })}
         </div>
       </div>
+    </div>
     </div>
   );
 };

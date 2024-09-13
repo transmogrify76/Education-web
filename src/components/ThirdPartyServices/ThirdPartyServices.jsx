@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './ThirdPartyServices.css';
+import Header from '../Header/Header';
 
 const ThirdPartyServices = () => {
   const { parentId } = useParams();
@@ -107,6 +108,8 @@ const ThirdPartyServices = () => {
   }
 
   return (
+    <div>
+      <Header/>
     <div className="container">
       <h2 className="heading">Third Party Optional Services</h2>
       <form className="form" onSubmit={handleSubmit}>
@@ -172,6 +175,7 @@ const ThirdPartyServices = () => {
         <button type="submit" className="submit-button">Submit Request</button>
       </form>
       {status && <p className="status-message">Status: {status}</p>}
+    </div>
     </div>
   );
 };

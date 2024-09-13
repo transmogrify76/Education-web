@@ -6,203 +6,198 @@ body {
     background-color: #f5f5f5;
 }
 
-.curriculum-page-container {
+.curriculum-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-.header-containers {
+.curriculum-header-container {
     width: 100%;
-    height: 70vh; /* Adjust height if needed */
+    height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     color: white;
     background-image: 
-        linear-gradient(to right, rgba(0, 13, 255, 0.158), rgba(0, 0, 255, 0.377)), /* Gradient overlay */
-        url('../Assets/curriculum1.jpg'); /* Ensure this path is correct */
+        linear-gradient(to right, rgba(0, 13, 255, 0.158), rgba(0, 0, 255, 0.377)),
+        url('../Assets/curriculum1.jpg');
     background-size: cover;
     background-position: center;
 }
 
-.header-title {
-    font-size: 4rem; /* Increased font size for large screens */
+.curriculum-header-title {
+    color: #fff;
+    font-size: 4rem;
     font-family: 'Merriweather', serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 4px 4px rgba(142, 23, 136, 0.7);
 }
 
-.main-contents-wrapper {
-    /* display: flex;
-    flex: 1;
-    margin: 2rem auto;
-    max-width: 100%; */
-}
-.main-content-curiculum{
+.curriculum-main-content {
     display: flex;
 }
-.sidebars {
-    width: 250px; /* Fixed width for sidebar */
+
+.curriculum-sidebar {
+    width: 250px;
     background: #1a2d7b;
     border-right: 1px solid #ddd;
     color: aliceblue;
     padding: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 50vh; /* Adjust for header height and margin */
-    overflow-y: auto; /* Allows scrolling if content overflows */
+    max-height: 50vh;
+    overflow-y: auto;
 }
 
-.sidebars ul {
+.curriculum-sidebar ul {
     list-style: none;
     padding: 0;
 }
 
-.sidebars li {
+.curriculum-sidebar li {
     padding: 10px;
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease;
 }
 
-.sidebars li:hover {
+.curriculum-sidebar li:hover {
     background: #007bff;
     color: white;
 }
 
-.content-area {
-    flex: 1; /* Takes up the remaining space */
+.curriculum-content-area {
+    flex: 1;
     padding: 2rem;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: calc(100% - 250px); /* Full width minus sidebar width */
+    width: calc(100% - 250px);
 }
 
-.content-area h2 {
+.curriculum-content-area h2 {
     font-size: 2.5rem;
     color: #007bff;
     margin-right: 18%;
     margin-bottom: 1rem;
 }
 
-.content-area p {
+.curriculum-content-area p {
     font-size: 1.1rem;
     color: #555;
     line-height: 1.6;
 }
-.footer {
+
+.curriculum-footer {
     background: #333;
     color: #fff;
     text-align: center;
-    padding: 1rem;
+    /* padding: 1rem; */
     width: 100%;
 }
 
-.footer a {
-    color: #000000;
+.curriculum-footer a {
+    color: #ffffff;
     text-decoration: none;
 }
 
-.footer a:hover {
+.curriculum-footer a:hover {
     text-decoration: underline;
+}
+
+.curriculum-heading-classes {
+    color: #001feb;
+}
+
+.curriculum-heading-additional {
+    color: #001feb;
+}
+
+.curriculum-additional-courses-section {
+    display: flex;
+    /* margin-top: 2rem; */
+}
+
+.curriculum-courses-navbar {
+    width: 250px;
+    background: #1a2d7b;
+    border-right: 1px solid #ddd;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.curriculum-courses-navbar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.curriculum-courses-navbar li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+    color: white;
+}
+
+.curriculum-courses-navbar li:hover {
+    background: #007bff;
+    color: white;
+}
+
+.curriculum-course-content {
+    flex: 1;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 250px);
+}
+
+.curriculum-course-content h2 {
+    font-size: 2.5rem;
+    color: #007bff;
+    margin-right: 18%;
+    margin-bottom: 1rem;
+}
+
+.curriculum-course-content p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .main-content-wrapper {
+    .curriculum-main-content {
         flex-direction: column;
     }
 
-    .sidebar {
+    .curriculum-sidebar {
         width: 100%;
         border-right: none;
         border-bottom: 1px solid #ddd;
     }
 
-    .content-area {
-        width: 100%; /* Full width for mobile screens */
+    .curriculum-content-area {
+        width: 100%;
         padding: 1rem;
     }
 }
 
 @media (max-width: 480px) {
-    .header-title {
-        font-size: 2.5rem;
+    .curriculum-header-title {
+        font-size: 2rem;
     }
 
-    .content-area h2 {
+    .curriculum-sidebar li {
+        font-size: 14px;
+    }
+
+    .curriculum-content-area h2 {
         font-size: 1.8rem;
     }
 
-    .content-area p {
+    .curriculum-content-area p {
         font-size: 0.9rem;
     }
-
-    .sidebar li {
-        font-size: 0.875rem;
-    }
-}
-/* Additional Courses Section */
-.additional-courses-sections{
-    display: flex;
-}
-.additional-courses-section {
-    display: flex;
-    /* padding: 2rem; */
-    background: #f9f9f9;
-    margin-top: 2rem; /* Spacing between main content and additional courses */
-}
-
-.courses-navbar {
-    width: 250px; /* Fixed width for sidebar */
-    background: #1a2d7b;
-    border-right: 1px solid #ddd;
-    padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 50vh; /* Adjust for header height and margin */
-    overflow-y: auto; /* Allows scrolling if content overflows */
-}
-
-.courses-navbar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.courses-navbar li {
-    padding: 10px;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease;
-    color: white;
-}
-
-.courses-navbar li:hover {
-    background: #007bff;
-    color: white;
-}
-
-.course-content {
-    flex: 1; /* Takes up the remaining space */
-    padding: 2rem;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: calc(100% - 250px); /* Full width minus sidebar width */
-}
-
-.course-content h2 {
-    font-size: 2.5rem;
-    color: #007bff;
-    margin-right: 18%;
-    margin-bottom: 1rem;
-}
-
-.course-content p {
-    font-size: 1.1rem;
-    color: #555;
-    line-height: 1.6;
-}
-
-/* Responsive Styles */
-.heading-course{
-    color: #001feb;
 }

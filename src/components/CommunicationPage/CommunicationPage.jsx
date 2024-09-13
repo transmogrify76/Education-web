@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom'; // Import useParams
+import Header from '../Header/Header';
 
 const CommunicationPage = () => {
     const { teacherId } = useParams(); // Access route parameter here
@@ -36,6 +37,8 @@ const CommunicationPage = () => {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="communication-container">
             <h1>Create Communication</h1>
             <form onSubmit={(e) => e.preventDefault()}>
@@ -67,6 +70,7 @@ const CommunicationPage = () => {
                 </div>
                 <button type="button" onClick={handleSendCommunication}>Send Communication</button>
             </form>
+        </div>
         </div>
     );
 };

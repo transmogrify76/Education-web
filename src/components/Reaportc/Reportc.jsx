@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Reportc.css';
+import Header from '../Header/Header';
 
 export default function Report() {
   const [selectedAcademicYear, setSelectedAcademicYear] = useState('');
@@ -24,6 +25,8 @@ export default function Report() {
   };
 
   return (
+    <div>
+    <Header/>
     <div className='report-container'>
       <h2 className='report-head'>Report Card</h2>
       <div className='report-para'>
@@ -61,6 +64,7 @@ export default function Report() {
         </div>
       </div>
       
+    </div>
     </div>
   );
 }

@@ -1,50 +1,59 @@
-.assignment-post-page {
-  max-width: 600px;
+.assignment-form-container {
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  font-family: Arial, sans-serif;
+}
+
+.form-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-error {
+  color: red;
+  margin-bottom: 20px;
+}
+
+.assignment-form {
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group {
   margin-bottom: 15px;
 }
 
-label {
+.form-label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-input[type="text"],
-textarea,
-input[type="date"] {
+.class-select,
+.title-input,
+.description-textarea,
+.due-date-input,
+.pdf-url-input {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-input.link-input {
-  color: blue;
-  text-decoration: underline;
-  border: none;
-  background: none;
-  cursor: pointer;
+.description-textarea {
+  height: 100px;
+  resize: vertical;
 }
 
-input.link-input:focus {
-  outline: none;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
+.submit-button {
+  background-color: #4CAF50;
   color: white;
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
+.submit-button:hover {
+  background-color: #45a049;
 }

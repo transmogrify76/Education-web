@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AdminTimeTable.css'
+import Header from '../Header/Header';
 const AdminTimeTable = () => {
   const [formData, setFormData] = useState({
     day: '',
@@ -49,6 +50,8 @@ const AdminTimeTable = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="admin-timetable-page">
       <h1>Post Timetable</h1>
       {popupVisible && <div className="popup">Timetable posted successfully!</div>}
@@ -113,6 +116,7 @@ const AdminTimeTable = () => {
         </div>
         <button type="submit" className="submit-button">Post Timetable</button>
       </form>
+    </div>
     </div>
   );
 };

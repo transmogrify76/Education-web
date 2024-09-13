@@ -42,8 +42,8 @@ const TeacherDashboard = () => {
     { name: 'Post Events for students', image: informedConsentIcon, className: 'btn-6', link: '/TeacherPage' },
     { name: 'Reasource Creation Page', image: informedConsentIcon, className: 'btn-7',link:`/CreateResourcePage/${teacherId}` },
     { name: 'Give Grade or remarks for student', image: informedConsentIcon, className: 'btn-8', link: '/GradePage' },
-    { name: 'Create Assignment for student', image: informedConsentIcon, className: 'btn-9', link: '/AssignmentPostPage' }]
-    // { name: 'Leave Status Update', image: informedConsentIcon, className: 'btn-10', link: '/UpdateLeaveStatus' },
+    { name: 'Create Assignment for student', image: informedConsentIcon, className: 'btn-9', link: '/AssignmentPostPage' },
+    { name: 'Submitted Assignment by Students', image: informedConsentIcon, className: 'btn-10', link: '/UpdateLeaveStatus' }]
     // { name: 'Consent froms', image: thirdIcon, className:'btn-11' , link: '/ConsentFormPage'},
     // { name: 'Report card Update', image: childIcon, className: 'btn-12', link: '/' },
     // { name: 'Student Messages', image: chatIcon, className: 'btn-13', link: `/AdminChat` },

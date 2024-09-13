@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Tlogin.css';
+import Header from '../Header/Header';
 
 export default function Tlogin() {
   const [username, setUsername] = useState('');
@@ -48,6 +49,8 @@ export default function Tlogin() {
   }
 
   return (
+    <div>
+      <Header/>
     <div className="tlogin-container">
       <div className="tlogin-card">
         <h2>Welcome Teacher</h2>
@@ -74,9 +77,9 @@ export default function Tlogin() {
           </div>
           <button className="submit" type="submit">Login</button>
         </form>
-        <div className="button-bottom">
-          <button className="forgot-password-buttons" onClick={() => navigate('/forgetpassword')}>Forgot Password?</button>
-        </div>
+        <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
+                        Forgot Password?
+                    </div>
         <p className="message">{message}</p>
       </div>
       {showPopup && (
@@ -85,6 +88,7 @@ export default function Tlogin() {
           <span className="popup-message">Login successful!</span>
         </div>
       )}
+    </div>
     </div>
   );
 }

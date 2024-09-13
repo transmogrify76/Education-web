@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Attendance.css';
-
+import Header from '../Header/Header'
 const Attendance = () => {
     const [students, setStudents] = useState([]);
     const [selectedChild, setSelectedChild] = useState('');
@@ -135,6 +135,8 @@ const Attendance = () => {
     const daysInMonth = Array.from({ length: 31 }, (_, i) => i + 1);
 
     return (
+        <div>
+            <Header/>
         <div className="attendance-page">
             <h1>Bus Attendance</h1>
             <div className="select-student">
@@ -183,6 +185,7 @@ const Attendance = () => {
                     </div>
                 </div>
             )}
+        </div>
         </div>
     );
 };

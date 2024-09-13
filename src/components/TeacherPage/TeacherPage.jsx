@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './TeacherPage.css';
+import Header from '../Header/Header';
 
 const TeacherPage = () => {
   const [events, setEvents] = useState([]);
@@ -100,6 +101,8 @@ const TeacherPage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="event-post-container">
       <header className="header">
         <h1 className="header-title">Post Event</h1>
@@ -156,6 +159,7 @@ const TeacherPage = () => {
       <footer className="footer">
         <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
       </footer>
+    </div>
     </div>
   );
 };

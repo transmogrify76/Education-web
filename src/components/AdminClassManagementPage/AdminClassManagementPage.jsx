@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AdminClassManagementPage.css';
+import Header from '../Header/Header';
 
 const AdminClassManagementPage = () => {
   const [teachers, setTeachers] = useState([]);
@@ -98,6 +99,8 @@ const AdminClassManagementPage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="admin-class-management-page">
       <h1>Admin Class Management</h1>
 
@@ -171,6 +174,7 @@ const AdminClassManagementPage = () => {
           )}
         </>
       )}
+    </div>
     </div>
   );
 };

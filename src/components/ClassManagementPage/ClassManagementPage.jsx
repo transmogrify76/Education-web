@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './ClassManagementPage.css';
+import Header from '../Header/Header';
 
 const ClassManagementPage = () => {
   const { teacherId } = useParams(); // Get teacherId from URL params
@@ -63,6 +64,8 @@ const ClassManagementPage = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="class-management-page">
       <h1>Class Management</h1>
 
@@ -108,6 +111,7 @@ const ClassManagementPage = () => {
           ))}
         </ul>
       </div>
+    </div>
     </div>
   );
 };

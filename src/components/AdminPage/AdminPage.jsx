@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import informedConsentIcon from '../Assets/accept.png';
+import Header from '../Header/Header';
 // import timeIcon from '../Assets/time.png';
 // import menuIcon from '../Assets/menu.png';
 // import registrationIcon from '../Assets/registration.png';
@@ -27,7 +28,7 @@ import attenIcon from '../Assets/attendence.png';
 // import behavIcon from '../Assets/persuasive.png';
 // import learningIcon from '../Assets/reading.png';
 import './AdminPage.css';
-import Header from '../Header/Header';
+// import Header from '../Header/Header';
 const AdminPage = () => {
   const { admin_id,} = useParams();
   // Assuming icons is an array of objects with name and icon properties
@@ -68,7 +69,7 @@ const AdminPage = () => {
             {name}
           </Link>
         ))}
-      </div>
+    </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './AdminChat.css';
+import Header from '../Header/Header';
 
 const AdminChat = () => {
   const { adminId } = useParams();
@@ -105,6 +106,8 @@ const AdminChat = () => {
   };
 
   return (
+    <div>
+      <Header/>
     <div className="admin-chat-wrapper">
       <div className="admin-chat-header-container">
         <h2 className="admin-chat-header">Admin Chat</h2>
@@ -168,6 +171,7 @@ const AdminChat = () => {
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 };
