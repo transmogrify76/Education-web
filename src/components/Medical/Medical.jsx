@@ -51,7 +51,7 @@ const Medical = () => {
             <Header/>
         <div className="medical-page-containers">
             <div className="header-container-medical">
-                <h1 className="header-title">Our Medical Support</h1>
+                <div className="header-title">Our Medical Support</div>
             </div>
             <div className="main-contents">
                 <div className="doctors-container">

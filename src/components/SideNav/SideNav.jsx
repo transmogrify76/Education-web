@@ -77,8 +77,8 @@ function SideNav({ studentId }) {
         </li>
         <li className="sidebar-item">
           <Link to={`/StudentGradesPage/${studentId}`}>
-            <FaFileAlt className="sidebar-icon" />
-            Resource of the Class
+            <FaClipboardCheck className="sidebar-icon" />
+            All Grades
           </Link>
         </li>
       </ul>

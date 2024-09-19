@@ -87,10 +87,11 @@ const CurriculumPage = () => {
                     </div>
                 </div>
                 <footer className="infra-footer">
-                    <p className="footer-text">&copy; 2024 Edu-Web. All rights reserved.</p>
-                    <p>
+                <p>
                         <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
                     </p>
+                    <p className="footer-text">&copy; 2024 Edu-Web. All rights reserved.</p>
+
                 </footer>
             </div>
         </div>
