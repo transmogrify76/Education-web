@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css'; 
+import './Login.css';
 import { useNavigate } from 'react-router-dom'; 
 
 export default function Login() {
@@ -30,16 +30,13 @@ export default function Login() {
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log('API Response:', responseData); // Log the response data
+        console.log('API Response:', responseData);
 
-        // Extract the student ID from the nested student object
-        const studentId = responseData.student?.id; // Use optional chaining
-        if (studentId) {
-          setMessage(`Login successful! Welcome, ${responseData.student.name}.`);
-          navigate(`/StudentView/${studentId}`);
-        } else {
-          setMessage('Student ID not found in response.');
-        }
+        // Store the auth token in localStorage or sessionStorage
+        localStorage.setItem('authToken', responseData.token);
+
+        // Navigate to student dashboard or view
+        navigate(`/StudentView/${responseData.student.id}`);
       } else {
         const errorData = await response.json();
         setMessage(`Login failed: ${errorData.message}`);
@@ -78,8 +75,8 @@ export default function Login() {
           <button className="submit" type="submit">Login</button>
         </form>
         <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
-                        Forgot Password?
-                    </div>
+          Forgot Password?
+        </div>
         <p className="message">{message}</p>
       </div>
     </div>
