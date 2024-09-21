@@ -105,9 +105,9 @@ const TeacherPage = () => {
       <Header/>
     <div className="event-post-container">
       <header className="header">
-        <h1 className="header-title">Post Event</h1>
+        <div className="header-title">Post Event</div>
       </header>
-      <main className="main-content">
+      <main className="main-contenth">
         <form onSubmit={handleSubmit} className="event-form">
           <label htmlFor="eventMessage" className="form-label">Event Message</label>
           <textarea

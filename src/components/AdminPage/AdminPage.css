@@ -1,163 +1,115 @@
-/* Dashboard.css */
-
 .dashboard {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .btn-container {
-    display: flex;
-    flex-wrap: wrap;
-    height: 88vh;
-    margin-top: 50px;
-    padding: 10px;
-  }
-  
-  .button-card {
-    height: 10%;
-    width: 24%;
-    font-family: "Playfair Display", serif;
-    font-size: 18px;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    display: flex;
-    color: aliceblue;
-    border-color: black;
-    transition: all 0.3s ease;
-    align-items: center;
-    text-decoration: none;
-  }
-  
-  .button-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .icon {
-    width: 9%;
-    margin-right: 10px;
-  }
-  
-  /* Class names for each button */
-  .btn-1 {
-    margin-left: 5px;
-    background-color: rgb(144, 168, 190);
-  }
-  
-  .btn-2 {
-    margin-left: 5px;
-    background-color: rgb(79, 62, 255);
-  }
-  
-  .btn-3 {
-    margin-left: 5px;
-    background-color: rgb(66, 82, 173);
-  }
-  
-  .btn-4 {
-    margin-left: 5px;
-    background-color: rgb(210, 209, 227);
-  }
-  
-  .btn-5 {
-    margin-left: 5px;
-    background-color: rgb(79, 62, 255);
-  }
-  
-  .btn-6 {
-    margin-left: 5px;
-    background-color: rgb(124, 123, 137);
-  }
-  
-  .btn-7 {
-    margin-left: 5px;
-    background-color: rgb(66, 82, 173);
-  }
-  
-  .btn-8 {
-    margin-left: 5px;
-    background-color: rgb(129, 181, 227);
-  }
-  
-  .btn-9 {
-    margin-left: 5px;
-    background-color: rgb(79, 62, 255);
-  }
-  
-  .btn-10 {
-    margin-left: 5px;
-    background-color: rgb(45, 98, 222);
-  }
-  
-  .btn-11 {
-    margin-left: 5px;
-    background-color: rgb(144, 168, 190);
-  }
-  
-  .btn-12 {
-    margin-left: 5px;
-    background-color: rgb(124, 123, 137);
-  }
-  
-  .btn-13 {
-    margin-left: 5px;
-    background-color: rgb(144, 168, 190);
-  }
-  
-  .btn-14 {
-    margin-left: 5px;
-    background-color: rgb(144, 168, 190);
-  }
-  
-  .btn-15 {
-    margin-left: 5px;
-    background-color: rgb(124, 123, 137);
-  }
-  
-  .btn-16 {
-    margin-left: 5px;
-    background-color: rgb(45, 98, 222);
-  }
-  
-  .btn-17 {
-    margin-left: 5px;
-    background-color: rgb(124, 123, 137);
-  }
-  
-  .btn-18 {
-    margin-left: 5px;
-    background-color: rgb(123, 240, 156);
-  }
-  
-  .btn-19 {
-    margin-left: 5px;
-    background-color: rgb(66, 82, 173);
-  }
-  
-  .btn-20 {
-    margin-left: 5px;
-    background-color: rgb(66, 82, 173);
-  }
-  
-  .btn-21 {
-    margin-left: 5px;
-    background-color: rgb(45, 98, 222);
-  }
-  
-  .btn-22 {
-    margin-left: 5px;
-    background-color: rgb(79, 62, 255);
-  }
-  
-  .btn-23 {
-    margin-left: 5px;
-    background-color: rgb(79, 62, 255);
-  }
-  
-  .btn-24 {
-    margin-left: 5px;
-    background-color: rgb(66, 82, 173);
-  }
-  
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 20px;
+  margin-top: 50px;
+  height: 88vh;
+}
+
+.button-card {
+  flex: 1 1 22%;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  margin: 10px;
+  color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.button-card i {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.button-card:hover {
+  transform: scale(1.05);
+}
+
+/* Assigning unique solid background colors for each button */
+.btn-1 {
+  background-color: #ff6f61;
+}
+
+.btn-2 {
+  background-color: #6a4c93;
+}
+
+.btn-3 {
+  background-color: #3b7ddd;
+}
+
+.btn-4 {
+  background-color: #f48b29;
+}
+
+.btn-5 {
+  background-color: #56c596;
+}
+
+.btn-6 {
+  background-color: #f9a825;
+}
+
+.btn-7 {
+  background-color: #039be5;
+}
+
+.btn-8 {
+  background-color: #8e24aa;
+}
+
+.btn-9 {
+  background-color: #f44336;
+}
+
+.btn-10 {
+  background-color: #ff9800;
+}
+
+.btn-11 {
+  background-color: #4caf50;
+}
+
+.btn-12 {
+  background-color: #3f51b5;
+}
+
+.btn-13 {
+  background-color: #ff5722;
+}
+
+.btn-14 {
+  background-color: #e91e63;
+}
+
+.btn-15 {
+  background-color: #00bcd4;
+}
+
+.btn-16 {
+  background-color: #9c27b0;
+}
+
+.btn-17 {
+  background-color: #009688;
+}
+
+.btn-18 {
+  background-color: #cddc39;
+}

@@ -28,9 +28,9 @@ body {
 }
 
 .header-title {
-    font-size: 3rem;
+    font-size: 4rem;
     font-family: 'Merriweather', serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    text-shadow: 4px 2px 4px rgba(255, 0, 191, 0.7);
 }
 
 .main-contents {
