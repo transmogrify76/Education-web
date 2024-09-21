@@ -87,6 +87,7 @@ import GradePage from './components/GradePage/GradePage'
 import AssignmentSubmissionPage from './components/AssignmentSubmissionPage/AssignmentSubmissionPage'
 import ResourceShowPage from './components/ResourceShowPage/ResourceShowPage'
 import StudentGradesPage from './components/StudentGradesPage/StudentGradesPage'
+// import EbbokPage from './components/EbbokPage/EbookPage'
 
 function App() {
   return (
@@ -185,6 +186,7 @@ function App() {
           <Route path="/AssignmentSubmissionPage/:studentId" element={<AssignmentSubmissionPage/>} />           
           <Route path="/ResourceShowPage/:studentId" element={<ResourceShowPage/>} />           
           <Route path="/StudentGradesPage/:studentId" element={<StudentGradesPage/>} />           
+          {/* <Route path="/EbookPage/:studentId" element={<EbbokPage/>} />            */}
 
         </Routes>
       </div>

@@ -46,7 +46,7 @@ export default function Plogin() {
 
         // Redirect to parent dashboard after successful login
         setTimeout(() => {
-          navigate(`/ParentProfilePage/${parentId}`);
+          navigate(`/dashboard/${parentId}`);
         }, 2000);
       } else {
         const errorData = await response.json();

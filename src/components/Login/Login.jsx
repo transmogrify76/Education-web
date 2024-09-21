@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom'; 
-
+import Header from '../Header/Header';
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); 
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      navigate('/StudentView', { replace: true }); 
+    }
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -32,11 +38,10 @@ export default function Login() {
         const responseData = await response.json();
         console.log('API Response:', responseData);
 
-        // Store the auth token in localStorage or sessionStorage
         localStorage.setItem('authToken', responseData.token);
 
-        // Navigate to student dashboard or view
-        navigate(`/StudentView/${responseData.student.id}`);
+        // Redirect to the student dashboard or profile page
+        navigate(`/StudentView/${responseData.student.id}`, { replace: true }); // Replace history
       } else {
         const errorData = await response.json();
         setMessage(`Login failed: ${errorData.message}`);
@@ -48,36 +53,39 @@ export default function Login() {
   };
 
   return (
-    <div className="logins-container">
-      <div className="login-card">
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="input-groups">
-            <label htmlFor="username">Student ID</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
+    <div>
+      <Header />
+      <div className="logins-container">
+        <div className="login-card">
+          <h2>Login</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="input-groups">
+              <label htmlFor="username">Student ID</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-groups">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button className="submit" type="submit">Login</button>
+          </form>
+          <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
+            Forgot Password?
           </div>
-          <div className="input-groups">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button className="submit" type="submit">Login</button>
-        </form>
-        <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
-          Forgot Password?
+          <p className="message">{message}</p>
         </div>
-        <p className="message">{message}</p>
       </div>
     </div>
   );
