@@ -81,6 +81,12 @@ function SideNav({ studentId }) {
             All Grades
           </Link>
         </li>
+        <li className="sidebar-item">
+          <Link to={`/EbookPage/${studentId}`}>
+            <FaClipboardCheck className="sidebar-icon" />
+            E Books
+          </Link>
+        </li>
       </ul>
     </nav>
   );

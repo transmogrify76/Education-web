@@ -7,7 +7,7 @@ export default function Alogin() {
   const [employeeId, setEmployeeId] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,8 +42,8 @@ export default function Alogin() {
         const data = await response.json();
         localStorage.setItem('authToken', data.token); // Store the token
         setIsLoggedIn(true);
-        setMessage('Login successful!');
-        
+        // setMessage('Login successful!');
+
         const admin_id = data.admin_id;
         setTimeout(() => {
           navigate(`/adminpage/${admin_id}`); // Redirect to admin page
@@ -69,40 +69,42 @@ export default function Alogin() {
       <Header />
       <div className="Alogin-container">
         <div className="Alogin-card">
-          <h2>{isLoggedIn ? 'Welcome Admin' : 'Admin Login'}</h2>
-          {isLoggedIn ? (
-            <div>
-              <p>You are logged in.</p>
-              <button onClick={handleLogout} className="logout-button">Logout</button>
+          <h2>Admin Login</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="input-groups">
+              <label htmlFor="employeeId">Employee ID</label>
+              <input
+                type="text"
+                id="employeeId"
+                value={employeeId}
+                onChange={(e) => setEmployeeId(e.target.value)}
+                required
+              />
             </div>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <div className="input-groups">
-                <label htmlFor="employeeId">Employee ID</label>
-                <input
-                  type="text"
-                  id="employeeId"
-                  value={employeeId}
-                  onChange={(e) => setEmployeeId(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="input-groups">
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              <button className="btn submit" type="submit">Login</button>
-            </form>
-          )}
+            <div className="input-groups">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button className="btn submit" type="submit">Login</button>
+          </form>
+
+          
+
           <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
             Forgot Password?
           </div>
+          {isLoggedIn && (
+            <div>
+              <p>You are logged in.</p>
+              {/* <button onClick={handleLogout} className="logout-button">Logout</button> */}
+            </div>
+          )}
           <p className="message">{message}</p>
         </div>
       </div>
