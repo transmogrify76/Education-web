@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Plogin.css';
-
+import Header from '../Header/Header';
 export default function Plogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -10,7 +10,6 @@ export default function Plogin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the parent is already logged in
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       setIsLoggedIn(true);
@@ -65,6 +64,8 @@ export default function Plogin() {
   };
 
   return (
+    <div>
+      <Header />
     <div className="plogin-container">
       <div className="plogin-card">
         <h2>Parents Login</h2>
@@ -105,6 +106,7 @@ export default function Plogin() {
         </div>
         <p className="message">{message}</p>
       </div>
+    </div>
     </div>
   );
 }

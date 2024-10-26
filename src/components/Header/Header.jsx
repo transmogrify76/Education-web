@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Header.css';
 import logo from '../Assets/logo.png';
 
@@ -10,10 +10,9 @@ const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the user is logged in by checking for an auth token in localStorage or sessionStorage
     const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
     if (token) {
-      setIsLoggedIn(true); // Set the login state to true if a token exists
+      setIsLoggedIn(true);
     }
   }, []);
 
@@ -28,39 +27,87 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    // Remove authentication tokens from both localStorage and sessionStorage
+    // Remove authentication tokens from localStorage and sessionStorage
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
-    localStorage.removeItem('userType'); // Optionally remove the user type if stored
+
+    // Retrieve the stored userType
+    const userType = localStorage.getItem('userType'); 
+
+    // Optionally remove userType from storage
+    localStorage.removeItem('userType');
+
     setIsLoggedIn(false); // Update login state to false
-    navigate('/',  { replace: true }); // Redirect to the login page
+
+    // Redirect based on userType
+    switch(userType) {
+      case 'student':
+        navigate('/Login', { replace: true });
+        break;
+      case 'parent':
+        navigate('/Plogin', { replace: true });
+        break;
+      case 'teacher':
+        navigate('/tlogin', { replace: true });
+        break;
+      case 'admin':
+        navigate('/Adminregister', { replace: true });
+        break;
+      default:
+        navigate('/Login', { replace: true }); // Default to student login
+        break;
+    }
+  };
+
+  const handleLoginNavigate = (role) => {
+    switch(role) {
+      case 'student':
+        localStorage.setItem('userType', 'student');
+        navigate('/Login');
+        break;
+      case 'parent':
+        localStorage.setItem('userType', 'parent');
+        navigate('/Plogin');
+        break;
+      case 'teacher':
+        localStorage.setItem('userType', 'teacher');
+        navigate('/tlogin');
+        break;
+      case 'admin':
+        localStorage.setItem('userType', 'admin');
+        navigate('/Adminregister');
+        break;
+      default:
+        break;
+    }
+    setIsDropdownOpen(false); // Close the dropdown after navigation
   };
 
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <Link to="/">
+        <a href="/">
           <img src={logo} alt="EDU Web Logo" className="navbar-logo" />
           <p className="tagline">"padhega india tabhi toh badhega india"</p>
-        </Link>
+        </a>
       </div>
       <div className="navbar-right">
+        <a href="/Aboutus">About Us</a>
         <a href="/Infrastructure">Infrastructure</a>
         <a href="/Curriculum">Curriculum</a>
         <a href="/Award">Award</a>
         <a href="/Event">Event</a>
         <a href="/Contactus">Contact Us</a>
-        <a href="/Aboutus">About Us</a>
 
         {!isLoggedIn ? (
           <div className="dropdown">
             <div onClick={() => toggleDropdown('login')} className="dropbtn">Log In</div>
             {isDropdownOpen && (
               <div className="dropdown-content">
-                <Link to="/Login">Student</Link>
-                <Link to="/Plogin">Parent</Link>
-                <Link to="/tlogin">Teacher</Link>
-                <Link to="/Adminregister">Admin</Link>
+                <button className='login-button' onClick={() => handleLoginNavigate('student')}>Student</button>
+                <button className='login-button' onClick={() => handleLoginNavigate('parent')}>Parent</button>
+                <button className='login-button' onClick={() => handleLoginNavigate('teacher')}>Teacher</button>
+                <button className='login-button' onClick={() => handleLoginNavigate('admin')}>Admin</button>
               </div>
             )}
           </div>

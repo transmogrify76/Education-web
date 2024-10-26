@@ -10,7 +10,6 @@ import Header from '../Header/Header';
 const TeacherDashboard = () => {
   const { teacherId } = useParams();
 
-  // Define icons with FontAwesome and unique links
   const icons = [
     { name: 'Class Management', icon: faChalkboardTeacher, className: 'btn-1', link: `/ClassManagementPage/${teacherId}` },
     { name: 'Student Management', icon: faUserGraduate, className: 'btn-2', link: '/TeacherStudentManagementPage' },
@@ -20,7 +19,8 @@ const TeacherDashboard = () => {
     { name: 'Post Events for Students', icon: faCalendarAlt, className: 'btn-6', link: '/TeacherPage' },
     { name: 'Resource Creation Page', icon: faBook, className: 'btn-7', link: `/CreateResourcePage/${teacherId}` },
     { name: 'Give Grades or Remarks', icon: faStar, className: 'btn-8', link: '/GradePage' },
-    { name: 'Submitted Assignments', icon: faFolderOpen, className: 'btn-9', link: '/UpdateLeaveStatus' }
+    { name: 'Submitted Assignments', icon: faFolderOpen, className: 'btn-9', link: '/UpdateLeaveStatus' },
+    { name: 'E-Book Upload', icon: faBook, className: 'btn-10', link: '/ebookpage' }
   ];
 
   return (

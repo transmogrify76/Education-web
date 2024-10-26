@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Contactus = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [formData, setFormData] = useState({ name: '', email: '', message: '', phone: '' }); // Added phone to formData
     const [, setStatus] = useState('');
 
     const handleChange = (e) => {
@@ -54,7 +54,7 @@ const Contactus = () => {
         }
 
         // Reset form fields
-        setFormData({ name: '', email: '', message: '' });
+        setFormData({ name: '', email: '', message: '', phone: '' });
         setStatus('');
     };
 
@@ -97,6 +97,16 @@ const Contactus = () => {
                             required
                         />
 
+                        <label htmlFor="phone">Phone:</label> {/* Added phone input */}
+                        <input
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            required
+                        />
+
                         <label htmlFor="message">Message:</label>
                         <textarea
                             id="message"
@@ -111,11 +121,11 @@ const Contactus = () => {
                     </form>
                 </section>
                 <footer className="infra-footer">
-                <p>
-                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-                </p>
-                <p className="footer-text">© 2024 Edu-Web. All rights reserved.</p>
-            </footer>
+                    <p>
+                        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                    </p>
+                    <p className="footer-text">© 2024 Edu-Web. All rights reserved.</p>
+                </footer>
             </div>
             <ToastContainer />
         </div>

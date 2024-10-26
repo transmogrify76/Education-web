@@ -82,7 +82,7 @@ function SideNav({ studentId }) {
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/EbookPage/${studentId}`}>
+          <Link to={`/ShowEbookPage/${studentId}`}>
             <FaClipboardCheck className="sidebar-icon" />
             E Books
           </Link>
