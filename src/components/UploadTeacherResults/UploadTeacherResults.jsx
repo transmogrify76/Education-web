@@ -1,119 +1,191 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './UploadTeacherResults.css';
-import Header from '../Header/Header';
+import './UploadTeacherResults.css'; // Assuming you'll create a CSS file for styles
 
 const UploadTeacherResults = () => {
+  const [classNames, setClassNames] = useState([]);
+  const [selectedClass, setSelectedClass] = useState('');
   const [students, setStudents] = useState([]);
-  const [filteredStudents, setFilteredStudents] = useState([]);
-  const [selectedStudent, setSelectedStudent] = useState('');
-  const [year, setYear] = useState('');
-  const [file, setFile] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [subjects, setSubjects] = useState(['Math', 'Science', 'English', 'History', 'Geography', 'Art', 'Physical Education', 'Computer Science']);
 
+  // Fetch class names
   useEffect(() => {
-    // Fetch students from the API
-    axios.get('http://localhost:3000/student')
-      .then(response => {
-        setStudents(response.data);
-        setFilteredStudents(response.data);
-      })
-      .catch(error => console.error('Error fetching students:', error));
+    const fetchClassNames = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/class');
+        setClassNames(response.data);
+      } catch (error) {
+        console.error('There was an error fetching the class names:', error);
+      }
+    };
+
+    fetchClassNames();
   }, []);
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+  // Fetch students based on selected class
+  useEffect(() => {
+    const fetchStudents = async () => {
+      if (selectedClass) {
+        try {
+          const response = await axios.get(`http://localhost:3000/class/${selectedClass}`);
+          const studentsData = response.data.students || [];
+          const sortedStudents = studentsData.sort((a, b) => a.name.localeCompare(b.name));
+          setStudents(sortedStudents);
+          // Initialize results based on students
+          const initialResults = sortedStudents.map(student => ({ studentId: student.id, marks: {} }));
+          setResults(initialResults);
+        } catch (error) {
+          console.error('Error fetching students:', error);
+        }
+      } else {
+        setStudents([]);
+        setResults([]);
+      }
+    };
+
+    fetchStudents();
+  }, [selectedClass]);
+
+  const handleClassChange = (e) => {
+    setSelectedClass(e.target.value);
   };
 
-  const handleSearchChange = (event) => {
-    const query = event.target.value.toLowerCase();
-    setSearchQuery(query);
-    setFilteredStudents(
-      students.filter(student =>
-        student.name.toLowerCase().includes(query)
-      )
-    );
+  const handleResultChange = (index, subject, value) => {
+    const updatedResults = [...results];
+    updatedResults[index].marks[subject] = value;
+    setResults(updatedResults);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubjectChange = (index, value) => {
+    const updatedSubjects = [...subjects];
+    updatedSubjects[index] = value; // Update subject name
+    setSubjects(updatedSubjects);
+    // No need to add an empty row
+  };
 
-    if (!selectedStudent || !year || !file) {
-      alert('Please fill out all fields.');
-      return;
+  const addSubject = () => {
+    const newSubject = prompt("Enter new subject name:");
+    if (newSubject && !subjects.includes(newSubject)) {
+      setSubjects([...subjects, newSubject]);
+      // Add empty marks for existing results for the new subject
+      const updatedResults = results.map(result => ({
+        ...result,
+        marks: { ...result.marks, [newSubject]: '' },
+      }));
+      setResults(updatedResults);
+    } else {
+      alert("Subject already exists or invalid.");
     }
+  };
 
-    const formData = new FormData();
-    formData.append('studentId', selectedStudent);
-    formData.append('year', year);
-    formData.append('file', file);
+  const deleteSubject = (index) => {
+    const updatedSubjects = subjects.filter((_, i) => i !== index);
+    setSubjects(updatedSubjects);
 
-    axios.post('http://localhost:3000/results', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      .then(response => alert('Result uploaded successfully!'))
-      .catch(error => console.error('Error uploading result:', error));
+    // Remove the corresponding marks from results
+    const updatedResults = results.map(result => {
+      const newMarks = { ...result.marks };
+      delete newMarks[subjects[index]]; // Remove the mark for the deleted subject
+      return {
+        ...result,
+        marks: newMarks,
+      };
+    });
+    setResults(updatedResults);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      for (const result of results) {
+        for (const subject of subjects) {
+          if (result.marks[subject] !== undefined) {
+            await axios.post('http://localhost:3000/result/upload', {
+              studentId: result.studentId,
+              classId: selectedClass,
+              subjectName: subject,
+              marks: result.marks[subject],
+            });
+          }
+        }
+      }
+      alert('Results uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading results:', error);
+    }
   };
 
   return (
-    <div>
-      <Header/>
-    <div className="upload-results-container">
-      <h1>Upload Student Result (Teacher)</h1>
+    <div className="upload-container">
+      <h2 className="upload-container__heading">Upload Results</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="search">Search Student</label>
-          <input
-            type="text"
-            id="search"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            placeholder="Search by student name..."
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="student">Select Student</label>
+          <label htmlFor="class-dropdown" className="form-group__label">Select Class:</label>
           <select
-            id="student"
-            value={selectedStudent}
-            onChange={(e) => setSelectedStudent(e.target.value)}
+            id="class-dropdown"
+            value={selectedClass}
+            onChange={handleClassChange}
+            className="form-group__select"
           >
-            <option value="">Select a student</option>
-            {filteredStudents.map(student => (
-              <option key={student.id} value={student.id}>
-                {student.name} (ID: {student.id})
+            <option value="">Select a class</option>
+            {classNames.map((classItem) => (
+              <option key={classItem.id} value={classItem.id}>
+                {classItem.className}
               </option>
             ))}
           </select>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="year">Year</label>
-          <input
-            type="text"
-            id="year"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-            placeholder="Enter the year"
-          />
+        <table className="results-table">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              {subjects.map((subject, index) => (
+                <th key={subject}>
+                  <input
+                    type="text"
+                    value={subject}
+                    onChange={(e) => handleSubjectChange(index, e.target.value)}
+                    className="form-group__input"
+                  />
+                  <button type="button" onClick={() => deleteSubject(index)} className="btn-delete">Delete</button>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {results.map((result, index) => (
+              <tr key={index}>
+                <td>
+                  {students[index] ? (
+                    <span>{students[index].name}</span> 
+                  ) : (
+                    <span>No student</span>
+                  )}
+                </td>
+                {subjects.map((subject) => (
+                  <td key={subject}>
+                    <input
+                      type="number"
+                      value={result.marks[subject] || ''}
+                      onChange={(e) => handleResultChange(index, subject, e.target.value)}
+                      placeholder={`Marks for ${subject}`}
+                      className="form-group__input"
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div className="add-subject">
+          <button type="button" onClick={addSubject} className="btn-add-subject">Add Subject</button>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="file">Upload Result (PDF)</label>
-          <input
-            type="file"
-            id="file"
-            accept=".pdf"
-            onChange={handleFileChange}
-          />
-        </div>
-
-        <button type="submit">Upload</button>
+        <button type="submit" className="btn-primary">Upload Results</button>
       </form>
-    </div>
     </div>
   );
 };

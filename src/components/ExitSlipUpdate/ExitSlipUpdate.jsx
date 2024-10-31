@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ExitSlipUpdate.css'; // Ensure you have the corresponding CSS file
+import './ExitSlipUpdate.css'; 
 import Header from '../Header/Header';
 
 const ExitSlipUpdate = () => {
   const [exitSlips, setExitSlips] = useState([]);
   const [statusUpdate, setStatusUpdate] = useState({});
   const [error, setError] = useState(null);
-  const [replyAttachment, setReplyAttachment] = useState({}); // To hold admin reply attachments
-
+  const [replyAttachment, setReplyAttachment] = useState({}); 
   useEffect(() => {
-    // Fetch exit slip requests from the API
+    
     axios.get('http://localhost:3000/exit-slip')
       .then(response => {
         setExitSlips(response.data);
-        setError(null); // Clear any previous errors
+        setError(null); 
       })
       .catch(error => {
         console.error('Error fetching exit slips:', error);
-        setError('Failed to fetch exit slip requests.'); // Set an error message
+        setError('Failed to fetch exit slip requests.'); 
       });
   }, []);
 
@@ -29,7 +28,7 @@ const ExitSlipUpdate = () => {
       })
       .catch(error => {
         console.error('Error updating status:', error);
-        setError('Failed to update status.'); // Set an error message
+        setError('Failed to update status.'); 
       });
   };
 
@@ -43,16 +42,55 @@ const ExitSlipUpdate = () => {
   const handleReplySubmit = (id) => {
     const formData = new FormData();
     formData.append('attachment', replyAttachment[id]);
-    
+
     axios.post(`http://localhost:3000/exit-slip/reply/${id}`, formData)
       .then(response => {
-        // Handle success (e.g., refresh the state or display a message)
         console.log('Reply attachment uploaded successfully:', response.data);
       })
       .catch(error => {
         console.error('Error uploading reply attachment:', error);
-        setError('Failed to upload reply attachment.'); // Set an error message
+        setError('Failed to upload reply attachment.'); 
       });
+  };
+
+  
+  const getBlobUrlFromBase64 = (base64String) => {
+    try {
+      // Ensure the base64 string is valid
+      const trimmedString = base64String.trim();
+      if (trimmedString.length % 4 === 0) {
+        const binaryString = atob(trimmedString);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        const blob = new Blob([bytes], { type: 'application/pdf' }); // Change type if necessary
+        return URL.createObjectURL(blob);
+      } else {
+        console.error("Invalid base64 string");
+        return null;
+      }
+    } catch (error) {
+      console.error("Decoding error:", error);
+      return null;
+    }
+  };
+
+  // Function to download the PDF
+  const downloadPDF = (base64String, fileName) => {
+    const blobUrl = getBlobUrlFromBase64(base64String);
+    if (blobUrl) {
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = fileName; // Set the desired file name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl); // Clean up the URL object
+    } else {
+      console.error('Failed to create Blob URL');
+    }
   };
 
   return (
@@ -89,9 +127,18 @@ const ExitSlipUpdate = () => {
                 </td>
                 <td>
                   {request.attachment && (
-                    <a href={`http://localhost:3000/${request.attachment}`} target="_blank" rel="noopener noreferrer">
+                    <a 
+                      href={`http://localhost:3000/${request.attachment}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
                       View Attachment
                     </a>
+                  )}
+                  {request.base64Attachment && ( // Assuming base64Attachment is the property with the base64 string
+                    <button onClick={() => downloadPDF(request.base64Attachment, `attachment_${request.id}.pdf`)}>
+                      Download PDF
+                    </button>
                   )}
                 </td>
                 <td>

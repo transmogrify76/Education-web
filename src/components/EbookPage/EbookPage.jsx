@@ -12,14 +12,12 @@ const EbookPage = () => {
   });
   const [pdfFile, setPdfFile] = useState(null);
   const [message, setMessage] = useState('');
-
-  // Fetch class data dynamically
   useEffect(() => {
     const fetchClassOptions = async () => {
       try {
         const response = await axios.get('http://localhost:3000/class');
-        console.log(response.data); // Log the response for debugging
-        setClassOptions(response.data); // Set the fetched data to classOptions
+        console.log(response.data); 
+        setClassOptions(response.data); 
       } catch (error) {
         console.error('There was an error fetching the class options:', error);
       }
@@ -46,7 +44,7 @@ const EbookPage = () => {
     data.append('title', formData.title);
     data.append('description', formData.description);
     data.append('classId', formData.classId);
-    data.append('pdf', pdfFile);
+    data.append('file', pdfFile);
 
     try {
       await axios.post('http://localhost:3000/ebooks', data, {
@@ -103,18 +101,18 @@ const EbookPage = () => {
             <option value="">Select a class</option>
             {classOptions.map((classOption) => (
               <option key={classOption.id} value={classOption.id}>
-                {classOption.className} (ID: {classOption.id}) {/* Adjust this as needed */}
+                {classOption.className} (ID: {classOption.id})
               </option>
             ))}
           </select>
         </div>
 
         <div className="form-group">
-          <label htmlFor="pdf">Upload PDF</label>
+          <label htmlFor="file">Upload PDF</label>
           <input
             type="file"
-            id="pdf"
-            name="pdf"
+            id="file"
+            name="file"
             accept=".pdf"
             onChange={handleFileChange}
             required

@@ -1,31 +1,31 @@
+// ShowEbookPage.js
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import Header from '../Header/Header';
 import './ShowEbookPage.css';
-import Header from '../Header/Header'; 
 
 const ShowEbookPage = () => {
-  const { studentId } = useParams(); 
-  const [classId, setClassId] = useState(null); 
-  const [ebooks, setEbooks] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(null); 
+  const { studentId } = useParams();
+  const [classId, setClassId] = useState(null);
+  const [ebooks, setEbooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  
+  // Fetch class based on studentId
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        console.log('Fetching all classes'); 
-        const response = await fetch('http://localhost:3000/class'); 
-        const data = await response.json();
-        console.log('Classes data:', data); 
+        const response = await axios.get('http://localhost:3000/class');
+        const data = response.data;
 
-        // Check each class for the student ID
+        // Find class by matching studentId
         const studentClass = data.find((cls) =>
-          cls.students.some((student) => student.id === Number(studentId)) 
+          cls.students.some((student) => student.id === Number(studentId))
         );
 
         if (studentClass) {
-          setClassId(studentClass.id); 
+          setClassId(studentClass.id);
         } else {
           setError('Class not found for this student');
         }
@@ -33,23 +33,20 @@ const ShowEbookPage = () => {
         console.error('Error fetching classes:', err);
         setError('Error fetching classes');
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
     fetchClasses();
   }, [studentId]);
 
-  
+  // Fetch eBooks for the specific classId
   useEffect(() => {
     if (classId) {
       const fetchEbooks = async () => {
         try {
-          console.log(`Fetching ebooks for classId: ${classId}`); 
-          const response = await fetch(`http://localhost:3000/ebooks/class/${classId}`);
-          const ebookData = await response.json();
-          console.log('Ebook data:', ebookData); 
-          setEbooks(ebookData);
+          const response = await axios.get(`http://localhost:3000/ebooks/${classId}`);
+          setEbooks(response.data);
         } catch (err) {
           console.error('Error fetching ebooks:', err);
           setError('Error fetching ebooks');
@@ -60,35 +57,79 @@ const ShowEbookPage = () => {
     }
   }, [classId]);
 
+  // Handle eBook download
+  const handleDownload = async (ebookId, ebookTitle) => {
+    try {
+      const response = await axios({
+        url: `http://localhost:3000/ebooks/download/${ebookId}`,
+        method: 'GET',
+        responseType: 'blob', 
+      });
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${ebookTitle}.pdf`); 
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading file:', error);
+      setError('Failed to download the eBook. Please try again later.');
+    }
+  };
+  const handleView = async (ebookId) => {
+    try {
+      const response = await axios({
+        url: `http://localhost:3000/ebooks/download/${ebookId}`,
+        method: 'GET',
+        responseType: 'blob',
+      });
+
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url, '_blank');
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error viewing file:', error);
+      setError('Failed to open the eBook. Please try again later.');
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div>
-        <Header/>
-    <div className="ebook-page">
-      <h1>Ebooks for Class {classId}</h1>
-      <div className="ebook-list">
-        {ebooks.length > 0 ? (
-          ebooks.map((ebook) => (
-            <div key={ebook.id} className="ebook-item">
-              <h2>{ebook.title}</h2>
-              <p>{ebook.description}</p>
-              <a 
-                href={`http://localhost:3000/ebooks/download/${ebook.pdfUrl.split('/').pop()}`} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                download 
-              >
-                Download PDF
-              </a>
-            </div>
-          ))
-        ) : (
-          <p>No ebooks found for this class.</p>
-        )}
+      <Header />
+      <div className="ebook-page">
+        <h1>Ebooks for Class {classId}</h1>
+        <div className="ebook-list">
+          {ebooks.length > 0 ? (
+            ebooks.map((ebook) => (
+              <div key={ebook.id} className="ebook-item">
+                <h2>{ebook.title}</h2>
+                <p>{ebook.description}</p>
+                <button
+                  onClick={() => handleDownload(ebook.id, ebook.title)}
+                  className="download-btn"
+                >
+                  Download PDF
+                </button>
+                <button
+                  onClick={() => handleView(ebook.id)}
+                  className="view-btn"
+                >
+                  View PDF
+                </button>
+              </div>
+            ))
+          ) : (
+            <p>No ebooks found for this class.</p>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 };

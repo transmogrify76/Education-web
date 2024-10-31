@@ -11,14 +11,15 @@ const ExitSlipRequest = () => {
     reason: '',
     date: '',
     time: '',
-    parentContact: '', // This will be set to the parent's email
-    attachment: null, // State for the file attachment
+    parentContact: '',
+    attachment: null,
   });
 
   const [students, setStudents] = useState([]);
-  const [parentEmail, setParentEmail] = useState(''); // State to hold parent's email
+  const [parentEmail, setParentEmail] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -29,11 +30,8 @@ const ExitSlipRequest = () => {
         }
         const data = await response.json();
         setStudents(data.students || []);
-        setParentEmail(data.email || ''); // Assuming the parent's email is in the 'email' field
-        setFormData(prev => ({
-          ...prev,
-          parentContact: data.email || '' // Set parent contact info to email
-        }));
+        setParentEmail(data.email || '');
+        setFormData(prev => ({ ...prev, parentContact: data.email || '' }));
       } catch (error) {
         console.error('Error fetching student data:', error);
         setError('Failed to fetch student data.');
@@ -46,10 +44,7 @@ const ExitSlipRequest = () => {
   }, [parentId]);
 
   const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleStudentChange = (e) => {
@@ -63,15 +58,16 @@ const ExitSlipRequest = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      attachment: e.target.files[0], // Store the file
-    }));
+    const file = e.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      setFormData(prev => ({ ...prev, attachment: file }));
+    } else {
+      alert('Only PDF files are allowed');
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const data = new FormData();
     data.append('studentId', formData.studentId);
     data.append('parentContact', formData.parentContact);
@@ -79,38 +75,36 @@ const ExitSlipRequest = () => {
     data.append('reason', formData.reason);
     data.append('date', formData.date);
     data.append('time', formData.time);
-    data.append('attachment', formData.attachment); // Append the file
+    data.append('attachment', formData.attachment);
 
     try {
       const response = await fetch('http://localhost:3000/exit-slip', {
         method: 'POST',
-        body: data, // Use FormData
+        body: data,
       });
 
-      const result = await response.json();
       if (response.ok) {
-        console.log('Form submitted successfully', result);
+        setSuccessMessage('Exit slip request submitted successfully.');
       } else {
+        const result = await response.json();
         console.error('Form submission failed', result);
+        setError('Failed to submit the exit slip request.');
       }
     } catch (error) {
       console.error('Network error:', error);
+      setError('A network error occurred. Please try again later.');
     }
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
       <Header />
       <div className="container">
         <h2 className="heading">Exit Slip Request</h2>
+        {successMessage && <p className="success-message">{successMessage}</p>}
         <form className="form" onSubmit={handleSubmit}>
           <select
             name="studentId"
@@ -153,7 +147,7 @@ const ExitSlipRequest = () => {
           <input
             type="text"
             name="parentContact"
-            value={formData.parentContact} // Display parent's email
+            value={formData.parentContact}
             className="input"
             readOnly
             placeholder="Parent's Email"
