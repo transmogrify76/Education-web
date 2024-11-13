@@ -85,6 +85,7 @@ const ExitSlipRequest = () => {
 
       if (response.ok) {
         setSuccessMessage('Exit slip request submitted successfully.');
+        setError(null);
       } else {
         const result = await response.json();
         console.error('Form submission failed', result);

@@ -7,90 +7,77 @@ const ExitSlipUpdate = () => {
   const [exitSlips, setExitSlips] = useState([]);
   const [statusUpdate, setStatusUpdate] = useState({});
   const [error, setError] = useState(null);
-  const [replyAttachment, setReplyAttachment] = useState({}); 
+  const [replyAttachment, setReplyAttachment] = useState({});
+  const [replies, setReplies] = useState({});
+  
   useEffect(() => {
-    
+    // Fetch all exit slips data on component mount
     axios.get('http://localhost:3000/exit-slip')
       .then(response => {
-        setExitSlips(response.data);
-        setError(null); 
+        setExitSlips(response.data);  // Set the fetched data to the state
+        setError(null);
       })
       .catch(error => {
         console.error('Error fetching exit slips:', error);
-        setError('Failed to fetch exit slip requests.'); 
+        setError('Failed to fetch exit slip requests.');
       });
   }, []);
 
   const handleStatusChange = (id, status) => {
     axios.patch(`http://localhost:3000/exit-slip/${id}`, { status })
-      .then(response => {
+      .then(() => {
         setStatusUpdate(prevState => ({ ...prevState, [id]: status }));
+        setError(null);
       })
       .catch(error => {
         console.error('Error updating status:', error);
-        setError('Failed to update status.'); 
+        setError('Failed to update status.');
       });
+  };
+
+  const handleReplyChange = (id, reply) => {
+    setReplies(prevState => ({
+      ...prevState,
+      [id]: reply,
+    }));
   };
 
   const handleReplyAttachmentChange = (id, event) => {
     setReplyAttachment(prevState => ({
       ...prevState,
-      [id]: event.target.files[0]
+      [id]: event.target.files[0],
     }));
   };
 
   const handleReplySubmit = (id) => {
     const formData = new FormData();
-    formData.append('attachment', replyAttachment[id]);
+    formData.append('status', statusUpdate[id] || 'Pending');
+    formData.append('reply', replies[id] || '');
 
-    axios.post(`http://localhost:3000/exit-slip/reply/${id}`, formData)
+    // Attach file only if there is one
+    if (replyAttachment[id]) {
+      formData.append('attachment', replyAttachment[id]);
+    }
+
+    axios.post(`http://localhost:3000/exit-slip/reply/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
       .then(response => {
-        console.log('Reply attachment uploaded successfully:', response.data);
+        console.log('Reply and attachment uploaded successfully');
+        setError(null);
+        // Update exit slip with new data from response
+        setExitSlips(prevSlips => 
+          prevSlips.map(slip => 
+            slip.id === id ? { ...slip, ...response.data } : slip
+          )
+        );
       })
       .catch(error => {
-        console.error('Error uploading reply attachment:', error);
-        setError('Failed to upload reply attachment.'); 
+        console.error('Error uploading reply attachment and message:', error);
+        setError('Failed to upload reply message and attachment.');
       });
-  };
-
-  
-  const getBlobUrlFromBase64 = (base64String) => {
-    try {
-      // Ensure the base64 string is valid
-      const trimmedString = base64String.trim();
-      if (trimmedString.length % 4 === 0) {
-        const binaryString = atob(trimmedString);
-        const len = binaryString.length;
-        const bytes = new Uint8Array(len);
-        for (let i = 0; i < len; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
-        }
-        const blob = new Blob([bytes], { type: 'application/pdf' }); // Change type if necessary
-        return URL.createObjectURL(blob);
-      } else {
-        console.error("Invalid base64 string");
-        return null;
-      }
-    } catch (error) {
-      console.error("Decoding error:", error);
-      return null;
-    }
-  };
-
-  // Function to download the PDF
-  const downloadPDF = (base64String, fileName) => {
-    const blobUrl = getBlobUrlFromBase64(base64String);
-    if (blobUrl) {
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = fileName; // Set the desired file name
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(blobUrl); // Clean up the URL object
-    } else {
-      console.error('Failed to create Blob URL');
-    }
   };
 
   return (
@@ -109,6 +96,7 @@ const ExitSlipUpdate = () => {
               <th>Time</th>
               <th>Parent Contact</th>
               <th>Status</th>
+              <th>Reply</th>
               <th>Attachment</th>
               <th>Actions</th>
             </tr>
@@ -126,32 +114,45 @@ const ExitSlipUpdate = () => {
                   {statusUpdate[request.id] || request.status}
                 </td>
                 <td>
+                  {request.reply ? (
+                    <p>{request.reply}</p>
+                  ) : (
+                    <textarea
+                      placeholder="Write a reply"
+                      value={replies[request.id] || ''}
+                      onChange={(e) => handleReplyChange(request.id, e.target.value)}
+                      className="reply-textarea"
+                    />
+                  )}
+                </td>
+                <td>
                   {request.attachment && (
-                    <a 
-                      href={`http://localhost:3000/${request.attachment}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                    <button 
+                      onClick={() => window.open(`http://localhost:3000/${request.attachment}`, '_blank')}
+                      className="view-attachment-button"
                     >
                       View Attachment
-                    </a>
-                  )}
-                  {request.base64Attachment && ( // Assuming base64Attachment is the property with the base64 string
-                    <button onClick={() => downloadPDF(request.base64Attachment, `attachment_${request.id}.pdf`)}>
-                      Download PDF
                     </button>
                   )}
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    onChange={(e) => handleReplyAttachmentChange(request.id, e)}
+                    className="file-upload"
+                  />
                 </td>
                 <td>
                   {statusUpdate[request.id] === 'Approved' || statusUpdate[request.id] === 'Declined' || request.status === 'Approved' || request.status === 'Declined' ? null : (
                     <>
-                      <div className="action-button" onClick={() => handleStatusChange(request.id, 'Approved')}>
+                      <button className="action-button" onClick={() => handleStatusChange(request.id, 'Approved')}>
                         Approve
-                      </div>
-                      <div className="action-button decline-button" onClick={() => handleStatusChange(request.id, 'Declined')}>
+                      </button>
+                      <button className="action-button decline-button" onClick={() => handleStatusChange(request.id, 'Declined')}>
                         Decline
-                      </div>
-                      <input type="file" onChange={(e) => handleReplyAttachmentChange(request.id, e)} />
-                      <button onClick={() => handleReplySubmit(request.id)}>Upload Reply</button>
+                      </button>
+                      <button onClick={() => handleReplySubmit(request.id)} className="reply-button">
+                        Submit Reply
+                      </button>
                     </>
                   )}
                 </td>

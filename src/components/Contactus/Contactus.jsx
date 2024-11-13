@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Contactus = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', message: '', phone: '' }); // Added phone to formData
+    const [formData, setFormData] = useState({ name: '', email: '', message: '', phone: '' });
     const [, setStatus] = useState('');
 
     const handleChange = (e) => {
@@ -97,7 +97,7 @@ const Contactus = () => {
                             required
                         />
 
-                        <label htmlFor="phone">Phone:</label> {/* Added phone input */}
+                        <label htmlFor="phone">Phone:</label> 
                         <input
                             type="text"
                             id="phone"

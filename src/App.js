@@ -89,7 +89,11 @@ import ResourceShowPage from './components/ResourceShowPage/ResourceShowPage'
 import StudentGradesPage from './components/StudentGradesPage/StudentGradesPage'
 import EbookPage from './components/EbookPage/EbookPage'
 import ShowEbookPage from './components/ShowEbookPage/ShowEbookPage'
-
+import SubmittedAssignment from './components/SubmittedAssignment/SubmittedAssignment'
+import CreateMeeting from './components/CreateMeeting/CreateMeeting'
+import ParentClassDataPage from './components/ParentClassDataPage/ParentClassDataPage'
+import CreateSurveyForm from './components/CreateSurveyForm/CreateSurveyForm'
+import GetSurveys from './components/GetSurveys/GetSurveys'
 function App() {
   return (
     <Router>
@@ -188,8 +192,13 @@ function App() {
           <Route path="/ResourceShowPage/:studentId" element={<ResourceShowPage/>} />           
           <Route path="/StudentGradesPage/:studentId" element={<StudentGradesPage/>} />  
           <Route path="/EbookPage" element={<EbookPage/>} />  
+          <Route path="/ParentClassDataPage" element={<ParentClassDataPage/>} />  
 
           <Route path="/ShowEbookPage/:studentId" element={<ShowEbookPage/>} />            
+          <Route path="/SubmittedAssignment/" element={<SubmittedAssignment/>} />            
+          <Route path="/CreateMeeting/" element={<CreateMeeting/>} />            
+          <Route path="/CreateSurveyForm/" element={<CreateSurveyForm/>} />            
+          <Route path="/GetSurveys/" element={<GetSurveys/>} />            
 
         </Routes>
       </div>

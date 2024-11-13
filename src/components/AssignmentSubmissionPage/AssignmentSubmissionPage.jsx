@@ -13,9 +13,7 @@ const AssignmentSubmissionPage = () => {
   const [selectedClassId, setSelectedClassId] = useState('');
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [content, setContent] = useState('');
-  const [pdfFile, setPdfFile] = useState(null);
-  const [pdfLink, setPdfLink] = useState('');
-  const [assignmentPdfUrl, setAssignmentPdfUrl] = useState(''); // State for assignment PDF URL
+  const [classroomLink, setClassroomLink] = useState(''); // State for Classroom Link
 
   // Fetch all classes on component mount
   useEffect(() => {
@@ -64,40 +62,27 @@ const AssignmentSubmissionPage = () => {
     const selectedId = e.target.value;
     const assignment = filteredAssignments.find(a => a.id === Number(selectedId));
     setSelectedAssignment(assignment);
-    if (assignment) {
-      setAssignmentPdfUrl(assignment.pdfUrl); // Set the PDF URL
-    }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setPdfFile(file);
-      setPdfLink(URL.createObjectURL(file));
-    }
+  const handleClassroomLinkChange = (e) => {
+    setClassroomLink(e.target.value); // Update the Classroom Link
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('content', content);
-    formData.append('studentId', studentId);
-    if (pdfFile) {
-      formData.append('file', pdfFile);
-    }
+    const formData = {
+      content,
+      studentId,
+      classroomLink: classroomLink || '', // Ensure classroomLink is always sent as an empty string if not provided
+    };
 
     try {
-      await axios.post(`http://localhost:3000/assignments/${selectedAssignment.id}/submit`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      await axios.post(`http://localhost:3000/assignments/${selectedAssignment.id}/submit`, formData);
       alert('Assignment submitted successfully!');
       // Reset form fields
       setContent('');
-      setPdfFile(null);
-      setPdfLink('');
+      setClassroomLink('');
       setSelectedAssignment(null); // Reset selected assignment
     } catch (error) {
       console.error('Error submitting assignment:', error);
@@ -157,11 +142,11 @@ const AssignmentSubmissionPage = () => {
               <p><strong>Title:</strong> {selectedAssignment.title}</p>
               <p><strong>Description:</strong> {selectedAssignment.description}</p>
               <p><strong>Due Date:</strong> {new Date(selectedAssignment.dueDate).toLocaleDateString()}</p>
-              {assignmentPdfUrl && (
-                <div className="pdf-url">
-                  <p><strong>Assignment PDF:</strong></p>
-                  <a href={assignmentPdfUrl} target="_blank" rel="noopener noreferrer">
-                    View Assignment PDF
+              {selectedAssignment.classroomLink && (
+                <div className="classroom-link">
+                  <p><strong>Google Classroom Link:</strong></p>
+                  <a href={selectedAssignment.classroomLink} target="_blank" rel="noopener noreferrer">
+                    Join Google Classroom
                   </a>
                 </div>
               )}
@@ -170,7 +155,8 @@ const AssignmentSubmissionPage = () => {
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="content">Submission Content:</label>
+              <label htmlFor="content">Submission Content: </label>
+              <label htmlFor="content_w">Please Write Your Name and Roll Number in this box first </label>
               <textarea
                 id="content"
                 value={content}
@@ -182,20 +168,14 @@ const AssignmentSubmissionPage = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="pdfFile">Upload PDF:</label>
+              <label htmlFor="classroomLink">Google Classroom Link:</label>
               <input
-                type="file"
-                id="pdfFile"
-                accept="application/pdf"
-                onChange={handleFileChange}
+                type="url"
+                id="classroomLink"
+                placeholder="Enter Google Classroom Link"
+                value={classroomLink}
+                onChange={handleClassroomLinkChange}
               />
-              {pdfLink && (
-                <div className="pdf-preview">
-                  <a href={pdfLink} target="_blank" rel="noopener noreferrer">
-                    View PDF
-                  </a>
-                </div>
-              )}
             </div>
 
             <button type="submit">Submit Assignment</button>

@@ -36,12 +36,33 @@ const ExternalReport = () => {
       }
     };
 
-    // Fetch student result data by student ID
     const fetchResults = async () => {
       try {
         const response = await fetch(`http://localhost:3000/result/${studentId}`);
         const data = await response.json();
-        setSubjects(data);
+
+        const subjectMap = {};
+
+        data.forEach(subject => {
+          const { subjectName, marks } = subject;
+
+          if (Array.isArray(marks) && marks.length > 0) {
+            const recentMark = marks.reduce((latest, current) => {
+              return new Date(current.date) > new Date(latest.date) ? current : latest;
+            });
+
+            subjectMap[subjectName] = recentMark;
+          } else {
+            subjectMap[subjectName] = marks;
+          }
+        });
+
+        const updatedSubjects = Object.keys(subjectMap).map(subjectName => ({
+          subjectName,
+          marks: subjectMap[subjectName],
+        }));
+
+        setSubjects(updatedSubjects);
       } catch (error) {
         console.error("Error fetching result data:", error);
       }
@@ -49,7 +70,19 @@ const ExternalReport = () => {
 
     fetchClassData();
     fetchResults();
-  }, [studentId]);
+  }, [studentId]); // Fetch data whenever studentId changes
+
+  // Update a subject when modified
+  const handleSubjectUpdate = (subjectName, newMarks) => {
+    setSubjects(prevSubjects => {
+      const updatedSubjects = prevSubjects.map(subject =>
+        subject.subjectName === subjectName
+          ? { ...subject, marks: newMarks } // Update marks for the edited subject
+          : subject
+      );
+      return updatedSubjects;
+    });
+  };
 
   const generatePDF = () => {
     const element = pdfRef.current;
@@ -78,10 +111,10 @@ const ExternalReport = () => {
           </tr>
         </thead>
         <tbody>
-          {subjects.map(subject => (
-            <tr key={subject.id}>
+          {subjects.map((subject, index) => (
+            <tr key={index}>
               <td>{subject.subjectName}</td>
-              <td>{subject.marks}</td>
+              <td>{subject.marks ? subject.marks : 'N/A'}</td>
             </tr>
           ))}
         </tbody>

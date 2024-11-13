@@ -12,8 +12,8 @@ const ParentRegisterPage = () => {
         address: '',
         password: '',
         roleType: 'parent', // Ensure this matches your API expectations
-        relation: '', // New field for relation
-        occupation: '', // New field for occupation
+        relationType: '', // Changed from 'relation' to 'relationType'
+        occupation: '', // Optional field for occupation
     });
 
     const [message, setMessage] = useState('');
@@ -45,8 +45,8 @@ const ParentRegisterPage = () => {
                     address: formData.address,
                     password: formData.password,
                     roleType: formData.roleType,
-                    relation: formData.relation, // Include relation in the request
-                    occupation: formData.occupation, // Include occupation in the request
+                    relationType: formData.relationType, // Ensure this matches the backend
+                    occupation: formData.occupation, // Optional field for occupation
                 }),
             });
 
@@ -71,7 +71,7 @@ const ParentRegisterPage = () => {
 
     return (
         <div>
-            <Header/>
+            <Header />
             <div className="register-page-containers">
                 <form className="register-forms" onSubmit={handleSubmit}>
                     <h1 className="register-title">Parent Registration</h1>
@@ -129,8 +129,8 @@ const ParentRegisterPage = () => {
                         Relation (to student):
                         <input
                             type="text"
-                            name="relation"
-                            value={formData.relation}
+                            name="relationType" // Ensure the name matches the backend field
+                            value={formData.relationType}
                             onChange={handleChange}
                             required
                         />
@@ -142,7 +142,7 @@ const ParentRegisterPage = () => {
                             name="occupation"
                             value={formData.occupation}
                             onChange={handleChange}
-                            required
+                            // Occupation is optional
                         />
                     </label>
                     <label>
