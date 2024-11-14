@@ -9,12 +9,13 @@ const ExitSlipUpdate = () => {
   const [error, setError] = useState(null);
   const [replyAttachment, setReplyAttachment] = useState({});
   const [replies, setReplies] = useState({});
-  
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  // Fetch exit slips on component mount
   useEffect(() => {
-    // Fetch all exit slips data on component mount
     axios.get('http://localhost:3000/exit-slip')
       .then(response => {
-        setExitSlips(response.data);  // Set the fetched data to the state
+        setExitSlips(response.data);
         setError(null);
       })
       .catch(error => {
@@ -24,15 +25,7 @@ const ExitSlipUpdate = () => {
   }, []);
 
   const handleStatusChange = (id, status) => {
-    axios.patch(`http://localhost:3000/exit-slip/${id}`, { status })
-      .then(() => {
-        setStatusUpdate(prevState => ({ ...prevState, [id]: status }));
-        setError(null);
-      })
-      .catch(error => {
-        console.error('Error updating status:', error);
-        setError('Failed to update status.');
-      });
+    setStatusUpdate(prevState => ({ ...prevState, [id]: status }));
   };
 
   const handleReplyChange = (id, reply) => {
@@ -54,29 +47,27 @@ const ExitSlipUpdate = () => {
     formData.append('status', statusUpdate[id] || 'Pending');
     formData.append('reply', replies[id] || '');
 
-    // Attach file only if there is one
     if (replyAttachment[id]) {
-      formData.append('attachment', replyAttachment[id]);
+      formData.append('adminAttachment', replyAttachment[id]);
     }
 
-    axios.post(`http://localhost:3000/exit-slip/reply/${id}`, formData, {
+    axios.patch(`http://localhost:3000/exit-slip/${id}/admin-reply`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
       .then(response => {
-        console.log('Reply and attachment uploaded successfully');
-        setError(null);
-        // Update exit slip with new data from response
         setExitSlips(prevSlips => 
           prevSlips.map(slip => 
             slip.id === id ? { ...slip, ...response.data } : slip
           )
         );
+        setSuccessMessage('Reply, status, and attachment saved successfully');
+        setError(null);
       })
       .catch(error => {
-        console.error('Error uploading reply attachment and message:', error);
-        setError('Failed to upload reply message and attachment.');
+        console.error('Error saving reply, status, and attachment:', error);
+        setError('Failed to save reply, status, and attachment.');
       });
   };
 
@@ -86,6 +77,8 @@ const ExitSlipUpdate = () => {
       <div className="exit-slip-update-page">
         <h2>Exit Slip Request Management</h2>
         {error && <p className="error-message">{error}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        
         <table>
           <thead>
             <tr>
@@ -142,19 +135,21 @@ const ExitSlipUpdate = () => {
                   />
                 </td>
                 <td>
-                  {statusUpdate[request.id] === 'Approved' || statusUpdate[request.id] === 'Declined' || request.status === 'Approved' || request.status === 'Declined' ? null : (
-                    <>
-                      <button className="action-button" onClick={() => handleStatusChange(request.id, 'Approved')}>
-                        Approve
-                      </button>
-                      <button className="action-button decline-button" onClick={() => handleStatusChange(request.id, 'Declined')}>
-                        Decline
-                      </button>
-                      <button onClick={() => handleReplySubmit(request.id)} className="reply-button">
-                        Submit Reply
-                      </button>
-                    </>
-                  )}
+                  <select
+                    onChange={(e) => handleStatusChange(request.id, e.target.value)}
+                    value={statusUpdate[request.id] || request.status}
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Declined">Declined</option>
+                  </select>
+                  <button 
+                    onClick={() => handleReplySubmit(request.id)} 
+                    className="reply-button"
+                    disabled={!replies[request.id] && !replyAttachment[request.id] && !statusUpdate[request.id]}
+                  >
+                    Submit Reply
+                  </button>
                 </td>
               </tr>
             ))}

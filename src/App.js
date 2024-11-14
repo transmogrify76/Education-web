@@ -138,7 +138,7 @@ function App() {
           <Route path="/ForgetPassword" element={<ForgetPassword />} />
           <Route path="/ResetPassword" element={<ResetPassword />} />
           <Route path="/TeacherRegister" element={<TeacherRegister />} />
-          <Route path="/TransportRequest" element={<TransportRequest />} />
+          <Route path="/TransportRequest/:parentId" element={<TransportRequest />} />
           <Route path="/PaymentPage" element={<PaymentPage />} />
           <Route path="/ParentProfilePage" element={<ParentProfilePage />} />
           <Route path="/ParentProfilePage/:parentId" element={<ParentProfilePage />} />

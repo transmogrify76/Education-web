@@ -49,7 +49,7 @@ const Dashboard = () => {
     { name: 'Registration Info', image: registrationIcon, className: 'btn-4', link: `/ParentProfilePage/${parentId}` },
     { name: 'Report Card PDF', image: resultIcon, className: 'btn-5', link: '/reportc' },
     { name: 'TC Request', image: tcIcon, className: 'btn-6', link:`/TimeOfRequest/${parentId}` },
-    { name: 'Transport request', image: roadIcon, className: 'btn-7', link:'/TransportRequest' },
+    { name: 'Transport request', image: roadIcon, className: 'btn-7', link:`/TransportRequest/${parentId}` },
     { name: 'Student profile', image: studentIcon, className: 'btn-8', link: `/StudentProfilePage/${parentId}` },
     { name: 'External report', image: externalIcon, className: 'btn-9', link: '/Externalr' },
     { name: 'Notifications', image: notilIcon, className: 'btn-10', link:'/Notification' },

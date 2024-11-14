@@ -27,19 +27,17 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    // Remove authentication tokens from localStorage and sessionStorage
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
 
-    // Retrieve the stored userType
+
     const userType = localStorage.getItem('userType'); 
 
-    // Optionally remove userType from storage
     localStorage.removeItem('userType');
 
-    setIsLoggedIn(false); // Update login state to false
+    setIsLoggedIn(false);
 
-    // Redirect based on userType
+
     switch(userType) {
       case 'student':
         navigate('/Login', { replace: true });
@@ -54,7 +52,7 @@ const Header = () => {
         navigate('/Adminregister', { replace: true });
         break;
       default:
-        navigate('/Login', { replace: true }); // Default to student login
+        navigate('/Login', { replace: true }); 
         break;
     }
   };
@@ -80,7 +78,7 @@ const Header = () => {
       default:
         break;
     }
-    setIsDropdownOpen(false); // Close the dropdown after navigation
+    setIsDropdownOpen(false); 
   };
 
   return (
