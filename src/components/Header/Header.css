@@ -6,7 +6,6 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
-/* Navbar styling */
 .navbar {
   display: flex;
   height: 60px;
@@ -47,7 +46,6 @@ body, html {
   transform: translateY(-2px);
 }
 
-/* Dropdown styling */
 .dropdown {
   position: relative;
   display: inline-block;
@@ -73,6 +71,7 @@ body, html {
 
 
 .dropdown-content {
+  margin-top: 10px;
   display: block;
   position: absolute;
   background-color: white;
@@ -92,12 +91,12 @@ body, html {
   background-color: #f1f1f1;
 }
 
-/* Make the dropdown-content hidden by default */
+
 .dropdown-content {
   display: none;
 }
 
-/* Show the dropdown when toggled */
+
 .dropdown .dropdown-content {
   display: block;
 }
@@ -114,6 +113,9 @@ body, html {
   font-style: italic;
   color: #f1f1f1;
   font-size: smaller;
+}
+.login-button{
+  width: 85%;
 }
 .logout-buttons{
   width: 80%;

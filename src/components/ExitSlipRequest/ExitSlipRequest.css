@@ -77,4 +77,9 @@
     transform: scale(0.95);
     box-shadow: rgba(133, 189, 215, 0.8) 0px 15px 10px -10px;
   }
+  .success-message {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
   

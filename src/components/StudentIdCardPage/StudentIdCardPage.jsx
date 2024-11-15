@@ -111,10 +111,6 @@ const StudentIdCardPage = () => {
             <div className="id-card-field"><strong>Date of Birth:</strong> {new Date(selectedStudent.dob).toLocaleDateString()}</div>
             <div className="id-card-field"><strong>Address:</strong> {selectedStudent.address}</div>
             <div className="id-card-field"><strong>School Name:</strong> Edu_web</div>
-            <button className="download-btn" onClick={handleDownload}>
-              <FontAwesomeIcon icon={faDownload} className="icon" />
-              Download PDF
-            </button>
             <button className="close-btn" onClick={handleCloseCard}>Close</button>
           </div>
         </div>

@@ -1,57 +1,127 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './EbookPage.css';
 import Header from '../Header/Header';
 
 const EbookPage = () => {
-  const [notifications, setNotifications] = useState([]);
-
+  const [classOptions, setClassOptions] = useState([]);
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    classId: '',
+  });
+  const [pdfFile, setPdfFile] = useState(null);
+  const [message, setMessage] = useState('');
   useEffect(() => {
-    // Fetch notifications data from the API
-    fetch('http://localhost:3000/notification')
-      .then(response => response.json())
-      .then(data => {
-        console.log('Notifications data:', data); // Debugging line
-        setNotifications(data);
-      })
-      .catch(error => console.error('Error fetching notifications:', error));
+    const fetchClassOptions = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/class');
+        console.log(response.data); 
+        setClassOptions(response.data); 
+      } catch (error) {
+        console.error('There was an error fetching the class options:', error);
+      }
+    };
+    fetchClassOptions();
   }, []);
 
-  // Helper function to format the date
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString(); // This will format it as 'MM/DD/YYYY' by default
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    setPdfFile(e.target.files[0]);
+  };
+
+  const handleClassChange = (e) => {
+    setFormData({ ...formData, classId: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append('title', formData.title);
+    data.append('description', formData.description);
+    data.append('classId', formData.classId);
+    data.append('file', pdfFile);
+
+    try {
+      await axios.post('http://localhost:3000/ebooks', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      setMessage('Ebook created successfully!');
+    } catch (error) {
+      setMessage('Failed to create ebook.');
+    }
   };
 
   return (
     <div>
-      <Header />
-      <div className="event-page-container">
-        <div className="event-header-container">
-          <h1 className="event-header-title">Upcoming Events & Holidays</h1>
+    <Header />
+    <div className="ebook-page">
+      
+      <h1>Create a New Ebook</h1>
+      {message && <p className="message">{message}</p>}
+      <form className="ebook-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleInputChange}
+            required
+          />
         </div>
-        <div className="event-main-content">
-          <div className="event-list-container">
-            <h2 className="event-section-title">Upcoming Events & Holidays</h2>
-            {notifications.length > 0 ? (
-              notifications.map((notification) => (
-                <div key={notification.id} className="event-notification-card">
-                  <h3>{notification.message}</h3>
-                  <p><strong>Date:</strong> {notification.date ? formatDate(notification.date) : 'No date provided'}</p>
-                  <p><strong>Description:</strong> {notification.description || 'No description available'}</p>
-                </div>
-              ))
-            ) : (
-              <p>No notifications available at the moment.</p>
-            )}
-          </div>
+
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+            required
+          ></textarea>
         </div>
-        <footer className="infra-footer">
-                <p>
-                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-                </p>
-                <p className="footer-text">© 2024 Edu-Web. All rights reserved.</p>
-            </footer>
-      </div>
+
+        <div className="form-group">
+          <label htmlFor="classId">Select Class</label>
+          <select
+            id="classId"
+            name="classId"
+            value={formData.classId}
+            onChange={handleClassChange}
+            required
+          >
+            <option value="">Select a class</option>
+            {classOptions.map((classOption) => (
+              <option key={classOption.id} value={classOption.id}>
+                {classOption.className} (ID: {classOption.id})
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="file">Upload PDF</label>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            accept=".pdf"
+            onChange={handleFileChange}
+            required
+          />
+        </div>
+
+        <button type="submit" className="submit-btn">Create Ebook</button>
+      </form>
+    </div>
     </div>
   );
 };

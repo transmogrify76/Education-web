@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import SideNav from '../SideNav/SideNav'; 
-import { FaFileAlt, FaHandsHelping, FaComments, FaClipboardCheck } from 'react-icons/fa';
+import { FaFileAlt, FaHandsHelping, FaComments, FaClipboardCheck, FaLink, FaBook } from 'react-icons/fa';
 import './Student.css'; // Import the CSS file for Student
 import Header from '../Header/Header';
 
@@ -50,11 +50,14 @@ function Student() {
           <div onClick={() => navigate(`/ResourceShowPage/${studentId}`)} className="dashboard-button dark-violet">
             <FaComments className="button-icon" /> Resource of the class
           </div>
-          <div onClick={() => navigate(`/StudentGradesPage/${studentId}`)} className="dashboard-button dark-violet">
+          <div onClick={() => navigate(`/StudentGradesPage/${studentId}`)} className="dashboard-button orange">
             <FaClipboardCheck className="button-icon" /> All Grades
           </div>
-          <div onClick={() => navigate(`/EbookPage/${studentId}`)} className="dashboard-button dark-violet">
-            <FaClipboardCheck className="button-icon" /> E-Books
+          <div onClick={() => navigate(`/ShowEbookPage/${studentId}`)} className="dashboard-button light-gray">
+            < FaBook className="button-icon" /> E-Books
+          </div>
+          <div onClick={() => navigate(`/ParentClassDataPage`)} className="dashboard-button dark-violet">
+            <FaLink className="button-icon" /> Virtual Meeting Link
           </div>
         </div>
         <div className="alerts-section">

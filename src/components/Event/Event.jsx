@@ -6,7 +6,6 @@ const Event = () => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    // Fetch notifications data from the API
     fetch('http://localhost:3000/notification')
       .then(response => response.json())
       .then(data => {
@@ -15,11 +14,9 @@ const Event = () => {
       })
       .catch(error => console.error('Error fetching notifications:', error));
   }, []);
-
-  // Helper function to format the date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString(); // This will format it as 'MM/DD/YYYY' by default
+    return date.toLocaleDateString(); 
   };
 
   return (

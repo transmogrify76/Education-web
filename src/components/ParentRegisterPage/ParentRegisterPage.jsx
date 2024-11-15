@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ParentRegisterPage.css';
 import Header from '../Header/Header';
+
 const ParentRegisterPage = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -11,6 +12,8 @@ const ParentRegisterPage = () => {
         address: '',
         password: '',
         roleType: 'parent', // Ensure this matches your API expectations
+        relationType: '', // Changed from 'relation' to 'relationType'
+        occupation: '', // Optional field for occupation
     });
 
     const [message, setMessage] = useState('');
@@ -42,6 +45,8 @@ const ParentRegisterPage = () => {
                     address: formData.address,
                     password: formData.password,
                     roleType: formData.roleType,
+                    relationType: formData.relationType, // Ensure this matches the backend
+                    occupation: formData.occupation, // Optional field for occupation
                 }),
             });
 
@@ -66,81 +71,100 @@ const ParentRegisterPage = () => {
 
     return (
         <div>
-            <Header/>
-        <div className="register-page-containers">
-            
-            <form className="register-forms" onSubmit={handleSubmit}>
-            <h1 className="register-title">Parent Registration</h1>
-                <label>
-                    Name:
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Student Name:
-                    <input
-                        type="text"
-                        name="studentName"
-                        value={formData.studentName}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Email:
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Phone Number:
-                    <input
-                        type="tel"
-                        name="phoneNo"
-                        value={formData.phoneNo}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Address:
-                    <input
-                        type="text"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <button type="submit" className="submit-button">Register</button>
-            </form>
-            {showPopup && (
-                <div className="popup">
-                    <span className="popup-icon">✔</span>
-                    <span className="popup-message">Parent registered successfully!</span>
-                </div>
-            )}
-            {message && <p className="message">{message}</p>}
-        </div>
+            <Header />
+            <div className="register-page-containers">
+                <form className="register-forms" onSubmit={handleSubmit}>
+                    <h1 className="register-title">Parent Registration</h1>
+                    <label>
+                        Name:
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Student Name:
+                        <input
+                            type="text"
+                            name="studentName"
+                            value={formData.studentName}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Email:
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Phone Number:
+                        <input
+                            type="tel"
+                            name="phoneNo"
+                            value={formData.phoneNo}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Address:
+                        <input
+                            type="text"
+                            name="address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Relation (to student):
+                        <input
+                            type="text"
+                            name="relationType" // Ensure the name matches the backend field
+                            value={formData.relationType}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Occupation:
+                        <input
+                            type="text"
+                            name="occupation"
+                            value={formData.occupation}
+                            onChange={handleChange}
+                            // Occupation is optional
+                        />
+                    </label>
+                    <label>
+                        Password:
+                        <input
+                            type="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </label>
+                    <button type="submit" className="submit-button">Register</button>
+                </form>
+                {showPopup && (
+                    <div className="popup">
+                        <span className="popup-icon">✔</span>
+                        <span className="popup-message">Parent registered successfully!</span>
+                    </div>
+                )}
+                {message && <p className="message">{message}</p>}
+            </div>
         </div>
     );
 };

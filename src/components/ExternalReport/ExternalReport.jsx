@@ -1,113 +1,125 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import Sidebar from '../SideNav/SideNav';
-import Header from '../Header/Header';
+import html2pdf from 'html2pdf.js';
 import './ExternalReport.css';
- 
+
 const ExternalReport = () => {
   const { studentId } = useParams();
-  const [academicYear, setAcademicYear] = useState('');
-  const [resultData, setResultData] = useState(null);
-  const [error, setError] = useState(null);
-  
-  const fetchResultDataByYear = async (year) => {
-    try {
-      const response = await axios.get(`http://localhost:3000/results/year/${year}`);
-      setResultData(response.data);
-      setError(null);
-    } catch (error) {
-      setError('Failed to fetch result data for the specified year');
-      setResultData(null);
-      console.error('Error fetching result data:', error);
-    }
+  const [studentInfo, setStudentInfo] = useState({ name: '', enrollmentNo: '', className: '' });
+  const [subjects, setSubjects] = useState([]);
+  const pdfRef = useRef();
+
+  useEffect(() => {
+    const fetchClassData = async () => {
+      try {
+        const classResponse = await fetch(`http://localhost:3000/class`);
+        const classData = await classResponse.json();
+
+        let foundClass = '';
+        classData.forEach(cls => {
+          const studentInClass = cls.students.find(student => student.id === parseInt(studentId));
+          if (studentInClass) {
+            foundClass = cls.className;
+            setStudentInfo(prevInfo => ({
+              ...prevInfo,
+              name: studentInClass.name,
+              enrollmentNo: studentInClass.enrollmentNo,
+              className: foundClass,
+            }));
+          }
+        });
+        if (!foundClass) {
+          console.error("Student not found in any class.");
+        }
+      } catch (error) {
+        console.error("Error fetching class data:", error);
+      }
+    };
+
+    const fetchResults = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/result/${studentId}`);
+        const data = await response.json();
+
+        const subjectMap = {};
+
+        data.forEach(subject => {
+          const { subjectName, marks } = subject;
+
+          if (Array.isArray(marks) && marks.length > 0) {
+            const recentMark = marks.reduce((latest, current) => {
+              return new Date(current.date) > new Date(latest.date) ? current : latest;
+            });
+
+            subjectMap[subjectName] = recentMark;
+          } else {
+            subjectMap[subjectName] = marks;
+          }
+        });
+
+        const updatedSubjects = Object.keys(subjectMap).map(subjectName => ({
+          subjectName,
+          marks: subjectMap[subjectName],
+        }));
+
+        setSubjects(updatedSubjects);
+      } catch (error) {
+        console.error("Error fetching result data:", error);
+      }
+    };
+
+    fetchClassData();
+    fetchResults();
+  }, [studentId]); // Fetch data whenever studentId changes
+
+  // Update a subject when modified
+  const handleSubjectUpdate = (subjectName, newMarks) => {
+    setSubjects(prevSubjects => {
+      const updatedSubjects = prevSubjects.map(subject =>
+        subject.subjectName === subjectName
+          ? { ...subject, marks: newMarks } // Update marks for the edited subject
+          : subject
+      );
+      return updatedSubjects;
+    });
   };
 
-  const handleYearChange = (e) => {
-    setAcademicYear(e.target.value);
-  };
+  const generatePDF = () => {
+    const element = pdfRef.current;
 
-  const handleSearch = () => {
-    if (academicYear) {
-      fetchResultDataByYear(academicYear);
-    } else {
-      setError('Please enter a valid year');
-    }
-  };
+    document.querySelector(".pdf-button").style.display = "none";
 
-  const handleDownload = async (filePath) => {
-    try {
-      const response = await axios({
-        url: `http://localhost:3000/${filePath}`,
-        method: 'GET',
-        responseType: 'blob', 
+    html2pdf()
+      .from(element)
+      .save(`Result_${studentId}.pdf`)
+      .then(() => {
+        document.querySelector(".pdf-button").style.display = "inline-block";
       });
-
-      const blob = new Blob([response.data], { type: 'application/pdf' });
-
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', filePath.split('/').pop()); 
-      document.body.appendChild(link);
-      link.click();
-
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Error downloading file:', error);
-      setError('Failed to download the file');
-    }
   };
 
   return (
-    <div className='for-header'>
-      <Header />
-      <div className="e-dash">
-        <Sidebar studentId={studentId} />
-        <div className="content">
-          <div className="external-report-container">
-            <h3>Search and download external report cards by entering the academic year.</h3>
-            <div className="external-report">
-              <div className="report-pair">
-                <label htmlFor="academic-year">Academic year:</label>
-                <input
-                  type="number"
-                  id="academic-year"
-                  value={academicYear}
-                  onChange={handleYearChange}
-                  placeholder="Enter Year (e.g., 2021)"
-                  min="2000"
-                  max={new Date().getFullYear()} 
-                />
-              </div>
-              <button onClick={handleSearch} className="search-btn">Search</button>
-            </div>
-
-            {error ? (
-              <p className="error-message">{error}</p>
-            ) : resultData && resultData.length > 0 ? (
-              <div className="result-section">
-                <h4>Results for the Year {academicYear}</h4>
-                {resultData.map((result) => (
-                  <div key={result.id} className="result-item">
-                    <p>Student: {result.student.name} (ID: {result.student.id})</p>
-                    <p>Enrollment No: {result.student.enrollmentNo}</p>
-                    <button
-                      onClick={() => handleDownload(result.filePath)}
-                      className="download-btn"
-                    >
-                      Download Result
-                    </button>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No results found for the specified year.</p>
-            )}
-          </div>
-        </div>
-      </div>
+    <div className="result-page" ref={pdfRef}>
+      <h1>Student Results</h1>
+      <h2>Name: {studentInfo.name}</h2>
+      <h3>Enrollment Number: {studentInfo.enrollmentNo}</h3>
+      <h3>Class: {studentInfo.className}</h3>
+      <table className="result-table">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Marks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {subjects.map((subject, index) => (
+            <tr key={index}>
+              <td>{subject.subjectName}</td>
+              <td>{subject.marks ? subject.marks : 'N/A'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button className="pdf-button" onClick={generatePDF}>Download PDF</button>
     </div>
   );
 };

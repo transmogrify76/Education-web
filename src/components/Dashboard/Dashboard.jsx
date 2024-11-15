@@ -1,7 +1,7 @@
 // Dashboard.js
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { FaLink } from 'react-icons/fa';
+import { Link, useParams } from 'react-router-dom';
 import informedConsentIcon from '../Assets/accept.png';
 import timeIcon from '../Assets/time.png';
 import menuIcon from '../Assets/menu.png';
@@ -28,43 +28,55 @@ import behavIcon from '../Assets/persuasive.png';
 import learningIcon from '../Assets/reading.png';
 import './Dashboard.css';
 import Header from '../Header/Header';
+
 const Dashboard = () => {
-  const { parentId, } = useParams();
-  // Assuming icons is an array of objects with name and icon properties
+  const { parentId } = useParams();
+
+  // Helper function to render image or icon
+  const renderIcon = (image) => {
+    return typeof image === 'string' ? (
+      <img src={image} className="icon" alt="icon" />
+    ) : (
+      <image className="icon" />
+    );
+  };
+
+  // Define icon buttons with links and icons
   const icons = [
     { name: 'Consent forms', image: informedConsentIcon, className: 'btn-1', link: `/consent/${parentId}` },
     { name: 'Time Table', image: timeIcon, className: 'btn-2', link: `/TimeTable/${parentId}`},
     { name: 'Exit Slip Request', image: menuIcon, className: 'btn-3', link: `/ExitSlipRequest/${parentId}` },
     { name: 'Registration Info', image: registrationIcon, className: 'btn-4', link: `/ParentProfilePage/${parentId}` },
-    { name: 'Report Card PDF', image: resultIcon, className: 'btn-5',link: '/reportc' },
+    { name: 'Report Card PDF', image: resultIcon, className: 'btn-5', link: '/reportc' },
     { name: 'TC Request', image: tcIcon, className: 'btn-6', link:`/TimeOfRequest/${parentId}` },
-    { name: 'Transport request', image: roadIcon, className: 'btn-7', link:'/TransportRequest' },
+    { name: 'Transport request', image: roadIcon, className: 'btn-7', link:`/TransportRequest/${parentId}` },
     { name: 'Student profile', image: studentIcon, className: 'btn-8', link: `/StudentProfilePage/${parentId}` },
     { name: 'External report', image: externalIcon, className: 'btn-9', link: '/Externalr' },
     { name: 'Notifications', image: notilIcon, className: 'btn-10', link:'/Notification' },
-    { name: 'Third Party Optional Services', image: thirdIcon, className:'btn-11', link : `/ThirdPartyServices/${parentId}`},
+    { name: 'Third Party Optional Services', image: thirdIcon, className:'btn-11', link : `/ThirdPartyServices/${parentId}` },
     { name: 'Parent Profile', image: childIcon, className: 'btn-12' },
     { name: 'Circular', image: circularIcon, className: 'btn-13', link: '/Circular' },
     { name: 'Clubs', image: chatIcon, className: 'btn-14', link: '/ClubPage' },
     { name: 'Medical', image: medIcon, className: 'btn-15', link: '/Medical' },
-    { name: 'Student ID Card', image: idIcon, className: 'btn-16', link: `/StudentIdCardPage/${parentId}`},
+    { name: 'Student ID Card', image: idIcon, className: 'btn-16', link: `/StudentIdCardPage/${parentId}` },
     { name: 'Calendar', image: calcIcon, className: 'btn-17', link: '/Calendar' },
     { name: 'Attendance', image: attenIcon, className: 'btn-18', link: "/Attendance" },
     { name: 'Online Fee Payment', image: feeIcon, className: 'btn-19', link: '/Paymentpage' },
     { name: 'Fee Reminder', image: feeremIcon, className: 'btn-20', link: `/FeeReminderPage/${parentId}` },
-    { name: 'Student Leave Application', image: leaveIcon, className: 'btn-21', link: '/Leave'},
+    { name: 'Student Leave Application', image: leaveIcon, className: 'btn-21', link: '/Leave' },
     { name: 'Parent counselling request', image: counIcon, className: 'btn-22', link: `/CounselingRequest/${parentId}` },
     { name: 'Behaviour assessment tool', image: behavIcon, className: 'btn-23', link:`/BehaviorAssessmentTool/${parentId}` },
-    { name: 'Communication With Teacher', image: learningIcon, className: 'btn-24',link: `/ParentMessages/${parentId}` },
+    { name: 'Communication With Teacher', image: learningIcon, className: 'btn-24', link: `/ParentMessages/${parentId}` },
+    { name: 'Virtual Meeting Link', image: FaLink, className: 'btn-25', link: `/ParentClassDataPage` },
   ];
 
   return (
     <div className="dashboard">
-      <Header/>
+      <Header />
       <div className="btn-container">
         {icons.map(({ name, image, className, link }, index) => (
           <Link key={index} to={link} className={`button-card ${className}`}>
-            <img src={image} className="icon" alt={name} />
+            {renderIcon(image)}
             {name}
           </Link>
         ))}
@@ -72,4 +84,5 @@ const Dashboard = () => {
     </div>
   );
 }
+
 export default Dashboard;

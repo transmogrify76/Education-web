@@ -1,0 +1,134 @@
+/* General Page Styling */
+.get-surveys-page {
+    padding: 20px;
+    font-family: 'Courier New', Courier, monospace; /* Retro typewriter font */
+    background-color: #f4f4f9; /* Soft beige background */
+    color: #333;
+  }
+  
+  /* Main Title Styling */
+  h1 {
+    text-align: center;
+    color: #8B5D33; /* Warm brown color for a vintage feel */
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for a vintage effect */
+    margin-bottom: 40px;
+    font-family: 'Georgia', serif; /* Elegant serif font for nostalgia */
+  }
+  
+  /* Message Styling */
+  .message {
+    color: #ff6347; /* Tomato red color for emphasis */
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  /* Survey List */
+  .survey-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    background: #fff3e0; /* Light peach background for softness */
+    border-radius: 10px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1); /* Soft shadows */
+  }
+  
+  /* Survey Card Styling */
+  .survey-card {
+    background-color: #fff8e1; /* Light pastel yellow background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e1bee7; /* Soft border for a vintage touch */
+  }
+  
+  /* Card Heading */
+  .survey-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', Times, serif; /* Classic font for nostalgia */
+    color: #6b4f30; /* Muted brown color for text */
+  }
+  
+  /* Card Paragraph */
+  .survey-card p {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #5d4037; /* Slightly darker brown for better readability */
+  }
+  
+  /* Centering the Button */
+  .survey-link-btn-container {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    align-items: center; /* Center the button vertically */
+    width: 100%; /* Ensure full width for proper centering */
+  }
+  
+  /* Button Styling */
+  .survey-link-btn {
+    background-color: #ff8a65; /* Soft coral orange for a retro pop of color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace; /* Retro typewriter font */
+    letter-spacing: 1px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  /* Button Hover Effect */
+  .survey-link-btn:hover {
+    background-color: #f4511e; /* Vintage deep orange hover effect */
+    transform: scale(1.05); /* Slight scale effect for interaction */
+    transition: 0.3s ease-in-out;
+  }
+  
+  /* Responsive Design for Smaller Screens */
+  @media (max-width: 768px) {
+    .get-surveys-page {
+      padding: 15px;
+    }
+  
+    h1 {
+      font-size: 1.8rem;
+    }
+  
+    .survey-list {
+      padding: 10px;
+    }
+  
+    .survey-card {
+      padding: 15px;
+    }
+  
+    .survey-card h3 {
+      font-size: 1.3rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .survey-card {
+      padding: 10px;
+    }
+  
+    .survey-card h3 {
+      font-size: 1.2rem;
+    }
+  
+    .survey-card p {
+      font-size: 0.9rem;
+    }
+  
+    .survey-link-btn {
+      padding: 8px 15px;
+    }
+  }
+  

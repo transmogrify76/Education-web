@@ -1,24 +1,95 @@
+/* ExternalReport.css */
 
-.e-dash {
-    background-color:rgb(230, 230, 230);
-    display: flex;
-    height: 25vh;
+.result-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
-.content {
-    flex-grow: 1;
-    padding: 20px;
+.result-page h1 {
+  font-size: 2rem;
+  color: #007bff;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: bold;
 }
 
-.external-report {
-    display: flex;
-    flex-wrap: wrap; /* Allows wrapping if necessary */
-    gap: 20px; /* Space between each label-dropdown pair */
+.result-page h2, .result-page h3 {
+  font-size: 1.25rem;
+  color: #555;
+  margin: 0.5rem 0;
+  text-align: center;
 }
 
-.report-pair {
-    display: flex;
-    flex-direction: column; /* Stack label and dropdown vertically */
-    gap: 5px; /* Space between label and dropdown */
-    flex: 1 1 200px; /* Grow and shrink flexibly with a base width of 200px */
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+
+.result-table thead {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.result-table th,
+.result-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.result-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.result-table th {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.result-table td {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.pdf-button {
+  display: inline-block;
+  margin: 1.5rem auto 0;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.pdf-button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .result-page {
+    padding: 1rem;
+  }
+
+  .result-table th,
+  .result-table td {
+    padding: 0.5rem;
+  }
+
+  .pdf-button {
+    width: 100%;
+    padding: 0.75rem;
+  }
 }

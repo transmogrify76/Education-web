@@ -1,119 +1,218 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './UploadTeacherResults.css';
-import Header from '../Header/Header';
 
 const UploadTeacherResults = () => {
+  const [classNames, setClassNames] = useState([]);
+  const [selectedClass, setSelectedClass] = useState('');
   const [students, setStudents] = useState([]);
-  const [filteredStudents, setFilteredStudents] = useState([]);
-  const [selectedStudent, setSelectedStudent] = useState('');
-  const [year, setYear] = useState('');
-  const [file, setFile] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [results, setResults] = useState([]);
+  const [subjects, setSubjects] = useState(['Math', 'Science', 'English', 'History', 'Geography', 'Art', 'Physical Education', 'Computer Science']);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  // Fetch class names
   useEffect(() => {
-    // Fetch students from the API
-    axios.get('http://localhost:3000/student')
-      .then(response => {
-        setStudents(response.data);
-        setFilteredStudents(response.data);
-      })
-      .catch(error => console.error('Error fetching students:', error));
+    const fetchClassNames = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get('http://localhost:3000/class');
+        setClassNames(Array.isArray(response.data) ? response.data : []);
+      } catch (error) {
+        setError('Error fetching class names');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchClassNames();
   }, []);
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+  // Fetch students based on selected class
+  useEffect(() => {
+    const fetchStudents = async () => {
+      if (selectedClass) {
+        setLoading(true);
+        setError(null);
+        try {
+          const response = await axios.get(`http://localhost:3000/class/${selectedClass}`);
+          const studentsData = Array.isArray(response.data.students) ? response.data.students : [];
+          const sortedStudents = studentsData.sort((a, b) => a.name.localeCompare(b.name));
+          setStudents(sortedStudents);
+          const initialResults = sortedStudents.map(student => ({ studentId: student.id, marks: {} }));
+          setResults(initialResults);
+        } catch (error) {
+          setError('Error fetching students');
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setStudents([]);
+        setResults([]);
+      }
+    };
+
+    fetchStudents();
+  }, [selectedClass]);
+
+  const handleClassChange = (e) => {
+    setSelectedClass(e.target.value);
   };
 
-  const handleSearchChange = (event) => {
-    const query = event.target.value.toLowerCase();
-    setSearchQuery(query);
-    setFilteredStudents(
-      students.filter(student =>
-        student.name.toLowerCase().includes(query)
-      )
-    );
+  const handleResultChange = (index, subject, value) => {
+    const updatedResults = [...results];
+    updatedResults[index].marks[subject] = value;
+    setResults(updatedResults);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubjectChange = (index, value) => {
+    const updatedSubjects = [...subjects];
+    updatedSubjects[index] = value;
+    setSubjects(updatedSubjects);
 
-    if (!selectedStudent || !year || !file) {
-      alert('Please fill out all fields.');
-      return;
+    const updatedResults = results.map((result, idx) => {
+      if (idx === index) {
+        const updatedMarks = { ...result.marks };
+        updatedMarks[value] = updatedMarks[subjects[index]]; // Retain marks from the old subject name
+        delete updatedMarks[subjects[index]]; // Remove the old subject
+        return { ...result, marks: updatedMarks };
+      }
+      return result;
+    });
+
+    setResults(updatedResults);
+  };
+
+  const addSubject = () => {
+    const newSubject = prompt('Enter new subject name:');
+    if (newSubject && !subjects.includes(newSubject)) {
+      setSubjects([...subjects, newSubject]);
+      const updatedResults = results.map(result => ({
+        ...result,
+        marks: { ...result.marks, [newSubject]: '' },
+      }));
+      setResults(updatedResults);
+    } else {
+      alert('Subject already exists or is invalid.');
     }
+  };
 
-    const formData = new FormData();
-    formData.append('studentId', selectedStudent);
-    formData.append('year', year);
-    formData.append('file', file);
+  const deleteSubject = (index) => {
+    const updatedSubjects = subjects.filter((_, i) => i !== index);
+    setSubjects(updatedSubjects);
 
-    axios.post('http://localhost:3000/results', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-      .then(response => alert('Result uploaded successfully!'))
-      .catch(error => console.error('Error uploading result:', error));
+    const updatedResults = results.map(result => {
+      const newMarks = { ...result.marks };
+      delete newMarks[subjects[index]];
+      return { ...result, marks: newMarks };
+    });
+    setResults(updatedResults);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      // Prepare the results for backend
+      const payload = results.map(result => ({
+        studentId: result.studentId,
+        year: new Date().getFullYear(), // assuming current year for now
+        subjects: Object.keys(result.marks).map(subjectName => ({
+          subjectName,
+          marks: result.marks[subjectName],
+        })),
+      }));
+
+      // POST request to upload results
+      for (const data of payload) {
+        await axios.post('http://localhost:3000/result/upload', data);
+      }
+      
+      alert('Results uploaded successfully!');
+    } catch (error) {
+      setError('Error uploading results');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div>
-      <Header/>
-    <div className="upload-results-container">
-      <h1>Upload Student Result (Teacher)</h1>
+    <div className="upload-container">
+      <h2 className="upload-container__heading">Upload Results</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="search">Search Student</label>
-          <input
-            type="text"
-            id="search"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            placeholder="Search by student name..."
-          />
-        </div>
+        {loading && <div className="loading">Loading...</div>}
+        {error && <div className="error-message">{error}</div>}
 
         <div className="form-group">
-          <label htmlFor="student">Select Student</label>
+          <label htmlFor="class-dropdown" className="form-group__label">Select Class:</label>
           <select
-            id="student"
-            value={selectedStudent}
-            onChange={(e) => setSelectedStudent(e.target.value)}
+            id="class-dropdown"
+            value={selectedClass}
+            onChange={handleClassChange}
+            className="form-group__select"
           >
-            <option value="">Select a student</option>
-            {filteredStudents.map(student => (
-              <option key={student.id} value={student.id}>
-                {student.name} (ID: {student.id})
+            <option value="">Select a class</option>
+            {classNames.map((classItem) => (
+              <option key={classItem.id} value={classItem.id}>
+                {classItem.className}
               </option>
             ))}
           </select>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="year">Year</label>
-          <input
-            type="text"
-            id="year"
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-            placeholder="Enter the year"
-          />
+        {students.length > 0 && (
+          <table className="results-table">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                {subjects.map((subject, index) => (
+                  <th key={subject}>
+                    <input
+                      type="text"
+                      value={subject}
+                      onChange={(e) => handleSubjectChange(index, e.target.value)}
+                      className="form-group__input"
+                    />
+                    <button type="button" onClick={() => deleteSubject(index)} className="btn-delete">Delete</button>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {results.map((result, index) => (
+                <tr key={index}>
+                  <td>
+                    {students[index] ? (
+                      <span>{students[index].name}</span>
+                    ) : (
+                      <span>No student</span>
+                    )}
+                  </td>
+                  {subjects.map((subject) => (
+                    <td key={subject}>
+                      <input
+                        type="number"
+                        value={result.marks[subject] || ''}
+                        onChange={(e) => handleResultChange(index, subject, e.target.value)}
+                        placeholder={`Marks for ${subject}`}
+                        className="form-group__input"
+                      />
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+
+        <div className="add-subject">
+          <button type="button" onClick={addSubject} className="btn-add-subject">Add Subject</button>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="file">Upload Result (PDF)</label>
-          <input
-            type="file"
-            id="file"
-            accept=".pdf"
-            onChange={handleFileChange}
-          />
-        </div>
-
-        <button type="submit">Upload</button>
+        <button type="submit" className="btn-primary" disabled={loading}>Upload Results</button>
       </form>
-    </div>
     </div>
   );
 };

@@ -1,0 +1,81 @@
+.parent-class-data-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .page-header {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .input-group {
+    margin-bottom: 1rem;
+  }
+  
+  .input-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .input-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .status-message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  .status-message.success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .meeting-list {
+    margin-top: 20px;
+  }
+  
+  .meeting-item {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .meeting-item h3 {
+    font-size: 1.5rem;
+    color: #007acc;
+    margin-bottom: 0.5rem;
+  }
+  
+  .join-link {
+    font-size: 1.2rem;
+    color: #007acc;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .join-link:hover {
+    text-decoration: underline;
+  }
+  
+  .loading-text {
+    font-size: 1.2rem;
+    color: #888;
+  }
+  

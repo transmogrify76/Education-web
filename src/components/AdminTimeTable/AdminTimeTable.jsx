@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import './AdminTimeTable.css'
+import './AdminTimeTable.css';
 import Header from '../Header/Header';
+
 const AdminTimeTable = () => {
   const [formData, setFormData] = useState({
     day: '',
@@ -9,7 +10,7 @@ const AdminTimeTable = () => {
     period: 'AM',
     subject: '',
     professor: '',
-    studentId: ''
+    classId: ''  // Updated from studentId to classId
   });
   const [popupVisible, setPopupVisible] = useState(false);
 
@@ -27,7 +28,7 @@ const AdminTimeTable = () => {
       time: time,
       subject: formData.subject,
       professor: formData.professor,
-      studentId: formData.studentId,
+      classId: formData.classId,  // Updated from studentId to classId
     };
 
     fetch('http://localhost:3000/timetable', {
@@ -40,9 +41,9 @@ const AdminTimeTable = () => {
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
-        setPopupVisible(true); // Show the popup
-        setTimeout(() => setPopupVisible(false), 3000); // Hide after 3 seconds
-        setFormData({ day: '', hour: '', minute: '', period: 'AM', subject: '', professor: '', studentId: '' }); // Clear the form
+        setPopupVisible(true);
+        setTimeout(() => setPopupVisible(false), 3000);
+        setFormData({ day: '', hour: '', minute: '', period: 'AM', subject: '', professor: '', classId: '' }); // Reset classId
       })
       .catch(error => {
         console.error('Error:', error);
@@ -51,72 +52,72 @@ const AdminTimeTable = () => {
 
   return (
     <div>
-      <Header/>
-    <div className="admin-timetable-page">
-      <h1>Post Timetable</h1>
-      {popupVisible && <div className="popup">Timetable posted successfully!</div>}
-      <form className="timetable-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="day">Day:</label>
-          <select name="day" value={formData.day} onChange={handleChange} required>
-            <option value="" disabled>Select Day</option>
-            <option value="Monday">Monday</option>
-            <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
-            <option value="Thursday">Thursday</option>
-            <option value="Friday">Friday</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="time">Time:</label>
-          <div className="time-inputs">
-            <input 
-              type="number" 
-              name="hour" 
-              value={formData.hour} 
-              onChange={handleChange} 
-              min="1" 
-              max="12" 
-              placeholder="HH" 
-              required 
-            />
-            <span>:</span>
-            <input 
-              type="number" 
-              name="minute" 
-              value={formData.minute} 
-              onChange={handleChange} 
-              min="0" 
-              max="59" 
-              placeholder="MM" 
-              required 
-            />
-            <select 
-              name="period" 
-              value={formData.period} 
-              onChange={handleChange} 
-              required
-            >
-              <option value="AM">AM</option>
-              <option value="PM">PM</option>
+      <Header />
+      <div className="admin-timetable-page">
+        <h1>Post Timetable</h1>
+        {popupVisible && <div className="popup">Timetable posted successfully!</div>}
+        <form className="timetable-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="day">Day:</label>
+            <select name="day" value={formData.day} onChange={handleChange} required>
+              <option value="" disabled>Select Day</option>
+              <option value="Monday">Monday</option>
+              <option value="Tuesday">Tuesday</option>
+              <option value="Wednesday">Wednesday</option>
+              <option value="Thursday">Thursday</option>
+              <option value="Friday">Friday</option>
             </select>
           </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="subject">Subject:</label>
-          <input type="text" name="subject" value={formData.subject} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label htmlFor="professor">Professor:</label>
-          <input type="text" name="professor" value={formData.professor} onChange={handleChange} required />
-        </div>
-        <div className="form-group">
-          <label htmlFor="studentId">Student ID:</label>
-          <input type="number" name="studentId" value={formData.studentId} onChange={handleChange} required />
-        </div>
-        <button type="submit" className="submit-button">Post Timetable</button>
-      </form>
-    </div>
+          <div className="form-group">
+            <label htmlFor="time">Time:</label>
+            <div className="time-inputs">
+              <input 
+                type="number" 
+                name="hour" 
+                value={formData.hour} 
+                onChange={handleChange} 
+                min="1" 
+                max="12" 
+                placeholder="HH" 
+                required 
+              />
+              <span>:</span>
+              <input 
+                type="number" 
+                name="minute" 
+                value={formData.minute} 
+                onChange={handleChange} 
+                min="0" 
+                max="59" 
+                placeholder="MM" 
+                required 
+              />
+              <select 
+                name="period" 
+                value={formData.period} 
+                onChange={handleChange} 
+                required
+              >
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="subject">Subject:</label>
+            <input type="text" name="subject" value={formData.subject} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label htmlFor="professor">Professor:</label>
+            <input type="text" name="professor" value={formData.professor} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label htmlFor="classId">Class ID:</label> {/* Updated label */}
+            <input type="number" name="classId" value={formData.classId} onChange={handleChange} required /> {/* Updated input name */}
+          </div>
+          <button type="submit" className="submit-button">Post Timetable</button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -3,14 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
-import { faChalkboardTeacher, faUserGraduate, faClipboardList, faFileUpload, faComments, faCalendarAlt, faBook, faStar, faFolderOpen } from '@fortawesome/free-solid-svg-icons';
+import { faChalkboardTeacher, faUserGraduate, faClipboardList, faFileUpload, faComments, faCalendarAlt, faBook, faStar, faFolderOpen, faLink } from '@fortawesome/free-solid-svg-icons';
 import './TeacherDashboard.css';
 import Header from '../Header/Header';
 
 const TeacherDashboard = () => {
   const { teacherId } = useParams();
 
-  // Define icons with FontAwesome and unique links
   const icons = [
     { name: 'Class Management', icon: faChalkboardTeacher, className: 'btn-1', link: `/ClassManagementPage/${teacherId}` },
     { name: 'Student Management', icon: faUserGraduate, className: 'btn-2', link: '/TeacherStudentManagementPage' },
@@ -20,7 +19,9 @@ const TeacherDashboard = () => {
     { name: 'Post Events for Students', icon: faCalendarAlt, className: 'btn-6', link: '/TeacherPage' },
     { name: 'Resource Creation Page', icon: faBook, className: 'btn-7', link: `/CreateResourcePage/${teacherId}` },
     { name: 'Give Grades or Remarks', icon: faStar, className: 'btn-8', link: '/GradePage' },
-    { name: 'Submitted Assignments', icon: faFolderOpen, className: 'btn-9', link: '/UpdateLeaveStatus' }
+    { name: 'Submitted Assignments', icon: faFolderOpen, className: 'btn-9', link: '/SubmittedAssignment' },
+    { name: 'E-Book Upload', icon: faBook, className: 'btn-10', link: '/ebookpage' },
+    { name: 'Google Meeting Link', icon: faLink, className: 'btn-100', link: '/CreateMeeting' }
   ];
 
   return (

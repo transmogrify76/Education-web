@@ -87,8 +87,13 @@ import GradePage from './components/GradePage/GradePage'
 import AssignmentSubmissionPage from './components/AssignmentSubmissionPage/AssignmentSubmissionPage'
 import ResourceShowPage from './components/ResourceShowPage/ResourceShowPage'
 import StudentGradesPage from './components/StudentGradesPage/StudentGradesPage'
-// import EbbokPage from './components/EbbokPage/EbookPage'
-
+import EbookPage from './components/EbookPage/EbookPage'
+import ShowEbookPage from './components/ShowEbookPage/ShowEbookPage'
+import SubmittedAssignment from './components/SubmittedAssignment/SubmittedAssignment'
+import CreateMeeting from './components/CreateMeeting/CreateMeeting'
+import ParentClassDataPage from './components/ParentClassDataPage/ParentClassDataPage'
+import CreateSurveyForm from './components/CreateSurveyForm/CreateSurveyForm'
+import GetSurveys from './components/GetSurveys/GetSurveys'
 function App() {
   return (
     <Router>
@@ -133,7 +138,7 @@ function App() {
           <Route path="/ForgetPassword" element={<ForgetPassword />} />
           <Route path="/ResetPassword" element={<ResetPassword />} />
           <Route path="/TeacherRegister" element={<TeacherRegister />} />
-          <Route path="/TransportRequest" element={<TransportRequest />} />
+          <Route path="/TransportRequest/:parentId" element={<TransportRequest />} />
           <Route path="/PaymentPage" element={<PaymentPage />} />
           <Route path="/ParentProfilePage" element={<ParentProfilePage />} />
           <Route path="/ParentProfilePage/:parentId" element={<ParentProfilePage />} />
@@ -185,8 +190,15 @@ function App() {
           <Route path="/GradePage" element={<GradePage/>} />           
           <Route path="/AssignmentSubmissionPage/:studentId" element={<AssignmentSubmissionPage/>} />           
           <Route path="/ResourceShowPage/:studentId" element={<ResourceShowPage/>} />           
-          <Route path="/StudentGradesPage/:studentId" element={<StudentGradesPage/>} />           
-          {/* <Route path="/EbookPage/:studentId" element={<EbbokPage/>} />            */}
+          <Route path="/StudentGradesPage/:studentId" element={<StudentGradesPage/>} />  
+          <Route path="/EbookPage" element={<EbookPage/>} />  
+          <Route path="/ParentClassDataPage" element={<ParentClassDataPage/>} />  
+
+          <Route path="/ShowEbookPage/:studentId" element={<ShowEbookPage/>} />            
+          <Route path="/SubmittedAssignment/" element={<SubmittedAssignment/>} />            
+          <Route path="/CreateMeeting/" element={<CreateMeeting/>} />            
+          <Route path="/CreateSurveyForm/" element={<CreateSurveyForm/>} />            
+          <Route path="/GetSurveys/" element={<GetSurveys/>} />            
 
         </Routes>
       </div>

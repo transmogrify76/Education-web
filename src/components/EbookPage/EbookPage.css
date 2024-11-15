@@ -1,0 +1,80 @@
+.ebook-page {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff; 
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); 
+  }
+  
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px; 
+    font-family: 'Arial', sans-serif; 
+  }
+  
+  .message {
+    text-align: center;
+    color: #28a745; 
+    margin-bottom: 15px; 
+    font-weight: bold; 
+  }
+  
+  .ebook-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: 500; 
+  }
+  
+  input,
+  textarea {
+    padding: 12px; 
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  input:focus,
+  textarea:focus {
+    border-color: #66afe9;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.5); 
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .submit-btn {
+    padding: 12px; 
+    font-size: 18px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); 
+  }
+  
+  .submit-btn:active {
+    transform: translateY(0); 
+  }
+  

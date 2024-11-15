@@ -25,11 +25,6 @@ h1 {
 .assignment-dropdown-container {
   margin-bottom: 20px;
 }
-
-label {
-  font-weight: bold;
-}
-
 select,
 textarea,
 input[type="file"] {

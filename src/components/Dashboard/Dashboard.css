@@ -57,7 +57,7 @@
 
 .btn-4 {
   margin-left: 5px;
-  background-color: rgb(210, 209, 227);
+  background-color: rgb(98, 137, 143);
 }
 
 .btn-5 {
@@ -92,7 +92,7 @@
 
 .btn-11 {
   margin-left: 5px;
-  background-color: rgb(144, 168, 190);
+  background-color: rgb(219, 18, 18);
 }
 
 .btn-12 {
@@ -158,4 +158,8 @@
 .btn-24 {
   margin-left: 5px;
   background-color: rgb(66, 82, 173);
+}
+.btn-25 {
+  margin-left: 5px;
+  background-color: rgba(99, 0, 160, 0.881);
 }
