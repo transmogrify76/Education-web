@@ -94,6 +94,7 @@ import CreateMeeting from './components/CreateMeeting/CreateMeeting'
 import ParentClassDataPage from './components/ParentClassDataPage/ParentClassDataPage'
 import CreateSurveyForm from './components/CreateSurveyForm/CreateSurveyForm'
 import GetSurveys from './components/GetSurveys/GetSurveys'
+import SubjectEdit from './components/SubjectEdit/SubjectEdit'
 function App() {
   return (
     <Router>
@@ -199,6 +200,7 @@ function App() {
           <Route path="/CreateMeeting/" element={<CreateMeeting/>} />            
           <Route path="/CreateSurveyForm/" element={<CreateSurveyForm/>} />            
           <Route path="/GetSurveys/" element={<GetSurveys/>} />            
+          <Route path="/SubjectEdit/" element={<SubjectEdit/>} />            
 
         </Routes>
       </div>

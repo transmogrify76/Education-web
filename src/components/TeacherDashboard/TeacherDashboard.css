@@ -160,6 +160,10 @@
     margin-left: 5px;
     background-color: rgb(66, 82, 173);
   }
+  .btn-25 {
+    margin-left: 5px;
+    background-color: rgb(66, 82, 173);
+  }
   .btn-1 { background-color: #5a9bd4; }
 .btn-2 { background-color: #4caf50; }
 .btn-3 { background-color: #f44336; }
@@ -169,3 +173,4 @@
 .btn-7 { background-color: #673ab7; }
 .btn-8 { background-color: #8bc34a; }
 .btn-9 { background-color: #e91e63; }
+.btn-25 { background-color: #511ee9; }

@@ -117,7 +117,7 @@ const Contactus = () => {
                             required
                         ></textarea>
 
-                        <button type="submit" className="submitButton">Send Message</button>
+                        <button type="submit" className="submit">Send Message</button>
                     </form>
                 </section>
                 <footer className="infra-footer">

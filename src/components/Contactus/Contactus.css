@@ -107,8 +107,8 @@ body {
     background: white;
 }
 
-.submitButton {
-    margin-left: 35%;
+.submit {
+    /* margin-left: 35%; */
     margin-top: 10%;
     width: 40%;
     --border-color: linear-gradient(-45deg, #ffae00, #7e03aa, #00fffb);
@@ -139,14 +139,14 @@ body {
     transition: color 250ms;
 }
 
-.submitButton::after,
-.submitButton::before {
+.submit::after,
+.submit::before {
     content: "";
     position: absolute;
     inset: 0;
 }
 
-.submitButton::before {
+.submit::before {
     background: var(--border-color);
     background-size: 300% 300%;
     animation: move-bg7234 5s ease infinite;
@@ -165,7 +165,7 @@ body {
     }
 }
 
-.submitButton::after {
+.submit::after {
     background: var(--bg);
     z-index: -1;
     clip-path: polygon(
@@ -179,6 +179,6 @@ body {
     );
 }
 
-.submitButton:hover {
+.submit:hover {
     color: var(--bg);
 }
