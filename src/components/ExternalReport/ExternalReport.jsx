@@ -2,13 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
 import './ExternalReport.css';
-
 const ExternalReport = () => {
   const { studentId } = useParams();
   const [studentInfo, setStudentInfo] = useState({ name: '', enrollmentNo: '', className: '' });
   const [subjects, setSubjects] = useState([]);
   const pdfRef = useRef();
-
   useEffect(() => {
     const fetchClassData = async () => {
       try {
@@ -70,14 +68,13 @@ const ExternalReport = () => {
 
     fetchClassData();
     fetchResults();
-  }, [studentId]); // Fetch data whenever studentId changes
+  }, [studentId]); 
 
-  // Update a subject when modified
   const handleSubjectUpdate = (subjectName, newMarks) => {
     setSubjects(prevSubjects => {
       const updatedSubjects = prevSubjects.map(subject =>
         subject.subjectName === subjectName
-          ? { ...subject, marks: newMarks } // Update marks for the edited subject
+          ? { ...subject, marks: newMarks } 
           : subject
       );
       return updatedSubjects;
