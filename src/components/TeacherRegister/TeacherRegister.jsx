@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 import './TeacherRegister.css';
 
 const TeacherRegister = () => {
@@ -10,8 +10,8 @@ const TeacherRegister = () => {
     address: '',
     password: ''
   });
-  const [showPopup, setShowPopup] = useState(false);  // State for popup
-  const navigate = useNavigate();  // Initialize useNavigate
+  const [showPopup, setShowPopup] = useState(false); 
+  const navigate = useNavigate();  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,38 +22,41 @@ const TeacherRegister = () => {
     e.preventDefault();
     const teacherData = {
       ...formData,
-      roleType: 'teacher', // Include the roleType in the request
-      id: 1, // Assuming id is static for this example
+      roleType: 'teacher', 
+      id: 2, // Static ID for now, can be dynamic if needed
       password: await hashPassword(formData.password)
     };
-
+  
+    const authToken = localStorage.getItem('authToken');  // Get token from localStorage or session
+  
     try {
       const response = await fetch('http://localhost:3000/teacher/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`,  // Include the Authorization token
         },
         body: JSON.stringify(teacherData),
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
+  
       const result = await response.json();
       console.log('Registration successful:', result);
-      setShowPopup(true);  // Show the popup notification
+      setShowPopup(true);  
       setTimeout(() => {
-        navigate('/tlogin');  // Navigate to login page after 2 seconds
+        navigate('/tlogin');  
       }, 2000);
     } catch (error) {
       console.error('Error registering teacher:', error);
     }
   };
+  
 
   const hashPassword = async (password) => {
-    // Simulating hashing function, replace with actual implementation
-    return password;
+    return password; // Simulating hashing, replace with actual hash function
   };
 
   return (
