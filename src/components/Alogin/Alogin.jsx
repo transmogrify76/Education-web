@@ -46,7 +46,7 @@ export default function Alogin() {
 
         const admin_id = data.admin_id;
         setTimeout(() => {
-          navigate(`/adminpage/${admin_id}`); // Redirect to admin page
+          navigate(`/admindashboard`); // Redirect to admin page
         }, 2000);
       } else {
         const errorData = await response.json();
@@ -93,8 +93,6 @@ export default function Alogin() {
             </div>
             <button className="btn submit" type="submit">Login</button>
           </form>
-
-          
 
           <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
             Forgot Password?

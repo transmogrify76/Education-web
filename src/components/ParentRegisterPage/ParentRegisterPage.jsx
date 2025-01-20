@@ -31,11 +31,21 @@ const ParentRegisterPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Retrieve the token from localStorage
+        const token = localStorage.getItem('authToken');
+
+        // Check if the token exists, else show an error message
+        if (!token) {
+            setMessage('Authorization token not found. Please log in as an admin.');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:3000/parent/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
                 },
                 body: JSON.stringify({
                     name: formData.name,
@@ -57,7 +67,7 @@ const ParentRegisterPage = () => {
                 setShowPopup(true);
                 setTimeout(() => {
                     setShowPopup(false);
-                    navigate(`/plogin?parentId=${parentId}`); // Redirect to Plogin with parentId
+                    navigate(`/plogin`); // Redirect to Plogin with parentId
                 }, 2000); // Adjust the delay as needed
             } else {
                 const errorData = await response.json();
@@ -170,3 +180,4 @@ const ParentRegisterPage = () => {
 };
 
 export default ParentRegisterPage;
+

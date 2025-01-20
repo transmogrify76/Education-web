@@ -1,46 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Tlogin.css';
 import Header from '../Header/Header';
 
 export default function Tlogin() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    if (username === '' || password === '') {
+  
+    if (email === '' || password === '') {
       setMessage('Please enter both email and password.');
       return;
     }
-
+  
     try {
       const response = await fetch('http://localhost:3000/teacher/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: username,
-          password: password
-        })
+          email: email,
+          password: password,
+        }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
-        const teacherId = data.teacherId;
-
-        localStorage.setItem('authToken', data.token);
+        const { token } = data;
+  
+        // Store the token in localStorage
+        localStorage.setItem('authToken', token);
+        setMessage('Login successful');
         setIsLoggedIn(true);
-        // setMessage('Login successful!');
-
-        // Redirect to the dashboard after a short delay
+  
         setTimeout(() => {
-          navigate(`/TeacherDashboard/${teacherId}`);
+          // Redirect to the teacher's dashboard after successful login
+          navigate('/teacherdashboard');  // Use correct route here
         }, 2000);
       } else {
         const errorData = await response.json();
@@ -51,7 +59,7 @@ export default function Tlogin() {
       setMessage(`Error: ${error.message}`);
     }
   };
-
+  
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     setIsLoggedIn(false);
@@ -63,44 +71,45 @@ export default function Tlogin() {
       <Header />
       <div className="tlogin-container">
         <div className="tlogin-card">
-          <h2>Welcome Teacher</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="input-groups">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-groups">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button className="submit" type="submit">Login</button>
-          </form>
-
-          <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
-            Forgot Password?
-          </div>
-          {isLoggedIn && (
+          <h2>Teacher Login</h2>
+          {isLoggedIn ? (
             <div>
               <p>You are logged in.</p>
-              {/* <button onClick={handleLogout} className="logout-button">Logout</button> */}
+              <button onClick={handleLogout} className="logout-button">Logout</button>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <div className="input-groups">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="input-groups">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button className="submit" type="submit">Login</button>
+            </form>
           )}
+          <div className="button-bottom">
+            <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
+              Forgot Password?
+            </div>
+          </div>
           <p className="message">{message}</p>
         </div>
       </div>
     </div>
   );
 }
-
