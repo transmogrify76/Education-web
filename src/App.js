@@ -8,6 +8,7 @@ import Alogin from './components/Alogin/Alogin';
 import Adminview from './components/Adminview/Adminview';
 import Login from './components/Login/Login';
 import Dashboard from './components/Dashboard/Dashboard';
+import ParentDashboard from './components/Dashboard/Dashboard';
 import Signup from './components/Signup/Signup';
 import ParentView from './components/Parentview/Parentview';
 import Home from './components/Home/Home';
@@ -28,7 +29,7 @@ import Attendance from './components/Attendance/Attendance';
 import Infrastructure from './components/Infrastructure/Infrastructure';
 import Event from './components/Event/Event';
 import CurriculumPage from './components/Curriculam/CurriculumPage';
-import AdminPage from './components/AdminPage/AdminPage';
+import AdminDashboard from './components/AdminPage/AdminPage';
 import StudentRegisterPage from './components/StudentRegisterPage/StudentRegisterPage';
 import ParentRegisterPage from './components/ParentRegisterPage/ParentRegisterPage';
 import Medical from './components/Medical/Medical';
@@ -110,7 +111,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/parentview" element={<ParentView />} />
           <Route path="/plogin" element={<Plogin />} />
-          <Route path="/dashboard/:parentId" element={<Dashboard />} />
+          {/* <Route path="/dashboard/:parentId" element={<Dashboard />} /> */}
+          <Route path="/parentdashboard" element={<ParentDashboard />} />
           <Route path="/Alogin" element={<Alogin />} />
           <Route path="/Consent/:parentid" element={<Consent />} />
           <Route path="/Reportc" element={<Reportc />} />
@@ -129,7 +131,8 @@ function App() {
           <Route path="/event/:id" element={<Event />} />
           <Route path="/event" element={<Event />} />
           <Route path='/curriculum' element={<CurriculumPage />} />
-          <Route path='/AdminPage/:admin_id' element={<AdminPage />} />
+          {/* <Route path='/AdminPage/:admin_id' element={<AdminPage />} /> */}
+            <Route path='/admindashboard' element={<AdminDashboard />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
           <Route path="/ParentRegisterpage" element={<ParentRegisterPage />} />
           <Route path="/Medical" element={<Medical />} />
