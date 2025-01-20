@@ -111,7 +111,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/parentview" element={<ParentView />} />
           <Route path="/plogin" element={<Plogin />} />
-          {/* <Route path="/dashboard/:parentId" element={<Dashboard />} /> */}
+        
           <Route path="/parentdashboard" element={<ParentDashboard />} />
           <Route path="/Alogin" element={<Alogin />} />
           <Route path="/Consent/:parentid" element={<Consent />} />
@@ -131,8 +131,8 @@ function App() {
           <Route path="/event/:id" element={<Event />} />
           <Route path="/event" element={<Event />} />
           <Route path='/curriculum' element={<CurriculumPage />} />
-          {/* <Route path='/AdminPage/:admin_id' element={<AdminPage />} /> */}
-            <Route path='/admindashboard' element={<AdminDashboard />} />
+        
+          <Route path='/admindashboard' element={<AdminDashboard />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
           <Route path="/ParentRegisterpage" element={<ParentRegisterPage />} />
           <Route path="/Medical" element={<Medical />} />
