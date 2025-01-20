@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom'; 
 import Header from '../Header/Header';
+
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); 
+
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
-      navigate('/StudentView', { replace: true }); 
+      navigate('/StudentView', { replace: true }); // Redirect if already logged in
     }
   }, [navigate]);
 
@@ -38,10 +40,11 @@ export default function Login() {
         const responseData = await response.json();
         console.log('API Response:', responseData);
 
+        // Store the JWT token in localStorage
         localStorage.setItem('authToken', responseData.token);
 
-        // Redirect to the student dashboard or profile page
-        navigate(`/StudentView/${responseData.student.id}`, { replace: true }); // Replace history
+        // Redirect to the student dashboard or profile page after successful login
+        navigate('/StudentView', { replace: true }); // Replace history with dashboard
       } else {
         const errorData = await response.json();
         setMessage(`Login failed: ${errorData.message}`);

@@ -28,32 +28,35 @@ const StudentRegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
+            const token = localStorage.getItem('authToken'); // Get token from localStorage (if needed)
+    
             const response = await fetch('http://localhost:3000/student/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Add Authorization header with Bearer token
                 },
                 body: JSON.stringify({
                     name: `${formData.firstName} ${formData.lastName}`,
                     enrollmentNo: formData.studentId,
                     email: formData.email,
-                    parentEmail: formData.parentEmail, // Use parentEmail instead of parentId
+                    parentEmail: formData.parentEmail,
                     dob: formData.dob,
                     password: formData.password,
                     address: formData.address,
-                    roleType: 'student', // RoleType is hardcoded to 'student'
+                    roleType: 'student',
                 }),
             });
-
+    
             if (response.ok) {
                 setShowPopup(true);
-
+    
                 // Redirect to another page after a short delay to show the popup
                 setTimeout(() => {
                     navigate('/login'); // Adjust this as needed
-                }, 1500); // Adjust the delay as needed
+                }, 1500);
             } else {
                 const errorData = await response.json();
                 console.error('Registration failed:', errorData.message);
@@ -64,6 +67,7 @@ const StudentRegisterPage = () => {
             // Handle fetch error appropriately
         }
     };
+    
 
     return (
         <div className="register-page-containers">
