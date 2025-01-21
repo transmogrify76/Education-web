@@ -97,6 +97,7 @@ import CreateSurveyForm from './components/CreateSurveyForm/CreateSurveyForm'
 import GetSurveys from './components/GetSurveys/GetSurveys'
 import SubjectEdit from './components/SubjectEdit/SubjectEdit'
 import ClassCreate from './components/ClassCreate/ClassCreate';
+import StudentList from './components/StudentList/StudentList';
 function App() {
   return (
     <Router>
@@ -133,6 +134,7 @@ function App() {
           <Route path="/event" element={<Event />} />
           <Route path='/curriculum' element={<CurriculumPage />} />
           <Route path='/classcreate' element={<ClassCreate />} />
+          <Route path='/studentlist' element={<StudentList />} />
         
           <Route path='/admindashboard' element={<AdminDashboard />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
