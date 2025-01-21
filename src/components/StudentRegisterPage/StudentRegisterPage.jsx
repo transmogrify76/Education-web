@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Initialize useNavigate
 import './StudentRegisterPage.css';
 
@@ -7,16 +7,37 @@ const StudentRegisterPage = () => {
         firstName: '',
         lastName: '',
         dob: '',
-        className: '',
+        className: '', // Default to empty until user selects a class
         studentId: '',
         email: '',
         password: '',
-        parentEmail: '', // Replace parentId with parentEmail
+        parentEmail: '',
         address: '',
     });
 
     const [showPopup, setShowPopup] = useState(false);
+    const [classes, setClasses] = useState([]); // To store fetched classes
     const navigate = useNavigate(); // Initialize useNavigate
+
+    // Fetch classes from the API when the component mounts
+    useEffect(() => {
+        const fetchClasses = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/class');
+                const data = await response.json();
+
+                if (response.ok) {
+                    setClasses(data); // Assuming the response contains an array of classes
+                } else {
+                    console.error('Failed to fetch classes:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching classes:', error);
+            }
+        };
+
+        fetchClasses();
+    }, []); // Empty dependency array ensures this runs once when the component mounts
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -52,8 +73,8 @@ const StudentRegisterPage = () => {
                     password: formData.password,
                     address: formData.address,
                     roleType: 'student',
-                    class: formData.className, // Added class
-                    rollNo: formData.studentId, // Added rollNo (assuming it's the same as studentId)
+                    class: formData.className, // Send selected class
+                    rollNo: formData.studentId, // Assuming it's the same as studentId
                 }),
             });
 
@@ -62,7 +83,7 @@ const StudentRegisterPage = () => {
 
                 // Redirect to StudentView page after a short delay to show the popup
                 setTimeout(() => {
-                    navigate('/studentview'); // Adjust this to your desired route
+                    navigate('/login'); // Adjust this to your desired route
                 }, 1500);
             } else {
                 const errorData = await response.json();
@@ -112,13 +133,19 @@ const StudentRegisterPage = () => {
                 </label>
                 <label>
                     Class:
-                    <input
-                        type="text"
+                    <select
                         name="className"
                         value={formData.className}
                         onChange={handleChange}
                         required
-                    />
+                    >
+                        <option value="">Select a Class</option>
+                        {classes.map((classItem, index) => (
+                            <option key={index} value={classItem.className}>
+                                {classItem.className} {/* Assuming `className` is the field in the API response */}
+                            </option>
+                        ))}
+                    </select>
                 </label>
                 <label>
                     Student ID:
