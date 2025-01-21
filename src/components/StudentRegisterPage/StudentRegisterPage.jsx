@@ -28,10 +28,15 @@ const StudentRegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         try {
             const token = localStorage.getItem('authToken'); // Get token from localStorage (if needed)
-    
+
+            if (!token) {
+                alert('You must be logged in as an admin to register a student');
+                return;
+            }
+
             const response = await fetch('http://localhost:3000/student/register', {
                 method: 'POST',
                 headers: {
@@ -47,15 +52,17 @@ const StudentRegisterPage = () => {
                     password: formData.password,
                     address: formData.address,
                     roleType: 'student',
+                    class: formData.className, // Added class
+                    rollNo: formData.studentId, // Added rollNo (assuming it's the same as studentId)
                 }),
             });
-    
+
             if (response.ok) {
                 setShowPopup(true);
-    
-                // Redirect to another page after a short delay to show the popup
+
+                // Redirect to StudentView page after a short delay to show the popup
                 setTimeout(() => {
-                    navigate('/login'); // Adjust this as needed
+                    navigate('/studentview'); // Adjust this to your desired route
                 }, 1500);
             } else {
                 const errorData = await response.json();
@@ -67,13 +74,12 @@ const StudentRegisterPage = () => {
             // Handle fetch error appropriately
         }
     };
-    
 
     return (
         <div className="register-page-containers">
-           
             <form className="register-forms" onSubmit={handleSubmit}>
-            <h1 className="register-title">Student Registration</h1>
+                <h1 className="register-title">Student Registration</h1>
+                {/* Form Fields */}
                 <label>
                     First Name:
                     <input
