@@ -96,6 +96,7 @@ import ParentClassDataPage from './components/ParentClassDataPage/ParentClassDat
 import CreateSurveyForm from './components/CreateSurveyForm/CreateSurveyForm'
 import GetSurveys from './components/GetSurveys/GetSurveys'
 import SubjectEdit from './components/SubjectEdit/SubjectEdit'
+import ClassCreate from './components/ClassCreate/ClassCreate';
 function App() {
   return (
     <Router>
@@ -131,6 +132,7 @@ function App() {
           <Route path="/event/:id" element={<Event />} />
           <Route path="/event" element={<Event />} />
           <Route path='/curriculum' element={<CurriculumPage />} />
+          <Route path='/classcreate' element={<ClassCreate />} />
         
           <Route path='/admindashboard' element={<AdminDashboard />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
