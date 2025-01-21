@@ -210,12 +210,11 @@ const StudentRegisterPage = () => {
         e.preventDefault();
     
         try {
-            // Retrieve admin token from localStorage
-            const adminToken = localStorage.getItem('adminAuthToken'); // Use the correct token key for admin
+            // Retrieve token from localStorage (using the correct key)
+            const token = localStorage.getItem('adminAuthToken'); // Ensure this key is correct
     
-            if (!adminToken) {
-                console.error('Admin token is missing');
-                alert('Admin token is required for registration');
+            if (!token) {
+                alert('You must be logged in as an admin to register a student');
                 return;
             }
     
@@ -223,17 +222,28 @@ const StudentRegisterPage = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${adminToken}`, // Correct Bearer format with admin token
+                    'Authorization': `Bearer ${token}`, // Use the correct variable 'token' here
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    name: `${formData.firstName} ${formData.lastName}`,
+                    enrollmentNo: formData.studentId,
+                    email: formData.email,
+                    parentEmail: formData.parentEmail,
+                    dob: formData.dob,
+                    password: formData.password,
+                    address: formData.address,
+                    roleType: 'student',
+                    class: formData.className,
+                    rollNo: formData.studentId,
+                }),
             });
     
             if (response.ok) {
                 setShowPopup(true);
     
-                // Redirect to another page after a short delay
+                // Redirect after successful registration
                 setTimeout(() => {
-                    navigate('/login');
+                    navigate('/studentview');
                 }, 1500);
             } else {
                 const errorData = await response.json();
@@ -246,10 +256,12 @@ const StudentRegisterPage = () => {
         }
     };
     
+
     return (
         <div className="register-page-containers">
             <form className="register-forms" onSubmit={handleSubmit}>
                 <h1 className="register-title">Student Registration</h1>
+                {/* Form Fields */}
                 <label>
                     Name:
                     <input
