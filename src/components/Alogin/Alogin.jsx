@@ -41,17 +41,19 @@ export default function Alogin() {
 
       if (response.ok) {
         const data = await response.json();
+        console.log('Backend Response:', data); // Debugging the backend response
 
-        // Assuming the backend is returning the jwt_token key
-        const jwtToken = data.jwt_token; // Fetch the JWT token from the response
+        // Fetch the token using the correct key from the backend response
+        const jwtToken = data.token;
 
         if (jwtToken) {
-          // Storing jwt_token as authToken in localStorage
+          // Store the token in localStorage
           localStorage.setItem('authToken', jwtToken);
 
-          // Setting the logged-in status
+          // Set the logged-in status
           setIsLoggedIn(true);
 
+          // Redirect to the admin dashboard
           setTimeout(() => {
             navigate('/admindashboard'); // Redirect to admin page
           }, 2000);

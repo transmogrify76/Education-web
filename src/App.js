@@ -165,10 +165,9 @@ function App() {
           <Route path='/NotificationPage' element={<NotificationPage/>}/>
           <Route path='/UpdateLeaveStatus' element={<UpdateLeaveStatus/>}/>          
           <Route path='/ConsentFormPage' element={<ConsentFormPage/>}/>          
-          {/* <Route path='/StudentView/:studentId' element={<StudentView/>}/>           */}
+          <Route path='/StudentView' element={<StudentView/>}/>          
           {/* <Route path='/SideNav/:studentId' element={<SideNav/>}/>           */}
-          <Route path='/student/:studentId' element={<StudentView />} />
-          <Route path='/SideNav/:studentId' element={<SideNav/>}/>          
+          <Route path='/SideNav' element={<SideNav/>}/>          
           <Route path='/GoalsSettingInternalExam/:studentId' element={<GoalsSettingInternalExam/>}/>          
           <Route path='/GoalSettingView/:studentId' element={<GoalSettingView/>}/>          
           <Route path='/ExternalReport/:studentId' element={<ExternalReport/>}/>          
@@ -179,7 +178,7 @@ function App() {
           <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
           <Route path='/BehaviorAssessmentPage/:studentId' element={<BehaviorAssessmentPage/>}/>          
           <Route path='/AdminChat/:admin_id' element={<AdminChat/>}/>            
-          <Route path='/TeacherDashboard/:teacherId' element={<TeacherDashboard/>}/>            
+          <Route path='/TeacherDashboard' element={<TeacherDashboard/>}/>            
           <Route path='/ClassManagementPage/:teacherId' element={<ClassManagementPage/>}/>            
           <Route path='/AdminClassManagementPage' element={<AdminClassManagementPage/>}/>            
           <Route path="/TeacherStudentManagementPage" element={<TeacherStudentManagementPage/>} />           
