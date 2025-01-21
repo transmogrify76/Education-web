@@ -58,68 +58,67 @@ const AdminRegister = () => {
 
     return (
         <div>
-            <Header/>
-        <div className="register-page-container">
-            <form className="register-form" onSubmit={handleSubmit}>
-                <h1 className="form-title">Admin Register</h1>
-                <div className="form-group">
-                    <label htmlFor="fullName">Full Name</label>
-                    <input
-                        type="text"
-                        id="fullName"
-                        name="fullName"
-                        value={formData.fullName}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="employeeId">Employee ID</label>
-                    <input
-                        type="text"
-                        id="employeeId"
-                        name="employeeId"
-                        value={formData.employeeId}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                <button type="submit" className="btn">Register</button>
-                <p className="login-link">
-                Already have an account? <Link to="/alogin">Login here</Link>
-            </p>
-                {message && <p className="message">{message}</p>}
-            </form>
-            {showPopup && (
-                <div className="popup">
-                    <span className="popup-icon">✔</span>
-                    <span className="popup-message">Registration successful!</span>
-                </div>
-            )}
-            
-        </div>
+            <Header />
+            <div className="register-page-container">
+                <form className="register-form" onSubmit={handleSubmit}>
+                    <h1 className="form-title">Admin Register</h1>
+                    <div className="form-group">
+                        <label htmlFor="fullName">Full Name</label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            value={formData.fullName}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="employeeId">Employee ID</label>
+                        <input
+                            type="text"
+                            id="employeeId"
+                            name="employeeId"
+                            value={formData.employeeId}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="btn">Register</button>
+                    <p className="login-link">
+                        Already have an account? <Link to="/alogin">Login here</Link>
+                    </p>
+                    {message && <p className="message">{message}</p>}
+                </form>
+                {showPopup && (
+                    <div className="popup">
+                        <span className="popup-icon">✔</span>
+                        <span className="popup-message">Registration successful!</span>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

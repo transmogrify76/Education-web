@@ -38,13 +38,13 @@ export default function Login() {
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log('API Response:', responseData);
+        console.log('API Response:', responseData); // Log the API response
 
         // Store the JWT token in localStorage
         localStorage.setItem('authToken', responseData.token);
 
         // Redirect to the student dashboard or profile page after successful login
-        navigate('/StudentView', { replace: true }); // Replace history with dashboard
+        navigate('/student', { replace: true }); // Replace history with dashboard
       } else {
         const errorData = await response.json();
         setMessage(`Login failed: ${errorData.message}`);

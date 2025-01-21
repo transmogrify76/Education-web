@@ -165,8 +165,9 @@ function App() {
           <Route path='/NotificationPage' element={<NotificationPage/>}/>
           <Route path='/UpdateLeaveStatus' element={<UpdateLeaveStatus/>}/>          
           <Route path='/ConsentFormPage' element={<ConsentFormPage/>}/>          
-          <Route path='/StudentView/:studentId' element={<StudentView/>}/>          
+          {/* <Route path='/StudentView/:studentId' element={<StudentView/>}/>           */}
           {/* <Route path='/SideNav/:studentId' element={<SideNav/>}/>           */}
+          <Route path='/student/:studentId' element={<StudentView />} />
           <Route path='/SideNav/:studentId' element={<SideNav/>}/>          
           <Route path='/GoalsSettingInternalExam/:studentId' element={<GoalsSettingInternalExam/>}/>          
           <Route path='/GoalSettingView/:studentId' element={<GoalSettingView/>}/>          
