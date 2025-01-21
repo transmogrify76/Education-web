@@ -15,8 +15,9 @@ export default function Alogin() {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       setIsLoggedIn(true);
+      navigate('/admindashboard'); // Redirect if already logged in
     }
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -40,14 +41,25 @@ export default function Alogin() {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('authToken', data.token); // Store the token
-        setIsLoggedIn(true);
-        // setMessage('Login successful!');
+        console.log('Backend Response:', data); // Debugging the backend response
 
-        const admin_id = data.admin_id;
-        setTimeout(() => {
-          navigate(`/admindashboard`); // Redirect to admin page
-        }, 2000);
+        // Fetch the token using the correct key from the backend response
+        const jwtToken = data.token;
+
+        if (jwtToken) {
+          // Store the token in localStorage
+          localStorage.setItem('authToken', jwtToken);
+
+          // Set the logged-in status
+          setIsLoggedIn(true);
+
+          // Redirect to the admin dashboard
+          setTimeout(() => {
+            navigate('/admindashboard'); // Redirect to admin page
+          }, 2000);
+        } else {
+          setMessage('Login failed: No token received');
+        }
       } else {
         const errorData = await response.json();
         setMessage(`Login failed: ${errorData.message}`);
@@ -100,7 +112,6 @@ export default function Alogin() {
           {isLoggedIn && (
             <div>
               <p>You are logged in.</p>
-              {/* <button onClick={handleLogout} className="logout-button">Logout</button> */}
             </div>
           )}
           <p className="message">{message}</p>

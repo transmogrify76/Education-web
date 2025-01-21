@@ -7,11 +7,14 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
   const navigate = useNavigate(); 
 
+  // Check if user is already logged in
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
+      setIsLoggedIn(true);
       navigate('/StudentView', { replace: true }); // Redirect if already logged in
     }
   }, [navigate]);
@@ -19,32 +22,40 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Validate inputs
     if (username === '' || password === '') {
       setMessage('Please enter both username and password.');
       return;
     }
 
     try {
+      // Send login request to the server
       const response = await fetch('http://localhost:3000/student/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          enrollmentNo: username,
+          enrollmentNo: username,  // Send student enrollment number as username
           password: password,
         }),
       });
 
+      // Handle successful login
       if (response.ok) {
-        const responseData = await response.json();
-        console.log('API Response:', responseData);
+        const data = await response.json();  // Parse the response
+        localStorage.setItem('authToken', data.token);  // Store JWT token
+        const studentId = data.studentId;  // Assuming studentId is returned from the server (similar to parentId)
+        setMessage('Login successful!');
+        setIsLoggedIn(true);
 
-        // Store the JWT token in localStorage
-        localStorage.setItem('authToken', responseData.token);
+        // Optionally, save any other necessary data to localStorage
+        localStorage.setItem('studentId', studentId);
 
-        // Redirect to the student dashboard or profile page after successful login
-        navigate('/StudentView', { replace: true }); // Replace history with dashboard
+        // Redirect to student view after a short delay
+        setTimeout(() => {
+          navigate('/StudentView', { replace: true });
+        }, 2000);  // Optional delay for showing the success message
       } else {
         const errorData = await response.json();
         setMessage(`Login failed: ${errorData.message}`);

@@ -118,7 +118,7 @@ const AdminRegister = () => {
                     <span className="popup-message">Registration successful!</span>
                 </div>
             )}
-            
+           
         </div>
         </div>
     );
