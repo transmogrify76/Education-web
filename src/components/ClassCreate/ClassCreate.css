@@ -1,80 +1,131 @@
-/* General page styling */
-.class-create-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    background-color: #f9f9f9;
-    min-height: 100vh;
+/* Basic styling for the class management page */
+.class-management-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
   }
   
   h1 {
-    font-size: 2rem;
-    color: #333;
+    text-align: center;
     margin-bottom: 30px;
   }
   
-  /* Form container styling */
+  /* Error message styling */
+  .error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Form styling */
   .class-form {
-    width: 100%;
-    max-width: 500px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    width: 50%;
+    margin: 0 auto 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
   }
   
   .class-form label {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
   }
   
   .class-form input {
     padding: 10px;
-    font-size: 1rem;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
+    border-radius: 4px;
   }
   
-  .class-form input:focus {
-    border-color: #4CAF50;
-  }
-  
-  .submit-button {
-    padding: 10px 20px;
-    font-size: 1rem;
+  .class-form button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
     background-color: #4CAF50;
     color: white;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
   }
   
-  .submit-button:hover {
+  .class-form button:hover {
     background-color: #45a049;
   }
   
-  .submit-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  /* Message styling for success and error */
-  .success-message {
-    color: green;
-    font-size: 1rem;
+  /* Table styling */
+  .classes-table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
   }
   
-  .error-message {
-    color: red;
-    font-size: 1rem;
-    margin-top: 20px;
+  .classes-table th, .classes-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .classes-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .classes-table td {
+    font-size: 16px;
+  }
+  
+  .classes-table tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Button styling in table */
+  .edit-button, .delete-button {
+    padding: 6px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100px;
+  }
+  
+  .edit-button {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .edit-button:hover {
+    background-color: #45a049;
+  }
+  
+  .delete-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .class-form {
+      width: 80%;
+    }
+  
+    .classes-table th, .classes-table td {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .edit-button, .delete-button {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
   }
   

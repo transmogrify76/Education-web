@@ -1,86 +1,122 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ClassCreate.css'; // Assuming you have a separate CSS file for styling
+import { useParams } from 'react-router-dom';
+import './ClassCreate.css';
 import Header from '../Header/Header';
-import { useNavigate } from 'react-router-dom';
 
-const ClassCreatePage = () => {
+const ClassCreate = () => {
+  const { teacherId } = useParams(); // Get teacherId from URL params
   const [className, setClassName] = useState('');
   const [subject, setSubject] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const [classes, setClasses] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [editClassId, setEditClassId] = useState(null);
+  const [error, setError] = useState(''); // For error messages
 
   // Retrieve token from localStorage
   const token = localStorage.getItem('authToken'); // 'authToken' is the key for the admin token
 
+  useEffect(() => {
+    fetchClasses();
+  }, [teacherId]); // Fetch classes whenever teacherId changes
+
+  // Fetch all classes
+  const fetchClasses = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/class', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setClasses(response.data);
+    } catch (error) {
+      console.error('Error fetching classes:', error);
+      setError('Failed to fetch classes.');
+    }
+  };
+
+  // Fetch class by ID
+  const fetchClassById = async (classId) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/class/${classId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { className, subject } = response.data;
+      setClassName(className);
+      setSubject(subject);
+      setEditClassId(classId);
+      setEditMode(true);
+    } catch (error) {
+      console.error('Error fetching class by ID:', error);
+      setError('Failed to fetch class details.');
+    }
+  };
+
+  // Handle form submit (Create or Update class)
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Check if the token exists, else show an error message
-    if (!token) {
-      setMessage('Authorization token not found. Please log in as an admin.');
-      return;
-    }
-
-    const payload = {
-      className,
-      subject,
-    };
+    const payload = { className, subject, teacherId: Number(teacherId) };
 
     try {
-      // Send a POST request to create the class with the token in the Authorization header
-      const response = await axios.post(
-        'http://localhost:3000/class',
-        payload,
-        {
+      if (editMode) {
+        // Update existing class (PATCH method)
+        await axios.patch(`http://localhost:3000/class/${editClassId}`, payload, {
           headers: {
-            Authorization: `Bearer ${token}`, // Add the token in the Authorization header
+            Authorization: `Bearer ${token}`,
           },
-        }
-      );
-
-      if (response.status === 200) {
-        setClassName('');
-        setSubject('');
-        setSuccess('Class created successfully!');
-        setError('');
-        setMessage('');
-
-        // Optionally, redirect after success (if needed)
-        setTimeout(() => {
-          navigate('/class-management'); // Redirect to class management page after success
-        }, 2000); // Optional: delay before redirect
+        });
+        setEditMode(false);
+        setEditClassId(null);
       } else {
-        setError('Class create Successfully.');
-        setSuccess('');
-        setMessage('');
+        // Create new class (POST method)
+        await axios.post('http://localhost:3000/class', payload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
       }
+      setClassName('');
+      setSubject('');
+      fetchClasses();
     } catch (error) {
-      console.error('Error creating class:', error);
-      // Check if the error is from the backend or network
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        setError(error.response.data.message || 'Failed to create class. Please try again.');
-      } else if (error.request) {
-        // The request was made but no response was received
-        setError('No response from the server. Please try again later.');
-      } else {
-        setError('An error occurred. Please try again.');
-      }
-      setSuccess('');
-      setMessage('');
+      console.error('Error submitting class:', error);
+      setError('Failed to submit class.');
+    }
+  };
+
+  // Handle Edit button click
+  const handleEdit = (classItem) => {
+    fetchClassById(classItem.id); // Fetch and set class details
+  };
+
+  // Handle Delete button click
+  const handleDelete = async (classId) => {
+    try {
+      await axios.delete(`http://localhost:3000/class/${classId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      fetchClasses();
+    } catch (error) {
+      console.error('Error deleting class:', error);
+      setError('Failed to delete class.');
     }
   };
 
   return (
     <div>
       <Header />
-      <div className="class-create-page">
-        <h1>Create New Class</h1>
+      <div className="class-management-page">
+        <h1>Class Management</h1>
 
+        {/* Display Error message */}
+        {error && <p className="error-message">{error}</p>}
+
+        {/* Form for creating/updating class */}
         <form className="class-form" onSubmit={handleSubmit}>
           <label htmlFor="className">Class Name:</label>
           <input
@@ -101,17 +137,42 @@ const ClassCreatePage = () => {
           />
 
           <button type="submit" className="submit-button">
-            Create Class
+            {editMode ? 'Update Class' : 'Create Class'}
           </button>
         </form>
 
-        {/* Conditional Rendering of Message */}
-        {message && <p className="message">{message}</p>}
-        {error && <p className="error-message">{error}</p>}
-        {success && <p className="success-message">{success}</p>}
+        {/* Table to display existing classes */}
+        <div className="classes-list">
+          <h2>All Classes</h2>
+          <table className="classes-table">
+            <thead>
+              <tr>
+                <th>Class Name</th>
+                <th>Subject</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {classes.map((classItem) => (
+                <tr key={classItem.id}>
+                  <td>{classItem.className}</td>
+                  <td>{classItem.subject}</td>
+                  <td>
+                    <button onClick={() => handleEdit(classItem)} className="edit-button">
+                      Edit
+                    </button>
+                    <button onClick={() => handleDelete(classItem.id)} className="delete-button">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 };
 
-export default ClassCreatePage;
+export default ClassCreate;
