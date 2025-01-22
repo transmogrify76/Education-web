@@ -13,7 +13,6 @@ function Student() {
     <div className='for-header'>
       <Header/>
     <div className="dashboard-containers">
-      {/* Pass studentId as a prop to SideNav */}
       <SideNav studentId={studentId} />
       
       {/* Main content */}
@@ -53,7 +52,7 @@ function Student() {
           <div onClick={() => navigate(`/StudentGradesPage`)} className="dashboard-button orange">
             <FaClipboardCheck className="button-icon" /> All Grades
           </div>
-          <div onClick={() => navigate(`/ShowEbookPage/${studentId}`)} className="dashboard-button light-gray">
+          <div onClick={() => navigate(`/ShowEbookPage`)} className="dashboard-button light-gray">
             < FaBook className="button-icon" /> E-Books
           </div>
           <div onClick={() => navigate(`/ParentClassDataPage`)} className="dashboard-button dark-violet">
