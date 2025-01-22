@@ -43,7 +43,7 @@ const Dashboard = () => {
 
   // Define icon buttons with links and icons
   const icons = [
-    { name: 'Consent forms', image: informedConsentIcon, className: 'btn-1', link: `/consent/${parentId}` },
+    { name: 'Consent forms', image: informedConsentIcon, className: 'btn-1', link: `/consent` },
     { name: 'Time Table', image: timeIcon, className: 'btn-2', link: `/TimeTable/${parentId}`},
     { name: 'Exit Slip Request', image: menuIcon, className: 'btn-3', link: `/ExitSlipRequest/${parentId}` },
     { name: 'Registration Info', image: registrationIcon, className: 'btn-4', link: `/ParentProfilePage/${parentId}` },

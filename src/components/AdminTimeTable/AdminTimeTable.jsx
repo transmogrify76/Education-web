@@ -31,21 +31,22 @@ const AdminTimeTable = () => {
       classId: formData.classId,  // Updated from studentId to classId
     };
 
+    // Sending POST request to backend
     fetch('http://localhost:3000/timetable', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(submissionData)
+      body: JSON.stringify(submissionData),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log('Success:', data);
         setPopupVisible(true);
         setTimeout(() => setPopupVisible(false), 3000);
         setFormData({ day: '', hour: '', minute: '', period: 'AM', subject: '', professor: '', classId: '' }); // Reset classId
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error:', error);
       });
   };
@@ -71,31 +72,31 @@ const AdminTimeTable = () => {
           <div className="form-group">
             <label htmlFor="time">Time:</label>
             <div className="time-inputs">
-              <input 
-                type="number" 
-                name="hour" 
-                value={formData.hour} 
-                onChange={handleChange} 
-                min="1" 
-                max="12" 
-                placeholder="HH" 
-                required 
+              <input
+                type="number"
+                name="hour"
+                value={formData.hour}
+                onChange={handleChange}
+                min="1"
+                max="12"
+                placeholder="HH"
+                required
               />
               <span>:</span>
-              <input 
-                type="number" 
-                name="minute" 
-                value={formData.minute} 
-                onChange={handleChange} 
-                min="0" 
-                max="59" 
-                placeholder="MM" 
-                required 
+              <input
+                type="number"
+                name="minute"
+                value={formData.minute}
+                onChange={handleChange}
+                min="0"
+                max="59"
+                placeholder="MM"
+                required
               />
-              <select 
-                name="period" 
-                value={formData.period} 
-                onChange={handleChange} 
+              <select
+                name="period"
+                value={formData.period}
+                onChange={handleChange}
                 required
               >
                 <option value="AM">AM</option>
@@ -112,8 +113,8 @@ const AdminTimeTable = () => {
             <input type="text" name="professor" value={formData.professor} onChange={handleChange} required />
           </div>
           <div className="form-group">
-            <label htmlFor="classId">Class ID:</label> {/* Updated label */}
-            <input type="number" name="classId" value={formData.classId} onChange={handleChange} required /> {/* Updated input name */}
+            <label htmlFor="classId">Class ID:</label>
+            <input type="number" name="classId" value={formData.classId} onChange={handleChange} required />
           </div>
           <button type="submit" className="submit-button">Post Timetable</button>
         </form>

@@ -32,7 +32,7 @@ function Student() {
           <div onClick={() => navigate(`/ThirdPartyServicesStudent/${studentId}`)} className="dashboard-button light-gray">
             <FaHandsHelping className="button-icon" /> Third Party Optional Services
           </div>
-          <div onClick={() => navigate(`/StudentWellbeingForm/${studentId}`)} className="dashboard-button gray">
+          <div onClick={() => navigate(`/StudentWellbeingForm`)} className="dashboard-button gray">
             Student Wellbeing Request
           </div>
           <div onClick={() => navigate(`/Chatbot/${studentId}`)} className="dashboard-button pink">
