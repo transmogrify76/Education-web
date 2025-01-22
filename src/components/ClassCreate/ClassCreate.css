@@ -1,0 +1,131 @@
+/* Basic styling for the class management page */
+.class-management-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Form styling */
+  .class-form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .class-form label {
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  .class-form input {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .class-form button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .class-form button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Table styling */
+  .classes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .classes-table th, .classes-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .classes-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .classes-table td {
+    font-size: 16px;
+  }
+  
+  .classes-table tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Button styling in table */
+  .edit-button, .delete-button {
+    padding: 6px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100px;
+  }
+  
+  .edit-button {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .edit-button:hover {
+    background-color: #45a049;
+  }
+  
+  .delete-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .class-form {
+      width: 80%;
+    }
+  
+    .classes-table th, .classes-table td {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .edit-button, .delete-button {
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+  }
+  

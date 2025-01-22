@@ -96,6 +96,8 @@ import ParentClassDataPage from './components/ParentClassDataPage/ParentClassDat
 import CreateSurveyForm from './components/CreateSurveyForm/CreateSurveyForm'
 import GetSurveys from './components/GetSurveys/GetSurveys'
 import SubjectEdit from './components/SubjectEdit/SubjectEdit'
+import ClassCreate from './components/ClassCreate/ClassCreate';
+import StudentList from './components/StudentList/StudentList';
 function App() {
   return (
     <Router>
@@ -114,7 +116,7 @@ function App() {
         
           <Route path="/parentdashboard" element={<ParentDashboard />} />
           <Route path="/Alogin" element={<Alogin />} />
-          <Route path="/Consent/:parentid" element={<Consent />} />
+          <Route path="/Consent" element={<Consent />} />
           <Route path="/Reportc" element={<Reportc />} />
           <Route path='/Externalr' element={<ExternalR />} />
           <Route path='/Tlogin' element={<Tlogin />} />
@@ -131,6 +133,8 @@ function App() {
           <Route path="/event/:id" element={<Event />} />
           <Route path="/event" element={<Event />} />
           <Route path='/curriculum' element={<CurriculumPage />} />
+          <Route path='/classcreate' element={<ClassCreate />} />
+          <Route path='/studentlist' element={<StudentList />} />
         
           <Route path='/admindashboard' element={<AdminDashboard />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
@@ -172,7 +176,7 @@ function App() {
           <Route path='/GoalSettingView/:studentId' element={<GoalSettingView/>}/>          
           <Route path='/ExternalReport/:studentId' element={<ExternalReport/>}/>          
           <Route path='/ThirdPartyServicesStudent/:studentId' element={<ThirdPartyServicesStudent/>}/>          
-          <Route path='/StudentWellbeingForm/:studentId' element={<StudentWellbeingForm/>}/>          
+          <Route path='/StudentWellbeingForm' element={<StudentWellbeingForm/>}/>          
           <Route path='/Chatbot/:studentId' element={<Chatbot/>}/>          
           <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
           <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
