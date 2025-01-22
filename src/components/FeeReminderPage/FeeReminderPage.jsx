@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode'; // Import jwt-decode to decode the token
 import './FeeReminderPage.css';
 import Header from '../Header/Header';
+import { useNavigate } from 'react-router-dom'; // For redirection if token is missing
 
 const FeeReminderPage = () => {
-  const { parentId } = useParams();
   const [students, setStudents] = useState([]);
   const [selectedStudentId, setSelectedStudentId] = useState('');
   const [feeData, setFeeData] = useState([]);
@@ -17,24 +17,43 @@ const FeeReminderPage = () => {
     'PayPal',
   ];
 
-  useEffect(() => {
-    const fetchStudentData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`http://localhost:3000/parent/${parentId}`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const data = await response.json();
-        setStudents(data.students || []);
-      } catch (error) {
-        console.error('Error fetching student data:', error);
-        setError('Failed to fetch student data.');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const navigate = useNavigate();
 
-    fetchStudentData();
-  }, [parentId]);
+  useEffect(() => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      setError('No authToken found');
+      navigate('/login'); // Redirect to login page if token is missing
+      return;
+    }
+
+    try {
+      // Decode the JWT token to get the parentId
+      const decodedToken = jwtDecode(authToken);
+      const parentId = decodedToken.id; // Assuming parentId is stored in token
+
+      const fetchStudentData = async () => {
+        setLoading(true);
+        try {
+          const response = await fetch(`http://localhost:3000/parent/${parentId}`);
+          if (!response.ok) throw new Error('Network response was not ok');
+          const data = await response.json();
+          setStudents(data.students || []);
+        } catch (error) {
+          console.error('Error fetching student data:', error);
+          setError('Failed to fetch student data.');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchStudentData();
+    } catch (error) {
+      console.error('Failed to decode authToken:', error);
+      setError('Failed to decode authToken');
+      setLoading(false); // Stop loading if token decoding fails
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const fetchFeeData = async () => {
@@ -91,90 +110,89 @@ const FeeReminderPage = () => {
 
   return (
     <div>
-      <Header/>
-    <div className="fee-reminder-container">
-      <header className="page-header">
-        <div className="header-title">Fee Reminder</div>
-      </header>
-      <main className="content-main">
-        <section className="student-selector">
-          <label htmlFor="student-dropdown">Select Student:</label>
-          <select
-            id="student-dropdown"
-            value={selectedStudentId}
-            onChange={(e) => setSelectedStudentId(e.target.value)}
-          >
-            <option value="">Select Student</option>
-            {students.map((student) => (
-              <option key={student.id} value={student.id}>
-                {student.name} (ID: {student.id})
-              </option>
-            ))}
-          </select>
-        </section>
-
-        {selectedStudentId && (
-          <section className="fee-details-section">
-            <h2>Fee Details for Selected Student</h2>
-            <table className="fee-details-table">
-              <thead>
-                <tr>
-                  <th>Term</th>
-                  <th>Amount</th>
-                  <th>Due Date</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {feeData.length > 0 ? (
-                  feeData.map((fee) => (
-                    <tr key={fee.id}>
-                      <td>{fee.term}</td>
-                      <td>{fee.amount}</td>
-                      <td>{new Date(fee.dueDate).toLocaleDateString()}</td>
-                      <td className={`fee-status ${fee.status.toLowerCase()}`}>{fee.status}</td>
-                      <td>
-                        {fee.status === 'Due' && (
-                          <button
-                            className="payment-button"
-                            onClick={() => handlePayment(fee.id, fee.term)}
-                          >
-                            Pay Now
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5">No fee details available</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+      <Header />
+      <div className="fee-reminder-container">
+        <header className="page-header">
+          <div className="header-title">Fee Reminder</div>
+        </header>
+        <main className="content-main">
+          <section className="student-selector">
+            <label htmlFor="student-dropdown">Select Student:</label>
+            <select
+              id="student-dropdown"
+              value={selectedStudentId}
+              onChange={(e) => setSelectedStudentId(e.target.value)}
+            >
+              <option value="">Select Student</option>
+              {students.map((student) => (
+                <option key={student.id} value={student.id}>
+                  {student.name} (ID: {student.id})
+                </option>
+              ))}
+            </select>
           </section>
-        )}
-        <section className="payment-options-section">
-          <h2>Payment Options</h2>
-          <ul>
-            {paymentOptions.map((option, index) => (
-              <li key={index}>{option}</li>
-            ))}
-          </ul>
-        </section>
-        <div className="notice-section">
-          <p>Please ensure all fee payments are made by the due dates to avoid any late fees. For any queries, contact the school administration.</p>
-        </div>
-      </main>
-      <footer className="infra-footer">
-        <p className="footer-text">© 2024 School Management System. All rights reserved.</p>
-        <p>
-                    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
-                </p>
-      </footer>
-    </div>
-          
+
+          {selectedStudentId && (
+            <section className="fee-details-section">
+              <h2>Fee Details for Selected Student</h2>
+              <table className="fee-details-table">
+                <thead>
+                  <tr>
+                    <th>Term</th>
+                    <th>Amount</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {feeData.length > 0 ? (
+                    feeData.map((fee) => (
+                      <tr key={fee.id}>
+                        <td>{fee.term}</td>
+                        <td>{fee.amount}</td>
+                        <td>{new Date(fee.dueDate).toLocaleDateString()}</td>
+                        <td className={`fee-status ${fee.status.toLowerCase()}`}>{fee.status}</td>
+                        <td>
+                          {fee.status === 'Due' && (
+                            <button
+                              className="payment-button"
+                              onClick={() => handlePayment(fee.id, fee.term)}
+                            >
+                              Pay Now
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5">No fee details available</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </section>
+          )}
+          <section className="payment-options-section">
+            <h2>Payment Options</h2>
+            <ul>
+              {paymentOptions.map((option, index) => (
+                <li key={index}>{option}</li>
+              ))}
+            </ul>
+          </section>
+          <div className="notice-section">
+            <p>Please ensure all fee payments are made by the due dates to avoid any late fees. For any queries, contact the school administration.</p>
+          </div>
+        </main>
+        <footer className="infra-footer">
+          <p className="footer-text">© 2024 School Management System. All rights reserved.</p>
+          <p>
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+          </p>
+        </footer>
+      </div>
     </div>
   );
 };
