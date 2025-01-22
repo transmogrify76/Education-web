@@ -11,13 +11,13 @@ const TeacherDashboard = () => {
   const { teacherId } = useParams();
 
   const icons = [
-    { name: 'Class Management', icon: faChalkboardTeacher, className: 'btn-1', link: `/ClassManagementPage/${teacherId}` },
+    { name: 'Class Management', icon: faChalkboardTeacher, className: 'btn-1', link: `/ClassManagementPage` },
     { name: 'Student Management', icon: faUserGraduate, className: 'btn-2', link: '/TeacherStudentManagementPage' },
     { name: 'Upload Assignment', icon: faClipboardList, className: 'btn-3', link: '/AssignmentPostPage' },
     { name: 'Upload Result for Students', icon: faFileUpload, className: 'btn-4', link: '/UploadResults' },
-    { name: 'Make Communications', icon: faComments, className: 'btn-5', link: `/CommunicationPage/${teacherId}` },
+    { name: 'Make Communications', icon: faComments, className: 'btn-5', link: `/CommunicationPage` },
     { name: 'Post Events for Students', icon: faCalendarAlt, className: 'btn-6', link: '/TeacherPage' },
-    { name: 'Resource Creation Page', icon: faBook, className: 'btn-7', link: `/CreateResourcePage/${teacherId}` },
+    { name: 'Resource Creation Page', icon: faBook, className: 'btn-7', link: `/CreateResourcePage` },
     { name: 'Give Grades or Remarks', icon: faStar, className: 'btn-8', link: '/GradePage' },
     { name: 'Submitted Assignments', icon: faFolderOpen, className: 'btn-9', link: '/SubmittedAssignment' },
     { name: 'E-Book Upload', icon: faBook, className: 'btn-10', link: '/ebookpage' },

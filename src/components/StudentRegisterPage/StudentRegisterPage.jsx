@@ -13,6 +13,7 @@ const StudentRegisterPage = () => {
         password: '',
         parentEmail: '',
         address: '',
+        
     });
 
     const [showPopup, setShowPopup] = useState(false);
