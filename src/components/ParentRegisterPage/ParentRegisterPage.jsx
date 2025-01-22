@@ -6,7 +6,7 @@ import Header from '../Header/Header';
 const ParentRegisterPage = () => {
     const [formData, setFormData] = useState({
         name: '',
-        studentName: '',
+        // studentName: '',
         email: '',
         phoneNo: '',
         address: '',
@@ -49,7 +49,7 @@ const ParentRegisterPage = () => {
                 },
                 body: JSON.stringify({
                     name: formData.name,
-                    studentName: formData.studentName,
+                    // studentName: formData.studentName,
                     email: formData.email,
                     phoneNo: formData.phoneNo,
                     address: formData.address,
@@ -95,7 +95,7 @@ const ParentRegisterPage = () => {
                             required
                         />
                     </label>
-                    <label>
+                    {/* <label>
                         Student Name:
                         <input
                             type="text"
@@ -104,7 +104,7 @@ const ParentRegisterPage = () => {
                             onChange={handleChange}
                             required
                         />
-                    </label>
+                    </label> */}
                     <label>
                         Email:
                         <input
