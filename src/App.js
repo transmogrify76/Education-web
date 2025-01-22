@@ -157,7 +157,7 @@ function App() {
           <Route path="/ExitSlipRequest/" element={<ExitSlipRequest />} />
           <Route path="/ThirdPartyServices/" element={<ThirdPartyServices />} />
           <Route path="/BehaviorAssessmentTool/" element={<BehaviorAssessmentTool />} />
-          <Route path="/FeeReminderPage/:parentId" element={<FeeReminderPage />} />
+          <Route path="/FeeReminderPage" element={<FeeReminderPage />} />
           <Route path="/ClubPage" element={<ClubPage />} />
           <Route path="/ClubPaymentPage" element={<ClubPaymentPage />} />
           <Route path="/payment/:clubId" element={<ClubPaymentPage />} />
@@ -181,7 +181,7 @@ function App() {
           <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
           <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
           <Route path='/BehaviorAssessmentPage/' element={<BehaviorAssessmentPage/>}/>          
-          <Route path='/AdminChat/:admin_id' element={<AdminChat/>}/>            
+          <Route path='/AdminChat' element={<AdminChat/>}/>            
           <Route path='/TeacherDashboard' element={<TeacherDashboard/>}/>            
           <Route path='/ClassManagementPage/' element={<ClassManagementPage/>}/>            
           <Route path='/AdminClassManagementPage' element={<AdminClassManagementPage/>}/>            

@@ -22,7 +22,7 @@ const AdminPage = () => {
     { name: 'Leave Status Update', icon: 'fas fa-calendar-check', className: 'btn-10', link: '/UpdateLeaveStatus' },
     { name: 'Consent Forms', icon: 'fas fa-file-alt', className: 'btn-11', link: '/ConsentFormPage' },
     { name: 'Report Card Update', icon: 'fas fa-file', className: 'btn-12', link: '/' },
-    { name: 'Student Messages', icon: 'fas fa-comments', className: 'btn-13', link: `/AdminChat/${admin_id}` },
+    { name: 'Student Messages', icon: 'fas fa-comments', className: 'btn-13', link: `/AdminChat` },
     { name: 'Student Wellbeing Request', icon: 'fas fa-heart', className: 'btn-14', link: '/AdminWellbeingRequests' },
     { name: 'Behavior Assessment Tools', icon: 'fas fa-behavior', className: 'btn-15', link: '/AdminBehaviorAssessment' },
     { name: 'Class Management Page', icon: 'fas fa-users', className: 'btn-16', link: '/AdminClassMAnagementPage' },
