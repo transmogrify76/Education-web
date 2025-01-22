@@ -13,7 +13,6 @@ function Student() {
     <div className='for-header'>
       <Header/>
     <div className="dashboard-containers">
-      {/* Pass studentId as a prop to SideNav */}
       <SideNav studentId={studentId} />
       
       {/* Main content */}

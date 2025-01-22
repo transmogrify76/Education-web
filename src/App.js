@@ -98,6 +98,7 @@ import GetSurveys from './components/GetSurveys/GetSurveys'
 import SubjectEdit from './components/SubjectEdit/SubjectEdit'
 import ClassCreate from './components/ClassCreate/ClassCreate';
 import StudentList from './components/StudentList/StudentList';
+import SubjectManagement from './components/SubjectManagement/SubjectManagement';
 function App() {
   return (
     <Router>
@@ -177,11 +178,11 @@ function App() {
           <Route path='/ExternalReport/' element={<ExternalReport/>}/>          
           <Route path='/ThirdPartyServicesStudent/' element={<ThirdPartyServicesStudent/>}/>          
           <Route path='/StudentWellbeingForm' element={<StudentWellbeingForm/>}/>          
-          <Route path='/Chatbot/:studentId' element={<Chatbot/>}/>          
+          <Route path='/Chatbot' element={<Chatbot/>}/>          
           <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
           <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
           <Route path='/BehaviorAssessmentPage/' element={<BehaviorAssessmentPage/>}/>          
-          <Route path='/AdminChat/:admin_id' element={<AdminChat/>}/>            
+          <Route path='/AdminChat' element={<AdminChat/>}/>            
           <Route path='/TeacherDashboard' element={<TeacherDashboard/>}/>            
           <Route path='/ClassManagementPage/' element={<ClassManagementPage/>}/>            
           <Route path='/AdminClassManagementPage' element={<AdminClassManagementPage/>}/>            
@@ -207,7 +208,8 @@ function App() {
           <Route path="/CreateMeeting/" element={<CreateMeeting/>} />            
           <Route path="/CreateSurveyForm/" element={<CreateSurveyForm/>} />            
           <Route path="/GetSurveys/" element={<GetSurveys/>} />            
-          <Route path="/SubjectEdit/" element={<SubjectEdit/>} />            
+          <Route path="/SubjectEdit/" element={<SubjectEdit/>} />   
+          <Route path="/subjectadd" element={<SubjectManagement/>} />          
 
         </Routes>
       </div>

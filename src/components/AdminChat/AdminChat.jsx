@@ -15,11 +15,16 @@ const AdminChat = () => {
 
   const messagesEndRef = useRef(null); // Reference to scroll to the bottom
 
+  // Retrieve the auth token from localStorage (or wherever it's stored)
+  const token = localStorage.getItem('authToken');
+
   useEffect(() => {
     // Fetch all students on component mount
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/student');
+        const response = await axios.get('http://localhost:3000/student', {
+          headers: { Authorization: `Bearer ${token}` }  // Add the token to the header
+        });
         setStudents(response.data);
       } catch (err) {
         console.error('Failed to fetch students:', err);
@@ -28,7 +33,7 @@ const AdminChat = () => {
     };
 
     fetchStudents();
-  }, []);
+  }, [token]);  // Depend on token in case it changes (like after login)
 
   useEffect(() => {
     if (selectedStudent) {
@@ -45,14 +50,18 @@ const AdminChat = () => {
     setLoading(true);
     try {
       // Fetch student messages
-      const studentMessagesResponse = await fetch(`http://localhost:3000/messages/student/${studentId}`);
+      const studentMessagesResponse = await fetch(`http://localhost:3000/messages/student/${studentId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       if (!studentMessagesResponse.ok) {
         throw new Error(`Student fetch error: ${studentMessagesResponse.status}`);
       }
       const studentMessages = await studentMessagesResponse.json();
 
       // Fetch admin messages
-      const adminMessagesResponse = await fetch(`http://localhost:3000/messages/admin/${adminId}?studentId=${studentId}`);
+      const adminMessagesResponse = await fetch(`http://localhost:3000/messages/admin/${adminId}?studentId=${studentId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       if (!adminMessagesResponse.ok) {
         throw new Error(`Admin messages fetch error: ${adminMessagesResponse.status}`);
       }
@@ -90,7 +99,9 @@ const AdminChat = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/messages', messageData);
+      const response = await axios.post('http://localhost:3000/messages', messageData, {
+        headers: { Authorization: `Bearer ${token}` }  // Send the token for message creation
+      });
       setMessages((prevMessages) => [...prevMessages, response.data]);
       setNewMessage('');
     } catch (err) {
@@ -107,71 +118,71 @@ const AdminChat = () => {
 
   return (
     <div>
-      <Header/>
-    <div className="admin-chat-wrapper">
-      <div className="admin-chat-header-container">
-        <h2 className="admin-chat-header">Admin Chat</h2>
-      </div>
-      <div className="student-select-container">
-        <label htmlFor="studentSelect" className="student-select-label">Select Student:</label>
-        <select
-          id="studentSelect"
-          value={selectedStudent || ''}
-          onChange={handleStudentChange}
-          className="student-select-dropdown"
-        >
-          <option value="" disabled>Select a student</option>
-          {students.map((student) => (
-            <option key={student.id} value={student.id}>
-              {student.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="chat-messages-container">
-        {loading ? (
-          <p className="loading-message">Loading messages...</p>
-        ) : error ? (
-          <p className="error-message">{error}</p>
-        ) : messages.length > 0 ? (
-          messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={`chat-message ${msg.senderType === 'admin' ? 'chat-message-admin' : 'chat-message-student'}`}
-            >
-              <p className="chat-message-content">{msg.content}</p>
-              <span className="chat-message-timestamp">{new Date(msg.createdAt).toLocaleString()}</span>
-            </div>
-          ))
-        ) : (
-          <p className="no-messages-message">No messages yet.</p>
-        )}
-        <div ref={messagesEndRef} /> {/* Reference element for scrolling */}
-      </div>
-      <form onSubmit={handleSendMessage} className="message-input-form">
-        <textarea
-          placeholder="Type your message here..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          className="message-textarea"
-        />
-        <div className="buttons-container">
-          <button
-            type="submit"
-            className="message-send-button"
-          >
-            Send
-          </button>
-          <button
-            type="button"
-            className="refresh-button"
-            onClick={handleRefresh}
-          >
-            Refresh
-          </button>
+      <Header />
+      <div className="admin-chat-wrapper">
+        <div className="admin-chat-header-container">
+          <h2 className="admin-chat-header">Admin Chat</h2>
         </div>
-      </form>
-    </div>
+        <div className="student-select-container">
+          <label htmlFor="studentSelect" className="student-select-label">Select Student:</label>
+          <select
+            id="studentSelect"
+            value={selectedStudent || ''}
+            onChange={handleStudentChange}
+            className="student-select-dropdown"
+          >
+            <option value="" disabled>Select a student</option>
+            {students.map((student) => (
+              <option key={student.id} value={student.id}>
+                {student.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="chat-messages-container">
+          {loading ? (
+            <p className="loading-message">Loading messages...</p>
+          ) : error ? (
+            <p className="error-message">{error}</p>
+          ) : messages.length > 0 ? (
+            messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`chat-message ${msg.senderType === 'admin' ? 'chat-message-admin' : 'chat-message-student'}`}
+              >
+                <p className="chat-message-content">{msg.content}</p>
+                <span className="chat-message-timestamp">{new Date(msg.createdAt).toLocaleString()}</span>
+              </div>
+            ))
+          ) : (
+            <p className="no-messages-message">No messages yet.</p>
+          )}
+          <div ref={messagesEndRef} /> {/* Reference element for scrolling */}
+        </div>
+        <form onSubmit={handleSendMessage} className="message-input-form">
+          <textarea
+            placeholder="Type your message here..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            className="message-textarea"
+          />
+          <div className="buttons-container">
+            <button
+              type="submit"
+              className="message-send-button"
+            >
+              Send
+            </button>
+            <button
+              type="button"
+              className="refresh-button"
+              onClick={handleRefresh}
+            >
+              Refresh
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

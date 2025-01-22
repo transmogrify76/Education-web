@@ -102,8 +102,9 @@ const StudentListPage = () => {
       className: student.class.className,
       address: student.address,
       parentEmail: student.parentEmail,
-      name: student.parent.name,
-      phoneNo: student.parent.phoneNo
+      parentName: student.parent ? student.parent.name : '',
+      phoneNo: student.parent.phoneNo,
+    
     });
   };
 
@@ -297,15 +298,16 @@ const StudentListPage = () => {
                   onChange={handleInputChange}
                 />
               </label>
+             
               <label>
-                Parent Name:
-                <input
-                  type="text"
-                  name="name"
-                  value={editFormData.name}
-                  onChange={handleInputChange}
-                />
-              </label>
+          Parent Name:
+          <input
+            type="text"
+            name="parentName"
+            value={editFormData.parentName}
+            onChange={handleInputChange}
+          />
+        </label>
               <label>
                 Parent Phone No:
                 <input

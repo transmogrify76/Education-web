@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode'; // Correct import for jwt-decode
 import './ExitSlipRequest.css';
 import Header from '../Header/Header';
 
 const ExitSlipRequest = () => {
-  const { parentId } = useParams();
   const [formData, setFormData] = useState({
     studentId: '',
     studentName: '',
@@ -20,27 +19,44 @@ const ExitSlipRequest = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+  const [parentId, setParentId] = useState(null);
 
   useEffect(() => {
-    const fetchStudentData = async () => {
+    // Get the authToken from localStorage
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
       try {
-        const response = await fetch(`http://localhost:3000/parent/${parentId}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch student data');
-        }
-        const data = await response.json();
-        setStudents(data.students || []);
-        setParentEmail(data.email || '');
-        setFormData(prev => ({ ...prev, parentContact: data.email || '' }));
+        // Decode the token to get the parentId
+        const decodedToken = jwtDecode(authToken);
+        setParentId(decodedToken.id); // Extract parentId from the decoded token
       } catch (error) {
-        console.error('Error fetching student data:', error);
-        setError('Failed to fetch student data.');
-      } finally {
-        setLoading(false);
+        console.error('Failed to decode authToken:', error);
       }
-    };
+    }
+  }, []);
 
-    fetchStudentData();
+  useEffect(() => {
+    if (parentId) {
+      const fetchStudentData = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/parent/${parentId}`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch student data');
+          }
+          const data = await response.json();
+          setStudents(data.students || []);
+          setParentEmail(data.email || '');
+          setFormData(prev => ({ ...prev, parentContact: data.email || '' }));
+        } catch (error) {
+          console.error('Error fetching student data:', error);
+          setError('Failed to fetch student data.');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchStudentData();
+    }
   }, [parentId]);
 
   const handleChange = (e) => {
@@ -107,20 +123,21 @@ const ExitSlipRequest = () => {
         <h2 className="heading">Exit Slip Request</h2>
         {successMessage && <p className="success-message">{successMessage}</p>}
         <form className="form" onSubmit={handleSubmit}>
-          <select
-            name="studentId"
-            value={formData.studentId}
-            onChange={handleStudentChange}
-            className="input"
-            required
-          >
-            <option value="">Select Student</option>
-            {students.map(student => (
-              <option key={student.id} value={student.id}>
-                {student.name} (ID: {student.id})
-              </option>
-            ))}
-          </select>
+        <select
+  name="studentId"
+  value={formData.studentId}
+  onChange={handleStudentChange}
+  className="input"
+  required
+>
+  <option value="">Select Student</option>
+  {students.map(student => (
+    <option key={student.id} value={student.id}>
+      {student.name}  {/* Display only the name */}
+    </option>
+  ))}
+</select>
+
           <textarea
             name="reason"
             value={formData.reason}

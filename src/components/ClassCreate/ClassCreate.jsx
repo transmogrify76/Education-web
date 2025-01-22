@@ -7,7 +7,6 @@ import Header from '../Header/Header';
 const ClassCreate = () => {
   const { teacherId } = useParams(); // Get teacherId from URL params
   const [className, setClassName] = useState('');
-  const [subject, setSubject] = useState('');
   const [classes, setClasses] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [editClassId, setEditClassId] = useState(null);
@@ -43,9 +42,8 @@ const ClassCreate = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const { className, subject } = response.data;
+      const { className } = response.data; // Only retrieve className
       setClassName(className);
-      setSubject(subject);
       setEditClassId(classId);
       setEditMode(true);
     } catch (error) {
@@ -57,7 +55,7 @@ const ClassCreate = () => {
   // Handle form submit (Create or Update class)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = { className, subject, teacherId: Number(teacherId) };
+    const payload = { className, teacherId: Number(teacherId) }; // Only include className in the payload
 
     try {
       if (editMode) {
@@ -78,7 +76,6 @@ const ClassCreate = () => {
         });
       }
       setClassName('');
-      setSubject('');
       fetchClasses();
     } catch (error) {
       console.error('Error submitting class:', error);
@@ -126,15 +123,6 @@ const ClassCreate = () => {
             required
           />
 
-          <label htmlFor="subject">Subject:</label>
-          <input
-            type="text"
-            id="subject"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-            required
-          />
-
           <button type="submit" className="submit-button">
             {editMode ? 'Update Class' : 'Create Class'}
           </button>
@@ -147,7 +135,6 @@ const ClassCreate = () => {
             <thead>
               <tr>
                 <th>Class Name</th>
-                <th>Subject</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -155,7 +142,6 @@ const ClassCreate = () => {
               {classes.map((classItem) => (
                 <tr key={classItem.id}>
                   <td>{classItem.className}</td>
-                  <td>{classItem.subject}</td>
                   <td>
                     <button onClick={() => handleEdit(classItem)} className="edit-button">
                       Edit

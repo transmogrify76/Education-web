@@ -18,11 +18,16 @@ const AdminBehaviorAssessment = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  // Retrieve the auth token from localStorage (or wherever it's stored)
+  const token = localStorage.getItem('authToken');
+
   // Fetch students from the behavior assessment endpoint
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/student');
+        const response = await axios.get('http://localhost:3000/student', {
+          headers: { Authorization: `Bearer ${token}` } // Add the token to the header
+        });
         const studentList = response.data.map((entry) => ({
           id: entry.id,
           name: entry.name,
@@ -36,8 +41,12 @@ const AdminBehaviorAssessment = () => {
       }
     };
 
-    fetchStudents();
-  }, []);
+    if (token) {
+      fetchStudents();
+    } else {
+      setError('Authorization token not found.');
+    }
+  }, [token]);
 
   // Filter students based on the search query
   useEffect(() => {
@@ -72,7 +81,9 @@ const AdminBehaviorAssessment = () => {
     };
 
     try {
-      await axios.post('http://localhost:3000/behavior-assessment', behaviorData);
+      await axios.post('http://localhost:3000/behavior-assessment', behaviorData, {
+        headers: { Authorization: `Bearer ${token}` } // Add token to the header for the post request
+      });
       setSuccess('Behavior assessment submitted successfully!');
       setError('');
       // Reset form after successful submission
@@ -94,132 +105,130 @@ const AdminBehaviorAssessment = () => {
 
   return (
     <div>
-      <Header/>
-    <div className="admin-page-container">
-      {/* <header className="header"> */}
+      <Header />
+      <div className="admin-page-container">
         <h1 className="header-titl">Admin - Behavior Assessment</h1>
-      {/* </header> */}
-      <main className="main-content">
-        <form onSubmit={handleSubmit} className="form-section">
-          <div className="input-group">
-            <label htmlFor="search">Search Student:</label>
-            <input
-              type="text"
-              id="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by name"
-            />
-            {filteredStudents.length > 0 && searchQuery && (
-              <ul className="suggestions-dropdown">
-                {filteredStudents.map((student) => (
-                  <li
-                    key={student.id}
-                    onClick={() => {
-                      setSelectedStudentId(student.id);
-                      setSearchQuery(student.name);
-                    }}
-                  >
+        <main className="main-content">
+          <form onSubmit={handleSubmit} className="form-section">
+            <div className="input-group">
+              <label htmlFor="search">Search Student:</label>
+              <input
+                type="text"
+                id="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search by name"
+              />
+              {filteredStudents.length > 0 && searchQuery && (
+                <ul className="suggestions-dropdown">
+                  {filteredStudents.map((student) => (
+                    <li
+                      key={student.id}
+                      onClick={() => {
+                        setSelectedStudentId(student.id);
+                        setSearchQuery(student.name);
+                      }}
+                    >
+                      {student.name} (ID: {student.enrollmentNo})
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="input-group">
+              <label htmlFor="student-select">Or Select Student:</label>
+              <select
+                id="student-select"
+                value={selectedStudentId}
+                onChange={(e) => setSelectedStudentId(e.target.value)}
+              >
+                <option value="">Select a student</option>
+                {students.map((student) => (
+                  <option key={student.id} value={student.id}>
                     {student.name} (ID: {student.enrollmentNo})
-                  </li>
+                  </option>
                 ))}
-              </ul>
-            )}
-          </div>
-          <div className="input-group">
-            <label htmlFor="student-select">Or Select Student:</label>
-            <select
-              id="student-select"
-              value={selectedStudentId}
-              onChange={(e) => setSelectedStudentId(e.target.value)}
-            >
-              <option value="">Select a student</option>
-              {students.map((student) => (
-                <option key={student.id} value={student.id}>
-                  {student.name} (ID: {student.enrollmentNo})
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="input-group">
-            <label htmlFor="week">Week:</label>
-            <input
-              type="text"
-              id="week"
-              value={week}
-              onChange={(e) => setWeek(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="year">Year:</label>
-            <input
-              type="text"
-              id="year"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="behavior">Behavior:</label>
-            <input
-              type="text"
-              id="behavior"
-              value={behavior}
-              onChange={(e) => setBehavior(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="cleanliness">Cleanliness:</label>
-            <input
-              type="text"
-              id="cleanliness"
-              value={cleanliness}
-              onChange={(e) => setCleanliness(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="hygiene">Hygiene:</label>
-            <input
-              type="text"
-              id="hygiene"
-              value={hygiene}
-              onChange={(e) => setHygiene(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="softSkills">Soft Skills:</label>
-            <input
-              type="text"
-              id="softSkills"
-              value={softSkills}
-              onChange={(e) => setSoftSkills(e.target.value)}
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label htmlFor="punctuality">Punctuality:</label>
-            <input
-              type="text"
-              id="punctuality"
-              value={punctuality}
-              onChange={(e) => setPunctuality(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="button-submit">Submit Assessment</button>
-          {error && <p className="error-message">{error}</p>}
-          {success && <p className="success-message">{success}</p>}
-        </form>
-      </main>
-      <footer className="footers">
-        <p className="footers-text">© 2024 Edu_Web. All rights reserved.</p>
-      </footer>
-    </div>
+              </select>
+            </div>
+            <div className="input-group">
+              <label htmlFor="week">Week:</label>
+              <input
+                type="text"
+                id="week"
+                value={week}
+                onChange={(e) => setWeek(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="year">Year:</label>
+              <input
+                type="text"
+                id="year"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="behavior">Behavior:</label>
+              <input
+                type="text"
+                id="behavior"
+                value={behavior}
+                onChange={(e) => setBehavior(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="cleanliness">Cleanliness:</label>
+              <input
+                type="text"
+                id="cleanliness"
+                value={cleanliness}
+                onChange={(e) => setCleanliness(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="hygiene">Hygiene:</label>
+              <input
+                type="text"
+                id="hygiene"
+                value={hygiene}
+                onChange={(e) => setHygiene(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="softSkills">Soft Skills:</label>
+              <input
+                type="text"
+                id="softSkills"
+                value={softSkills}
+                onChange={(e) => setSoftSkills(e.target.value)}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label htmlFor="punctuality">Punctuality:</label>
+              <input
+                type="text"
+                id="punctuality"
+                value={punctuality}
+                onChange={(e) => setPunctuality(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="button-submit">Submit Assessment</button>
+            {error && <p className="error-message">{error}</p>}
+            {success && <p className="success-message">{success}</p>}
+          </form>
+        </main>
+        <footer className="footers">
+          <p className="footers-text">© 2024 Edu_Web. All rights reserved.</p>
+        </footer>
+      </div>
     </div>
   );
 };
