@@ -112,22 +112,27 @@ import './Consent.css';
 import Header from '../Header/Header';
 
 const Consent = () => {
+  // Define state variables
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [parentName, setParentName] = useState('');
+  const [studentName, setStudentName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [userId, setUserId] = useState(null); // Define userId state
+  const navigate = useNavigate(); // Hook to navigate programmatically
+
+  // Get userId from URL params
+  const { userId: paramUserId } = useParams(); // This will get the userId from the URL
+
   const options = [
     { value: 'I give consent for field trips', label: 'Field Trips' },
     { value: 'I give consent for extracurricular activities', label: 'Extracurricular Activities' },
     { value: 'I give consent for photography use', label: 'Photography Use' },
   ];
 
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [parentName, setParentName] = useState('');
-  const [studentName, setStudentName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const navigate = useNavigate(); // Hook to navigate programmatically
-
   useEffect(() => {
     // Get the token from local storage (or from where it's stored)
-    const token = localStorage.getItem('authToken'); 
+    const token = localStorage.getItem('authToken');
 
     if (token) {
       const decodedToken = jwtDecode(token); // Use jwtDecode function
@@ -141,12 +146,6 @@ const Consent = () => {
       setUserId(userIdFromToken); // Set userId state from decoded token
     }
   }, [paramUserId, navigate]);
-
-  const options = [
-    { value: 'I give consent for field trips', label: 'Field Trips' },
-    { value: 'I give consent for extracurricular activities', label: 'Extracurricular Activities' },
-    { value: 'I give consent for photography use', label: 'Photography Use' },
-  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -232,4 +231,3 @@ const Consent = () => {
 };
 
 export default Consent;
-
