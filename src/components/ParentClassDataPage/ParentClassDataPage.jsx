@@ -83,7 +83,7 @@ const ParentClassDataPage = () => {
             <option value="">Select a class</option>
             {classNames.map((classItem) => (
               <option key={classItem.id} value={classItem.id}>
-                {classItem.className} (ID: {classItem.id})
+                {classItem.className} {/* Display only class name */}
               </option>
             ))}
           </select>

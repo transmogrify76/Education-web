@@ -96,6 +96,8 @@ import ParentClassDataPage from './components/ParentClassDataPage/ParentClassDat
 import CreateSurveyForm from './components/CreateSurveyForm/CreateSurveyForm'
 import GetSurveys from './components/GetSurveys/GetSurveys'
 import SubjectEdit from './components/SubjectEdit/SubjectEdit'
+import ClassCreate from './components/ClassCreate/ClassCreate';
+import StudentList from './components/StudentList/StudentList';
 function App() {
   return (
     <Router>
@@ -114,7 +116,7 @@ function App() {
         
           <Route path="/parentdashboard" element={<ParentDashboard />} />
           <Route path="/Alogin" element={<Alogin />} />
-          <Route path="/Consent/:parentid" element={<Consent />} />
+          <Route path="/Consent" element={<Consent />} />
           <Route path="/Reportc" element={<Reportc />} />
           <Route path='/Externalr' element={<ExternalR />} />
           <Route path='/Tlogin' element={<Tlogin />} />
@@ -122,8 +124,8 @@ function App() {
           <Route path='/Calendar' element={<Calendar />} />
           <Route path='/Leave' element={<Leave />} />
           <Route path='/Calen' element={<Calen />} />
-          <Route path='/TimeTable/:parentId' element={<TimeTable />} />
-          <Route path='/TimeOfRequest/:parentId' element={<TimeOffRequest />} />
+          <Route path='/TimeTable/' element={<TimeTable />} />
+          <Route path='/TimeOfRequest' element={<TimeOffRequest />} />
           <Route path='/Notification' element={<Notification />} />
           <Route path='/AttendancePage' element={<AttendancePage />} />
           <Route path='/Attendance' element={<Attendance />} />
@@ -131,6 +133,8 @@ function App() {
           <Route path="/event/:id" element={<Event />} />
           <Route path="/event" element={<Event />} />
           <Route path='/curriculum' element={<CurriculumPage />} />
+          <Route path='/classcreate' element={<ClassCreate />} />
+          <Route path='/studentlist' element={<StudentList />} />
         
           <Route path='/admindashboard' element={<AdminDashboard />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
@@ -142,17 +146,17 @@ function App() {
           <Route path="/ForgetPassword" element={<ForgetPassword />} />
           <Route path="/ResetPassword" element={<ResetPassword />} />
           <Route path="/TeacherRegister" element={<TeacherRegister />} />
-          <Route path="/TransportRequest/:parentId" element={<TransportRequest />} />
+          <Route path="/TransportRequest/" element={<TransportRequest />} />
           <Route path="/PaymentPage" element={<PaymentPage />} />
           <Route path="/ParentProfilePage" element={<ParentProfilePage />} />
-          <Route path="/ParentProfilePage/:parentId" element={<ParentProfilePage />} />
+          <Route path="/ParentProfilePage/" element={<ParentProfilePage />} />
           <Route path='/StudentProfilePage' element={<StudentProfilePage />} />
-          <Route path="/StudentProfilePage/:parentId" element={<StudentProfilePage />} />
-          <Route path="/StudentIdCardPage/:parentId" element={<StudentIdCardPage />} />
-          <Route path="/CounselingRequest/:parentId" element={<CounselingRequest />} />
-          <Route path="/ExitSlipRequest/:parentId" element={<ExitSlipRequest />} />
-          <Route path="/ThirdPartyServices/:parentId" element={<ThirdPartyServices />} />
-          <Route path="/BehaviorAssessmentTool/:parentId" element={<BehaviorAssessmentTool />} />
+          <Route path="/StudentProfilePage/" element={<StudentProfilePage />} />
+          <Route path="/StudentIdCardPage/" element={<StudentIdCardPage />} />
+          <Route path="/CounselingRequest/" element={<CounselingRequest />} />
+          <Route path="/ExitSlipRequest/" element={<ExitSlipRequest />} />
+          <Route path="/ThirdPartyServices/" element={<ThirdPartyServices />} />
+          <Route path="/BehaviorAssessmentTool/" element={<BehaviorAssessmentTool />} />
           <Route path="/FeeReminderPage/:parentId" element={<FeeReminderPage />} />
           <Route path="/ClubPage" element={<ClubPage />} />
           <Route path="/ClubPaymentPage" element={<ClubPaymentPage />} />
@@ -168,37 +172,37 @@ function App() {
           <Route path='/StudentView' element={<StudentView/>}/>          
           {/* <Route path='/SideNav/:studentId' element={<SideNav/>}/>           */}
           <Route path='/SideNav' element={<SideNav/>}/>          
-          <Route path='/GoalsSettingInternalExam/:studentId' element={<GoalsSettingInternalExam/>}/>          
-          <Route path='/GoalSettingView/:studentId' element={<GoalSettingView/>}/>          
-          <Route path='/ExternalReport/:studentId' element={<ExternalReport/>}/>          
-          <Route path='/ThirdPartyServicesStudent/:studentId' element={<ThirdPartyServicesStudent/>}/>          
-          <Route path='/StudentWellbeingForm/:studentId' element={<StudentWellbeingForm/>}/>          
+          <Route path='/GoalsSettingInternalExam/' element={<GoalsSettingInternalExam/>}/>          
+          <Route path='/GoalSettingView/' element={<GoalSettingView/>}/>          
+          <Route path='/ExternalReport/' element={<ExternalReport/>}/>          
+          <Route path='/ThirdPartyServicesStudent/' element={<ThirdPartyServicesStudent/>}/>          
+          <Route path='/StudentWellbeingForm' element={<StudentWellbeingForm/>}/>          
           <Route path='/Chatbot/:studentId' element={<Chatbot/>}/>          
           <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
           <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
-          <Route path='/BehaviorAssessmentPage/:studentId' element={<BehaviorAssessmentPage/>}/>          
+          <Route path='/BehaviorAssessmentPage/' element={<BehaviorAssessmentPage/>}/>          
           <Route path='/AdminChat/:admin_id' element={<AdminChat/>}/>            
           <Route path='/TeacherDashboard' element={<TeacherDashboard/>}/>            
-          <Route path='/ClassManagementPage/:teacherId' element={<ClassManagementPage/>}/>            
+          <Route path='/ClassManagementPage/' element={<ClassManagementPage/>}/>            
           <Route path='/AdminClassManagementPage' element={<AdminClassManagementPage/>}/>            
           <Route path="/TeacherStudentManagementPage" element={<TeacherStudentManagementPage/>} />           
           <Route path="/UploadResults" element={<UploadResults/>} />           
           <Route path="/UploadTeacherResults" element={<UploadTeacherResults/>} />           
           <Route path="/AssignmentPostPage" element={<AssignmentPostPage/>} />           
-          <Route path="/CommunicationPage/:teacherId" element={<CommunicationPage/>} />           
-          <Route path="/StudentMessages/:studentId" element={<StudentMessages/>} />           
-          <Route path="/ParentMessages/:parentId" element={<ParentMessages/>} />           
+          <Route path="/CommunicationPage/" element={<CommunicationPage/>} />           
+          <Route path="/StudentMessages/" element={<StudentMessages/>} />           
+          <Route path="/ParentMessages/" element={<ParentMessages/>} />           
           <Route path="/TeacherPage" element={<TeacherPage/>} />           
           <Route path="/AdminFeeReminderPage" element={<AdminFeeReminderPage/>} />           
-          <Route path="/CreateResourcePage/:teacherId" element={<CreateResourcePage/>} />           
+          <Route path="/CreateResourcePage/" element={<CreateResourcePage/>} />           
           <Route path="/GradePage" element={<GradePage/>} />           
-          <Route path="/AssignmentSubmissionPage/:studentId" element={<AssignmentSubmissionPage/>} />           
-          <Route path="/ResourceShowPage/:studentId" element={<ResourceShowPage/>} />           
-          <Route path="/StudentGradesPage/:studentId" element={<StudentGradesPage/>} />  
+          <Route path="/AssignmentSubmissionPage/" element={<AssignmentSubmissionPage/>} />           
+          <Route path="/ResourceShowPage/" element={<ResourceShowPage/>} />           
+          <Route path="/StudentGradesPage/" element={<StudentGradesPage/>} />  
           <Route path="/EbookPage" element={<EbookPage/>} />  
           <Route path="/ParentClassDataPage" element={<ParentClassDataPage/>} />  
 
-          <Route path="/ShowEbookPage/:studentId" element={<ShowEbookPage/>} />            
+          <Route path="/ShowEbookPage/" element={<ShowEbookPage/>} />            
           <Route path="/SubmittedAssignment/" element={<SubmittedAssignment/>} />            
           <Route path="/CreateMeeting/" element={<CreateMeeting/>} />            
           <Route path="/CreateSurveyForm/" element={<CreateSurveyForm/>} />            

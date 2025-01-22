@@ -11,6 +11,8 @@ const AdminPage = () => {
     { name: 'Parent Registration', icon: 'fas fa-user-tie', className: 'btn-1', link: '/Parentregisterpage' },
     { name: 'Student Registration', icon: 'fas fa-user-graduate', className: 'btn-2', link: '/studentregisterpage' },
     { name: 'Teacher Registration', icon: 'fas fa-chalkboard-teacher', className: 'btn-3', link: '/teacherregister' },
+    { name: 'Class Creation', icon: 'fas fa-book', className: 'btn-3', link: '/classcreate' },
+    { name: 'Student List', icon: 'fas fa-user', className: 'btn-3', link: '/studentlist' },
     { name: 'TimeTable Post', icon: 'fas fa-calendar-day', className: 'btn-10', link: '/AdminTimeTable' },
     { name: 'Update Transfer Certificate', icon: 'fas fa-certificate', className: 'btn-5', link: '/UpdateTc' },
     { name: 'Update Exit Slip', icon: 'fas fa-sign-out-alt', className: 'btn-6', link: '/ExitSlipUpdate' },

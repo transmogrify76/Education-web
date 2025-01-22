@@ -100,8 +100,8 @@ const EbookPage = () => {
           >
             <option value="">Select a class</option>
             {classOptions.map((classOption) => (
-              <option key={classOption.id} value={classOption.id}>
-                {classOption.className} (ID: {classOption.id})
+              <option key={classOption} value={classOption}>
+                {classOption.className}
               </option>
             ))}
           </select>
