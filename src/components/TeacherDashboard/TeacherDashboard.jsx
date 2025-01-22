@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
-import { faChalkboardTeacher, faUserGraduate, faClipboardList, faFileUpload, faComments, faCalendarAlt, faBook, faStar, faFolderOpen, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faChalkboardTeacher, faUserGraduate, faClipboardList, faFileUpload, faComments, faCalendarAlt, faBook, faStar, faFolderOpen, faLink, faCheckCircle } from '@fortawesome/free-solid-svg-icons'; // Added faCheckCircle
 import './TeacherDashboard.css';
 import Header from '../Header/Header';
 
@@ -22,7 +22,8 @@ const TeacherDashboard = () => {
     { name: 'Submitted Assignments', icon: faFolderOpen, className: 'btn-9', link: '/SubmittedAssignment' },
     { name: 'E-Book Upload', icon: faBook, className: 'btn-10', link: '/ebookpage' },
     { name: 'Google Meeting Link', icon: faLink, className: 'btn-100', link: '/CreateMeeting' },
-    { name: 'Subject Add ', icon: faFolderOpen, className: 'btn-25', link: '/SubjectEdit' }
+    { name: 'Subject Add ', icon: faFolderOpen, className: 'btn-25', link: '/SubjectEdit' },
+    { name: 'Attendance', icon: faCheckCircle, className: 'btn-11', link: '/AttendancePage' } // Added Attendance option
   ];
 
   return (

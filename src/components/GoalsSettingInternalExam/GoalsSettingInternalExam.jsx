@@ -190,7 +190,6 @@
 // export default GoalsSettingInternalExam;
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import Sidebar from '../SideNav/SideNav';
 import { FaTag } from 'react-icons/fa';
 import './GoalsSettingInternalExam.css';
@@ -198,7 +197,6 @@ import Header from '../Header/Header';
 import { jwtDecode } from 'jwt-decode';  // Corrected import
 
 const GoalsSettingInternalExam = () => {
-  const { studentId } = useParams();
   const [subjects, setSubjects] = useState([
     { name: 'arabic', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
     { name: 'english', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
@@ -241,7 +239,7 @@ const GoalsSettingInternalExam = () => {
     };
 
     fetchStudentData();
-  }, [studentId]);
+  }, []);
 
   const handleInputChange = (index, field, value) => {
     const updatedSubjects = [...subjects];
@@ -270,7 +268,6 @@ const GoalsSettingInternalExam = () => {
     const overallData = calculateOverallAchievements();
 
     const dataToSubmit = {
-      studentId,
       userId, // Include the userId here
       arabicAchievement: subjects.find(s => s.name === 'arabic').prevGrade,
       arabicSuggestedTarget: subjects.find(s => s.name === 'arabic').suggestedTarget,
@@ -326,7 +323,7 @@ const GoalsSettingInternalExam = () => {
     <div className='for-header'>
       <Header />
       <div className='side-with'>
-        <Sidebar studentId={studentId} />
+        <Sidebar /> {/* Remove studentId here as it's no longer needed */}
         <form onSubmit={handleSubmit}>
           <h1>Goals Settings Internal Exam</h1>
           <div className="table">
