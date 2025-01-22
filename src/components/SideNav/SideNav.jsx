@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaTachometerAlt, FaFileAlt, FaHandsHelping, FaComments, FaClipboardCheck, FaEnvelope } from 'react-icons/fa';
+import {jwtDecode} from 'jwt-decode'; // Corrected import
 import './SideNav.css'; // Import the CSS file for Sidebar
 
-function SideNav({ studentId }) {
+function SideNav() {
+  const [studentId, setStudentId] = useState(null);
+
+  useEffect(() => {
+    // Get the authToken from localStorage
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      try {
+        // Decode the token to get the studentId
+        const decodedToken = jwtDecode(authToken); // Correct usage
+        setStudentId(decodedToken.Id); // Access the correct field (Id) in the decoded token
+      } catch (error) {
+        console.error('Failed to decode authToken:', error);
+      }
+    }
+  }, []);
+
+  // If studentId is not available, show a loading message or handle the error
   if (!studentId) {
-    console.error('No studentId provided to SideNav');
-    return null; // or handle error appropriately
+    return <div>Loading...</div>; // Or handle it in another way
   }
 
   return (

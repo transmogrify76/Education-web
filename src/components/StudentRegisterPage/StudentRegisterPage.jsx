@@ -83,7 +83,7 @@ const StudentRegisterPage = () => {
 
                 // Redirect to StudentView page after a short delay to show the popup
                 setTimeout(() => {
-                    navigate('/login'); // Adjust this to your desired route
+                    navigate('/adminview'); // Adjust this to your desired route
                 }, 1500);
             } else {
                 const errorData = await response.json();

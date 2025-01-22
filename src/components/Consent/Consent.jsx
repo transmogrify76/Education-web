@@ -6,9 +6,9 @@ import Header from '../Header/Header';
 
 const Consent = () => {
   const options = [
-    { value: 'I am giving consent for option 1', label: 'Option 1' },
-    { value: 'I am giving consent for option2', label: 'Option 2' },
-    { value: 'I am giving consent for option3', label: 'Option 3' },
+    { value: 'I give consent for field trips', label: 'Field Trips' },
+    { value: 'I give consent for extracurricular activities', label: 'Extracurricular Activities' },
+    { value: 'I give consent for photography use', label: 'Photography Use' },
   ];
 
   const [selectedOption, setSelectedOption] = useState(null);
