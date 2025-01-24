@@ -12,8 +12,7 @@ const AttendancePage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Mapping the student name and class name to appropriate IDs
-    // You may need to replace this with a real method to map names to IDs from your backend
+
     const studentId = getStudentIdByName(studentName);
     const classId = getClassIdByName(className);
 

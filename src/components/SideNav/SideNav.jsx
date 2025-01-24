@@ -30,76 +30,76 @@ function SideNav() {
     <nav className="sidebar">
       <ul>
         <li className="sidebar-item">
-          <Link to={`/StudentView/${studentId}`}>
+          <Link to={`/StudentView`}>
             <FaTachometerAlt className="sidebar-icon" />
             Dashboard
           </Link>
         </li>
         <li className="sidebar-items">
-          <Link to={`/GoalsSettingInternalExam/${studentId}`}>
+          <Link to={`/GoalsSettingInternalExam`}>
             Goal setting entry
           </Link>
         </li>
         <li className="sidebar-items">
-          <Link to={`/GoalSettingView/${studentId}`}>
+          <Link to={`/GoalSettingView`}>
             Goal Setting View
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/ExternalReport/${studentId}`}>
+          <Link to={`/ExternalReport`}>
             <FaFileAlt className="sidebar-icon" />
             External report
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/ThirdPartyServicesStudent/${studentId}`}>
+          <Link to={`/ThirdPartyServicesStudent`}>
             <FaHandsHelping className="sidebar-icon" />
             Third Party Optional Services
           </Link>
         </li>
         <li className="sidebar-items">
-          <Link to={`/StudentWellbeingForm/${studentId}`}>
+          <Link to={`/StudentWellbeingForm`}>
             Student Wellbeing Request
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/Chatbot/${studentId}`}>
+          <Link to={`/Chatbot`}>
             <FaComments className="sidebar-icon" />
             Chat
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/BehaviorAssessmentPage/${studentId}`}>
+          <Link to={`/BehaviorAssessmentPage/`}>
             <FaClipboardCheck className="sidebar-icon" />
             Behavior assessment tool
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/StudentMessages/${studentId}`}>
+          <Link to={`/StudentMessages`}>
             <FaEnvelope className="sidebar-icon" />
             Communication With Teacher
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/AssignmentSubmissionPage/${studentId}`}>
+          <Link to={`/AssignmentSubmissionPage`}>
             <FaClipboardCheck className="sidebar-icon" />
             Assignment Submission
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/ResourceShowPage/${studentId}`}>
+          <Link to={`/ResourceShowPage`}>
             <FaFileAlt className="sidebar-icon" />
             Resource of the Class
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/StudentGradesPage/${studentId}`}>
+          <Link to={`/StudentGradesPage`}>
             <FaClipboardCheck className="sidebar-icon" />
             All Grades
           </Link>
         </li>
         <li className="sidebar-item">
-          <Link to={`/ShowEbookPage/${studentId}`}>
+          <Link to={`/ShowEbookPage`}>
             <FaClipboardCheck className="sidebar-icon" />
             E Books
           </Link>

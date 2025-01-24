@@ -334,7 +334,7 @@ const AdminFeeReminderPage = () => {
               <option value="Declined">Declined</option>
             </select>
           </div>
-          
+         
           {/* Dropdown to select student name */}
           <div>
             <label>Student Name:</label>
@@ -352,7 +352,7 @@ const AdminFeeReminderPage = () => {
               ))}
             </select>
           </div>
-          
+         
           <button type="submit">Create Fee Reminder</button>
         </form>
       </div>

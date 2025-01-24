@@ -25,7 +25,7 @@ function Student() {
           <div onClick={() => navigate(`/GoalSettingView`)} className="dashboard-button purple">
             Goal Setting View
           </div>
-          <div onClick={() => navigate(`/ExternalReport`)} className="dashboard-button blue">
+          <div onClick={() => navigate(`/tExternalRepor`)} className="dashboard-button blue">
             <FaFileAlt className="button-icon" /> External report
           </div>
           <div onClick={() => navigate(`/ThirdPartyServicesStudent`)} className="dashboard-button light-gray">
