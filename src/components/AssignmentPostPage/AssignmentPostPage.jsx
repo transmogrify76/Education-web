@@ -81,7 +81,7 @@ const AssignmentPostPage = () => {
               {classes.length > 0 ? (
                 classes.map((classItem) => (
                   <option key={classItem.id} value={classItem.id}>
-                    {classItem.className} (ID: {classItem.id})
+                    {classItem.className}  {/* Removed the ID display */}
                   </option>
                 ))
               ) : (

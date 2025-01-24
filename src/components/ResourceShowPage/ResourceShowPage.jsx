@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';  // Use useLocation to access the passed state
 import './ResourceShowPage.css';
 import Header from '../Header/Header';
 import SideNav from '../SideNav/SideNav';
 
 const ResourceShowPage = () => {
-  const { studentId } = useParams();
+  // Use location to get state
+  const location = useLocation();
+  const studentId = location.state?.studentId;  // Access studentId passed via state
+  
   const [classes, setClasses] = useState([]);
   const [allResources, setAllResources] = useState([]);
   const [filteredResources, setFilteredResources] = useState([]);
@@ -71,7 +74,7 @@ const ResourceShowPage = () => {
     <div className='for-header'>
       <Header />
       <div className="teaching-staff">
-        <SideNav studentId={studentId} />
+        <SideNav studentId={studentId} /> {/* Pass studentId to SideNav */}
         <div className="resource-show-container">
           <h1>Resource Show Page</h1>
 
