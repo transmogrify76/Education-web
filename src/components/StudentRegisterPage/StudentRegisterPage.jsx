@@ -13,7 +13,7 @@ const StudentRegisterPage = () => {
         password: '',
         parentEmail: '',
         address: '',
-        
+        gender: '', // New field for gender
     });
 
     const [showPopup, setShowPopup] = useState(false);
@@ -73,6 +73,7 @@ const StudentRegisterPage = () => {
                     dob: formData.dob,
                     password: formData.password,
                     address: formData.address,
+                    gender: formData.gender, // Include gender in the request
                     roleType: 'student',
                     class: formData.className, // Send selected class
                     rollNo: formData.studentId, // Assuming it's the same as studentId
@@ -197,6 +198,20 @@ const StudentRegisterPage = () => {
                         onChange={handleChange}
                         required
                     />
+                </label>
+                <label>
+                    Gender:
+                    <select
+                        name="gender"
+                        value={formData.gender}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
                 </label>
                 <button type="submit" className="submit-button">Register</button>
             </form>
