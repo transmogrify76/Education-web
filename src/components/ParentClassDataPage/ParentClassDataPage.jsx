@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode"; // Import jwt-decode to decode the token
 import './ParentClassDataPage.css'; // Custom styles
 import Header from '../Header/Header';
 
@@ -12,11 +13,26 @@ const ParentClassDataPage = () => {
   const [messageType, setMessageType] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Get the parentId from the JWT token
+  const getParentIdFromToken = () => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      const decodedToken = jwtDecode(authToken);
+      return decodedToken.id; // Assuming 'id' in the token refers to the parentId
+    }
+    return null;
+  };
+
+  const parentId = getParentIdFromToken(); // Get parentId from JWT
+
   // Fetch class names when the component mounts
   useEffect(() => {
     const fetchClassNames = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/class');
+        // Assuming your backend may use parentId to fetch class data
+        const response = await axios.get('http://localhost:3000/class', {
+          params: { parentId } // Send parentId if needed
+        });
         setClassNames(response.data);
       } catch (error) {
         console.error('Error fetching class names:', error);
@@ -26,7 +42,7 @@ const ParentClassDataPage = () => {
     };
 
     fetchClassNames();
-  }, []);
+  }, [parentId]);
 
   // Fetch meeting data when a class is selected
   useEffect(() => {
@@ -34,7 +50,9 @@ const ParentClassDataPage = () => {
       if (selectedClassId) {
         setIsLoading(true);
         try {
-          const response = await axios.get(`http://localhost:3000/meeting/${selectedClassId}`);
+          const response = await axios.get(`http://localhost:3000/meeting/${selectedClassId}`, {
+            params: { parentId } // Send parentId if needed
+          });
           if (response.data && response.data.title) {
             setMeetingData([response.data]);
           } else if (Array.isArray(response.data) && response.data.length > 0) {
@@ -53,7 +71,7 @@ const ParentClassDataPage = () => {
     };
 
     fetchMeetingData();
-  }, [selectedClassId]);
+  }, [selectedClassId, parentId]); // Add parentId as dependency to refetch if parentId changes
 
   // Handle class selection
   const handleClassChange = (e) => {
