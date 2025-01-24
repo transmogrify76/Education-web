@@ -105,6 +105,35 @@ const FeeReminderPage = () => {
     }
   };
 
+  const handlePendingPayment = async (feeId, term) => {
+    try {
+      // Open the payment portal
+      window.open(
+        `https://payment-portal.com/pay?studentId=${selectedStudentId}&term=${term}`,
+        '_blank'
+      );
+
+      // Update fee status to 'Pending' first
+      const response = await fetch(`http://localhost:3000/fee-reminder/update-latest/${selectedStudentId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ feeId, status: 'Pending' }),
+      });
+      if (!response.ok) throw new Error('Failed to update fee status to Pending');
+
+      // Refresh fee data after updating to 'Pending'
+      const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
+      if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');
+      const updatedFeeData = await updatedFeeResponse.json();
+      setFeeData(updatedFeeData);
+    } catch (error) {
+      console.error('Error during pending payment process:', error);
+      setError('Failed to process pending payment.');
+    }
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
@@ -160,6 +189,14 @@ const FeeReminderPage = () => {
                               onClick={() => handlePayment(fee.id, fee.term)}
                             >
                               Pay Now
+                            </button>
+                          )}
+                          {fee.status === 'Pending' && (
+                            <button
+                              className="payment-button"
+                              onClick={() => handlePendingPayment(fee.id, fee.term)}
+                            >
+                              Process Pending Payment
                             </button>
                           )}
                         </td>
