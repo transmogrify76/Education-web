@@ -19,7 +19,8 @@ const StudentListPage = () => {
     parentEmail: '',
     dob: '',
     className: '',
-    address: ''
+    address: '',
+    rollNo: '' // Added rollNo to the editFormData state
   });
 
   const token = localStorage.getItem('authToken');
@@ -70,7 +71,6 @@ const StudentListPage = () => {
       const response = await axios.get(`http://localhost:3000/class/${classId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      // Assuming `students` is in the response object, we set the students of the selected class
       setStudents(response.data.students);
     } catch (error) {
       console.error('Error fetching students for class:', error);
@@ -102,9 +102,7 @@ const StudentListPage = () => {
       className: student.class.className,
       address: student.address,
       parentEmail: student.parentEmail,
-      parentName: student.parent ? student.parent.name : '',
-      phoneNo: student.parent.phoneNo,
-    
+      rollNo: student.rollNo // Populate rollNo when opening the edit modal
     });
   };
 
@@ -158,7 +156,6 @@ const StudentListPage = () => {
         </select>
       </div>
 
-      {/* Displaying Students based on selected class */}
       <div className="students-list">
         <h2>Students in Class {selectedClass ? getClassName(selectedClass) : 'All Students'}</h2>
         <table className="students-table">
@@ -166,7 +163,6 @@ const StudentListPage = () => {
             <tr>
               <th>Name</th>
               <th>Email</th>
-              {/* Dynamically display class name in the header */}
               <th>{selectedClass ? getClassName(selectedClass) : 'Class'}</th>
               <th>Actions</th>
             </tr>
@@ -181,7 +177,6 @@ const StudentListPage = () => {
                 <tr key={student.id}>
                   <td>{student.name}</td>
                   <td>{student.email}</td>
-                  {/* Displaying the class name */}
                   <td>{student.class ? student.class.className : 'N/A'}</td>
                   <td>
                     <button
@@ -274,7 +269,7 @@ const StudentListPage = () => {
               <label>
                 DOB:
                 <input
-                  type="dob"
+                  type="date"
                   name="dob"
                   value={editFormData.dob}
                   onChange={handleInputChange}
@@ -283,7 +278,7 @@ const StudentListPage = () => {
               <label>
                 Class:
                 <input
-                  type="class"
+                  type="text"
                   name="className"
                   value={editFormData.className}
                   onChange={handleInputChange}
@@ -298,22 +293,12 @@ const StudentListPage = () => {
                   onChange={handleInputChange}
                 />
               </label>
-             
               <label>
-          Parent Name:
-          <input
-            type="text"
-            name="parentName"
-            value={editFormData.parentName}
-            onChange={handleInputChange}
-          />
-        </label>
-              <label>
-                Parent Phone No:
+                Roll Number:
                 <input
-                  type="phoneNo"
-                  name="PhoneNo"
-                  value={editFormData.phoneNo}
+                  type="text"
+                  name="rollNo"
+                  value={editFormData.rollNo}
                   onChange={handleInputChange}
                 />
               </label>
