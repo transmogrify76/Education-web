@@ -55,7 +55,7 @@ const ClassCreate = () => {
   // Handle form submit (Create or Update class)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = { className, teacherId: Number(teacherId) }; // Only include className in the payload
+    const payload = { className }; // Only include className in the payload
 
     try {
       if (editMode) {
