@@ -1,56 +1,113 @@
 import React, { useState } from 'react';
-import Header from '../Header/Header'
+import axios from 'axios';
 
 const AttendancePage = () => {
-  const [selectedChild, setSelectedChild] = useState(null);
-  const [attendance, setAttendance] = useState([]);
+  const [studentName, setStudentName] = useState('');
+  const [className, setClassName] = useState('');
+  const [date, setDate] = useState('');
+  const [present, setPresent] = useState(false);
+  const [responseData, setResponseData] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleChildSelect = (child) => {
-    setSelectedChild(child);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Mapping the student name and class name to appropriate IDs
+    // You may need to replace this with a real method to map names to IDs from your backend
+    const studentId = getStudentIdByName(studentName);
+    const classId = getClassIdByName(className);
+
+    const payload = {
+      studentId: studentId,
+      classId: classId,
+      date: date,
+      present: present,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:3000/attendance', payload);
+      setResponseData(response.data);
+      setError(null);
+    } catch (err) {
+      setError('An error occurred while posting attendance.');
+      setResponseData(null);
+    }
   };
 
-  const handleScan = () => {
-    // Simulate scanning ID card
-    const currentTime = new Date().toLocaleString();
-    setAttendance([...attendance, { child: selectedChild, time: currentTime }]);
+  // Dummy methods to simulate fetching IDs by names
+  const getStudentIdByName = (name) => {
+    const students = [
+      { id: 6, name: 'Chitradeep Ghosh' }, // Example data
+    ];
+    const student = students.find((student) => student.name === name);
+    return student ? student.id : null;
+  };
+
+  const getClassIdByName = (className) => {
+    const classes = [
+      { id: 2, name: 'Math' }, // Example data
+    ];
+    const classObj = classes.find((classItem) => classItem.name === className);
+    return classObj ? classObj.id : null;
   };
 
   return (
-    <div>
-      <Header/>
-
-    <div className="attendance-page">
-      <h1 className="page-title">Student Attendance</h1>
-
-      <div className="child-selection">
-        <h2 className="section-title">Select Your Child</h2>
-        <div className="child-list">
-          <div className="child-item" onClick={() => handleChildSelect('John Doe')}>
-            <span className="child-name">John Doe</span>
-          </div>
-          <div className="child-item" onClick={() => handleChildSelect('Jane Smith')}>
-            <span className="child-name">Jane Smith</span>
-          </div>
+    <div className="attendance-form">
+      <h1>Mark Attendance</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="studentName">Student Name:</label>
+          <input
+            type="text"
+            id="studentName"
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
+            required
+          />
         </div>
-      </div>
+        <div>
+          <label htmlFor="className">Class:</label>
+          <input
+            type="text"
+            id="className"
+            value={className}
+            onChange={(e) => setClassName(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="date">Date:</label>
+          <input
+            type="date"
+            id="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="present">Present:</label>
+          <input
+            type="checkbox"
+            id="present"
+            checked={present}
+            onChange={(e) => setPresent(e.target.checked)}
+          />
+        </div>
+        <button type="submit">Submit Attendance</button>
+      </form>
 
-      <div className="scan-section">
-        <h2 className="section-title">Scan ID Card</h2>
-        <button className="scan-button" onClick={handleScan}>
-          Scan
-        </button>
-      </div>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <div className="attendance-list">
-        <h2 className="section-title">Attendance</h2>
-        {attendance.map((entry, index) => (
-          <div key={index} className="attendance-entry">
-            <span className="child-name">{entry.child}</span>
-            <span className="time">{entry.time}</span>
-          </div>
-        ))}
-      </div>
-    </div>
+      {responseData && (
+        <div className="response">
+          <h3>Attendance Recorded</h3>
+          <p>Date: {responseData.date}</p>
+          <p>Student: {responseData.student.name}</p>
+          <p>Class: {responseData.classEntity.className} - {responseData.classEntity.subject}</p>
+          <p>Present: {responseData.present ? 'Yes' : 'No'}</p>
+        </div>
+      )}
     </div>
   );
 };

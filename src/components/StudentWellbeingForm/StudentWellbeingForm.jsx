@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'; // Import jwt-decode to decode the token
 import Sidebar from '../SideNav/SideNav';
 import './StudentWellbeingForm.css';
 import Header from '../Header/Header';
 
 const StudentWellbeingForm = () => {
-  const { studentId } = useParams();
   const [studentData, setStudentData] = useState({
     name: '',
     enroll: '',
@@ -17,30 +16,47 @@ const StudentWellbeingForm = () => {
   });
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null);
+  const [studentId, setStudentId] = useState(null); // Store the decoded studentId
 
+  // Decode the JWT token to get studentId
   useEffect(() => {
-    const fetchStudentData = async () => {
+    const token = localStorage.getItem('authToken'); // Get token from localStorage
+    if (token) {
       try {
-        const response = await fetch(`http://localhost:3000/student`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setStudentData((prevState) => ({
-          ...prevState,
-          name: data.name,
-          enroll: data.enrollmentNo,
-          class: data.class
-        }));
+        const decodedToken = jwtDecode(token); // Decode the token
+        setStudentId(decodedToken.Id); // Set the studentId from decoded token
       } catch (error) {
-        setError('Error fetching student data: ' + error.message);
-      } finally {
-        setLoading(false);
+        console.error('Failed to decode JWT token:', error);
       }
-    };
+    }
+  }, []);
 
-    fetchStudentData();
-  }, [studentId]);
+  // Fetch student data once studentId is available
+  useEffect(() => {
+    if (studentId) {
+      const fetchStudentData = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/student-wellbeing/${studentId}`); // Fetch based on studentId
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
+          setStudentData((prevState) => ({
+            ...prevState,
+            name: data.name,
+            enroll: data.enrollmentNo,
+            class: data.class
+          }));
+        } catch (error) {
+          setError('Error fetching student data: ' + error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchStudentData();
+    }
+  }, [studentId]); // Re-fetch if studentId is updated
 
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;
