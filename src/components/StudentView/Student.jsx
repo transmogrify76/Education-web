@@ -51,9 +51,9 @@ function Student() {
             <div onClick={() => navigate(`/StudentWellbeingForm`)} className="dashboard-button gray">
               Student Wellbeing Request
             </div>
-            <div onClick={() => navigate(`/Chatbot`)} className="dashboard-button pink">
+            {/* <div onClick={() => navigate(`/Chatbot`)} className="dashboard-button pink">
               <FaComments className="button-icon" /> Chat
-            </div>
+            </div> */}
             <div onClick={() => navigate(`/BehaviorAssessmentPage`)} className="dashboard-button dark-blue">
               <FaClipboardCheck className="button-icon" /> Behavior assessment tool
             </div>

@@ -178,7 +178,7 @@ function App() {
           <Route path='/ExternalReport/' element={<ExternalReport/>}/>          
           <Route path='/ThirdPartyServicesStudent/' element={<ThirdPartyServicesStudent/>}/>          
           <Route path='/StudentWellbeingForm' element={<StudentWellbeingForm/>}/>          
-          <Route path='/Chatbot' element={<Chatbot/>}/>          
+          {/* <Route path='/Chatbot' element={<Chatbot/>}/>           */}
           <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
           <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
           <Route path='/BehaviorAssessmentPage/' element={<BehaviorAssessmentPage/>}/>          

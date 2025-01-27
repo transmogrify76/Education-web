@@ -1,70 +1,85 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'; // Import jwt-decode to decode the token
 import html2pdf from 'html2pdf.js';
 import logo from '../Assets/logo.png'; // Adjust this path as needed
 import './ExternalReport.css';
 
 const ExternalReport = () => {
-  const { studentId } = useParams();
   const [studentInfo, setStudentInfo] = useState({ name: '', enrollmentNo: '', className: '' });
   const [results, setResults] = useState({}); // Store results by subject
   const pdfRef = useRef();
+  const [studentId, setStudentId] = useState(null); // State to store the decoded studentId
 
   useEffect(() => {
-    const fetchClassData = async () => {
+    // Fetch studentId from the JWT token (localStorage)
+    const token = localStorage.getItem('authToken');
+    if (token) {
       try {
-        const classResponse = await fetch('http://localhost:3000/class');
-        const classData = await classResponse.json();
-
-        let foundClass = '';
-        classData.forEach(cls => {
-          const studentInClass = cls.students.find(student => student.id === parseInt(studentId));
-          if (studentInClass) {
-            foundClass = cls.className;
-            setStudentInfo(prevInfo => ({
-              ...prevInfo,
-              name: studentInClass.name,
-              enrollmentNo: studentInClass.enrollmentNo,
-              className: foundClass,
-            }));
-          }
-        });
-        if (!foundClass) {
-          console.error("Student not found in any class.");
-        }
+        const decodedToken = jwtDecode(token);
+        setStudentId(decodedToken.Id); // Set the studentId from decoded token
       } catch (error) {
-        console.error("Error fetching class data:", error);
+        console.error('Failed to decode JWT token:', error);
       }
-    };
+    }
 
-    const fetchResults = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/results/student/${studentId}`);
-        const data = await response.json();
+    if (studentId) {
+      // Fetch student class data and results once studentId is available
+      const fetchClassData = async () => {
+        try {
+          const classResponse = await fetch('http://localhost:3000/class');
+          const classData = await classResponse.json();
 
-        const subjectMap = {};
+          let foundClass = '';
+          classData.forEach(cls => {
+            const studentInClass = cls.students.find(student => student.id === studentId);
+            if (studentInClass) {
+              foundClass = cls.className;
+              setStudentInfo(prevInfo => ({
+                ...prevInfo,
+                name: studentInClass.name,
+                enrollmentNo: studentInClass.enrollmentNo,
+                className: foundClass,
+              }));
+            }
+          });
+          if (!foundClass) {
+            console.error("Student not found in any class.");
+          }
+        } catch (error) {
+          console.error("Error fetching class data:", error);
+        }
+      };
 
-        for (let i = 0; i < data.length; i++) {
-          const { subject, marks, id } = data[i];
+      const fetchResults = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/results/student/${studentId}`);
+          const data = await response.json();
 
-          if (!subjectMap[subject.name]) {
-            subjectMap[subject.name] = { marks, id };
-          } else {
-            if (id > subjectMap[subject.name].id) {
+          const subjectMap = {};
+
+          for (let i = 0; i < data.length; i++) {
+            const { subject, marks, id } = data[i];
+
+            if (!subjectMap[subject.name]) {
               subjectMap[subject.name] = { marks, id };
+            } else {
+              if (id > subjectMap[subject.name].id) {
+                subjectMap[subject.name] = { marks, id };
+              }
             }
           }
+
+          setResults(subjectMap);
+        } catch (error) {
+          console.error("Error fetching result data:", error);
         }
+      };
 
-        setResults(subjectMap);
-      } catch (error) {
-        console.error("Error fetching result data:", error);
-      }
-    };
+      fetchClassData();
+      fetchResults();
+    }
 
-    fetchClassData();
-    fetchResults();
-  }, [studentId]);
+  }, [studentId]); // Re-run effect when studentId is set
 
   const generatePDF = () => {
     const element = pdfRef.current;
@@ -74,7 +89,7 @@ const ExternalReport = () => {
 
     const opt = {
       margin:       1,
-      filename:     `Result_${studentId}.pdf`,
+      filename:     `Result_${studentInfo.name}.pdf`,
       html2canvas:  { scale: 2 },
       jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
     };

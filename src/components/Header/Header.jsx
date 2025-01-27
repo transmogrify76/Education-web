@@ -86,7 +86,7 @@ const Header = () => {
       <div className="navbar-left">
         <a href="/">
           <img src={logo} alt="EDU Web Logo" className="navbar-logo" />
-          <p className="tagline">"পড়বে ইন্ডিয়া, তবেই তো বাড়বে ইন্ডিয়া"</p>
+          <p className="tagline">"Padhega INDIA, Tabhi To Badhega INDIA"</p>
         </a>
       </div>
       <div className="navbar-right">
