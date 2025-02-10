@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Import jwt-decode to decode the token
+import { jwtDecode } from 'jwt-decode'; 
 import Sidebar from '../SideNav/SideNav';
 import './StudentWellbeingForm.css';
 import Header from '../Header/Header';
@@ -12,8 +12,9 @@ const StudentWellbeingForm = () => {
     difficultyMessage: '',
     talkBrieflyMessage: '',
     problemSolvingMessage: '',
-    helpOptions: [] // To store selected checkbox options
+    helpOptions: []
   });
+
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null);
   const [studentId, setStudentId] = useState(null); // Store the decoded studentId
@@ -27,19 +28,27 @@ const StudentWellbeingForm = () => {
         setStudentId(decodedToken.Id); // Set the studentId from decoded token
       } catch (error) {
         console.error('Failed to decode JWT token:', error);
+        setError('Failed to decode JWT token');
       }
+    } else {
+      setError('No token found');
     }
   }, []);
 
   // Fetch student data once studentId is available
   useEffect(() => {
     if (studentId) {
+      console.log('Fetching data for studentId:', studentId); // Log studentId for debugging
+
       const fetchStudentData = async () => {
         try {
           const response = await fetch(`http://localhost:3000/student-wellbeing/${studentId}`); // Fetch based on studentId
+          console.log('Response Status:', response.status); // Log the status code
+          
           if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(`Network response was not ok. Status: ${response.status}`);
           }
+
           const data = await response.json();
           setStudentData((prevState) => ({
             ...prevState,
@@ -48,6 +57,7 @@ const StudentWellbeingForm = () => {
             class: data.class
           }));
         } catch (error) {
+          console.error('Error fetching student data:', error);
           setError('Error fetching student data: ' + error.message);
         } finally {
           setLoading(false);
@@ -55,8 +65,10 @@ const StudentWellbeingForm = () => {
       };
 
       fetchStudentData();
+    } else {
+      setLoading(false); // Stop loading if no studentId
     }
-  }, [studentId]); // Re-fetch if studentId is updated
+  }, [studentId]);
 
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;
