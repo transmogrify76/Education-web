@@ -8,7 +8,7 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] = useState(false);
   const navigate = useNavigate();
-
+  // Similarly like all are same 
   useEffect(() => {
     const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
     if (token) {
@@ -91,6 +91,7 @@ const Header = () => {
       </div>
       <div className="navbar-right">
         <a href="/Aboutus">About Us</a>
+        <a href="/Dashboard">Dashboard</a>
         <a href="/Infrastructure">Infrastructure</a>
         <a href="/Curriculum">Curriculum</a>
         <a href="/Award">Award</a>
