@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 const TeacherPage = () => {
   const [events, setEvents] = useState([]);
   const [eventMessage, setEventMessage] = useState('');
+  const [eventDescription, setEventDescription] = useState(''); // Added description state
   const [eventDate, setEventDate] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -34,6 +35,10 @@ const TeacherPage = () => {
     setEventMessage(event.target.value);
   };
 
+  const handleEventDescriptionChange = (event) => {
+    setEventDescription(event.target.value); // Handle description change
+  };
+
   const handleEventDateChange = (event) => {
     setEventDate(event.target.value);
   };
@@ -44,11 +49,13 @@ const TeacherPage = () => {
     setError(null);
     setSuccess(false);
 
-    if (!eventMessage.trim() || !eventDate) {
-      setError('Message and date are required');
+    if (!eventMessage.trim() || !eventDate || !eventDescription.trim()) {
+      setError('Message, description, and date are required');
       setLoading(false);
       return;
     }
+
+    const postTime = new Date().toISOString(); // Get current date and time as post time
 
     try {
       const response = await fetch('http://localhost:3000/notification', {
@@ -56,7 +63,12 @@ const TeacherPage = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: eventMessage, date: eventDate }),
+        body: JSON.stringify({
+          message: eventMessage,
+          description: eventDescription, // Include description in the request body
+          date: eventDate,
+          postTime, // Include the post time in the request body
+        }),
       });
 
       if (!response.ok) {
@@ -64,6 +76,7 @@ const TeacherPage = () => {
       }
 
       setEventMessage('');
+      setEventDescription('');
       setEventDate('');
       setSuccess(true);
       fetchEvents();
@@ -102,64 +115,74 @@ const TeacherPage = () => {
 
   return (
     <div>
-      <Header/>
-    <div className="event-post-container">
-      <header className="header">
-        <div className="header-title">Post Event</div>
-      </header>
-      <main className="main-contenth">
-        <form onSubmit={handleSubmit} className="event-form">
-          <label htmlFor="eventMessage" className="form-label">Event Message</label>
-          <textarea
-            id="eventMessage"
-            value={eventMessage}
-            onChange={handleEventMessageChange}
-            required
-            className="form-textarea"
-          ></textarea>
-          <label htmlFor="eventDate" className="form-label">Event Date</label>
-          <input
-            type="date"
-            id="eventDate"
-            value={eventDate}
-            onChange={handleEventDateChange}
-            required
-            className="form-input"
-          />
-          <button type="submit" className="submit-button" disabled={loading}>
-            {loading ? 'Posting...' : 'Post Event'}
-          </button>
-          {success && <p className="success-message">Event posted successfully!</p>}
-          {error && <p className="error-message">Error: {error}</p>}
-        </form>
-        <div className="event-list">
-          <h2>Existing Events</h2>
-          {loading && <p>Loading events...</p>}
-          {error && <p className="error-message">Error: {error}</p>}
-          {events.length === 0 ? (
-            <p>No events available.</p>
-          ) : (
-            events.map((event) => (
-              <div key={event.id} className="event-item">
-                <p><strong>ID:</strong> {event.id}</p>
-                <p><strong>Message:</strong> {event.message}</p>
-                <p><strong>Date:</strong> {event.date}</p>
-                <button 
-                  onClick={() => handleDelete(event.id)} 
-                  disabled={loading}
-                  className="delete-button"
-                >
-                  {loading ? 'Deleting...' : 'Delete'}
-                </button>
-              </div>
-            ))
-          )}
-        </div>
-      </main>
-      <footer className="footer">
-        <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
-      </footer>
-    </div>
+      <Header />
+      <div className="event-post-container">
+        <header className="header">
+          <div className="header-title">Post Event</div>
+        </header>
+        <main className="main-contenth">
+          <form onSubmit={handleSubmit} className="event-form">
+            <label htmlFor="eventMessage" className="form-label">Event Message</label>
+            <textarea
+              id="eventMessage"
+              value={eventMessage}
+              onChange={handleEventMessageChange}
+              required
+              className="form-textarea"
+            ></textarea>
+            <label htmlFor="eventDescription" className="form-label">Event Description</label>
+            <textarea
+              id="eventDescription"
+              value={eventDescription}
+              onChange={handleEventDescriptionChange} // Handle description change
+              required
+              className="form-textarea"
+            ></textarea>
+            <label htmlFor="eventDate" className="form-label">Event Date</label>
+            <input
+              type="date"
+              id="eventDate"
+              value={eventDate}
+              onChange={handleEventDateChange}
+              required
+              className="form-input"
+            />
+            <button type="submit" className="submit-button" disabled={loading}>
+              {loading ? 'Posting...' : 'Post Event'}
+            </button>
+            {success && <p className="success-message">Event posted successfully!</p>}
+            {error && <p className="error-message">Error: {error}</p>}
+          </form>
+          <div className="event-list">
+            <h2>Existing Events</h2>
+            {loading && <p>Loading events...</p>}
+            {error && <p className="error-message">Error: {error}</p>}
+            {events.length === 0 ? (
+              <p>No events available.</p>
+            ) : (
+              events.map((event) => (
+                <div key={event.id} className="event-item">
+                  <p><strong>ID:</strong> {event.id}</p>
+                  <p><strong>Message:</strong> {event.message}</p>
+                  <p><strong>Description:</strong> {event.description}</p> {/* Display description */}
+                  <p><strong>Date:</strong> {event.date}</p>
+                  <p><strong>Post Time:</strong> {event.postTime}</p> {/* Display post time */}
+                  <button 
+                    onClick={() => handleDelete(event.id)} 
+                    disabled={loading}
+                    className="delete-button"
+                  >
+                    {loading ? 'Deleting...' : 'Delete'}
+                  </button>
+                </div>
+              ))
+            )}
+          </div>
+        </main>
+        <footer className="footer">
+          <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
+        </footer>
+      </div>
     </div>
   );
 };

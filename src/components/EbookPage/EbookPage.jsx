@@ -12,11 +12,13 @@ const EbookPage = () => {
   });
   const [pdfFile, setPdfFile] = useState(null);
   const [message, setMessage] = useState('');
+
+  // Fetch the class options from the backend
   useEffect(() => {
     const fetchClassOptions = async () => {
       try {
         const response = await axios.get('http://localhost:3000/class');
-        console.log(response.data); 
+        console.log(response.data);
         setClassOptions(response.data); 
       } catch (error) {
         console.error('There was an error fetching the class options:', error);
@@ -25,28 +27,38 @@ const EbookPage = () => {
     fetchClassOptions();
   }, []);
 
+  // Handle input field changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle file input change
   const handleFileChange = (e) => {
     setPdfFile(e.target.files[0]);
   };
 
+  // Handle class selection change
   const handleClassChange = (e) => {
     setFormData({ ...formData, classId: e.target.value });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Ensure only the classId (numeric ID) is sent
+    const classId = formData.classId;
+
+    // Create form data to be sent to the backend
     const data = new FormData();
     data.append('title', formData.title);
     data.append('description', formData.description);
-    data.append('classId', formData.classId);
+    data.append('classId', classId); // Ensure we're only sending the classId
     data.append('file', pdfFile);
 
     try {
+      // Make the POST request to the backend
       await axios.post('http://localhost:3000/ebooks', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -54,74 +66,74 @@ const EbookPage = () => {
       });
       setMessage('Ebook created successfully!');
     } catch (error) {
+      console.error('Error occurred while creating the ebook:', error);
       setMessage('Failed to create ebook.');
     }
   };
 
   return (
     <div>
-    <Header />
-    <div className="ebook-page">
-      
-      <h1>Create a New Ebook</h1>
-      {message && <p className="message">{message}</p>}
-      <form className="ebook-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+      <Header />
+      <div className="ebook-page">
+        <h1>Create a New Ebook</h1>
+        {message && <p className="message">{message}</p>}
+        <form className="ebook-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="title">Title</label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="description">Description</label>
-          <textarea
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            required
-          ></textarea>
-        </div>
+          <div className="form-group">
+            <label htmlFor="description">Description</label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              required
+            ></textarea>
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="classId">Select Class</label>
-          <select
-            id="classId"
-            name="classId"
-            value={formData.classId}
-            onChange={handleClassChange}
-            required
-          >
-            <option value="">Select a class</option>
-            {classOptions.map((classOption) => (
-              <option key={classOption} value={classOption}>
-                {classOption.className}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className="form-group">
+            <label htmlFor="classId">Select Class</label>
+            <select
+              id="classId"
+              name="classId"
+              value={formData.classId}
+              onChange={handleClassChange}
+              required
+            >
+              <option value="">Select a class</option>
+              {classOptions.map((classOption) => (
+                <option key={classOption.id} value={classOption.id}>
+                  {classOption.className}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="file">Upload PDF</label>
-          <input
-            type="file"
-            id="file"
-            name="file"
-            accept=".pdf"
-            onChange={handleFileChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="file">Upload PDF</label>
+            <input
+              type="file"
+              id="file"
+              name="file"
+              accept=".pdf"
+              onChange={handleFileChange}
+              required
+            />
+          </div>
 
-        <button type="submit" className="submit-btn">Create Ebook</button>
-      </form>
-    </div>
+          <button type="submit" className="submit-btn">Create Ebook</button>
+        </form>
+      </div>
     </div>
   );
 };
