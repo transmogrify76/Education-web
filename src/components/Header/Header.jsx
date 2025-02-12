@@ -11,16 +11,11 @@ const Header = () => {
   const location = useLocation(); // Get the current route
 
   useEffect(() => {
-    // On component mount, check if there's an authToken in localStorage or sessionStorage
     const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-
-    // If a token exists, consider the user logged in
     if (token) {
       setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false); // Ensure it's logged out on reload if no token is found
     }
-  }, []); // This effect only runs on mount
+  }, []);
 
   const toggleDropdown = (type) => {
     if (type === 'login') {
@@ -32,73 +27,39 @@ const Header = () => {
     }
   };
 
-  const handleLogout = async () => {
-    // Get the authToken from localStorage or sessionStorage
-    const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-    
-    if (!token) {
-      // If no token is found, consider the user logged out directly
-      setIsLoggedIn(false);
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+
+    const userType = localStorage.getItem('userType'); // Check if this is a valid value
+    localStorage.removeItem('userType');
+    setIsLoggedIn(false);
+
+    if (!userType) {
       navigate('/Login', { replace: true });
       return;
     }
 
-    try {
-      // Make a POST request to the logout API
-      const response = await fetch('http://localhost:3000/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, // Send token in Authorization header
-        },
-      });
-
-      if (response.ok) {
-        // Logout was successful, clear localStorage and sessionStorage
-        localStorage.removeItem('authToken');
-        sessionStorage.removeItem('authToken');
-        localStorage.removeItem('userType');
-        
-        setIsLoggedIn(false);
-
-        // Navigate based on the user type
-        const userType = localStorage.getItem('userType');
-        if (!userType) {
-          navigate('/Login', { replace: true });
-          return;
-        }
-
-        switch (userType) {
-          case 'student':
-            navigate('/Login', { replace: true });
-            break;
-          case 'parent':
-            navigate('/Plogin', { replace: true });
-            break;
-          case 'teacher':
-            navigate('/tlogin', { replace: true });
-            break;
-          case 'admin':
-            navigate('/Adminregister', { replace: true });
-            break;
-          default:
-            navigate('/Login', { replace: true });
-            break;
-        }
-      } else {
-        // If the response isn't ok, handle the error
-        console.error('Logout failed:', response.statusText);
-        alert('Logout failed. Please try again.');
-      }
-    } catch (error) {
-      // Handle any network or server errors
-      console.error('Logout error:', error);
-      alert('Logout error. Please try again later.');
+    switch (userType) {
+      case 'student':
+        navigate('/Login', { replace: true });
+        break;
+      case 'parent':
+        navigate('/Plogin', { replace: true });
+        break;
+      case 'teacher':
+        navigate('/tlogin', { replace: true });
+        break;
+      case 'admin':
+        navigate('/Adminregister', { replace: true });
+        break;
+      default:
+        navigate('/Login', { replace: true });
+        break;
     }
   };
 
   const handleLoginNavigate = (role) => {
-    // Navigate to the appropriate login page based on user role and set user type
     switch (role) {
       case 'student':
         localStorage.setItem('userType', 'student');
@@ -123,7 +84,7 @@ const Header = () => {
   };
 
   const handleDashboardNavigate = () => {
-    const userType = localStorage.getItem('userType');
+    const userType = localStorage.getItem('userType'); // Ensure it's valid before using it
     if (userType) {
       switch (userType) {
         case 'student':
@@ -139,7 +100,7 @@ const Header = () => {
           navigate('/AdminDashboard');
           break;
         default:
-          navigate('/Login');
+          navigate('/Login'); // Fallback if userType is undefined
           break;
       }
     } else {

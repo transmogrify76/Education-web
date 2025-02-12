@@ -17,6 +17,7 @@
     "format": "^0.2.2",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",
+    "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.1",
     "jwt-decode": "^4.0.0",
     "pdfjs-dist": "^3.11.174",

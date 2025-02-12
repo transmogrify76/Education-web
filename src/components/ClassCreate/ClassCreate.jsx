@@ -135,6 +135,22 @@ const ClassCreate = () => {
     });
   };
 
+  // Handle Create New Class button click
+  const handleCreateNewClass = () => {
+    setClassName('');
+    setSelectedTeacherIds([]);
+    setEditMode(false);
+    setEditClassId(null);
+  };
+
+  // Handle Cancel button click (when in Edit Mode)
+  const handleCancelEdit = () => {
+    setEditMode(false);
+    setClassName('');
+    setSelectedTeacherIds([]);
+    setEditClassId(null);
+  };
+
   return (
     <div>
       <Header />
@@ -174,6 +190,18 @@ const ClassCreate = () => {
           <button type="submit" className="submit-button">
             {editMode ? 'Update Class' : 'Create Class'}
           </button>
+
+          {/* Cancel or Create New Class buttons */}
+          {editMode && (
+            <>
+              <button type="button" onClick={handleCancelEdit} className="cancel-button">
+                Cancel Edit
+              </button>
+              <button type="button" onClick={handleCreateNewClass} className="create-new-button">
+                Create New Class
+              </button>
+            </>
+          )}
         </form>
 
         {/* Table to display existing classes */}

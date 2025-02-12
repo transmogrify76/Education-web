@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode'; 
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode'; // Import jwt-decode
 import Sidebar from '../SideNav/SideNav';
-import './StudentWellbeingForm.css';
 import Header from '../Header/Header';
+import './StudentWellbeingForm.css';
 
 const StudentWellbeingForm = () => {
   const [studentData, setStudentData] = useState({
@@ -35,31 +36,46 @@ const StudentWellbeingForm = () => {
     }
   }, []);
 
-  // Fetch student data once studentId is available
+  // Fetch student wellbeing data once studentId is available
   useEffect(() => {
     if (studentId) {
       console.log('Fetching data for studentId:', studentId); // Log studentId for debugging
 
       const fetchStudentData = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/student-wellbeing/${studentId}`); // Fetch based on studentId
-          console.log('Response Status:', response.status); // Log the status code
-          
-          if (!response.ok) {
-            throw new Error(`Network response was not ok. Status: ${response.status}`);
+          // Get the auth token from localStorage
+          const token = localStorage.getItem('authToken');
+          if (!token) {
+            setError('No auth token found');
+            setLoading(false);
+            return;
           }
 
-          const data = await response.json();
-          setStudentData((prevState) => ({
-            ...prevState,
-            name: data.name,
-            enroll: data.enrollmentNo,
-            class: data.class
-          }));
-        } catch (error) {
-          console.error('Error fetching student data:', error);
-          setError('Error fetching student data: ' + error.message);
-        } finally {
+          // Add token to Authorization header
+          const config = {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          };
+
+          // Fetch student wellbeing data based on studentId
+          const studentResponse = await axios.get(`http://localhost:3000/student-wellbeing/${studentId}`, config);
+          const studentDetails = studentResponse.data;
+
+          // If data is available, update studentData state
+          if (studentDetails) {
+            setStudentData((prevState) => ({
+              ...prevState,
+              name: studentDetails.name,
+              enroll: studentDetails.enrollmentNo,
+              class: studentDetails.class,
+            }));
+          }
+
+          setLoading(false);
+        } catch (err) {
+          console.error('Error fetching student wellbeing data:', err); // Log the detailed error
+          setError('Error fetching student wellbeing data: ' + (err.response?.data?.message || err.message)); // Show more detailed error
           setLoading(false);
         }
       };
@@ -104,13 +120,20 @@ const StudentWellbeingForm = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:3000/student-wellbeing', {
-        method: 'POST',
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setError('No auth token found');
+        return;
+      }
+
+      const config = {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(payload)
-      });
+      };
+
+      const response = await axios.post('http://localhost:3000/student-wellbeing', payload, config);
 
       if (response.ok) {
         alert('Wellbeing form submitted successfully');
@@ -142,7 +165,6 @@ const StudentWellbeingForm = () => {
   return (
     <div className='for-header'>
       <Header />
-
       <div className="containerss">
         <Sidebar studentId={studentId} />
         <div className="student-wellbeing-form">
