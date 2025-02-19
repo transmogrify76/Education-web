@@ -1,5 +1,5 @@
 .admin-timetable-page {
-    max-width: 650px;
+    max-width: 800px;
     margin: 40px auto;
     padding: 30px;
     background-color: #ffffff;
@@ -153,3 +153,80 @@
     font-weight: 600;
     animation: fadeInOut 3s ease-in-out;
 }
+.admin-timetable-page {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Add a gap between form and table */
+    padding: 20px;
+  }
+  
+  .form-container {
+    width: 48%; /* Left side for the form */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .table-container {
+    width: 48%; /* Right side for the timetable list */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    overflow-x: auto; /* Ensure the table is scrollable if it overflows */
+  }
+  
+  .timetable-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .timetable-table th, .timetable-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .timetable-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .timetable-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .popup {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .submit-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Optional: Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .admin-timetable-page {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .form-container, .table-container {
+      width: 100%;
+    }
+  }
+  

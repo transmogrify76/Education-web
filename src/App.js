@@ -99,6 +99,7 @@ import SubjectEdit from './components/SubjectEdit/SubjectEdit'
 import ClassCreate from './components/ClassCreate/ClassCreate';
 import StudentList from './components/StudentList/StudentList';
 import SubjectManagement from './components/SubjectManagement/SubjectManagement';
+import AdminTeacherList from './components/TeacherList/TeacherList';
 function App() {
   return (
     <Router>
@@ -136,7 +137,7 @@ function App() {
           <Route path='/curriculum' element={<CurriculumPage />} />
           <Route path='/classcreate' element={<ClassCreate />} />
           <Route path='/studentlist' element={<StudentList />} />
-        
+          <Route path='/teacherlist' element={<AdminTeacherList />} />
           <Route path='/admindashboard' element={<AdminDashboard />} />
           <Route path='/StudentRegisterPage' element={<StudentRegisterPage />} />
           <Route path="/ParentRegisterpage" element={<ParentRegisterPage />} />
@@ -178,7 +179,7 @@ function App() {
           <Route path='/ExternalReport/' element={<ExternalReport/>}/>          
           <Route path='/ThirdPartyServicesStudent/' element={<ThirdPartyServicesStudent/>}/>          
           <Route path='/StudentWellbeingForm' element={<StudentWellbeingForm/>}/>          
-          <Route path='/Chatbot' element={<Chatbot/>}/>          
+          {/* <Route path='/Chatbot' element={<Chatbot/>}/>           */}
           <Route path='/AdminWellbeingRequests' element={<AdminWellbeingRequests/>}/>          
           <Route path='/AdminBehaviorAssessment' element={<AdminBehaviorAssessment/>}/>          
           <Route path='/BehaviorAssessmentPage/' element={<BehaviorAssessmentPage/>}/>          

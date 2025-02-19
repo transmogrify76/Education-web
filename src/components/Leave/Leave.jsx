@@ -53,7 +53,7 @@ const Leave = () => {
           />
         </div>
         <div className="form-control">
-          <label htmlFor="rollNo">Roll No:</label>
+          <label htmlFor="rollNo">Enrolment No:</label>
           <input
             type="text"
             id="rollNo"

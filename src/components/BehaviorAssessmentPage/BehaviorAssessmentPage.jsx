@@ -1,18 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import {jwtDecode} from 'jwt-decode';  // Import jwt-decode
 import Header from '../Header/Header';
 import SideNav from '../SideNav/SideNav';
 import './BehaviorAssessmentPage.css';
 
 const BehaviorAssessmentPage = () => {
-  const { studentId } = useParams();
   const [behaviorData, setBehaviorData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [studentId, setStudentId] = useState(null); // State to store the decoded studentId
 
   useEffect(() => {
     const fetchBehaviorData = async () => {
+      // Decode the authToken from localStorage
+      const authToken = localStorage.getItem('authToken');
+      if (authToken) {
+        try {
+          const decodedToken = jwtDecode(authToken); // Decode the token
+          setStudentId(decodedToken.Id); // Set the studentId from the token
+        } catch (err) {
+          setError('Failed to decode token');
+          setLoading(false);
+          return;
+        }
+      }
+
       if (!studentId) return;
 
       setLoading(true);
@@ -27,8 +41,8 @@ const BehaviorAssessmentPage = () => {
     };
 
     fetchBehaviorData();
-  }, [studentId]);
-  
+  }, [studentId]); // Re-run the effect when studentId changes
+
   if (loading) return <p className="loading-message">Loading...</p>;
   if (error) return <div className="error-message">{error}</div>;
 

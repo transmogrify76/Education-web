@@ -17,7 +17,6 @@ const AdminClassManagementPage = () => {
   useEffect(() => {
     fetchTeachers();
   }, []);
-
   useEffect(() => {
     if (selectedTeacherId) {
       fetchClassesByTeacher(selectedTeacherId);

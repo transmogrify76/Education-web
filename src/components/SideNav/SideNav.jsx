@@ -62,14 +62,14 @@ function SideNav() {
             Student Wellbeing Request
           </Link>
         </li>
-        <li className="sidebar-item">
+        {/* <li className="sidebar-item">
           <Link to={`/Chatbot`}>
             <FaComments className="sidebar-icon" />
             Chat
           </Link>
-        </li>
+        </li> */}
         <li className="sidebar-item">
-          <Link to={`/BehaviorAssessmentPage/`}>
+          <Link to={`/BehaviorAssessmentPage`}>
             <FaClipboardCheck className="sidebar-icon" />
             Behavior assessment tool
           </Link>

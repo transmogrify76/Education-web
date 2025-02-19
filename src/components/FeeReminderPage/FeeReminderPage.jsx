@@ -255,7 +255,7 @@ const FeeReminderPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedPaymentMode, setSelectedPaymentMode] = useState('');
-  
+ 
   const paymentOptions = [
     'Credit Card',
     'Debit Card',
@@ -356,7 +356,7 @@ const FeeReminderPage = () => {
               body: JSON.stringify({ feeId, status: 'paid' }),
             });
             if (!updateResponse.ok) throw new Error('Failed to update fee status');
-            
+           
             // Refresh fee data
             const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
             if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');

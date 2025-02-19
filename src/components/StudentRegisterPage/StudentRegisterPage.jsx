@@ -14,6 +14,7 @@ const StudentRegisterPage = () => {
         parentEmail: '',
         address: '',
         gender: '', // New field for gender
+        rollNo: '' // Added roll number field
     });
 
     const [showPopup, setShowPopup] = useState(false);
@@ -76,7 +77,7 @@ const StudentRegisterPage = () => {
                     gender: formData.gender, // Include gender in the request
                     roleType: 'student',
                     class: formData.className, // Send selected class
-                    rollNo: formData.studentId, // Assuming it's the same as studentId
+                    rollNo: formData.rollNo, // Send roll number
                 }),
             });
 
@@ -155,6 +156,16 @@ const StudentRegisterPage = () => {
                         type="text"
                         name="studentId"
                         value={formData.studentId}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Roll Number:
+                    <input
+                        type="text"
+                        name="rollNo"
+                        value={formData.rollNo}
                         onChange={handleChange}
                         required
                     />

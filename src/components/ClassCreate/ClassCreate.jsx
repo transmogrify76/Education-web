@@ -7,6 +7,8 @@ import Header from '../Header/Header';
 const ClassCreate = () => {
   const { teacherId } = useParams(); // Get teacherId from URL params
   const [className, setClassName] = useState('');
+  const [teachers, setTeachers] = useState([]); // Store list of teachers
+  const [selectedTeacherIds, setSelectedTeacherIds] = useState([]); // Store selected teacher IDs
   const [classes, setClasses] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [editClassId, setEditClassId] = useState(null);
@@ -17,7 +19,23 @@ const ClassCreate = () => {
 
   useEffect(() => {
     fetchClasses();
-  }, [teacherId]); // Fetch classes whenever teacherId changes
+    fetchTeachers();
+  }, [teacherId]); // Fetch classes and teachers whenever teacherId changes
+
+  // Fetch all teachers
+  const fetchTeachers = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/teacher', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setTeachers(response.data); // Store teachers data in the state
+    } catch (error) {
+      console.error('Error fetching teachers:', error);
+      setError('Failed to fetch teachers.');
+    }
+  };
 
   // Fetch all classes
   const fetchClasses = async () => {
@@ -42,8 +60,9 @@ const ClassCreate = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      const { className } = response.data; // Only retrieve className
+      const { className, teacherIds } = response.data; // Retrieve className and teacherIds
       setClassName(className);
+      setSelectedTeacherIds(teacherIds || []); // Set selected teacher IDs
       setEditClassId(classId);
       setEditMode(true);
     } catch (error) {
@@ -55,7 +74,7 @@ const ClassCreate = () => {
   // Handle form submit (Create or Update class)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = { className, teacherId: Number(teacherId) }; // Only include className in the payload
+    const payload = { className, teacherIds: selectedTeacherIds }; // Include teacherIds in the payload
 
     try {
       if (editMode) {
@@ -76,6 +95,7 @@ const ClassCreate = () => {
         });
       }
       setClassName('');
+      setSelectedTeacherIds([]);
       fetchClasses();
     } catch (error) {
       console.error('Error submitting class:', error);
@@ -103,6 +123,34 @@ const ClassCreate = () => {
     }
   };
 
+  // Handle checkbox change for teachers
+  const handleTeacherChange = (e) => {
+    const { value, checked } = e.target;
+    setSelectedTeacherIds((prev) => {
+      if (checked) {
+        return [...prev, parseInt(value)]; // Add teacherId to the array
+      } else {
+        return prev.filter((id) => id !== parseInt(value)); // Remove teacherId from the array
+      }
+    });
+  };
+
+  // Handle Create New Class button click
+  const handleCreateNewClass = () => {
+    setClassName('');
+    setSelectedTeacherIds([]);
+    setEditMode(false);
+    setEditClassId(null);
+  };
+
+  // Handle Cancel button click (when in Edit Mode)
+  const handleCancelEdit = () => {
+    setEditMode(false);
+    setClassName('');
+    setSelectedTeacherIds([]);
+    setEditClassId(null);
+  };
+
   return (
     <div>
       <Header />
@@ -123,9 +171,37 @@ const ClassCreate = () => {
             required
           />
 
+          <label>Assign Teachers:</label>
+          <div className="teachers-list">
+            {teachers.map((teacher) => (
+              <div key={teacher.id} className="teacher-checkbox">
+                <input
+                  type="checkbox"
+                  id={`teacher-${teacher.id}`}
+                  value={teacher.id}
+                  checked={selectedTeacherIds.includes(teacher.id)}
+                  onChange={handleTeacherChange}
+                />
+                <label htmlFor={`teacher-${teacher.id}`}>{teacher.name}</label>
+              </div>
+            ))}
+          </div>
+
           <button type="submit" className="submit-button">
             {editMode ? 'Update Class' : 'Create Class'}
           </button>
+
+          {/* Cancel or Create New Class buttons */}
+          {editMode && (
+            <>
+              <button type="button" onClick={handleCancelEdit} className="cancel-button">
+                Cancel Edit
+              </button>
+              <button type="button" onClick={handleCreateNewClass} className="create-new-button">
+                Create New Class
+              </button>
+            </>
+          )}
         </form>
 
         {/* Table to display existing classes */}
@@ -135,6 +211,7 @@ const ClassCreate = () => {
             <thead>
               <tr>
                 <th>Class Name</th>
+                <th>Teachers</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -142,6 +219,7 @@ const ClassCreate = () => {
               {classes.map((classItem) => (
                 <tr key={classItem.id}>
                   <td>{classItem.className}</td>
+                  <td>{classItem.teachers?.map((teacher) => teacher.name).join(', ')}</td>
                   <td>
                     <button onClick={() => handleEdit(classItem)} className="edit-button">
                       Edit

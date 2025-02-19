@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './GoalSettingView.css';
-import { useParams } from 'react-router-dom';
 import SideNav from '../SideNav/SideNav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import Header from '../Header/Header';
+import { jwtDecode } from 'jwt-decode'; // Import jwt-decode to decode the token
 
 const GoalSettingView = () => {
-  const { studentId } = useParams();
   const [formData, setFormData] = useState({
     arabicAchievement: '',
     arabicMyTarget: '',
@@ -31,36 +30,53 @@ const GoalSettingView = () => {
     myTargetForThisGrade: '',
     suggestedTargetForCurrentGrade: ''
   });
+  
+  const [studentId, setStudentId] = useState(null); // State to store studentId from JWT token
 
-  // Fetch goal-setting data when component mounts
   useEffect(() => {
-    const fetchData = async () => {
+    // Fetch studentId from the JWT token (localStorage)
+    const token = localStorage.getItem('authToken');
+    if (token) {
       try {
-        const response = await fetch(`http://localhost:3000/goal-setting/student/${studentId}`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        
-        // Handle the case where data is an array
-        if (Array.isArray(data) && data.length > 0) {
-          const [goalData] = data; // Extract the first object from the array
-          console.log('Fetched data:', goalData); // Log data to verify structure
-          
-          // Exclude or handle id field if not needed
-          const { id, studentId, ...rest } = goalData;
-          console.log('Processed goal data:', rest); // Log processed data
-          setFormData(rest);
-        } else {
-          console.error('Unexpected data format:', data);
-        }
+        const decodedToken = jwtDecode(token);
+        setStudentId(decodedToken.Id); // Set the studentId from decoded token
       } catch (error) {
-        console.error('Error fetching goal setting data:', error);
+        console.error('Failed to decode JWT token:', error);
       }
-    };
+    }
+  }, []); // Empty dependency array means this will run only once when component mounts
 
-    fetchData();
-  }, [studentId]);
+  // Fetch goal-setting data when studentId is available
+  useEffect(() => {
+    if (studentId) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/goal-setting/student/${studentId}`);
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
+          
+          // Handle the case where data is an array
+          if (Array.isArray(data) && data.length > 0) {
+            const [goalData] = data; // Extract the first object from the array
+            console.log('Fetched data:', goalData); // Log data to verify structure
+            
+            // Exclude or handle id field if not needed
+            const { id, studentId, ...rest } = goalData;
+            console.log('Processed goal data:', rest); // Log processed data
+            setFormData(rest);
+          } else {
+            console.error('Unexpected data format:', data);
+          }
+        } catch (error) {
+          console.error('Error fetching goal setting data:', error);
+        }
+      };
+
+      fetchData();
+    }
+  }, [studentId]); // Re-run effect when studentId is set
 
   return (
     <div className='goal-setting-view-container'>

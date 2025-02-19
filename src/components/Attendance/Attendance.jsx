@@ -213,7 +213,7 @@ const Attendance = () => {
         setError(null);
         try {
           const response = await fetch(`http://localhost:3000/attendance?studentId=${selectedChild}`, {
-            method: 'GET',
+            method: 'GET', // Keep it GET since data is passed via query parameters
           });
           if (!response.ok) {
             throw new Error('Failed to fetch attendance data');
