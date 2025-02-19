@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TeacherRegister.css';
+import Header from '../Header/Header';
 
 const TeacherRegister = () => {
   const [formData, setFormData] = useState({
@@ -89,6 +90,8 @@ const TeacherRegister = () => {
   };
 
   return (
+    <div>
+      <Header />
     <div className="teacher-register-container">
       <div className="teacher-register-card">
         <h2>Teacher Registration</h2>
@@ -182,6 +185,7 @@ const TeacherRegister = () => {
           </div>
         )}
       </div>
+    </div>
     </div>
   );
 };
