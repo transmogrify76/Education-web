@@ -10,6 +10,8 @@
 //   const [feeData, setFeeData] = useState([]);
 //   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState(null);
+//   const [selectedPaymentMode, setSelectedPaymentMode] = useState('');
+  
 //   const paymentOptions = [
 //     'Credit Card',
 //     'Debit Card',
@@ -90,79 +92,54 @@
 //   }, []);
 
 //   const handlePayment = async (feeId, term, amount) => {
-//     // Razorpay payment configuration
-//     const options = {
-//       key: 'rzp_test_nzmqxQYhvCH9rD', // Replace with your Razorpay test/live key
-//       amount: amount, // Amount in paise (100 paise = 1 INR)
-//       currency: 'INR',
-//       name: 'School Fees Payment',
-//       description: 'Payment for school fees',
-//       handler: async (response) => {
-//         alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
-//         try {
-//           // Update fee status to 'paid'
-//           const updateResponse = await fetch(`http://localhost:3000/fee-reminder/update-latest/${selectedStudentId}`, {
-//             method: 'PATCH',
-//             headers: {
-//               'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({ feeId, status: 'paid' }),
-//           });
-//           if (!updateResponse.ok) throw new Error('Failed to update fee status');
-          
-//           // Refresh fee data
-//           const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
-//           if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');
-//           const updatedFeeData = await updatedFeeResponse.json();
-//           setFeeData(updatedFeeData);
-//         } catch (error) {
-//           console.error('Error during fee update:', error);
-//           setError('Failed to update fee status');
-//         }
-//       },
-//       prefill: {
-//         name: 'Student Name', // Replace with dynamic student name
-//         email: 'student@example.com', // Replace with dynamic student email
-//         contact: '1234567899', // Replace with dynamic student contact
-//       },
-//       notes: {
-//         address: 'Student Address', // Replace with dynamic student address
-//       },
-//       theme: {
-//         color: '#F37254',
-//       },
-//     };
-
-//     const rzp = new window.Razorpay(options);
-//     rzp.open();
-//   };
-
-//   const handlePendingPayment = async (feeId, term) => {
-//     try {
-//       // Open the payment portal
-//       window.open(
-//         `https://payment-portal.com/pay?studentId=${selectedStudentId}&term=${term}`,
-//         '_blank'
-//       );
-
-//       // Update fee status to 'Pending' first
-//       const response = await fetch(`http://localhost:3000/fee-reminder/update-latest/${selectedStudentId}`, {
-//         method: 'PATCH',
-//         headers: {
-//           'Content-Type': 'application/json',
+//     if (selectedPaymentMode === 'Razorpay') {
+//       // Razorpay payment configuration
+//       const options = {
+//         key: 'rzp_test_nzmqxQYhvCH9rD', // Replace with your Razorpay test/live key
+//         amount: amount, // Amount in paise (100 paise = 1 INR)
+//         currency: 'INR',
+//         name: 'School Fees Payment',
+//         description: 'Payment for school fees',
+//         handler: async (response) => {
+//           alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
+//           try {
+//             // Update fee status to 'paid'
+//             const updateResponse = await fetch(`http://localhost:3000/fee-reminder/update-latest/${selectedStudentId}`, {
+//               method: 'PATCH',
+//               headers: {
+//                 'Content-Type': 'application/json',
+//               },
+//               body: JSON.stringify({ feeId, status: 'paid' }),
+//             });
+//             if (!updateResponse.ok) throw new Error('Failed to update fee status');
+            
+//             // Refresh fee data
+//             const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
+//             if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');
+//             const updatedFeeData = await updatedFeeResponse.json();
+//             setFeeData(updatedFeeData);
+//           } catch (error) {
+//             console.error('Error during fee update:', error);
+//             setError('Failed to update fee status');
+//           }
 //         },
-//         body: JSON.stringify({ feeId, status: 'Pending' }),
-//       });
-//       if (!response.ok) throw new Error('Failed to update fee status to Pending');
+//         prefill: {
+//           name: 'Student Name', // Replace with dynamic student name
+//           email: 'student@example.com', // Replace with dynamic student email
+//           contact: '1234567899', // Replace with dynamic student contact
+//         },
+//         notes: {
+//           address: 'Student Address', // Replace with dynamic student address
+//         },
+//         theme: {
+//           color: '#F37254',
+//         },
+//       };
 
-//       // Refresh fee data after updating to 'Pending'
-//       const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
-//       if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');
-//       const updatedFeeData = await updatedFeeResponse.json();
-//       setFeeData(updatedFeeData);
-//     } catch (error) {
-//       console.error('Error during pending payment process:', error);
-//       setError('Failed to process pending payment.');
+//       const rzp = new window.Razorpay(options);
+//       rzp.open();
+//     } else {
+//       alert('Please select a valid payment method');
 //     }
 //   };
 
@@ -216,20 +193,28 @@
 //                         <td className={`fee-status ${fee.status.toLowerCase()}`}>{fee.status}</td>
 //                         <td>
 //                           {fee.status === 'Pending' && (
-//                             <button
-//                               className="payment-button"
-//                               onClick={() => handlePayment(fee.id, fee.term, fee.amount)}
-//                             >
-//                               Pay Now
-//                             </button>
-//                           )}
-//                           {fee.status === 'Pending' && (
-//                             <button
-//                               className="payment-button"
-//                               onClick={() => handlePendingPayment(fee.id, fee.term)}
-//                             >
-//                               Process Pending Payment
-//                             </button>
+//                             <>
+//                               <button
+//                                 className="payment-button"
+//                                 onClick={() => handlePayment(fee.id, fee.term, fee.amount)}
+//                               >
+//                                 Pay Now
+//                               </button>
+//                               <div className="payment-options">
+//                                 <label>Choose Payment Method:</label>
+//                                 <select
+//                                   value={selectedPaymentMode}
+//                                   onChange={(e) => setSelectedPaymentMode(e.target.value)}
+//                                 >
+//                                   <option value="">Select Payment Method</option>
+//                                   {paymentOptions.map((option, index) => (
+//                                     <option key={index} value={option}>
+//                                       {option}
+//                                     </option>
+//                                   ))}
+//                                 </select>
+//                               </div>
+//                             </>
 //                           )}
 //                         </td>
 //                       </tr>
@@ -243,17 +228,6 @@
 //               </table>
 //             </section>
 //           )}
-//           <section className="payment-options-section">
-//             <h2>Payment Options</h2>
-//             <ul>
-//               {paymentOptions.map((option, index) => (
-//                 <li key={index}>{option}</li>
-//               ))}
-//             </ul>
-//           </section>
-//           <div className="notice-section">
-//             <p>Please ensure all fee payments are made by the due dates to avoid any late fees. For any queries, contact the school administration.</p>
-//           </div>
 //         </main>
 //         <footer className="infra-footer">
 //           <p className="footer-text">© 2024 School Management System. All rights reserved.</p>
@@ -268,7 +242,6 @@
 
 // export default FeeReminderPage;
 
-
 import React, { useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode'; // Import jwt-decode to decode the token
 import './FeeReminderPage.css';
@@ -281,6 +254,15 @@ const FeeReminderPage = () => {
   const [feeData, setFeeData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedPaymentMode, setSelectedPaymentMode] = useState('');
+  
+  const paymentOptions = [
+    'Credit Card',
+    'Debit Card',
+    'Bank Transfer',
+    'PayPal',
+    'Razorpay'
+  ];
 
   const navigate = useNavigate();
 
@@ -354,51 +336,67 @@ const FeeReminderPage = () => {
   }, []);
 
   const handlePayment = async (feeId, term, amount) => {
-    // Razorpay payment configuration
-    const options = {
-      key: 'rzp_test_nzmqxQYhvCH9rD', // Replace with your Razorpay test/live key
-      amount: amount, // Amount in paise (100 paise = 1 INR)
-      currency: 'INR',
-      name: 'School Fees Payment',
-      description: 'Payment for school fees',
-      handler: async (response) => {
-        alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
-        try {
-          // Update fee status to 'paid'
-          const updateResponse = await fetch(`http://localhost:3000/fee-reminder/update-latest/${selectedStudentId}`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ feeId, status: 'paid' }),
-          });
-          if (!updateResponse.ok) throw new Error('Failed to update fee status');
-          
-          // Refresh fee data
-          const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
-          if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');
-          const updatedFeeData = await updatedFeeResponse.json();
-          setFeeData(updatedFeeData);
-        } catch (error) {
-          console.error('Error during fee update:', error);
-          setError('Failed to update fee status');
-        }
-      },
-      prefill: {
-        name: 'Student Name', // Replace with dynamic student name
-        email: 'student@example.com', // Replace with dynamic student email
-        contact: '1234567899', // Replace with dynamic student contact
-      },
-      notes: {
-        address: 'Student Address', // Replace with dynamic student address
-      },
-      theme: {
-        color: '#F37254',
-      },
-    };
+    if (selectedPaymentMode === 'Razorpay') {
+      // Razorpay payment configuration
+      const options = {
+        key: 'rzp_test_nzmqxQYhvCH9rD', // Replace with your Razorpay test/live key
+        amount: amount, // Amount in paise (100 paise = 1 INR)
+        currency: 'INR',
+        name: 'School Fees Payment',
+        description: 'Payment for school fees',
+        handler: async (response) => {
+          alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
+          try {
+            // Update fee status to 'paid'
+            const updateResponse = await fetch(`http://localhost:3000/fee-reminder/update-latest/${selectedStudentId}`, {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ feeId, status: 'paid' }),
+            });
+            if (!updateResponse.ok) throw new Error('Failed to update fee status');
+            
+            // Refresh fee data
+            const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
+            if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');
+            const updatedFeeData = await updatedFeeResponse.json();
+            setFeeData(updatedFeeData);
+          } catch (error) {
+            console.error('Error during fee update:', error);
+            setError('Failed to update fee status');
+          }
+        },
+        prefill: {
+          name: 'Student Name', // Replace with dynamic student name
+          email: 'student@example.com', // Replace with dynamic student email
+          contact: '1234567899', // Replace with dynamic student contact
+        },
+        notes: {
+          address: 'Student Address', // Replace with dynamic student address
+        },
+        theme: {
+          color: '#F37254',
+        },
+      };
 
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } else if (selectedPaymentMode === 'Credit Card') {
+      // Simulate Credit Card Payment Logic (This would normally be integrated with Stripe, PayPal, etc.)
+      alert('Redirecting to Credit Card Payment Gateway...');
+    } else if (selectedPaymentMode === 'Debit Card') {
+      // Simulate Debit Card Payment Logic (Similar to Credit Card)
+      alert('Redirecting to Debit Card Payment Gateway...');
+    } else if (selectedPaymentMode === 'Bank Transfer') {
+      // Simulate Bank Transfer Logic
+      alert('Initiating Bank Transfer...');
+    } else if (selectedPaymentMode === 'PayPal') {
+      // Simulate PayPal Logic (Replace with actual PayPal integration in real-world use)
+      alert('Redirecting to PayPal...');
+    } else {
+      alert('Please select a valid payment method');
+    }
   };
 
   if (loading) return <p>Loading...</p>;
@@ -451,12 +449,28 @@ const FeeReminderPage = () => {
                         <td className={`fee-status ${fee.status.toLowerCase()}`}>{fee.status}</td>
                         <td>
                           {fee.status === 'Pending' && (
-                            <button
-                              className="payment-button"
-                              onClick={() => handlePayment(fee.id, fee.term, fee.amount)}
-                            >
-                              Pay Now
-                            </button>
+                            <>
+                              <button
+                                className="payment-button"
+                                onClick={() => handlePayment(fee.id, fee.term, fee.amount)}
+                              >
+                                Pay Now
+                              </button>
+                              <div className="payment-options">
+                                <label>Choose Payment Method:</label>
+                                <select
+                                  value={selectedPaymentMode}
+                                  onChange={(e) => setSelectedPaymentMode(e.target.value)}
+                                >
+                                  <option value="">Select Payment Method</option>
+                                  {paymentOptions.map((option, index) => (
+                                    <option key={index} value={option}>
+                                      {option}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </>
                           )}
                         </td>
                       </tr>
