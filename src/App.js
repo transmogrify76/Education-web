@@ -100,6 +100,7 @@ import ClassCreate from './components/ClassCreate/ClassCreate';
 import StudentList from './components/StudentList/StudentList';
 import SubjectManagement from './components/SubjectManagement/SubjectManagement';
 import AdminTeacherList from './components/TeacherList/TeacherList';
+import TeacherAddSubjectPage from './components/TeacherAddSubjectPage/TeacherAddSubjectPage';
 function App() {
   return (
     <Router>
@@ -211,6 +212,7 @@ function App() {
           <Route path="/GetSurveys/" element={<GetSurveys/>} />            
           <Route path="/SubjectEdit/" element={<SubjectEdit/>} />   
           <Route path="/subjectadd" element={<SubjectManagement/>} />          
+          <Route path="/subject-teacher" element={<TeacherAddSubjectPage/>} />          
 
         </Routes>
       </div>
