@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Header.css';
 import logo from '../Assets/logo.png';
 
@@ -8,6 +8,7 @@ const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current route
 
   useEffect(() => {
     const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
@@ -30,15 +31,16 @@ const Header = () => {
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
 
-
-    const userType = localStorage.getItem('userType'); 
-
+    const userType = localStorage.getItem('userType'); // Check if this is a valid value
     localStorage.removeItem('userType');
-
     setIsLoggedIn(false);
 
+    if (!userType) {
+      navigate('/Login', { replace: true });
+      return;
+    }
 
-    switch(userType) {
+    switch (userType) {
       case 'student':
         navigate('/Login', { replace: true });
         break;
@@ -52,13 +54,13 @@ const Header = () => {
         navigate('/Adminregister', { replace: true });
         break;
       default:
-        navigate('/Login', { replace: true }); 
+        navigate('/Login', { replace: true });
         break;
     }
   };
 
   const handleLoginNavigate = (role) => {
-    switch(role) {
+    switch (role) {
       case 'student':
         localStorage.setItem('userType', 'student');
         navigate('/Login');
@@ -78,7 +80,32 @@ const Header = () => {
       default:
         break;
     }
-    setIsDropdownOpen(false); 
+    setIsDropdownOpen(false);
+  };
+
+  const handleDashboardNavigate = () => {
+    const userType = localStorage.getItem('userType'); // Ensure it's valid before using it
+    if (userType) {
+      switch (userType) {
+        case 'student':
+          navigate('/StudentView');
+          break;
+        case 'parent':
+          navigate('/Dashboard');
+          break;
+        case 'teacher':
+          navigate('/TeacherDashboard');
+          break;
+        case 'admin':
+          navigate('/AdminDashboard');
+          break;
+        default:
+          navigate('/Login'); // Fallback if userType is undefined
+          break;
+      }
+    } else {
+      navigate('/Login');
+    }
   };
 
   return (
@@ -90,12 +117,27 @@ const Header = () => {
         </a>
       </div>
       <div className="navbar-right">
+        {/* Home Icon */}
+        <a href="/" className="home-icon">
+          <i className="fas fa-home"></i>
+        </a>
         <a href="/Aboutus">About Us</a>
         <a href="/Infrastructure">Infrastructure</a>
         <a href="/Curriculum">Curriculum</a>
         <a href="/Award">Award</a>
         <a href="/Event">Event</a>
         <a href="/Contactus">Contact Us</a>
+
+        {/* Conditionally render the Dashboard button */}
+        {isLoggedIn && (
+          <a
+            href="#"
+            onClick={handleDashboardNavigate}
+            className="dashboard-button"
+          >
+            Dashboard
+          </a>
+        )}
 
         {!isLoggedIn ? (
           <div className="dropdown">

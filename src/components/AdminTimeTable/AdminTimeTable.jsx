@@ -13,17 +13,18 @@ const AdminTimeTable = () => {
     classId: '',
   });
   const [popupVisible, setPopupVisible] = useState(false);
-  const [classOptions, setClassOptions] = useState([]);
-  const [subjectOptions, setSubjectOptions] = useState([]);
-  const [teacherOptions, setTeacherOptions] = useState([]);
+  const [classOptions, setClassOptions] = useState([]); // Class options with teacher data
+  const [subjectOptions, setSubjectOptions] = useState([]); 
+  const [teacherOptions, setTeacherOptions] = useState([]); // To store teacher options based on selected class
   const [timetable, setTimetable] = useState([]);
 
+  // Fetch classes from API
   useEffect(() => {
     const fetchClasses = async () => {
       try {
         const response = await fetch('http://localhost:3000/class');
         const data = await response.json();
-        setClassOptions(data);
+        setClassOptions(data); // Set available classes
       } catch (error) {
         console.error('Error fetching class data:', error);
       }
@@ -31,6 +32,7 @@ const AdminTimeTable = () => {
     fetchClasses();
   }, []);
 
+  // Fetch subjects and teachers based on selected class
   useEffect(() => {
     if (formData.classId) {
       const fetchSubjects = async () => {
@@ -43,22 +45,19 @@ const AdminTimeTable = () => {
         }
       };
       fetchSubjects();
-    }
-  }, [formData.classId]);
 
-  useEffect(() => {
-    const fetchTeachers = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/teacher');
-        const data = await response.json();
-        setTeacherOptions(data);
-      } catch (error) {
-        console.error('Error fetching teachers:', error);
+      // Get teacher options based on the selected class
+      const selectedClass = classOptions.find(classItem => classItem.id === formData.classId);
+      if (selectedClass && selectedClass.teachers) {
+        console.log(selectedClass.teachers); // Correctly log the teachers array here
+        setTeacherOptions(selectedClass.teachers); // Set teachers for the selected class
+      } else {
+        setTeacherOptions([]); // Clear teachers if no teachers are available for the selected class
       }
-    };
-    fetchTeachers();
-  }, []);
+    }
+  }, [formData.classId, classOptions]);
 
+  // Fetch timetables to display in the table
   const fetchTimetables = async () => {
     try {
       const response = await fetch('http://localhost:3000/timetable');
@@ -68,15 +67,17 @@ const AdminTimeTable = () => {
       console.error('Error fetching timetables:', error);
     }
   };
-
+  
   useEffect(() => {
     fetchTimetables();
   }, []);
 
+  // Handle form data change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     const time = `${formData.hour}:${formData.minute} ${formData.period}`;
@@ -211,7 +212,7 @@ const AdminTimeTable = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="professor">Professor:</label>
+              <label htmlFor="professor">Teacher:</label>
               <select
                 name="professor"
                 value={formData.professor}
@@ -244,7 +245,7 @@ const AdminTimeTable = () => {
                 <th>Day</th>
                 <th>Time</th>
                 <th>Subject</th>
-                <th>Professor</th>
+                <th>Teacher</th>
                 <th>Class</th>
               </tr>
             </thead>

@@ -10,9 +10,12 @@
     background-image: url('../Assets/login.jpg');
     background-size: cover;
     justify-content: center;
-  align-items: center;
-  height: 100vh; /* Ensure notification can be positioned correctly */
+    align-items: center;
+    min-height: 100vh; /* Ensure it covers at least the full viewport height */
+    padding: 20px; /* Optionally add padding to prevent content from touching the edges */
+    box-sizing: border-box; /* Ensure padding is included in the element's total height */
 }
+
 
 .register-title {
     font-size: 2rem;

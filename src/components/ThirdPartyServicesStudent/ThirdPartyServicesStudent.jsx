@@ -16,6 +16,7 @@ const ThirdPartyServicesStudent = () => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
+        console.log(decodedToken); // Check the decoded token
         setStudentId(decodedToken.Id); // Set the studentId from decoded token
       } catch (error) {
         console.error('Failed to decode JWT token:', error);
@@ -46,27 +47,34 @@ const ThirdPartyServicesStudent = () => {
     }
   }, [studentId]); // Re-fetch if studentId is updated
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  if (!studentData) return <p>No data found for student ID {studentId}</p>;
-
   return (
     <div className='for-header'>
       <Header />
       <div className="page-containerss">
         <Sidebar studentId={studentId} />
         <div className="student-details">
-          <h1>Third Party Optional Services</h1>
-          <h2>{studentData.studentName}</h2>
-          <p>Email: {studentData.email}</p>
-          <p>Phone No: {studentData.phoneNo}</p>
-          <p>Status: {studentData.status}</p>
-          <h3>Selected Services:</h3>
-          <ul>
-            {studentData.selectedServices.map((service, index) => (
-              <li key={index}>{service}</li>
-            ))}
-          </ul>
+          {/* Conditional rendering based on loading, error, and studentData */}
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>Error: {error.message}</p>
+          ) : studentData ? (
+            <>
+              <h1>Third Party Optional Services</h1>
+              <h2>{studentData.studentName}</h2>
+              <p>Email: {studentData.email}</p>
+              <p>Phone No: {studentData.phoneNo}</p>
+              <p>Status: {studentData.status}</p>
+              <h3>Selected Services:</h3>
+              <ul>
+                {studentData.selectedServices.map((service, index) => (
+                  <li key={index}>{service}</li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <p>No data found for student ID {studentId}</p>
+          )}
         </div>
       </div>
     </div>

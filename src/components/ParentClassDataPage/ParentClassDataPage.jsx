@@ -18,7 +18,7 @@ const ParentClassDataPage = () => {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       const decodedToken = jwtDecode(authToken);
-      return decodedToken.id; // Assuming 'id' in the token refers to the parentId
+      return decodedToken.Id; // Assuming 'id' in the token refers to the parentId
     }
     return null;
   };
