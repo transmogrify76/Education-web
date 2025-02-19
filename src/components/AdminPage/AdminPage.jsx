@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 import './AdminPage.css';
 
 const AdminPage = () => {
-  const { admin_id } = useParams();
+  // const { admin_id } = useParams();
 
   const icons = [
     { name: 'Parent Registration', icon: 'fas fa-user-tie', className: 'btn-1', link: '/Parentregisterpage' },
@@ -29,7 +29,8 @@ const AdminPage = () => {
     { name: 'Behavior Assessment Tools', icon: 'fas fa-behavior', className: 'btn-15', link: '/AdminBehaviorAssessment' },
     { name: 'Class Management Page', icon: 'fas fa-users', className: 'btn-16', link: '/AdminClassMAnagementPage' },
     { name: 'Result Upload', icon: 'fas fa-upload', className: 'btn-17', link: '/UploadResults' },
-    { name: 'Fee Reminder Update', icon: 'fas fa-money-bill-alt', className: 'btn-19', link: '/AdminFeeReminderPage' }
+    { name: 'Fee Reminder Update', icon: 'fas fa-money-bill-alt', className: 'btn-19', link: '/AdminFeeReminderPage' },
+    { name: 'Add subject on Teacher', icon: 'fas fa-external-link-alt', className: 'btn-20', link: '/subject-teacher' }
   ];
 
   return (

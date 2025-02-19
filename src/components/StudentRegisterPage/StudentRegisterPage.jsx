@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Initialize useNavigate
 import './StudentRegisterPage.css';
+import Header from '../Header/Header';
 
 const StudentRegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -100,6 +101,8 @@ const StudentRegisterPage = () => {
     };
 
     return (
+        <div>
+            <Header/>
         <div className="register-page-containers">
             <form className="register-forms" onSubmit={handleSubmit}>
                 <h1 className="register-title">Student Registration</h1>
@@ -232,6 +235,7 @@ const StudentRegisterPage = () => {
                     <span className="popup-message">Student registered successfully!</span>
                 </div>
             )}
+        </div>
         </div>
     );
 };
