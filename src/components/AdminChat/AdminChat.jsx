@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import './AdminChat.css';
 import Header from '../Header/Header';
 
-const AdminChat = () => {
+const AdminChat = () => { 
   const { adminId } = useParams();
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);

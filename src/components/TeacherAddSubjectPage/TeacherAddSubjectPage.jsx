@@ -1,38 +1,31 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./TeacherAddSubjectPage.css";
-import Header from '../Header/Header';
 
 const TeacherAddSubjectPage = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phoneNo: "",
-    address: "",
-    gender: "",
-    subjects: [],
-  });
+  const [teachers, setTeachers] = useState([]); // List of teachers
+  const [selectedTeacherId, setSelectedTeacherId] = useState(""); // Selected teacher ID
+  const [teacherDetails, setTeacherDetails] = useState(null); // Teacher details
+  const [name, setName] = useState(""); // Teacher's name
+  const [email, setEmail] = useState(""); // Teacher's email
+  const [phoneNo, setPhoneNo] = useState(""); // Teacher's phone number
+  const [address, setAddress] = useState(""); // Teacher's address
+  const [gender, setGender] = useState(""); // Teacher's gender
+  const [subjects, setSubjects] = useState([]); // List of subjects
+  const [loading, setLoading] = useState(true); // Loading state
+  const [token, setToken] = useState(null); // Token for authorization
 
-  const [newSubject, setNewSubject] = useState("");
-  const [token, setToken] = useState(""); // Store the auth token here
-  const [teachers, setTeachers] = useState([]); // Store the list of teachers
-  const [selectedTeacherId, setSelectedTeacherId] = useState(""); // Store selected teacher ID
-
-  // Fetch the token from localStorage when the component mounts
+  // Fetch token from localStorage when component mounts
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
-    if (storedToken) {
-      setToken(storedToken);
-    } else {
-      console.error("Authorization token missing");
-    }
+    setToken(storedToken);
+  }, []);
 
-    // Fetch teachers list
+  // Fetch teachers list when component mounts
+  useEffect(() => {
     const fetchTeachers = async () => {
       try {
         const response = await fetch("http://localhost:3000/teacher");
         const data = await response.json();
-        setTeachers(data); // Populate teachers list
+        setTeachers(data); // Populate teacher list
       } catch (error) {
         console.error("Error fetching teachers:", error);
       }
@@ -41,199 +34,220 @@ const TeacherAddSubjectPage = () => {
     fetchTeachers();
   }, []);
 
+  // Fetch details for the selected teacher
+  const fetchTeacherDetails = async (id) => {
+    if (!id || !token) return; // Ensure token exists
+    try {
+      const response = await fetch(`http://localhost:3000/teacher/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setTeacherDetails(data);
+      setName(data.name);
+      setEmail(data.email);
+      setPhoneNo(data.phoneNo);
+      setAddress(data.address);
+      setGender(data.gender);
+
+      // Extract subject names from teacher's subjects array
+      setSubjects(data.subjects.map((subject) => subject.name));
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching teacher details:", error);
+    }
+  };
+
+  // Handle teacher selection from dropdown
+  const handleTeacherSelect = (e) => {
+    const selectedId = e.target.value;
+    setSelectedTeacherId(selectedId);
+    fetchTeacherDetails(selectedId);
+  };
+
+  // Handle input change in the form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleAddSubject = () => {
-    if (newSubject.trim() !== "") {
-      setFormData((prevState) => ({
-        ...prevState,
-        subjects: [...prevState.subjects, newSubject],
-      }));
-      setNewSubject(""); // Reset input field
-    }
-  };
-
-  const handleRemoveSubject = (subject) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      subjects: prevState.subjects.filter((s) => s !== subject),
-    }));
-  };
-
-  const handleTeacherSelect = async (e) => {
-    const selectedTeacherId = e.target.value;
-    setSelectedTeacherId(selectedTeacherId);
-
-    if (selectedTeacherId) {
-      try {
-        // Fetch the selected teacher's details
-        const response = await axios.get(`http://localhost:3000/teacher/${selectedTeacherId}`);
-        const selectedTeacher = response.data;
-
-        // Update form data with the teacher's details
-        setFormData({
-          name: selectedTeacher.name,
-          email: selectedTeacher.email,
-          phoneNo: selectedTeacher.phoneNo,
-          address: selectedTeacher.address,
-          gender: selectedTeacher.gender,
-          subjects: selectedTeacher.subjects || [],
-        });
-      } catch (error) {
-        console.error("Error fetching teacher details:", error);
-      }
+    if (name === "subjects") {
+      setSubjects(value.split(",").map((subject) => subject.trim()));
     } else {
-      // Reset form data if no teacher is selected
-      setFormData({
-        name: "",
-        email: "",
-        phoneNo: "",
-        address: "",
-        gender: "",
-        subjects: [],
-      });
+      switch (name) {
+        case "name":
+          setName(value);
+          break;
+        case "email":
+          setEmail(value);
+          break;
+        case "phoneNo":
+          setPhoneNo(value);
+          break;
+        case "address":
+          setAddress(value);
+          break;
+        case "gender":
+          setGender(value);
+          break;
+        default:
+          break;
+      }
     }
   };
 
+  // Handle form submission to update teacher details
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!token) {
-      alert("Authorization token is missing. Please log in.");
+      alert("No token available");
       return;
     }
 
+    // Sanitize name input to ensure it's a valid string before trimming
+    const sanitizedName = typeof name === "string" ? name.trim() : "";
+
+    if (!sanitizedName) {
+      alert("Please enter a valid name");
+      return;
+    }
+
+    // Prepare updated teacher data
+    const updatedSubjects = subjects.map((subject) => ({
+      name: subject, // Assuming subjects are simple strings
+    }));
+
+    const updatedTeacherData = {
+      name: sanitizedName,
+      email,
+      phoneNo,
+      address,
+      gender,
+      subjects: updatedSubjects,
+    };
+
+    // Send updated data to backend
     try {
-      const response = await axios.patch(
-        `http://localhost:3000/teacher/${selectedTeacherId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include token in headers
-          },
-        }
-      );
-      alert("Teacher data updated successfully!");
+      const response = await fetch(`http://localhost:3000/teacher/${selectedTeacherId}`, {
+        method: "PATCH",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedTeacherData),
+      });
+
+      if (response.ok) {
+        alert("Teacher details updated successfully");
+      } else {
+        const errorData = await response.json();
+        alert(`Failed to update teacher details: ${errorData.message}`);
+      }
     } catch (error) {
-      console.error("Error updating teacher:", error);
-      alert("There was an error updating the teacher data.");
+      console.error("Error updating teacher details:", error);
     }
   };
 
   return (
     <div>
-      <Header/>
+      <h2>Update Teacher Details</h2>
 
-    <div className="teacher-add-subject-page">
-      <h2>Update Teacher Information</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Select Teacher:</label>
-          <select onChange={handleTeacherSelect} value={selectedTeacherId}>
-            <option value="">Select Teacher</option>
-            {teachers.map((teacher) => (
-              <option key={teacher.id} value={teacher.id}>
-                {teacher.name}
-              </option>
-            ))}
-          </select>
-        </div>
+      <label htmlFor="teacherSelect">Select Teacher:</label>
+      <select id="teacherSelect" value={selectedTeacherId} onChange={handleTeacherSelect}>
+        <option value="">--Select Teacher--</option>
+        {teachers.map((teacher) => (
+          <option key={teacher.id} value={teacher.id}>
+            {teacher.name}
+          </option>
+        ))}
+      </select>
 
-        <div className="form-group">
-          <label>Name:</label>
+      {loading ? (
+        <p>Loading teacher details...</p>
+      ) : teacherDetails ? (
+        <form onSubmit={handleSubmit}>
+          <h3>Update Teacher Information</h3>
+
+          <label htmlFor="name">Name:</label>
           <input
             type="text"
+            id="name"
             name="name"
-            value={formData.name}
+            value={name}
             onChange={handleInputChange}
-            disabled
+            required
           />
-        </div>
+          <br />
+          <br />
 
-        <div className="form-group">
-          <label>Email:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="email"
+            id="email"
             name="email"
-            value={formData.email}
+            value={email}
             onChange={handleInputChange}
-            disabled
+            required
           />
-        </div>
+          <br />
+          <br />
 
-        <div className="form-group">
-          <label>Phone No:</label>
+          <label htmlFor="phoneNo">Phone No:</label>
           <input
             type="text"
+            id="phoneNo"
             name="phoneNo"
-            value={formData.phoneNo}
+            value={phoneNo}
             onChange={handleInputChange}
-            disabled
+            required
           />
-        </div>
+          <br />
+          <br />
 
-        <div className="form-group">
-          <label>Address:</label>
+          <label htmlFor="address">Address:</label>
           <input
             type="text"
+            id="address"
             name="address"
-            value={formData.address}
+            value={address}
             onChange={handleInputChange}
+            required
           />
-        </div>
+          <br />
+          <br />
 
-        <div className="form-group">
-          <label>Gender:</label>
+          <label htmlFor="gender">Gender:</label>
           <select
+            id="gender"
             name="gender"
-            value={formData.gender}
+            value={gender}
             onChange={handleInputChange}
+            required
           >
-            <option value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
-        </div>
+          <br />
+          <br />
 
-        <div className="form-group">
-          <label>Subjects:</label>
-          <div className="subjects-container">
-            {formData.subjects.map((subject, index) => (
-              <div className="subject-item" key={index}>
-                <span>{subject}</span>
-                <button
-                  type="button"
-                  className="remove-subject"
-                  onClick={() => handleRemoveSubject(subject)}
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
-          </div>
+          <label htmlFor="subjects">Subjects:</label>
           <input
             type="text"
-            value={newSubject}
-            onChange={(e) => setNewSubject(e.target.value)}
-            placeholder="Add a subject"
+            id="subjects"
+            name="subjects"
+            value={subjects.join(", ")} // Join subjects as a string
+            onChange={handleInputChange}
+            required
           />
-          <button type="button" onClick={handleAddSubject}>
-            Add Subject
-          </button>
-        </div>
+          <br />
+          <br />
 
-        <button type="submit" className="submit-btn">
-          Update Teacher
-        </button>
-      </form>
-    </div>
+          <button type="submit">Update Teacher</button>
+        </form>
+      ) : (
+        <p>No teacher details available</p>
+      )}
     </div>
   );
 };
