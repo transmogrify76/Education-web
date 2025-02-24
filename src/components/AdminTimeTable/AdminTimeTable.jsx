@@ -9,16 +9,15 @@ const AdminTimeTable = () => {
     minute: '',
     period: 'AM',
     subject: '',
-    professor: '',
+    professor: '', // professor ID
     classId: '',
   });
   const [popupVisible, setPopupVisible] = useState(false);
-  const [classOptions, setClassOptions] = useState([]); // Class options with teacher data
+  const [classOptions, setClassOptions] = useState([]); // Class options
   const [subjectOptions, setSubjectOptions] = useState([]); 
-  const [teacherOptions, setTeacherOptions] = useState([]); // To store teacher options based on selected class
+  const [teacherOptions, setTeacherOptions] = useState([]); // Teacher options
   const [timetable, setTimetable] = useState([]);
 
-  // Fetch classes from API
   useEffect(() => {
     const fetchClasses = async () => {
       try {
@@ -32,32 +31,36 @@ const AdminTimeTable = () => {
     fetchClasses();
   }, []);
 
-  // Fetch subjects and teachers based on selected class
   useEffect(() => {
     if (formData.classId) {
+      const fetchTeachers = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/class/${formData.classId}`);
+          const data = await response.json();
+          setTeacherOptions(data.teachers || []);
+        } catch (error) {
+          console.error('Error fetching teachers:', error);
+        }
+      };
+      fetchTeachers();
+    }
+  }, [formData.classId]);
+
+  useEffect(() => {
+    if (formData.professor) {
       const fetchSubjects = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/subjects/class/${formData.classId}`);
+          const response = await fetch(`http://localhost:3000/teacher/${formData.professor}`);
           const data = await response.json();
-          setSubjectOptions(data);
+          setSubjectOptions(data.subjects || []);
         } catch (error) {
           console.error('Error fetching subjects:', error);
         }
       };
       fetchSubjects();
-
-      // Get teacher options based on the selected class
-      const selectedClass = classOptions.find(classItem => classItem.id === formData.classId);
-      if (selectedClass && selectedClass.teachers) {
-        console.log(selectedClass.teachers); // Correctly log the teachers array here
-        setTeacherOptions(selectedClass.teachers); // Set teachers for the selected class
-      } else {
-        setTeacherOptions([]); // Clear teachers if no teachers are available for the selected class
-      }
     }
-  }, [formData.classId, classOptions]);
+  }, [formData.professor]);
 
-  // Fetch timetables to display in the table
   const fetchTimetables = async () => {
     try {
       const response = await fetch('http://localhost:3000/timetable');
@@ -67,25 +70,25 @@ const AdminTimeTable = () => {
       console.error('Error fetching timetables:', error);
     }
   };
-  
+
   useEffect(() => {
     fetchTimetables();
   }, []);
 
-  // Handle form data change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    const selectedTeacher = teacherOptions.find(teacher => teacher.id === Number(formData.professor));
+    const teacherName = selectedTeacher ? selectedTeacher.name : 'Unknown Teacher';
     const time = `${formData.hour}:${formData.minute} ${formData.period}`;
     const submissionData = {
       day: formData.day,
       time,
       subject: formData.subject,
-      professor: formData.professor,
+      professor: teacherName,
       classId: formData.classId,
     };
 
@@ -97,8 +100,7 @@ const AdminTimeTable = () => {
       body: JSON.stringify(submissionData),
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
+      .then(() => {
         setPopupVisible(true);
         setTimeout(() => setPopupVisible(false), 3000);
         setFormData({
@@ -117,17 +119,31 @@ const AdminTimeTable = () => {
       });
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/timetable/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        fetchTimetables();
+      } else {
+        console.error('Failed to delete timetable');
+      }
+    } catch (error) {
+      console.error('Error deleting timetable:', error);
+    }
+  };
+
   return (
     <div>
       <Header />
       <div className="admin-timetable-page">
-        {/* Left Side: Timetable Form */}
         <div className="form-container">
-          <h1>Post Timetable</h1>
-          {popupVisible && <div className="popup">Timetable posted successfully!</div>}
-          <form className="timetable-form" onSubmit={handleSubmit}>
-            {/* Day Selection */}
-            <div className="form-group">
+          <h1>Create Timetable</h1>
+          {popupVisible && <div className="popup-message">Timetable posted successfully!</div>}
+          <form className="form" onSubmit={handleSubmit}>
+            <div className="form-field">
               <label htmlFor="day">Day:</label>
               <select name="day" value={formData.day} onChange={handleChange} required>
                 <option value="" disabled>Select Day</option>
@@ -139,8 +155,7 @@ const AdminTimeTable = () => {
               </select>
             </div>
 
-            {/* Time Selection */}
-            <div className="form-group">
+            <div className="form-field">
               <label htmlFor="time">Time:</label>
               <div className="time-inputs">
                 <input
@@ -176,8 +191,7 @@ const AdminTimeTable = () => {
               </div>
             </div>
 
-            {/* Class, Subject, and Teacher Selection */}
-            <div className="form-group">
+            <div className="form-field">
               <label htmlFor="classId">Class:</label>
               <select
                 name="classId"
@@ -194,24 +208,7 @@ const AdminTimeTable = () => {
               </select>
             </div>
 
-            <div className="form-group">
-              <label htmlFor="subject">Subject:</label>
-              <select
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>Select Subject</option>
-                {subjectOptions.map((subject) => (
-                  <option key={subject.id} value={subject.name}>
-                    {subject.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
+            <div className="form-field">
               <label htmlFor="professor">Teacher:</label>
               <select
                 name="professor"
@@ -222,7 +219,7 @@ const AdminTimeTable = () => {
                 <option value="" disabled>Select Teacher</option>
                 {teacherOptions.length > 0 ? (
                   teacherOptions.map((teacher) => (
-                    <option key={teacher.id} value={teacher.name}>
+                    <option key={teacher.id} value={teacher.id}>
                       {teacher.name}
                     </option>
                   ))
@@ -232,11 +229,31 @@ const AdminTimeTable = () => {
               </select>
             </div>
 
-            <button type="submit" className="submit-button">Post Timetable</button>
+            <div className="form-field">
+              <label htmlFor="subject">Subject:</label>
+              <select
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>Select Subject</option>
+                {subjectOptions.length > 0 ? (
+                  subjectOptions.map((subject) => (
+                    <option key={subject.id} value={subject.name}>
+                      {subject.name}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No subjects available</option>
+                )}
+              </select>
+            </div>
+
+            <button type="submit" className="submit-button">Create Timetable</button>
           </form>
         </div>
 
-        {/* Right Side: Timetable List */}
         <div className="table-container">
           <h2>Timetable List</h2>
           <table className="timetable-table">
@@ -247,6 +264,7 @@ const AdminTimeTable = () => {
                 <th>Subject</th>
                 <th>Teacher</th>
                 <th>Class</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -258,11 +276,19 @@ const AdminTimeTable = () => {
                     <td>{item.subject}</td>
                     <td>{item.professor}</td>
                     <td>{item.class.className}</td>
+                    <td>
+                      <button
+                        onClick={() => handleDelete(item.id)}
+                        className="delete-button-one"
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="5">No timetables available</td>
+                  <td colSpan="6">No timetables available</td>
                 </tr>
               )}
             </tbody>

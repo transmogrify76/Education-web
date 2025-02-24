@@ -158,88 +158,94 @@
 // export default CommunicationPage;
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode'; // Correct the import here
 import Header from '../Header/Header';
 
 const CommunicationPage = () => {
-    const { teacherId } = useParams(); // Access route parameter here
+    const [teacherId, setTeacherId] = useState(null); // Store the teacher ID
     const [recipientType, setRecipientType] = useState('student');
-    const [recipients, setRecipients] = useState([]); // Store students or parents
+    const [recipients, setRecipients] = useState([]);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [recipientId, setRecipientId] = useState('');
     const [selectedClass, setSelectedClass] = useState('');
-    const [classes, setClasses] = useState([]); // Store available classes
-    const [parentInfo, setParentInfo] = useState(null); // Store parent information when student is selected
+    const [classes, setClasses] = useState([]);
+    const [parentInfo, setParentInfo] = useState(null);
 
-    const token = localStorage.getItem('authToken'); // Assuming the auth token is stored in local storage
+    const token = localStorage.getItem('authToken');
+
+    // Decode the JWT token and extract the teacherId
+    useEffect(() => {
+        if (token) {
+            try {
+                const decodedToken = jwtDecode(token);
+                setTeacherId(decodedToken.id); // Assuming teacherId is in the token's payload
+            } catch (error) {
+                console.error('Error decoding JWT token:', error);
+            }
+        }
+    }, [token]);
 
     // Fetch available classes
     useEffect(() => {
-        axios.get('http://localhost:3000/class', {
-            headers: { Authorization: `Bearer ${token}` }
-        })
-        .then(response => setClasses(response.data))
-        .catch(error => console.error('Error fetching classes:', error));
-    }, [token]);
+        if (teacherId) {
+            axios.get('http://localhost:3000/class', {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            .then(response => setClasses(response.data))
+            .catch(error => console.error('Error fetching classes:', error));
+        }
+    }, [token, teacherId]);
 
-    // Fetch students for a specific class
     const fetchStudentsForClass = async (classId) => {
         try {
             const response = await axios.get(`http://localhost:3000/class/${classId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
-            // Map the students to include their parent's name along with the student's info
             const studentsWithParents = response.data.students.map(student => ({
                 ...student,
-                parentName: student.parent ? student.parent.name : 'N/A', // Add parent's name
-                parentId: student.parent ? student.parent.id : null // Add parent's ID if available
+                parentName: student.parent ? student.parent.name : 'N/A',
+                parentId: student.parent ? student.parent.id : null
             }));
 
-            setRecipients(studentsWithParents); // Set students along with parent names
+            setRecipients(studentsWithParents);
         } catch (error) {
             console.error('Error fetching students for class:', error);
         }
     };
 
-    // Fetch students when class is selected
     useEffect(() => {
         if (selectedClass) {
-            fetchStudentsForClass(selectedClass); // Fetch students for the selected class
+            fetchStudentsForClass(selectedClass);
         } else {
-            setRecipients([]); // Clear recipients if no class is selected
+            setRecipients([]);
         }
     }, [selectedClass]);
 
-    // Handle recipient selection (whether student or parent)
     const handleRecipientChange = (e) => {
         const selectedRecipient = e.target.value;
         setRecipientId(selectedRecipient);
 
-        // If recipient type is 'student'
         if (recipientType === 'student') {
             const selectedStudent = recipients.find(student => student.id === selectedRecipient);
             if (selectedStudent) {
-                setParentInfo(selectedStudent.parent || null); // Set parent info if available
+                setParentInfo(selectedStudent.parent || null);
             }
         } else if (recipientType === 'parent') {
-            // If recipient type is 'parent', ensure we're selecting the correct parent
             const selectedParent = recipients.find(student => student.parentId && student.parentId === selectedRecipient);
             if (selectedParent) {
-                setRecipientId(selectedParent.parentId); // Set recipientId to the parent's ID
+                setRecipientId(selectedParent.parentId);
             }
         }
     };
 
-    // Handle sending the communication (without the selected class)
     const handleSendCommunication = () => {
         const communicationData = {
             title,
             content,
             recipientType,
             recipientId,
-            // Do not include selectedClass in the payload here
         };
 
         axios.post(`http://localhost:3000/communication/send-communication/${teacherId}`, communicationData)
@@ -289,13 +295,12 @@ const CommunicationPage = () => {
                                 recipients.map((recipient) => (
                                     recipientType === 'student' ? (
                                         <option key={recipient.id} value={recipient.id}>
-                                            {recipient.name} {/* Display student name */}
+                                            {recipient.name}
                                         </option>
                                     ) : (
-                                        // If recipient type is 'parent', display both parent and student names
                                         recipient.parentId && (
                                             <option key={recipient.parentId} value={recipient.parentId}>
-                                                {recipient.parentName} - {recipient.name} {/* Display parent and student names */}
+                                                {recipient.parentName} - {recipient.name}
                                             </option>
                                         )
                                     )
@@ -321,3 +326,5 @@ const CommunicationPage = () => {
 };
 
 export default CommunicationPage;
+
+

@@ -1,232 +1,159 @@
 .admin-timetable-page {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    font-family: 'Roboto', sans-serif;
-    position: relative;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  gap: 30px;
 }
 
-.admin-timetable-page h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #222;
-    font-size: 26px;
-    font-weight: 700;
+.form-container {
+  width: 50%;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-.timetable-form {
-    display: flex;
-    flex-direction: column;
+h1 {
+  text-align: center;
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 30px;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.form-field {
+  margin-bottom: 20px;
 }
 
-.form-group label {
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #444;
-    display: block;
-    font-size: 16px;
+.form-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #34495e;
+  font-size: 16px;
 }
 
-.form-group input,
-.form-group select {
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background-color: #f7f7f7;
-    transition: all 0.3s ease;
+.form-field select,
+.form-field input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ecf0f1;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #1e90ff;
-    background-color: #eef5ff;
-    outline: none;
+.form-field select:focus,
+.form-field input:focus {
+  border-color: #3498db;
+  background-color: #eaf2f8;
+  outline: none;
 }
 
 .time-inputs {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .time-inputs input[type="number"],
 .time-inputs select {
-    width: 70px;
-    text-align: center;
-    padding: 10px;
-    font-size: 16px;
+  width: 70px;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
 }
 
 .submit-button {
-    width: 100%;
-    padding: 15px;
-    font-size: 18px;
-    color: #fff;
-    background-color: #1e90ff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-weight: bold;
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 600;
 }
 
 .submit-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.02);
+  background-color: #2980b9;
+  transform: scale(1.05);
 }
 
-.popup {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 12px 25px;
-    background-color: #28a745;
-    color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    font-weight: 600;
-    animation: fadeInOut 3s ease-in-out;
+.popup-message {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 12px 25px;
+  background-color: #2ecc71;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: bold;
+  animation: fadeInOut 3s ease-in-out;
 }
 
 @keyframes fadeInOut {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
-.timetable-list {
-    margin-top: 30px;
-    padding: 0;
-    list-style: none;
+.table-container {
+  width: 45%;
+  padding: 20px;
+  background-color: #f4f6f7;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
 }
 
-.timetable-item {
-    background-color: #f0f0f0;
-    border-radius: 6px;
-    padding: 15px;
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 16px;
+.timetable-table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.timetable-item div {
-    color: #555;
+.timetable-table th, .timetable-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
 }
 
-.delete-button {
-    background-color: #ff4d4d;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
+.timetable-table th {
+  background-color: #ecf0f1;
+}
+
+.timetable-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.delete-button-one {
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .delete-button:hover {
-    background-color: #e63939;
+  background-color: #c0392b;
 }
 
-.delete-popup {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 12px 25px;
-    background-color: #dc3545;
-    color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    font-weight: 600;
-    animation: fadeInOut 3s ease-in-out;
-}
-.admin-timetable-page {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px; /* Add a gap between form and table */
-    padding: 20px;
+@media (max-width: 768px) {
+  .admin-timetable-page {
+    flex-direction: column;
+    gap: 20px;
   }
-  
-  .form-container {
-    width: 48%; /* Left side for the form */
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .table-container {
-    width: 48%; /* Right side for the timetable list */
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    overflow-x: auto; /* Ensure the table is scrollable if it overflows */
-  }
-  
-  .timetable-table {
+
+  .form-container, .table-container {
     width: 100%;
-    border-collapse: collapse;
   }
-  
-  .timetable-table th, .timetable-table td {
-    padding: 8px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .timetable-table th {
-    background-color: #f4f4f4;
-  }
-  
-  .timetable-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .popup {
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 20px;
-  }
-  
-  .submit-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Optional: Responsive design for smaller screens */
-  @media (max-width: 768px) {
-    .admin-timetable-page {
-      flex-direction: column;
-      gap: 10px;
-    }
-  
-    .form-container, .table-container {
-      width: 100%;
-    }
-  }
-  
+}

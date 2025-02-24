@@ -11,8 +11,8 @@ const TeacherDashboard = () => {
   const { teacherId } = useParams();
 
   const icons = [
-    { name: 'Class Management', icon: faChalkboardTeacher, className: 'btn-1', link: `/ClassManagementPage` },
-    { name: 'Student Management', icon: faUserGraduate, className: 'btn-2', link: '/TeacherStudentManagementPage' },
+    // { name: 'Class Management', icon: faChalkboardTeacher, className: 'btn-1', link: `/ClassManagementPage` },
+    // { name: 'Student Management', icon: faUserGraduate, className: 'btn-2', link: '/TeacherStudentManagementPage' },
     { name: 'Upload Assignment', icon: faClipboardList, className: 'btn-3', link: '/AssignmentPostPage' },
     { name: 'Upload Result for Students', icon: faFileUpload, className: 'btn-4', link: '/UploadResults' },
     { name: 'Make Communications', icon: faComments, className: 'btn-5', link: `/CommunicationPage` },

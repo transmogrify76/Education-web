@@ -1,41 +1,96 @@
 .teacher-list-container {
-    padding: 20px;
-  }
-  
-  .teacher-list-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .class-dropdown {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .class-dropdown label {
-    margin-right: 10px;
-  }
-  
-  .teacher-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .teacher-table th, .teacher-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  .teacher-table th {
-    background-color: #f4f4f4;
-  }
-  
-  .teacher-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
- 
+  padding: 20px;
+}
+
+.teacher-list-container h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.class-dropdown {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.class-dropdown label {
+  margin-right: 10px;
+}
+
+.teacher-table-container {
+  margin-top: 30px;
+}
+
+.teacher-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.teacher-table th,
+.teacher-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.teacher-table th {
+  background-color: #f4f4f4;
+}
+
+.teacher-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.teacher-table td button {
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.teacher-table td button:hover {
+  background-color: #0056b3;
+}
+
+.teacher-table td button:active {
+  background-color: #003f7f;
+}
+
+/* Message for no teachers or classes available */
+.teacher-table td[colspan="5"], .teacher-table td[colspan="6"] {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+.class-dropdown select {
+  padding: 8px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.class-dropdown label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.teacher-list-container h2 {
+  margin-top: 20px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+}
+
+.teacher-table-container {
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+}

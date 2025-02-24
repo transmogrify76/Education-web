@@ -204,7 +204,6 @@ function App() {
           <Route path="/StudentGradesPage/" element={<StudentGradesPage/>} />  
           <Route path="/EbookPage" element={<EbookPage/>} />  
           <Route path="/ParentClassDataPage" element={<ParentClassDataPage/>} />  
-
           <Route path="/ShowEbookPage/" element={<ShowEbookPage/>} />            
           <Route path="/SubmittedAssignment/" element={<SubmittedAssignment/>} />            
           <Route path="/CreateMeeting/" element={<CreateMeeting/>} />            

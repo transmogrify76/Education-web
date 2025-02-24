@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './GradePage.css';
-import Header from '../Header/Header'
+import Header from '../Header/Header';
 
 const GradePage = () => {
   const [students, setStudents] = useState([]);
@@ -13,8 +13,21 @@ const GradePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // Retrieve the token from localStorage
+  const authToken = localStorage.getItem('authToken');
+
+  // Helper function to get headers with the Bearer token
+  const getAuthHeaders = () => {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}`,  // Add the token in the Authorization header
+    };
+  };
+
   useEffect(() => {
-    fetch('http://localhost:3000/student')
+    fetch('http://localhost:3000/student', {
+      headers: getAuthHeaders(),  // Include the token in the request header
+    })
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -30,7 +43,9 @@ const GradePage = () => {
     if (selectedStudent) {
       setLoading(true);
       setError('');
-      fetch(`http://localhost:3000/grading/student/${selectedStudent}`)
+      fetch(`http://localhost:3000/grading/student/${selectedStudent}`, {
+        headers: getAuthHeaders(),  // Include the token in the request header
+      })
         .then(response => {
           if (response.status === 404) {
             setGrades([]);
@@ -65,9 +80,7 @@ const GradePage = () => {
     setLoading(true);
     fetch('http://localhost:3000/grading', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),  // Include the token in the request header
       body: JSON.stringify({
         studentId: selectedStudent,
         subject,
@@ -94,7 +107,9 @@ const GradePage = () => {
   };
 
   const fetchGrades = () => {
-    fetch(`http://localhost:3000/grading/student/${selectedStudent}`)
+    fetch(`http://localhost:3000/grading/student/${selectedStudent}`, {
+      headers: getAuthHeaders(),  // Include the token in the request header
+    })
       .then(response => response.json())
       .then(data => setGrades(data))
       .catch(error => console.error('Error fetching grades:', error));
@@ -104,9 +119,7 @@ const GradePage = () => {
     setLoading(true);
     fetch(`http://localhost:3000/grading/student/${selectedStudent}/subject/${subject}`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: getAuthHeaders(),  // Include the token in the request header
       body: JSON.stringify(updatedGrade),
     })
       .then(() => {
@@ -119,113 +132,117 @@ const GradePage = () => {
       });
   };
 
+  // Find the name of the selected student based on the selectedStudent ID
+  const selectedStudentName = students.find(student => student.id === selectedStudent)?.name;
+
   return (
     <div>
-      <Header/>
-    <div className="student-grading-page">
-      <h1>Create and Update Grade Remarks</h1>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="student">Student</label>
-          <select
-            id="student"
-            value={selectedStudent}
-            onChange={(e) => setSelectedStudent(e.target.value)}
-            required
-          >
-            <option value="">Select a student</option>
-            {students.map(student => (
-              <option key={student.id} value={student.id}>
-                {student.name} (ID: {student.id})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="subject">Subject</label>
-          <input
-            type="text"
-            id="subject"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="assignment">Assignment Name</label>
-          <input
-            type="text"
-            id="assignment"
-            value={assignmentName}
-            onChange={(e) => setAssignmentName(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="grade">Grade</label>
-          <input
-            type="text"
-            id="grade"
-            value={grade}
-            onChange={(e) => setGrade(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="remarks">Remarks</label>
-          <input
-            type="text"
-            id="remarks"
-            value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
-            required
-          />
-        </div>
-
-        <button type="submit" disabled={loading}>
-          {loading ? 'Submitting...' : 'Submit'}
-        </button>
-      </form>
-
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        selectedStudent && (
-          <div>
-            <h2>Grades for Student ID: {selectedStudent}</h2>
-            {grades.length === 0 && !error ? (
-              <p>No grades available for this student.</p>
-            ) : (
-              <ul>
-                {grades.map(gradeItem => (
-                  <li key={gradeItem.id}>
-                    <strong>Subject:</strong> {gradeItem.subject}, 
-                    <strong> Assignment:</strong> {gradeItem.assignmentName}, 
-                    <strong> Grade:</strong> {gradeItem.grade}, 
-                    <strong> Remarks:</strong> {gradeItem.remarks}
-                    <button
-                      onClick={() =>
-                        handleUpdate(gradeItem.id, gradeItem.subject, {
-                          grade: prompt('New grade:', gradeItem.grade),
-                          remarks: prompt('New remarks:', gradeItem.remarks),
-                        })
-                      }
-                    >
-                      Update
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
+      <Header />
+      <div className="student-grading-page">
+        <h1>Create and Update Grade Remarks</h1>
+        {error && <p className="error">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="student">Student</label>
+            <select
+              id="student"
+              value={selectedStudent}
+              onChange={(e) => setSelectedStudent(e.target.value)}
+              required
+            >
+              <option value="">Select a student</option>
+              {students.map(student => (
+                <option key={student.id} value={student.id}>
+                  {student.name} (ID: {student.id})
+                </option>
+              ))}
+            </select>
           </div>
-        )
-      )}
-    </div>
+
+          <div className="form-group">
+            <label htmlFor="subject">Subject</label>
+            <input
+              type="text"
+              id="subject"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="assignment">Assignment Name</label>
+            <input
+              type="text"
+              id="assignment"
+              value={assignmentName}
+              onChange={(e) => setAssignmentName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="grade">Grade</label>
+            <input
+              type="text"
+              id="grade"
+              value={grade}
+              onChange={(e) => setGrade(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="remarks">Remarks</label>
+            <input
+              type="text"
+              id="remarks"
+              value={remarks}
+              onChange={(e) => setRemarks(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" disabled={loading}>
+            {loading ? 'Submitting...' : 'Submit'}
+          </button>
+        </form>
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          selectedStudent && (
+            <div>
+              {/* Display student's name fetched from the grades data */}
+              <h2>Grades : {grades.length > 0 ? grades[0].student.name : selectedStudentName}</h2> 
+              {grades.length === 0 && !error ? (
+                <p>No grades available for this student.</p>
+              ) : (
+                <ul>
+                  {grades.map(gradeItem => (
+                    <li key={gradeItem.id}>
+                      <strong>Subject:</strong> {gradeItem.subject}, 
+                      <strong> Assignment:</strong> {gradeItem.assignmentName}, 
+                      <strong> Grade:</strong> {gradeItem.grade}, 
+                      <strong> Remarks:</strong> {gradeItem.remarks}
+                      <button
+                        onClick={() =>
+                          handleUpdate(gradeItem.id, gradeItem.subject, {
+                            grade: prompt('New grade:', gradeItem.grade),
+                            remarks: prompt('New remarks:', gradeItem.remarks),
+                          })
+                        }
+                      >
+                        Update
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 };
