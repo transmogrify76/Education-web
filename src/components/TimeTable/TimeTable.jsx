@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './TimeTable.css';
+import Header from '../Header/Header';
 
 const TimeTable = () => {
     const { parentId } = useParams();
@@ -48,6 +49,9 @@ const TimeTable = () => {
     });
 
     return (
+        <div>
+            <Header/>
+
         <div className="timetable-container">
             <h2>Timetable</h2>
 
@@ -100,6 +104,7 @@ const TimeTable = () => {
             {Object.keys(groupedTimetable).length === 0 && selectedClass && (
                 <p>No timetable available for this class.</p>
             )}
+        </div>
         </div>
     );
 };

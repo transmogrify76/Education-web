@@ -101,6 +101,7 @@ import StudentList from './components/StudentList/StudentList';
 import SubjectManagement from './components/SubjectManagement/SubjectManagement';
 import AdminTeacherList from './components/TeacherList/TeacherList';
 import TeacherAddSubjectPage from './components/TeacherAddSubjectPage/TeacherAddSubjectPage';
+import ParentList from './components/ParentList/ParentList';
 function App() {
   return (
     <Router>
@@ -212,6 +213,7 @@ function App() {
           <Route path="/SubjectEdit/" element={<SubjectEdit/>} />   
           <Route path="/subjectadd" element={<SubjectManagement/>} />          
           <Route path="/subject-teacher" element={<TeacherAddSubjectPage/>} />          
+          <Route path="/ParentList" element={<ParentList/>} />          
 
         </Routes>
       </div>

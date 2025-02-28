@@ -1,3 +1,6 @@
+/* Global Styles */
+
+
 .homepage-container-home {
   display: flex;
   background-image: url(./edu.jpg);
@@ -7,9 +10,9 @@
   height: 100vh;
 }
 
-.homepage-heading-home  {
+.homepage-heading-home {
   font-size: 50px;
-  color: rgb(0, 0, 0) !important; /* Ensures the h1 tag in Home component is white */
+  color: rgb(0, 0, 0) !important; /* Ensures the h1 tag in Home component is black */
 }
 
 .homepage-content-home {
@@ -88,5 +91,79 @@
   100% {
     transform: translateX(0);
     opacity: 1; /* Fully visible */
+  }
+}
+
+/* Responsive Styles */
+
+@media (max-width: 1200px) {
+  .homepage-text-home {
+    max-width: 60%;
+    top: 70px;
+    left: 20px;
+    margin: 30px;
+  }
+  .rating-section {
+    left: 100px;
+    bottom: 20px;
+  }
+  .rating-stars, .rating-value {
+    font-size: 20px;
+  }
+  .rating-text {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .homepage-text-home {
+    max-width: 80%;
+    top: 50px;
+    left: 10px;
+    margin: 20px;
+  }
+  .rating-section {
+    left: 50px;
+    bottom: 10px;
+  }
+  .rating-stars, .rating-value {
+    font-size: 18px;
+  }
+  .rating-text {
+    font-size: 12px;
+  }
+  .typing-animation {
+    width: 90%;
+    font-size: 25px;
+    left: -5px;
+    bottom: -40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage-text-home {
+    max-width: 90%;
+    top: 30px;
+    left: 5px;
+    margin: 15px;
+  }
+  .rating-section {
+    left: 20px;
+    bottom: 5px;
+  }
+  .rating-stars, .rating-value {
+    font-size: 16px;
+  }
+  .rating-text {
+    font-size: 10px;
+  }
+  .typing-animation {
+    width: 95%;
+    font-size: 20px;
+    left: -10px;
+    bottom: -30px;
+  }
+  .homepage-heading-home {
+    font-size: 40px;
   }
 }

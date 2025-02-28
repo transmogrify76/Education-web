@@ -5,11 +5,13 @@ import './Home.css';
 const Home = () => {
   return (
     <div>
-      <Header />
-      <div className="homepage-container-home"> 
+
+        <Header />
+
+      <div className="homepage-container-home">
         <div className="homepage-content-home">
           <div className="homepage-text-home">
-            <div className="homepage-heading-home">Learn without Limits</div>
+            <h1 className="homepage-heading-home">Learn without Limits</h1>
             <h3>
               Explore a diverse range of courses, from academic subjects to practical skills.
               <br />
@@ -17,9 +19,6 @@ const Home = () => {
               <span className="typing-animation">Start your journey with us today!</span>
             </h3>
           </div>
-          {/* <div className="homepage-image">
-            <img src={potr} alt="potr" />
-          </div> */}
         </div>
         <div className="rating-section">
           <div className="rating-animation">

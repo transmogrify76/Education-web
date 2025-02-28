@@ -1,108 +1,3 @@
-// import React, { useState } from 'react';
-// import Select from 'react-select';
-// import axios from 'axios';
-// import './Consent.css';
-// import Header from '../Header/Header';
-
-// const Consent = () => {
-//   const options = [
-//     { value: 'I am giving consent for option 1', label: 'Option 1' },
-//     { value: 'I am giving consent for option2', label: 'Option 2' },
-//     { value: 'I am giving consent for option3', label: 'Option 3' },
-//   ];
-
-//   const [selectedOption, setSelectedOption] = useState(null);
-//   const [parentName, setParentName] = useState('');
-//   const [studentName, setStudentName] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [phone, setPhone] = useState('');
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const consentData = {
-//       parentName,
-//       studentName,
-//       email,
-//       phone,
-//       selectedOption: selectedOption.value,
-//     };
-
-//     try {
-//       await axios.post('http://localhost:3000/consent', consentData);
-//       alert('Consent form submitted successfully!');
-//     } catch (error) {
-//       console.error('Error submitting consent form:', error);
-//       alert('Failed to submit consent form');
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <Header/>
-
-//     <div className="consent-form">
-//       <h2 className="head">Consent Form</h2>
-//       <p className="para">
-//         Dear Parent, for the information in the dropdown below, we require your consent.
-//       </p>
-//       <form onSubmit={handleSubmit} className="container">
-//         <div className="form-group">
-//           <label>Parent's Name:</label>
-//           <input
-//             type="text"
-//             value={parentName}
-//             onChange={(e) => setParentName(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="form-group">
-//           <label>Student's Name:</label>
-//           <input
-//             type="text"
-//             value={studentName}
-//             onChange={(e) => setStudentName(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="form-group">
-//           <label>Email:</label>
-//           <input
-//             type="email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="form-group">
-//           <label>Phone Number:</label>
-//           <input
-//             type="tel"
-//             value={phone}
-//             onChange={(e) => setPhone(e.target.value)}
-//             required
-//           />
-//         </div>
-//         <div className="form-group">
-//           <label>Select an Option:</label>
-//           <Select
-//             options={options}
-//             value={selectedOption}
-//             onChange={setSelectedOption}
-//             placeholder="Please select"
-//             isSearchable={false}
-//             required
-//           />
-//         </div>
-//         <button type="submit" className="submit-btn">Submit</button>
-//       </form>
-//     </div>
-//     </div>
-//   );
-// };
-
-// export default Consent;
-
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
@@ -115,9 +10,10 @@ const Consent = () => {
   // Define state variables
   const [selectedOption, setSelectedOption] = useState(null);
   const [parentName, setParentName] = useState('');
-  const [studentName, setStudentName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [studentOptions, setStudentOptions] = useState([]); // Options for students (children)
+  const [selectedStudent, setSelectedStudent] = useState(null); // Selected student
   const [userId, setUserId] = useState(null); // Define userId state
   const navigate = useNavigate(); // Hook to navigate programmatically
 
@@ -131,27 +27,55 @@ const Consent = () => {
   ];
 
   useEffect(() => {
-    // Get the token from local storage (or from where it's stored)
+    // Get the token from local storage
     const token = localStorage.getItem('authToken');
-
+    
     if (token) {
-      const decodedToken = jwtDecode(token); // Use jwtDecode function
-      const userIdFromToken = decodedToken.userId; // Decode to get the userId from the token
+      const decodedToken = jwtDecode(token);
+      const userIdFromToken = decodedToken.id;
 
       // If userId in URL doesn't match the one in token, redirect to correct URL
       if (paramUserId && paramUserId !== userIdFromToken.toString()) {
         navigate(`/consent/${userIdFromToken}`);
       }
 
-      setUserId(userIdFromToken); // Set userId state from decoded token
+      setUserId(userIdFromToken);
+
+      // Fetch parent details from API using parent ID
+      axios.get(`http://localhost:3000/parent/${userIdFromToken}`)
+        .then(response => {
+          const parentData = response.data;
+          setParentName(parentData.name); // Set parent's name
+          setEmail(parentData.email); // Set parent's email
+          setPhone(parentData.phoneNo); // Set parent's phone number
+
+          // If there are children, set the children dropdown options
+          if (parentData.students && parentData.students.length > 0) {
+            const childrenOptions = parentData.students.map(child => ({
+              value: child.id,
+              label: child.name,
+            }));
+            setStudentOptions(childrenOptions);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching parent details:', error);
+          alert('Failed to fetch parent details');
+        });
     }
   }, [paramUserId, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!selectedStudent) {
+      alert('Please select a student.');
+      return;
+    }
+
     const consentData = {
       parentName,
-      studentName,
+      studentName: selectedStudent.label, // Use the selected student's name
       email,
       phone,
       selectedOption: selectedOption.value,
@@ -183,15 +107,7 @@ const Consent = () => {
               value={parentName}
               onChange={(e) => setParentName(e.target.value)}
               required
-            />
-          </div>
-          <div className="form-group">
-            <label>Student's Name:</label>
-            <input
-              type="text"
-              value={studentName}
-              onChange={(e) => setStudentName(e.target.value)}
-              required
+              readOnly
             />
           </div>
           <div className="form-group">
@@ -201,6 +117,7 @@ const Consent = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              readOnly
             />
           </div>
           <div className="form-group">
@@ -209,6 +126,18 @@ const Consent = () => {
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              required
+              readOnly
+            />
+          </div>
+          <div className="form-group">
+            <label>Select a Student:</label>
+            <Select
+              options={studentOptions}
+              value={selectedStudent}
+              onChange={setSelectedStudent}
+              placeholder="Please select a student"
+              isSearchable={false}
               required
             />
           </div>

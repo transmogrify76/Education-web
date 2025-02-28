@@ -13,6 +13,7 @@ const AdminPage = () => {
     { name: 'Teacher Registration', icon: 'fas fa-chalkboard-teacher', className: 'btn-3', link: '/teacherregister' },
     { name: 'Class Creation', icon: 'fas fa-book', className: 'btn-4', link: '/classcreate' },
     { name: 'Student List', icon: 'fas fa-user', className: 'btn-5', link: '/studentlist' },
+    { name: 'Parent List', icon: 'fas fa-users', className: 'btn-16', link: '/ParentList' },
     { name: 'Teacher List', icon: 'fas fa-user', className: 'btn-6', link: '/teacherlist' },
     { name: 'Subject Management', icon: 'fas fa-book', className: 'btn-7', link: '/subjectadd' },
     { name: 'TimeTable Post', icon: 'fas fa-calendar-day', className: 'btn-8', link: '/AdminTimeTable' },
@@ -27,7 +28,6 @@ const AdminPage = () => {
     // { name: 'Student Messages', icon: 'fas fa-comments', className: 'btn-13', link: `/AdminChat` },
     { name: 'Student Wellbeing Request', icon: 'fas fa-heart', className: 'btn-17', link: '/AdminWellbeingRequests' },
     { name: 'Behavior Assessment Tools', icon: 'fas fa-behavior', className: 'btn-18', link: '/AdminBehaviorAssessment' },
-    { name: 'Class Management Page', icon: 'fas fa-users', className: 'btn-16', link: '/AdminClassMAnagementPage' },
     { name: 'Result Upload', icon: 'fas fa-upload', className: 'btn-19', link: '/UploadResults' },
     { name: 'Fee Reminder Update', icon: 'fas fa-money-bill-alt', className: 'btn-20', link: '/AdminFeeReminderPage' },
     { name: 'Add subject on Teacher', icon: 'fas fa-external-link-alt', className: 'btn-21', link: '/subject-teacher' }
