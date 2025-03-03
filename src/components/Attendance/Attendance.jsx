@@ -26,7 +26,7 @@ const Attendance = () => {
         // Fetch student data based on parentId
         const fetchStudentData = async () => {
           try {
-            const response = await fetch(`http://localhost:3000/parent/${parentIdFromToken}`);
+            const response = await fetch(`http://192.168.0.103:3000/parent/${parentIdFromToken}`);
             if (!response.ok) {
               throw new Error('Failed to fetch student data');
             }
@@ -65,7 +65,7 @@ const Attendance = () => {
         setError(null);
         try {
           // Send the studentId as a query parameter in the URL
-          const response = await fetch(`http://localhost:3000/attendance?studentId=${selectedChild}`, {
+          const response = await fetch(`http://192.168.0.103:3000/attendance?studentId=${selectedChild}`, {
             method: 'GET', // Keep it GET since data is passed via query parameters
           });
           if (!response.ok) {

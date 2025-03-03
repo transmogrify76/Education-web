@@ -12,7 +12,7 @@ const TimeTable = () => {
     useEffect(() => {
         const fetchClassNames = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/class');
+                const response = await axios.get('http://192.168.0.103:3000/class');
                 setClassNames(response.data);
             } catch (error) {
                 console.error('There was an error fetching the class names:', error);
@@ -25,7 +25,7 @@ const TimeTable = () => {
         const fetchTimetable = async () => {
             if (selectedClass) {
                 try {
-                    const timetableResponse = await axios.get(`http://localhost:3000/timetable/class/${selectedClass}`);
+                    const timetableResponse = await axios.get(`http://192.168.0.103:3000/timetable/class/${selectedClass}`);
                     setTimetable(timetableResponse.data);
                 } catch (error) {
                     console.error('There was an error fetching the timetable:', error);

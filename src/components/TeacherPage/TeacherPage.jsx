@@ -19,7 +19,7 @@ const TeacherPage = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:3000/notification'); 
+      const response = await fetch('http://192.168.0.103:3000/notification'); 
       if (!response.ok) throw new Error('Failed to fetch events');
       const data = await response.json();
       console.log('Fetched events:', data);
@@ -58,7 +58,7 @@ const TeacherPage = () => {
     const postTime = new Date().toISOString(); // Get current date and time as post time
 
     try {
-      const response = await fetch('http://localhost:3000/notification', {
+      const response = await fetch('http://192.168.0.103:3000/notification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ const TeacherPage = () => {
     setError(null);
     try {
       console.log(`Attempting to delete event with ID: ${id}`); 
-      const response = await fetch(`http://localhost:3000/notification/${id}`, {
+      const response = await fetch(`http://192.168.0.103:3000/notification/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

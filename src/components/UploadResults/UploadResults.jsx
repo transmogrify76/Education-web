@@ -18,7 +18,7 @@
 //       setLoading(true);
 //       setError(null);
 //       try {
-//         const response = await axios.get('http://localhost:3000/class');
+//         const response = await axios.get('http://192.168.0.103:3000/class');
 //         setClassNames(Array.isArray(response.data) ? response.data : []);
 //       } catch (error) {
 //         setError('Error fetching class names');
@@ -36,13 +36,13 @@
 //         setError(null);
 //         try {
 //           // Fetch students for the selected class
-//           const studentsResponse = await axios.get(`http://localhost:3000/class/${selectedClass}`);
+//           const studentsResponse = await axios.get(`http://192.168.0.103:3000/class/${selectedClass}`);
 //           const studentsData = Array.isArray(studentsResponse.data.students) ? studentsResponse.data.students : [];
 //           const sortedStudents = studentsData.sort((a, b) => a.name.localeCompare(b.name));
 //           setStudents(sortedStudents);
 
 //           // Fetch subjects for the selected class
-//           const subjectsResponse = await axios.get(`http://localhost:3000/subjects/class/${selectedClass}`);
+//           const subjectsResponse = await axios.get(`http://192.168.0.103:3000/subjects/class/${selectedClass}`);
 //           const subjectsData = Array.isArray(subjectsResponse.data) ? subjectsResponse.data : [];
 //           setSubjects(subjectsData);
 
@@ -101,7 +101,7 @@
 //             marks: marks[studentId][subjectId],
 //           };
           
-//           await axios.post('http://localhost:3000/results/create', resultData);
+//           await axios.post('http://192.168.0.103:3000/results/create', resultData);
 //         }
 //       }
 //       alert('Results uploaded successfully!');
@@ -203,7 +203,7 @@ const UploadResults = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get('http://localhost:3000/class');
+        const response = await axios.get('http://192.168.0.103:3000/class');
         setClassNames(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         setError('Error fetching class names');
@@ -223,12 +223,12 @@ const UploadResults = () => {
         setError(null);
         try {
           // Fetch students for the selected class
-          const studentsResponse = await axios.get(`http://localhost:3000/class/${selectedClass}`);
+          const studentsResponse = await axios.get(`http://192.168.0.103:3000/class/${selectedClass}`);
           const studentsData = Array.isArray(studentsResponse.data.students) ? studentsResponse.data.students : [];
           setStudents(studentsData);
 
           // Fetch subjects for the selected class
-          const subjectsResponse = await axios.get(`http://localhost:3000/subjects/class/${selectedClass}`);
+          const subjectsResponse = await axios.get(`http://192.168.0.103:3000/subjects/class/${selectedClass}`);
           const subjectsData = Array.isArray(subjectsResponse.data) ? subjectsResponse.data : [];
           setSubjects(subjectsData);
 
@@ -292,7 +292,7 @@ const UploadResults = () => {
             marks: marks[studentId][subjectId],
           };
           
-          await axios.post('http://localhost:3000/results/create', resultData);
+          await axios.post('http://192.168.0.103:3000/results/create', resultData);
         }
       }
       alert('Results uploaded successfully!');

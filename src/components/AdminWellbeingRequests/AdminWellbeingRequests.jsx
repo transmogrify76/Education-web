@@ -10,7 +10,7 @@ const AdminWellbeingRequests = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await fetch('http://localhost:3000/student-wellbeing');
+        const response = await fetch('http://192.168.0.103:3000/student-wellbeing');
         if (!response.ok) {
           throw new Error('Failed to fetch requests');
         }

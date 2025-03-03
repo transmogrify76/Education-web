@@ -27,7 +27,7 @@ const TeacherList = () => {
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
-        const response = await fetch('http://localhost:3000/teacher', {
+        const response = await fetch('http://192.168.0.103:3000/teacher', {
           headers: {
             'Authorization': `Bearer ${authToken}`,  // Add token to Authorization header
           },
@@ -46,7 +46,7 @@ const TeacherList = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch('http://localhost:3000/class', {
+        const response = await fetch('http://192.168.0.103:3000/class', {
           headers: {
             'Authorization': `Bearer ${authToken}`,  // Add token to Authorization header
           },
@@ -70,7 +70,7 @@ const TeacherList = () => {
       // Fetch teachers for the selected class from the API
       const fetchTeachersForClass = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/teacher/class/${classId}`, {
+          const response = await fetch(`http://192.168.0.103:3000/teacher/class/${classId}`, {
             headers: {
               'Authorization': `Bearer ${authToken}`,  // Add token to Authorization header
             },
@@ -93,7 +93,7 @@ const TeacherList = () => {
   // Handle Delete Teacher action
   const handleDeleteTeacher = async (teacherId) => {
     try {
-      await fetch(`http://localhost:3000/teacher/${teacherId}`, {
+      await fetch(`http://192.168.0.103:3000/teacher/${teacherId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${authToken}`,  // Add token to Authorization header
@@ -110,7 +110,7 @@ const TeacherList = () => {
   const fetchTeacherDetails = async (id) => {
     if (!id || !authToken) return;
     try {
-      const response = await fetch(`http://localhost:3000/teacher/${id}`, {
+      const response = await fetch(`http://192.168.0.103:3000/teacher/${id}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
@@ -176,7 +176,7 @@ const TeacherList = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:3000/teacher/${selectedTeacherId}`,
+        `http://192.168.0.103:3000/teacher/${selectedTeacherId}`,
         formData,
         {
           headers: {

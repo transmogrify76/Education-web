@@ -17,7 +17,7 @@ const EbookPage = () => {
   useEffect(() => {
     const fetchClassOptions = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/class');
+        const response = await axios.get('http://192.168.0.103:3000/class');
         console.log(response.data);
         setClassOptions(response.data); 
       } catch (error) {
@@ -59,7 +59,7 @@ const EbookPage = () => {
 
     try {
       // Make the POST request to the backend
-      await axios.post('http://localhost:3000/ebooks', data, {
+      await axios.post('http://192.168.0.103:3000/ebooks', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

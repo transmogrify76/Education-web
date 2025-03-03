@@ -25,7 +25,7 @@ const ClassCreate = () => {
   // Fetch all teachers
   const fetchTeachers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/teacher', {
+      const response = await axios.get('http://192.168.0.103:3000/teacher', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -40,7 +40,7 @@ const ClassCreate = () => {
   // Fetch all classes
   const fetchClasses = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/class', {
+      const response = await axios.get('http://192.168.0.103:3000/class', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -55,7 +55,7 @@ const ClassCreate = () => {
   // Fetch class by ID
   const fetchClassById = async (classId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/class/${classId}`, {
+      const response = await axios.get(`http://192.168.0.103:3000/class/${classId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -79,7 +79,7 @@ const ClassCreate = () => {
     try {
       if (editMode) {
         // Update existing class (PATCH method)
-        await axios.patch(`http://localhost:3000/class/${editClassId}`, payload, {
+        await axios.patch(`http://192.168.0.103:3000/class/${editClassId}`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -88,7 +88,7 @@ const ClassCreate = () => {
         setEditClassId(null);
       } else {
         // Create new class (POST method)
-        await axios.post('http://localhost:3000/class', payload, {
+        await axios.post('http://192.168.0.103:3000/class', payload, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -111,7 +111,7 @@ const ClassCreate = () => {
   // Handle Delete button click
   const handleDelete = async (classId) => {
     try {
-      await axios.delete(`http://localhost:3000/class/${classId}`, {
+      await axios.delete(`http://192.168.0.103:3000/class/${classId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

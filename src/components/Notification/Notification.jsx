@@ -129,7 +129,7 @@ const Notification = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3000/notification')
+    fetch('http://192.168.0.103:3000/notification')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');

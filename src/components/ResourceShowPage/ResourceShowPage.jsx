@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';  // Use useLocation to access the passed state
+import { useLocation } from 'react-router-dom';  
 import './ResourceShowPage.css';
 import Header from '../Header/Header';
 import SideNav from '../SideNav/SideNav';
 
 const ResourceShowPage = () => {
-  // Use location to get state
+
   const location = useLocation();
-  const studentId = location.state?.studentId;  // Access studentId passed via state
+  const studentId = location.state?.studentId;  
   
   const [classes, setClasses] = useState([]);
   const [allResources, setAllResources] = useState([]);
   const [filteredResources, setFilteredResources] = useState([]);
   const [selectedClassId, setSelectedClassId] = useState('');
-
-  // Fetch all classes on component mount
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/class');
+        const response = await axios.get('http://192.168.0.103:3000/class');
         setClasses(response.data);
       } catch (error) {
         console.error('Error fetching classes:', error);
@@ -29,11 +27,11 @@ const ResourceShowPage = () => {
     fetchClasses();
   }, []);
 
-  // Fetch all resources on component mount
+
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/resources');
+        const response = await axios.get('http://192.168.0.103:3000/resources');
         setAllResources(response.data);
       } catch (error) {
         console.error('Error fetching resources:', error);
@@ -43,13 +41,13 @@ const ResourceShowPage = () => {
     fetchResources();
   }, []);
 
-  // Filter resources whenever selectedClassId changes
+
   useEffect(() => {
     if (selectedClassId) {
       const filtered = allResources.filter(resource => resource.classId === Number(selectedClassId));
       setFilteredResources(filtered);
     } else {
-      setFilteredResources([]); // Clear resources if no class is selected
+      setFilteredResources([]); 
     }
   }, [selectedClassId, allResources]);
 
@@ -74,7 +72,7 @@ const ResourceShowPage = () => {
     <div className='for-header'>
       <Header />
       <div className="teaching-staff">
-        <SideNav studentId={studentId} /> {/* Pass studentId to SideNav */}
+        <SideNav studentId={studentId} /> 
         <div className="resource-show-container">
           <h1>Resource Show Page</h1>
 

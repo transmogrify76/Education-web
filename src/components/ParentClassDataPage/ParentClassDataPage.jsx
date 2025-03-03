@@ -30,7 +30,7 @@ const ParentClassDataPage = () => {
     const fetchClassNames = async () => {
       try {
         // Assuming your backend may use parentId to fetch class data
-        const response = await axios.get('http://localhost:3000/class', {
+        const response = await axios.get('http://192.168.0.103:3000/class', {
           params: { parentId } // Send parentId if needed
         });
         setClassNames(response.data);
@@ -50,7 +50,7 @@ const ParentClassDataPage = () => {
       if (selectedClassId) {
         setIsLoading(true);
         try {
-          const response = await axios.get(`http://localhost:3000/meeting/${selectedClassId}`, {
+          const response = await axios.get(`http://192.168.0.103:3000/meeting/${selectedClassId}`, {
             params: { parentId } // Send parentId if needed
           });
           if (response.data && response.data.title) {

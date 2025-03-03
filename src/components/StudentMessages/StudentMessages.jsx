@@ -49,11 +49,11 @@ const StudentMessages = () => {
         };
 
         // Fetch messages
-        const messagesResponse = await axios.get(`http://localhost:3000/communication/communication-records/student/${studentId}`, config);
+        const messagesResponse = await axios.get(`http://192.168.0.103:3000/communication/communication-records/student/${studentId}`, config);
         setMessages(messagesResponse.data);
 
         // Fetch student details to get the name
-        const studentResponse = await axios.get(`http://localhost:3000/student/${studentId}`, config);
+        const studentResponse = await axios.get(`http://192.168.0.103:3000/student/${studentId}`, config);
         setStudentName(studentResponse.data.name);
 
         setLoading(false);

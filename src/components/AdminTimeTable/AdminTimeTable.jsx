@@ -21,7 +21,7 @@ const AdminTimeTable = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch('http://localhost:3000/class');
+        const response = await fetch('http://192.168.0.103:3000/class');
         const data = await response.json();
         setClassOptions(data); // Set available classes
       } catch (error) {
@@ -35,7 +35,7 @@ const AdminTimeTable = () => {
     if (formData.classId) {
       const fetchTeachers = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/class/${formData.classId}`);
+          const response = await fetch(`http://192.168.0.103:3000/class/${formData.classId}`);
           const data = await response.json();
           setTeacherOptions(data.teachers || []);
         } catch (error) {
@@ -50,7 +50,7 @@ const AdminTimeTable = () => {
     if (formData.professor) {
       const fetchSubjects = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/teacher/${formData.professor}`);
+          const response = await fetch(`http://192.168.0.103:3000/teacher/${formData.professor}`);
           const data = await response.json();
           setSubjectOptions(data.subjects || []);
         } catch (error) {
@@ -63,7 +63,7 @@ const AdminTimeTable = () => {
 
   const fetchTimetables = async () => {
     try {
-      const response = await fetch('http://localhost:3000/timetable');
+      const response = await fetch('http://192.168.0.103:3000/timetable');
       const data = await response.json();
       setTimetable(data);
     } catch (error) {
@@ -92,7 +92,7 @@ const AdminTimeTable = () => {
       classId: formData.classId,
     };
 
-    fetch('http://localhost:3000/timetable', {
+    fetch('http://192.168.0.103:3000/timetable', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ const AdminTimeTable = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/timetable/${id}`, {
+      const response = await fetch(`http://192.168.0.103:3000/timetable/${id}`, {
         method: 'DELETE',
       });
 

@@ -38,7 +38,7 @@ const FeeReminderPage = () => {
       const fetchStudentData = async () => {
         setLoading(true);
         try {
-          const response = await fetch(`http://localhost:3000/parent/${parentId}`);
+          const response = await fetch(`http://192.168.0.103:3000/parent/${parentId}`);
           if (!response.ok) throw new Error('Network response was not ok');
           const data = await response.json();
           setStudents(data.students || []);
@@ -64,7 +64,7 @@ const FeeReminderPage = () => {
 
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
+        const response = await fetch(`http://192.168.0.103:3000/fee-reminder/student/${selectedStudentId}`);
         if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         setFeeData(data || []);
@@ -104,7 +104,7 @@ const FeeReminderPage = () => {
           alert('Payment successful. Payment ID: ' + response.razorpay_payment_id);
           try {
             // Update fee status to 'paid'
-            const updateResponse = await fetch(`http://localhost:3000/fee-reminder/update-latest/${selectedStudentId}`, {
+            const updateResponse = await fetch(`http://192.168.0.103:3000/fee-reminder/update-latest/${selectedStudentId}`, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ const FeeReminderPage = () => {
             if (!updateResponse.ok) throw new Error('Failed to update fee status');
            
             // Refresh fee data
-            const updatedFeeResponse = await fetch(`http://localhost:3000/fee-reminder/student/${selectedStudentId}`);
+            const updatedFeeResponse = await fetch(`http://192.168.0.103:3000/fee-reminder/student/${selectedStudentId}`);
             if (!updatedFeeResponse.ok) throw new Error('Failed to fetch updated fee data');
             const updatedFeeData = await updatedFeeResponse.json();
             setFeeData(updatedFeeData);

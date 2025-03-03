@@ -25,7 +25,7 @@ const AdminBehaviorAssessment = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/student', {
+        const response = await axios.get('http://192.168.0.103:3000/student', {
           headers: { Authorization: `Bearer ${token}` } // Add the token to the header
         });
         const studentList = response.data.map((entry) => ({
@@ -81,7 +81,7 @@ const AdminBehaviorAssessment = () => {
     };
 
     try {
-      await axios.post('http://localhost:3000/behavior-assessment', behaviorData, {
+      await axios.post('http://192.168.0.103:3000/behavior-assessment', behaviorData, {
         headers: { Authorization: `Bearer ${token}` } // Add token to the header for the post request
       });
       setSuccess('Behavior assessment submitted successfully!');

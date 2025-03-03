@@ -39,7 +39,7 @@ const TeacherStudentManagementPage = () => {
   useEffect(() => {
     const fetchClassNames = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/class');
+        const response = await axios.get('http://192.168.0.103:3000/class');
         setClassNames(response.data);
       } catch (error) {
         console.error('There was an error fetching the class names:', error);
@@ -52,7 +52,7 @@ const TeacherStudentManagementPage = () => {
     const fetchStudentsByClass = async () => {
       if (selectedClassId) {
         try {
-          const response = await axios.get(`http://localhost:3000/management/students/class/${selectedClassId}`);
+          const response = await axios.get(`http://192.168.0.103:3000/management/students/class/${selectedClassId}`);
           setStudents(response.data);
         } catch (error) {
           console.error('There was an error fetching the students:', error);
@@ -68,7 +68,7 @@ const TeacherStudentManagementPage = () => {
     const fetchClassDetails = async () => {
       if (selectedClassId) {
         try {
-          const response = await axios.get(`http://localhost:3000/class/${selectedClassId}`);
+          const response = await axios.get(`http://192.168.0.103:3000/class/${selectedClassId}`);
           setClassDetails(response.data);
         } catch (error) {
           console.error('There was an error fetching the class details:', error);
@@ -88,11 +88,11 @@ const TeacherStudentManagementPage = () => {
     const studentId = e.target.value;
     if (studentId) {
       try {
-        const studentResponse = await axios.get(`http://localhost:3000/management/students/${studentId}`);
+        const studentResponse = await axios.get(`http://192.168.0.103:3000/management/students/${studentId}`);
         setStudentDetails(studentResponse.data);
 
         if (studentResponse.data.classId) {
-          const classResponse = await axios.get(`http://localhost:3000/management/students/class/${studentResponse.data.classId}`);
+          const classResponse = await axios.get(`http://192.168.0.103:3000/management/students/class/${studentResponse.data.classId}`);
           setClassDetails(classResponse.data);
         } else {
           setClassDetails(null);
@@ -109,7 +109,7 @@ const TeacherStudentManagementPage = () => {
   const handleAddStudent = async () => {
     if (studentIdToAdd && classIdToAdd) {
       try {
-        await axios.post('http://localhost:3000/management/students/add', {
+        await axios.post('http://192.168.0.103:3000/management/students/add', {
           studentId: studentIdToAdd,
           classId: classIdToAdd,
         });
@@ -129,7 +129,7 @@ const TeacherStudentManagementPage = () => {
   const handleRemoveStudent = async () => {
     if (studentIdToRemove && classIdToRemove) {
       try {
-        await axios.delete('http://localhost:3000/management/students/remove', {
+        await axios.delete('http://192.168.0.103:3000/management/students/remove', {
           data: { studentId: studentIdToRemove, classId: classIdToRemove },
         });
         alert('Student removed successfully');

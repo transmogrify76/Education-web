@@ -8,7 +8,7 @@ const UpdateLeaveStatus = () => {
 
   // Fetching leave requests from the server
   useEffect(() => {
-    axios.get('http://localhost:3000/leaves')
+    axios.get('http://192.168.0.103:3000/leaves')
       .then(response => {
         const sortedRequests = response.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         setLeaveRequests(sortedRequests);
@@ -20,7 +20,7 @@ const UpdateLeaveStatus = () => {
 
   // Handle status change by sending PATCH request to the correct endpoint
   const handleStatusChange = (id, status) => {
-    axios.patch(`http://localhost:3000/leaves/${id}/status`, { status })  // Updated URL
+    axios.patch(`http://192.168.0.103:3000/leaves/${id}/status`, { status })  // Updated URL
       .then(() => {
         setLeaveRequests(prevRequests =>
           prevRequests.map(request =>

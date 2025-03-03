@@ -30,7 +30,7 @@ export default function Login() {
 
     try {
       // Send login request to the server
-      const response = await fetch('http://localhost:3000/student/login', {
+      const response = await fetch('http://192.168.0.103:3000/student/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

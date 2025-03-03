@@ -23,7 +23,7 @@ const ParentList = () => {
   useEffect(() => {
     const fetchAllParents = async () => {
       try {
-        const response = await fetch('http://localhost:3000/parent', {
+        const response = await fetch('http://192.168.0.103:3000/parent', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -55,7 +55,7 @@ const ParentList = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch('http://localhost:3000/class', {
+        const response = await fetch('http://192.168.0.103:3000/class', {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -75,7 +75,7 @@ const ParentList = () => {
       if (!selectedClassId) return; // Only fetch if a class is selected
 
       try {
-        const response = await fetch(`http://localhost:3000/student/parents-by-class/${selectedClassId}`, {
+        const response = await fetch(`http://192.168.0.103:3000/student/parents-by-class/${selectedClassId}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
@@ -97,7 +97,7 @@ const ParentList = () => {
 
   const fetchAllParents = async () => {
     try {
-      const response = await fetch('http://localhost:3000/parent', {
+      const response = await fetch('http://192.168.0.103:3000/parent', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -151,7 +151,7 @@ const ParentList = () => {
     const authToken = localStorage.getItem('authToken');
 
     try {
-      const response = await fetch(`http://localhost:3000/parent/${editingParent.id}`, {
+      const response = await fetch(`http://192.168.0.103:3000/parent/${editingParent.id}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${authToken}`,
@@ -166,7 +166,7 @@ const ParentList = () => {
 
       // Re-fetch parents by class if selected, otherwise re-fetch all parents
       if (selectedClassId) {
-        const response = await fetch(`http://localhost:3000/student/parents-by-class/${selectedClassId}`, {
+        const response = await fetch(`http://192.168.0.103:3000/student/parents-by-class/${selectedClassId}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },

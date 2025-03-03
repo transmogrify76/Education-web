@@ -41,7 +41,7 @@ const StudentListPage = () => {
   // Fetch all students
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/student', {
+      const response = await axios.get('http://192.168.0.103:3000/student', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAllStudents(response.data);
@@ -55,7 +55,7 @@ const StudentListPage = () => {
   // Fetch classes
   const fetchClasses = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/class', {
+      const response = await axios.get('http://192.168.0.103:3000/class', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setClasses(response.data);
@@ -68,7 +68,7 @@ const StudentListPage = () => {
   // Fetch students for a specific class
   const fetchStudentsForClass = async (classId) => {
     try {
-      const response = await axios.get(`http://localhost:3000/class/${classId}`, {
+      const response = await axios.get(`http://192.168.0.103:3000/class/${classId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setStudents(response.data.students);
@@ -81,7 +81,7 @@ const StudentListPage = () => {
   // Handle student deletion
   const handleDelete = async (studentId) => {
     try {
-      await axios.delete(`http://localhost:3000/student/${studentId}`, {
+      await axios.delete(`http://192.168.0.103:3000/student/${studentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchStudents(); // Refresh the student list after deletion
@@ -119,7 +119,7 @@ const StudentListPage = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`http://localhost:3000/student/update/${editStudent.id}`, editFormData, {
+      await axios.patch(`http://192.168.0.103:3000/student/update/${editStudent.id}`, editFormData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setEditStudent(null);

@@ -36,11 +36,11 @@ const CreateResourcePage = () => {
       const fetchClassesAndResources = async () => {
         try {
           // Fetch all classes
-          const classesResponse = await axios.get('http://localhost:3000/class');
+          const classesResponse = await axios.get('http://192.168.0.103:3000/class');
           setClasses(classesResponse.data);
 
           // Fetch resources for the teacher
-          const resourcesResponse = await axios.get(`http://localhost:3000/resources/by-teacher/${teacherId}`);
+          const resourcesResponse = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
           setResources(resourcesResponse.data);
         } catch (error) {
           setError('Error fetching data');
@@ -65,7 +65,7 @@ const CreateResourcePage = () => {
       classId: parseInt(classId, 10), // Use the selected classId
     };
 
-    axios.post('http://localhost:3000/resources', resourceData, {
+    axios.post('http://192.168.0.103:3000/resources', resourceData, {
       params: { teacherId }
     })
       .then(response => {
@@ -76,7 +76,7 @@ const CreateResourcePage = () => {
         setContent('');
         setClassId('');
         // Refresh resources list
-        return axios.get(`http://localhost:3000/resources/by-teacher/${teacherId}`);
+        return axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
       })
       .then(response => setResources(response.data))
       .catch(error => console.error('Error creating resource:', error));
@@ -84,11 +84,11 @@ const CreateResourcePage = () => {
 
   const handleDelete = (resourceId) => {
     if (window.confirm('Are you sure you want to delete this resource?')) {
-      axios.delete(`http://localhost:3000/resources/${resourceId}`)
+      axios.delete(`http://192.168.0.103:3000/resources/${resourceId}`)
         .then(response => {
           alert('Resource deleted successfully!');
           // Refresh resources list
-          return axios.get(`http://localhost:3000/resources/by-teacher/${teacherId}`);
+          return axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
         })
         .then(response => setResources(response.data))
         .catch(error => console.error('Error deleting resource:', error));

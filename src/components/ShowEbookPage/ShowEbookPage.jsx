@@ -39,7 +39,7 @@ const ShowEbookPage = () => {
         };
 
         try {
-          const response = await axios.get('http://localhost:3000/class', config); // Pass config
+          const response = await axios.get('http://192.168.0.103:3000/class', config); // Pass config
           const data = response.data;
 
           // Find class by matching studentId
@@ -76,7 +76,7 @@ const ShowEbookPage = () => {
         };
 
         try {
-          const response = await axios.get(`http://localhost:3000/ebooks/${classId}`, config); // Pass config
+          const response = await axios.get(`http://192.168.0.103:3000/ebooks/${classId}`, config); // Pass config
           setEbooks(response.data);
         } catch (err) {
           console.error('Error fetching ebooks:', err);
@@ -99,10 +99,11 @@ const ShowEbookPage = () => {
 
     try {
       const response = await axios({
-        url: `http://localhost:3000/ebooks/download/${ebookId}`,
+        url: `http://192.168.0.103:3000/ebooks/download/${ebookId}`,
         method: 'GET',
         responseType: 'blob',
-        ...config, // Pass config
+        ...config, 
+
       });
 
       const blob = new Blob([response.data], { type: 'application/pdf' });
@@ -130,7 +131,7 @@ const ShowEbookPage = () => {
 
     try {
       const response = await axios({
-        url: `http://localhost:3000/ebooks/download/${ebookId}`,
+        url: `http://192.168.0.103:3000/ebooks/download/${ebookId}`,
         method: 'GET',
         responseType: 'blob',
         ...config, // Pass config

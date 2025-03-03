@@ -20,7 +20,7 @@ const StudentIdCardPage = () => {
         const fetchStudentData = async () => {
           console.log('Fetching data for parentId:', parentId); // Debug log
           try {
-            const response = await fetch(`http://localhost:3000/parent/${parentId}`);
+            const response = await fetch(`http://192.168.0.103:3000/parent/${parentId}`);
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }

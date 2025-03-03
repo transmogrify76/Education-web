@@ -19,7 +19,7 @@ const NotificationPage = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:3000/notification');
+      const response = await fetch('http://192.168.0.103:3000/notification');
       if (!response.ok) throw new Error('Failed to fetch notifications');
       const data = await response.json();
       console.log('Fetched notifications:', data);
@@ -48,7 +48,7 @@ const NotificationPage = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/notification', {
+      const response = await fetch('http://192.168.0.103:3000/notification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ const NotificationPage = () => {
     setError(null);
     try {
       console.log(`Attempting to delete notification with ID: ${id}`); // Debugging line
-      const response = await fetch(`http://localhost:3000/notification/${id}`, {
+      const response = await fetch(`http://192.168.0.103:3000/notification/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

@@ -7,7 +7,7 @@ const ConsentFormPage = () => {
 
   useEffect(() => {
     // Fetch all consent forms from the API
-    axios.get('http://localhost:3000/consent')
+    axios.get('http://192.168.0.103:3000/consent')
       .then(response => {
         // Sort forms by ID in ascending order (older first)
         const sortedForms = response.data.sort((a, b) => a.id - b.id);

@@ -29,7 +29,7 @@ const ThirdPartyServicesStudent = () => {
     if (studentId) {
       const fetchData = async () => {
         try {
-          const response = await fetch('http://localhost:3000/third-party-services');
+          const response = await fetch('http://192.168.0.103:3000/third-party-services');
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }

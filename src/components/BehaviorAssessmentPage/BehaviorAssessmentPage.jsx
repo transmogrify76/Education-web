@@ -31,7 +31,7 @@ const BehaviorAssessmentPage = () => {
 
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/behavior-assessment/student/${studentId}`);
+        const response = await axios.get(`http://192.168.0.103:3000/behavior-assessment/student/${studentId}`);
         setBehaviorData(response.data || []);
       } catch (err) {
         setError(`Failed to fetch behavior data: ${err.response ? err.response.data.message : err.message}`);

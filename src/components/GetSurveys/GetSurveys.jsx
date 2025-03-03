@@ -10,7 +10,7 @@ const GetSurveys = () => {
   useEffect(() => {
     const fetchSurveys = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/surveys');
+        const response = await axios.get('http://192.168.0.103:3000/surveys');
         setSurveys(response.data);
       } catch (error) {
         setMessage('Error fetching surveys.');

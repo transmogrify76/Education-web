@@ -16,7 +16,7 @@ const Home = () => {
               Explore a diverse range of courses, from academic subjects to practical skills.
               <br />
               Join our community, expand your knowledge, and unlock new opportunities. 
-              <span className="typing-animation">Start your journey with us today!</span>
+              <span className="typing-animation">Start your journey with us today !</span>
             </h3>
           </div>
         </div>

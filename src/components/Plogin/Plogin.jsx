@@ -25,7 +25,7 @@ export default function Plogin() {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/parent/login', {
+      const response = await fetch('http://192.168.0.103:3000/parent/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ export default function Plogin() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken'); // Clear the auth token
+    localStorage.removeItem('authToken'); 
     setIsLoggedIn(false);
     setMessage('You have logged out.');
   };

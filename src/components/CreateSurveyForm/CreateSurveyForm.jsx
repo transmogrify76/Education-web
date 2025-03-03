@@ -22,7 +22,7 @@ const CreateSurveyForm = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/surveys', surveyData);
+      const response = await axios.post('http://192.168.0.103:3000/surveys', surveyData);
       setMessage('Survey created successfully!');
       setTitle('');
       setTopic('');

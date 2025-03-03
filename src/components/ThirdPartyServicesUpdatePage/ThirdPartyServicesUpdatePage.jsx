@@ -8,7 +8,7 @@ const ThirdPartyServicesUpdatePage = () => {
   const [statusUpdate, setStatusUpdate] = useState({});
 
   useEffect(() => {
-    axios.get('http://localhost:3000/third-party-services')
+    axios.get('http://192.168.0.103:3000/third-party-services')
       .then(response => {
         const sortedServices = response.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         setServices(sortedServices);
@@ -19,7 +19,7 @@ const ThirdPartyServicesUpdatePage = () => {
   }, []);
 
   const handleStatusChange = (id, studentName, email, phoneNo, selectedServices, status) => {
-    axios.patch(`http://localhost:3000/third-party-services/${id}`, {
+    axios.patch(`http://192.168.0.103:3000/third-party-services/${id}`, {
       studentName,
       email,
       phoneNo,

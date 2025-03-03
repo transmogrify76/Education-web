@@ -25,7 +25,7 @@ const AttendancePage = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/attendance', payload);
+      const response = await axios.post('http://192.168.0.103:3000/attendance', payload);
       setResponseData(response.data);
       setError(null);
     } catch (err) {

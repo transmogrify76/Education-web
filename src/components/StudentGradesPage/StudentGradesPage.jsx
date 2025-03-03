@@ -55,7 +55,7 @@ const StudentGradesPage = () => {
 
         // Fetch grades
         const gradesResponse = await axios.get(
-          `http://localhost:3000/grading/student/${studentId}`,
+          `http://192.168.0.103:3000/grading/student/${studentId}`,
           config
         );
 
@@ -69,7 +69,7 @@ const StudentGradesPage = () => {
 
         // Fetch student details to get the student name
         const studentResponse = await axios.get(
-          `http://localhost:3000/student/${studentId}`,
+          `http://192.168.0.103:3000/student/${studentId}`,
           config
         );
 

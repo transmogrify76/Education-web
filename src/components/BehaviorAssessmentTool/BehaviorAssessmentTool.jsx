@@ -35,7 +35,7 @@ const BehaviorAssessmentTool = () => {
       const fetchStudents = async () => {
         setLoading(true);
         try {
-          const response = await axios.get(`http://localhost:3000/parent/${parentId}`);
+          const response = await axios.get(`http://192.168.0.103:3000/parent/${parentId}`);
           setStudents(response.data.students || []);
         } catch (err) {
           setError(`Failed to fetch students: ${err.response ? err.response.data.message : err.message}`);
@@ -55,7 +55,7 @@ const BehaviorAssessmentTool = () => {
 
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/behavior-assessment/student/${selectedStudentId}`);
+        const response = await axios.get(`http://192.168.0.103:3000/behavior-assessment/student/${selectedStudentId}`);
         setBehaviorData(response.data || []);
       } catch (err) {
         setError(`Failed to fetch behavior data: ${err.response ? err.response.data.message : err.message}`);

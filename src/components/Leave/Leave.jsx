@@ -26,7 +26,7 @@ const Leave = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/leaves', leaveData); // Adjust the URL as needed
+      const response = await axios.post('http://192.168.0.103:3000/leaves', leaveData); // Adjust the URL as needed
       setSuccess('Leave application submitted successfully!');
       setError('');
       // Reset form or handle successful submission here

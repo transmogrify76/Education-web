@@ -21,7 +21,7 @@ const TeacherRegister = () => {
     // Fetch subjects from the API
     const fetchSubjects = async () => {
       try {
-        const response = await fetch('http://localhost:3000/subjects');
+        const response = await fetch('http://192.168.0.103:3000/subjects');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -61,7 +61,7 @@ const TeacherRegister = () => {
     const authToken = localStorage.getItem('authToken'); // Get the auth token from localStorage
 
     try {
-      const response = await fetch('http://localhost:3000/teacher/register', {
+      const response = await fetch('http://192.168.0.103:3000/teacher/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -4,29 +4,29 @@ import Sidebar from '../SideNav/SideNav';
 import { FaTag } from 'react-icons/fa';
 import './GoalsSettingInternalExam.css';
 import Header from '../Header/Header';
-import {jwtDecode} from 'jwt-decode'; // Import jwt-decode to decode the JWT token
+import {jwtDecode} from 'jwt-decode'; 
 
 const GoalsSettingInternalExam = () => {
-  const { studentId: paramStudentId } = useParams(); // Fetch from URL params
+  const { studentId: paramStudentId } = useParams(); 
   const [subjects, setSubjects] = useState([
-    { name: 'arabic', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
+    { name: 'bengali', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
     { name: 'english', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
-    { name: 'urdu', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
+    { name: 'SCIENCE AND TECHNOLOGY', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
     { name: 'mathematics', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
-    { name: 'science and technology', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
-    { name: 'social studies', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' }
+    { name: 'History', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' },
+    { name: 'geography', prevGrade: '', suggestedTarget: '', targetForThisGrade: '' }
   ]);
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [studentId, setStudentId] = useState(null); // State to store the decoded studentId
+  const [studentId, setStudentId] = useState(null); 
 
   useEffect(() => {
-    // Fetch studentId from the JWT token (localStorage) if not passed as a URL parameter
+
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        setStudentId(decodedToken.Id); // Set the studentId from decoded token
+        setStudentId(decodedToken.Id); 
       } catch (error) {
         console.error('Failed to decode JWT token:', error);
       }
@@ -34,8 +34,8 @@ const GoalsSettingInternalExam = () => {
 
     const fetchStudentData = async () => {
       try {
-        const studentIdToUse = paramStudentId || studentId; // Use paramStudentId if available, else decoded studentId
-        const response = await fetch(`http://localhost:3000/goal-setting/student/${studentIdToUse}`);
+        const studentIdToUse = paramStudentId || studentId; 
+        const response = await fetch(`http://192.168.0.103:3000/goal-setting/student/${studentIdToUse}`);
         if (!response.ok) {
           throw new Error('Failed to fetch student data');
         }
@@ -80,13 +80,13 @@ const GoalsSettingInternalExam = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (loading) return; // Prevent multiple submissions
+    if (loading) return; 
 
     setLoading(true);
     const overallData = calculateOverallAchievements();
 
     const dataToSubmit = {
-      studentId: studentId, // Ensure the studentId is set from the token or URL params
+      studentId: studentId, 
       arabicAchievement: subjects.find(s => s.name === 'arabic').prevGrade,
       arabicSuggestedTarget: subjects.find(s => s.name === 'arabic').suggestedTarget,
       arabicMyTarget: subjects.find(s => s.name === 'arabic').targetForThisGrade,
@@ -113,8 +113,8 @@ const GoalsSettingInternalExam = () => {
     try {
       const method = student ? 'PATCH' : 'POST';
       const url = student
-        ? `http://localhost:3000/goal-setting/student/${studentId}`
-        : 'http://localhost:3000/goal-setting';
+        ? `http://192.168.0.103:3000/goal-setting/student/${studentId}`
+        : 'http://192.168.0.103:3000/goal-setting';
 
       const response = await fetch(url, {
         method: method,
@@ -133,7 +133,7 @@ const GoalsSettingInternalExam = () => {
     } catch (error) {
       console.error('Error:', error);
     } finally {
-      setLoading(false); // Re-enable form submission
+      setLoading(false); 
     }
   };
 
@@ -234,7 +234,7 @@ export default GoalsSettingInternalExam;
 
 //     const fetchStudentData = async () => {
 //       try {
-//         const response = await fetch(`http://localhost:3000/goal-setting/student`);
+//         const response = await fetch(`http://192.168.0.103:3000/goal-setting/student`);
 //         if (!response.ok) {
 //           throw new Error('Failed to fetch student data');
 //         }
@@ -311,8 +311,8 @@ export default GoalsSettingInternalExam;
 //     try {
 //       const method = student ? 'PATCH' : 'POST';
 //       const url = student
-//         ? `http://localhost:3000/goal-setting/student`
-//         : 'http://localhost:3000/goal-setting';
+//         ? `http://192.168.0.103:3000/goal-setting/student`
+//         : 'http://192.168.0.103:3000/goal-setting';
 
 //       const response = await fetch(url, {
 //         method: method,

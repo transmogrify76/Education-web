@@ -26,7 +26,7 @@ const ExternalReport = () => {
       // Fetch student class data and results once studentId is available
       const fetchClassData = async () => {
         try {
-          const classResponse = await fetch('http://localhost:3000/class');
+          const classResponse = await fetch('http://192.168.0.103:3000/class');
           const classData = await classResponse.json();
 
           let foundClass = '';
@@ -52,7 +52,7 @@ const ExternalReport = () => {
 
       const fetchResults = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/results/student/${studentId}`);
+          const response = await fetch(`http://192.168.0.103:3000/results/student/${studentId}`);
           const data = await response.json();
 
           const subjectMap = {};

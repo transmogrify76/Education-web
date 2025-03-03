@@ -27,7 +27,7 @@ const ThirdPartyServices = () => {
         const fetchData = async () => {
           try {
             // Fetch parent data
-            const parentResponse = await fetch(`http://localhost:3000/parent/${parentId}`);
+            const parentResponse = await fetch(`http://192.168.0.103:3000/parent/${parentId}`);
             if (!parentResponse.ok) {
               throw new Error('Network response was not ok');
             }
@@ -39,7 +39,7 @@ const ThirdPartyServices = () => {
             }));
 
             // Fetch student names
-            const studentResponse = await fetch(`http://localhost:3000/parent/${parentId}`);
+            const studentResponse = await fetch(`http://192.168.0.103:3000/parent/${parentId}`);
             if (!studentResponse.ok) {
               throw new Error('Network response was not ok');
             }
@@ -47,7 +47,7 @@ const ThirdPartyServices = () => {
             setStudents(studentData.students || []);
 
             // Fetch existing service requests for caching
-            const cachedResponse = await fetch(`http://localhost:3000/third-party-services?parentId=${parentId}`);
+            const cachedResponse = await fetch(`http://192.168.0.103:3000/third-party-services?parentId=${parentId}`);
             if (cachedResponse.ok) {
               const cachedData = await cachedResponse.json();
               setCachedData(cachedData);
@@ -92,7 +92,7 @@ const ThirdPartyServices = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/third-party-services', {
+      const response = await fetch('http://192.168.0.103:3000/third-party-services', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

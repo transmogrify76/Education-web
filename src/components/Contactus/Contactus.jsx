@@ -18,7 +18,7 @@ const Contactus = () => {
         setStatus('Sending...');
 
         try {
-            const response = await axios.post('http://localhost:3000/contact', formData);
+            const response = await axios.post('http://192.168.0.103:3000/contact', formData);
             if (response.status === 201) {
                 toast.success('Message sent successfully!', {
                     position: "top-right",

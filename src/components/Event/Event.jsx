@@ -6,7 +6,7 @@ const Event = () => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/notification')
+    fetch('http://192.168.0.103:3000/notification')
       .then(response => response.json())
       .then(data => {
         console.log('Notifications data:', data); // Debugging line

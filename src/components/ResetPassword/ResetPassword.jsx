@@ -9,14 +9,14 @@ const ResetPassword = () => {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const navigate = useNavigate(); // useNavigate hook
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Send request to backend
-      const response = await axios.post('http://localhost:3000/auth/reset-password', {
+
+      const response = await axios.post('http://192.168.0.103:3000/auth/reset-password', {
         email,
         otp,
         newPassword
@@ -31,7 +31,7 @@ const ResetPassword = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          onClose: () => navigate('/plogin') // Redirect to Plogin page on toast close
+          onClose: () => navigate('/plogin') 
         });
       } else {
         toast.error('Failed to reset password. Please try again later.', {
@@ -45,7 +45,7 @@ const ResetPassword = () => {
         });
       }
     } catch (error) {
-      // Log error details for debugging
+
       console.error('Error details:', error.response ? error.response.data : error.message);
 
       toast.error('Failed to reset password. Please try again later.', {

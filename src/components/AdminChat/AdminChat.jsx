@@ -22,7 +22,7 @@ const AdminChat = () => {
     // Fetch all students on component mount
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/student', {
+        const response = await axios.get('http://192.168.0.103:3000/student', {
           headers: { Authorization: `Bearer ${token}` }  // Add the token to the header
         });
         setStudents(response.data);
@@ -50,7 +50,7 @@ const AdminChat = () => {
     setLoading(true);
     try {
       // Fetch student messages
-      const studentMessagesResponse = await fetch(`http://localhost:3000/messages/student/${studentId}`, {
+      const studentMessagesResponse = await fetch(`http://192.168.0.103:3000/messages/student/${studentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!studentMessagesResponse.ok) {
@@ -59,7 +59,7 @@ const AdminChat = () => {
       const studentMessages = await studentMessagesResponse.json();
 
       // Fetch admin messages
-      const adminMessagesResponse = await fetch(`http://localhost:3000/messages/admin/${adminId}?studentId=${studentId}`, {
+      const adminMessagesResponse = await fetch(`http://192.168.0.103:3000/messages/admin/${adminId}?studentId=${studentId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!adminMessagesResponse.ok) {
@@ -99,7 +99,7 @@ const AdminChat = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/messages', messageData, {
+      const response = await axios.post('http://192.168.0.103:3000/messages', messageData, {
         headers: { Authorization: `Bearer ${token}` }  // Send the token for message creation
       });
       setMessages((prevMessages) => [...prevMessages, response.data]);

@@ -4,7 +4,7 @@ import SideNav from '../SideNav/SideNav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import Header from '../Header/Header';
-import { jwtDecode } from 'jwt-decode'; // Import jwt-decode to decode the token
+import { jwtDecode } from 'jwt-decode';
 
 const GoalSettingView = () => {
   const [formData, setFormData] = useState({
@@ -31,40 +31,38 @@ const GoalSettingView = () => {
     suggestedTargetForCurrentGrade: ''
   });
   
-  const [studentId, setStudentId] = useState(null); // State to store studentId from JWT token
-
+  const [studentId, setStudentId] = useState(null); 
   useEffect(() => {
-    // Fetch studentId from the JWT token (localStorage)
+    
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        setStudentId(decodedToken.Id); // Set the studentId from decoded token
+        setStudentId(decodedToken.Id); 
       } catch (error) {
         console.error('Failed to decode JWT token:', error);
       }
     }
-  }, []); // Empty dependency array means this will run only once when component mounts
+  }, []); 
 
-  // Fetch goal-setting data when studentId is available
+  
   useEffect(() => {
     if (studentId) {
       const fetchData = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/goal-setting/student/${studentId}`);
+          const response = await fetch(`http://192.168.0.103:3000/goal-setting/student/${studentId}`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
           const data = await response.json();
           
-          // Handle the case where data is an array
+
           if (Array.isArray(data) && data.length > 0) {
-            const [goalData] = data; // Extract the first object from the array
-            console.log('Fetched data:', goalData); // Log data to verify structure
+            const [goalData] = data; 
+            console.log('Fetched data:', goalData); 
             
-            // Exclude or handle id field if not needed
             const { id, studentId, ...rest } = goalData;
-            console.log('Processed goal data:', rest); // Log processed data
+            console.log('Processed goal data:', rest); 
             setFormData(rest);
           } else {
             console.error('Unexpected data format:', data);
@@ -76,7 +74,7 @@ const GoalSettingView = () => {
 
       fetchData();
     }
-  }, [studentId]); // Re-run effect when studentId is set
+  }, [studentId]);
 
   return (
     <div className='goal-setting-view-container'>
@@ -110,11 +108,9 @@ const GoalSettingView = () => {
                 <span className="text-green">My target for this grade</span>
               </div>
             </div>
-
-            {/* Arabic */}
             <div className="goal-setting-row">
               <div className="goal-setting-cell goal-setting-cell-sr">1</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">ARABIC</div>
+              <div className="goal-setting-cell goal-setting-cell-subject">BENGALI</div>
               <div className="goal-setting-cell">
                 <p>{formData.arabicAchievement}</p>
               </div>
@@ -125,8 +121,6 @@ const GoalSettingView = () => {
                 <p>{formData.arabicMyTarget}</p>
               </div>
             </div>
-
-            {/* English */}
             <div className="goal-setting-row">
               <div className="goal-setting-cell goal-setting-cell-sr">2</div>
               <div className="goal-setting-cell goal-setting-cell-subject">ENGLISH</div>
@@ -140,11 +134,9 @@ const GoalSettingView = () => {
                 <p>{formData.englishMyTarget}</p>
               </div>
             </div>
-
-            {/* Hindi */}
             <div className="goal-setting-row">
               <div className="goal-setting-cell goal-setting-cell-sr">3</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">HINDI</div>
+              <div className="goal-setting-cell goal-setting-cell-subject">SCIENCE & TECHNOLOGY</div>
               <div className="goal-setting-cell">
                 <p>{formData.hindiAchievement}</p>
               </div>
@@ -155,8 +147,6 @@ const GoalSettingView = () => {
                 <p>{formData.hindiMyTarget}</p>
               </div>
             </div>
-
-            {/* Mathematics */}
             <div className="goal-setting-row">
               <div className="goal-setting-cell goal-setting-cell-sr">4</div>
               <div className="goal-setting-cell goal-setting-cell-subject">MATHEMATICS</div>
@@ -170,11 +160,9 @@ const GoalSettingView = () => {
                 <p>{formData.mathematicsMyTarget}</p>
               </div>
             </div>
-
-            {/* Science & Technology */}
             <div className="goal-setting-row">
               <div className="goal-setting-cell goal-setting-cell-sr">5</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">SCIENCE & TECHNOLOGY</div>
+              <div className="goal-setting-cell goal-setting-cell-subject">HISTORY</div>
               <div className="goal-setting-cell">
                 <p>{formData.scienceAndTechnologyAchievement}</p>
               </div>
@@ -185,11 +173,9 @@ const GoalSettingView = () => {
                 <p>{formData.scienceAndTechnologyMyTarget}</p>
               </div>
             </div>
-
-            {/* Social Studies */}
             <div className="goal-setting-row">
               <div className="goal-setting-cell goal-setting-cell-sr">6</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">SOCIAL STUDIES</div>
+              <div className="goal-setting-cell goal-setting-cell-subject">GEOGRAPHY</div>
               <div className="goal-setting-cell">
                 <p>{formData.socialStudiesAchievement}</p>
               </div>

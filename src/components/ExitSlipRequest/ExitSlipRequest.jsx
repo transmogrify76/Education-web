@@ -39,7 +39,7 @@ const ExitSlipRequest = () => {
     if (parentId) {
       const fetchStudentData = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/parent/${parentId}`);
+          const response = await fetch(`http://192.168.0.103:3000/parent/${parentId}`);
           if (!response.ok) {
             throw new Error('Failed to fetch student data');
           }
@@ -94,7 +94,7 @@ const ExitSlipRequest = () => {
     data.append('attachment', formData.attachment);
 
     try {
-      const response = await fetch('http://localhost:3000/exit-slip', {
+      const response = await fetch('http://192.168.0.103:3000/exit-slip', {
         method: 'POST',
         body: data,
       });

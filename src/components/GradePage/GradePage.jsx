@@ -25,7 +25,7 @@ const GradePage = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3000/student', {
+    fetch('http://192.168.0.103:3000/student', {
       headers: getAuthHeaders(),  // Include the token in the request header
     })
       .then(response => response.json())
@@ -43,7 +43,7 @@ const GradePage = () => {
     if (selectedStudent) {
       setLoading(true);
       setError('');
-      fetch(`http://localhost:3000/grading/student/${selectedStudent}`, {
+      fetch(`http://192.168.0.103:3000/grading/student/${selectedStudent}`, {
         headers: getAuthHeaders(),  // Include the token in the request header
       })
         .then(response => {
@@ -78,7 +78,7 @@ const GradePage = () => {
     }
 
     setLoading(true);
-    fetch('http://localhost:3000/grading', {
+    fetch('http://192.168.0.103:3000/grading', {
       method: 'POST',
       headers: getAuthHeaders(),  // Include the token in the request header
       body: JSON.stringify({
@@ -107,7 +107,7 @@ const GradePage = () => {
   };
 
   const fetchGrades = () => {
-    fetch(`http://localhost:3000/grading/student/${selectedStudent}`, {
+    fetch(`http://192.168.0.103:3000/grading/student/${selectedStudent}`, {
       headers: getAuthHeaders(),  // Include the token in the request header
     })
       .then(response => response.json())
@@ -117,7 +117,7 @@ const GradePage = () => {
 
   const handleUpdate = (gradeId, subject, updatedGrade) => {
     setLoading(true);
-    fetch(`http://localhost:3000/grading/student/${selectedStudent}/subject/${subject}`, {
+    fetch(`http://192.168.0.103:3000/grading/student/${selectedStudent}/subject/${subject}`, {
       method: 'PATCH',
       headers: getAuthHeaders(),  // Include the token in the request header
       body: JSON.stringify(updatedGrade),

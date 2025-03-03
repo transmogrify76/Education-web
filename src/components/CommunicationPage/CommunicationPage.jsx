@@ -20,7 +20,7 @@
 
 //     // Fetch available classes
 //     useEffect(() => {
-//         axios.get('http://localhost:3000/class', {
+//         axios.get('http://192.168.0.103:3000/class', {
 //             headers: { Authorization: `Bearer ${token}` }
 //         })
 //         .then(response => setClasses(response.data))
@@ -30,7 +30,7 @@
 //     // Fetch students for a specific class
 //     const fetchStudentsForClass = async (classId) => {
 //         try {
-//             const response = await axios.get(`http://localhost:3000/class/${classId}`, {
+//             const response = await axios.get(`http://192.168.0.103:3000/class/${classId}`, {
 //                 headers: { Authorization: `Bearer ${token}` }
 //             });
 
@@ -79,7 +79,7 @@
 //             // Do not include selectedClass in the payload here
 //         };
 
-//         axios.post(`http://localhost:3000/communication/send-communication/${teacherId}`, communicationData)
+//         axios.post(`http://192.168.0.103:3000/communication/send-communication/${teacherId}`, communicationData)
 //             .then(response => alert('Communication sent successfully!'))
 //             .catch(error => console.error('Error sending communication:', error));
 //     };
@@ -189,7 +189,7 @@ const CommunicationPage = () => {
     // Fetch available classes
     useEffect(() => {
         if (teacherId) {
-            axios.get('http://localhost:3000/class', {
+            axios.get('http://192.168.0.103:3000/class', {
                 headers: { Authorization: `Bearer ${token}` }
             })
             .then(response => setClasses(response.data))
@@ -199,7 +199,7 @@ const CommunicationPage = () => {
 
     const fetchStudentsForClass = async (classId) => {
         try {
-            const response = await axios.get(`http://localhost:3000/class/${classId}`, {
+            const response = await axios.get(`http://192.168.0.103:3000/class/${classId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -248,7 +248,7 @@ const CommunicationPage = () => {
             recipientId,
         };
 
-        axios.post(`http://localhost:3000/communication/send-communication/${teacherId}`, communicationData)
+        axios.post(`http://192.168.0.103:3000/communication/send-communication/${teacherId}`, communicationData)
             .then(response => alert('Communication sent successfully!'))
             .catch(error => console.error('Error sending communication:', error));
     };

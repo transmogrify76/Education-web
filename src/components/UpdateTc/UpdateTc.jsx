@@ -8,7 +8,7 @@ const UpdateTc = () => {
 
   useEffect(() => {
     // Fetch the transfer requests and sort them by updatedAt date, with the most recent first
-    axios.get('http://localhost:3000/transfer-requests')
+    axios.get('http://192.168.0.103:3000/transfer-requests')
       .then(response => {
         const sortedRequests = response.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         setTransferRequests(sortedRequests);
@@ -20,7 +20,7 @@ const UpdateTc = () => {
 
   const handleStatusChange = (id, status) => {
     // Update the status of the transfer request in the database
-    axios.patch(`http://localhost:3000/transfer-requests/${id}`, { status })
+    axios.patch(`http://192.168.0.103:3000/transfer-requests/${id}`, { status })
       .then(response => {
         // Update the status in the transferRequests state to reflect the change immediately
         setTransferRequests(prevRequests =>

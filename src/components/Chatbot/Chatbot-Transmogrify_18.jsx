@@ -18,14 +18,14 @@ function Chatbot() {
     const fetchMessages = async () => {
       try {
         // Fetch student messages by student ID
-        const studentMessagesResponse = await fetch(`http://localhost:3000/messages/student/${studentId}`);
+        const studentMessagesResponse = await fetch(`http://192.168.0.103:3000/messages/student/${studentId}`);
         if (!studentMessagesResponse.ok) {
           throw new Error(`Student fetch error: ${studentMessagesResponse.status}`);
         }
         const studentMessages = await studentMessagesResponse.json();
 
         // Fetch admin ID
-        const adminResponse = await fetch('http://localhost:3000/admin');
+        const adminResponse = await fetch('http://192.168.0.103:3000/admin');
         if (!adminResponse.ok) {
           throw new Error(`Admin fetch error: ${adminResponse.status}`);
         }
@@ -33,7 +33,7 @@ function Chatbot() {
         setAdminId(adminData.id);
 
         // Fetch admin messages by admin ID
-        const adminMessagesResponse = await fetch(`http://localhost:3000/messages/admin/${adminData.id}`);
+        const adminMessagesResponse = await fetch(`http://192.168.0.103:3000/messages/admin/${adminData.id}`);
         if (!adminMessagesResponse.ok) {
           throw new Error(`Admin messages fetch error: ${adminMessagesResponse.status}`);
         }
@@ -62,7 +62,7 @@ function Chatbot() {
     if (newMessage.trim() !== '') {
       try {
         // Send new message
-        const response = await fetch('http://localhost:3000/messages', {
+        const response = await fetch('http://192.168.0.103:3000/messages', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -82,13 +82,13 @@ function Chatbot() {
         console.log('Message sent:', sentMessage);
 
         // Refetch messages after sending a new one
-        const studentMessagesResponse = await fetch(`http://localhost:3000/messages/student/${studentId}`);
+        const studentMessagesResponse = await fetch(`http://192.168.0.103:3000/messages/student/${studentId}`);
         if (!studentMessagesResponse.ok) {
           throw new Error(`Student fetch error: ${studentMessagesResponse.status}`);
         }
         const studentMessages = await studentMessagesResponse.json();
         
-        const adminMessagesResponse = await fetch(`http://localhost:3000/messages/admin/${adminId}`);
+        const adminMessagesResponse = await fetch(`http://192.168.0.103:3000/messages/admin/${adminId}`);
         if (!adminMessagesResponse.ok) {
           throw new Error(`Admin messages fetch error: ${adminMessagesResponse.status}`);
         }
@@ -109,13 +109,13 @@ function Chatbot() {
 
   const handleRefresh = async () => {
     try {
-      const studentMessagesResponse = await fetch(`http://localhost:3000/messages/student/${studentId}`);
+      const studentMessagesResponse = await fetch(`http://192.168.0.103:3000/messages/student/${studentId}`);
       if (!studentMessagesResponse.ok) {
         throw new Error(`Student fetch error: ${studentMessagesResponse.status}`);
       }
       const studentMessages = await studentMessagesResponse.json();
       
-      const adminMessagesResponse = await fetch(`http://localhost:3000/messages/admin/${adminId}`);
+      const adminMessagesResponse = await fetch(`http://192.168.0.103:3000/messages/admin/${adminId}`);
       if (!adminMessagesResponse.ok) {
         throw new Error(`Admin messages fetch error: ${adminMessagesResponse.status}`);
       }

@@ -26,7 +26,7 @@ export default function Tlogin() {
     }
   
     try {
-      const response = await fetch('http://localhost:3000/teacher/login', {
+      const response = await fetch('http://192.168.0.103:3000/teacher/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

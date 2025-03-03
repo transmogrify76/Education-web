@@ -25,7 +25,7 @@ const TeacherAddSubjectPage = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await fetch("http://localhost:3000/teacher");
+      const response = await fetch("http://192.168.0.103:3000/teacher");
       const data = await response.json();
       setTeachers(data);
     } catch (error) {
@@ -40,7 +40,7 @@ const TeacherAddSubjectPage = () => {
   const fetchTeacherDetails = async (id) => {
     if (!id || !token) return;
     try {
-      const response = await fetch(`http://localhost:3000/teacher/${id}`, {
+      const response = await fetch(`http://192.168.0.103:3000/teacher/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -101,7 +101,7 @@ const TeacherAddSubjectPage = () => {
 
     try {
       const response = await axios.patch(
-        `http://localhost:3000/teacher/${selectedTeacherId}`,
+        `http://192.168.0.103:3000/teacher/${selectedTeacherId}`,
         formData,
         {
           headers: {

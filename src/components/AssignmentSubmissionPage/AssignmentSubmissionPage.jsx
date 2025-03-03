@@ -19,7 +19,7 @@ const AssignmentSubmissionPage = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/class');
+        const response = await axios.get('http://192.168.0.103:3000/class');
         setClasses(response.data);
       } catch (error) {
         console.error('Error fetching classes:', error);
@@ -34,7 +34,7 @@ const AssignmentSubmissionPage = () => {
 
     const fetchAssignmentsByClass = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/assignments/class/${selectedClassId}`);
+        const response = await axios.get(`http://192.168.0.103:3000/assignments/class/${selectedClassId}`);
         setAssignments(response.data);
       } catch (error) {
         console.error('Error fetching assignments:', error);
@@ -78,7 +78,7 @@ const AssignmentSubmissionPage = () => {
     };
 
     try {
-      await axios.post(`http://localhost:3000/assignments/${selectedAssignment.id}/submit`, formData);
+      await axios.post(`http://192.168.0.103:3000/assignments/${selectedAssignment.id}/submit`, formData);
       alert('Assignment submitted successfully!');
       // Reset form fields
       setContent('');

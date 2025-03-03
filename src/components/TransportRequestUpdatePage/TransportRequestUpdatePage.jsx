@@ -8,7 +8,7 @@ const TransportRequestUpdatePage = () => {
   const [statusUpdate, setStatusUpdate] = useState({});
 
   useEffect(() => {
-    axios.get('http://localhost:3000/transport-request')
+    axios.get('http://192.168.0.103:3000/transport-request')
       .then(response => {
         const sortedRequests = response.data.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         setTransportRequests(sortedRequests);
@@ -19,7 +19,7 @@ const TransportRequestUpdatePage = () => {
   }, []);
 
   const handleStatusChange = (id, status) => {
-    axios.patch(`http://localhost:3000/transport-request/${id}/status`, { status })
+    axios.patch(`http://192.168.0.103:3000/transport-request/${id}/status`, { status })
       .then(response => {
         console.log('Status updated:', response.data); // Log response for debugging
         setTransportRequests(prevRequests =>

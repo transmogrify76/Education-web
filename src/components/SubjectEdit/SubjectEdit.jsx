@@ -14,7 +14,7 @@ const SubjectEdit = () => {
     // Fetch classes data
     const fetchClasses = async () => {
       try {
-        const response = await fetch('http://localhost:3000/class');
+        const response = await fetch('http://192.168.0.103:3000/class');
         const data = await response.json();
 
         // Check if the response is an array before using .map()
@@ -41,7 +41,7 @@ const SubjectEdit = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/subjects/create', {
+      const response = await fetch('http://192.168.0.103:3000/subjects/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

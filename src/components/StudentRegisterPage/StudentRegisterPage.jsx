@@ -26,7 +26,7 @@ const StudentRegisterPage = () => {
     useEffect(() => {
         const fetchClasses = async () => {
             try {
-                const response = await fetch('http://localhost:3000/class');
+                const response = await fetch('http://192.168.0.103:3000/class');
                 const data = await response.json();
 
                 if (response.ok) {
@@ -61,7 +61,7 @@ const StudentRegisterPage = () => {
                 return;
             }
 
-            const response = await fetch('http://localhost:3000/student/register', {
+            const response = await fetch('http://192.168.0.103:3000/student/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

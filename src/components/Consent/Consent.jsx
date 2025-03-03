@@ -42,7 +42,7 @@ const Consent = () => {
       setUserId(userIdFromToken);
 
       // Fetch parent details from API using parent ID
-      axios.get(`http://localhost:3000/parent/${userIdFromToken}`)
+      axios.get(`http://192.168.0.103:3000/parent/${userIdFromToken}`)
         .then(response => {
           const parentData = response.data;
           setParentName(parentData.name); // Set parent's name
@@ -83,7 +83,7 @@ const Consent = () => {
     };
 
     try {
-      await axios.post('http://localhost:3000/consent', consentData);
+      await axios.post('http://192.168.0.103:3000/consent', consentData);
       alert('Consent form submitted successfully!');
     } catch (error) {
       console.error('Error submitting consent form:', error);

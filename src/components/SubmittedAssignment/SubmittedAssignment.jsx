@@ -12,7 +12,7 @@
 //   useEffect(() => {
 //     const fetchClasses = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:3000/class');
+//         const response = await axios.get('http://192.168.0.103:3000/class');
 //         setClasses(response.data); // Set classes in state
 //       } catch (error) {
 //         setError('Failed to fetch classes.'); // Set error message
@@ -26,7 +26,7 @@
 //     if (selectedClassId) {
 //       const fetchAssignments = async () => {
 //         try {
-//           const response = await axios.get(`http://localhost:3000/assignments/class/${selectedClassId}`);
+//           const response = await axios.get(`http://192.168.0.103:3000/assignments/class/${selectedClassId}`);
 //           setAssignments(response.data); // Set assignments in state
 //         } catch (error) {
 //           setError('Failed to fetch assignments for the selected class.');
@@ -124,7 +124,7 @@ const SubmittedAssignment = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/class');
+        const response = await axios.get('http://192.168.0.103:3000/class');
         setClasses(response.data); // Set classes in state
       } catch (error) {
         setError('Failed to fetch classes.'); // Set error message
@@ -138,7 +138,7 @@ const SubmittedAssignment = () => {
     if (selectedClassId) {
       const fetchAssignments = async () => {
         try {
-          const response = await axios.get(`http://localhost:3000/assignments/class/${selectedClassId}`);
+          const response = await axios.get(`http://192.168.0.103:3000/assignments/class/${selectedClassId}`);
           setAssignments(response.data); // Set assignments in state
         } catch (error) {
           setError('Failed to fetch assignments for the selected class.');

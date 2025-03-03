@@ -59,7 +59,7 @@ const StudentWellbeingForm = () => {
           };
 
           // Fetch student wellbeing data based on studentId
-          const studentResponse = await axios.get(`http://localhost:3000/student-wellbeing/${studentId}`, config);
+          const studentResponse = await axios.get(`http://192.168.0.103:3000/student-wellbeing/${studentId}`, config);
           const studentDetails = studentResponse.data;
 
           // If data is available, update studentData state
@@ -133,7 +133,7 @@ const StudentWellbeingForm = () => {
         },
       };
 
-      const response = await axios.post('http://localhost:3000/student-wellbeing', payload, config);
+      const response = await axios.post('http://192.168.0.103:3000/student-wellbeing', payload, config);
 
       if (response.ok) {
         alert('Wellbeing form submitted successfully');

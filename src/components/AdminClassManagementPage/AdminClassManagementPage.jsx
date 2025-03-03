@@ -27,7 +27,7 @@ const AdminClassManagementPage = () => {
 
   const fetchTeachers = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/teacher');
+      const response = await axios.get('http://192.168.0.103:3000/teacher');
       setTeachers(response.data);
     } catch (error) {
       console.error('Error fetching teachers:', error);
@@ -39,7 +39,7 @@ const AdminClassManagementPage = () => {
     setLoading(true);
     setError(''); // Clear any previous errors
     try {
-      const response = await axios.get(`http://localhost:3000/class/teacher/${teacherId}`);
+      const response = await axios.get(`http://192.168.0.103:3000/class/teacher/${teacherId}`);
       if (response.data && Array.isArray(response.data)) {
         setClasses(response.data);
       } else {
@@ -65,11 +65,11 @@ const AdminClassManagementPage = () => {
 
     try {
       if (editMode) {
-        await axios.patch(`http://localhost:3000/class/${editClassId}`, payload);
+        await axios.patch(`http://192.168.0.103:3000/class/${editClassId}`, payload);
         setEditMode(false);
         setEditClassId(null);
       } else {
-        await axios.post('http://localhost:3000/class', payload);
+        await axios.post('http://192.168.0.103:3000/class', payload);
       }
       setClassName('');
       setSubject('');
@@ -89,7 +89,7 @@ const AdminClassManagementPage = () => {
 
   const handleDelete = async (classId) => {
     try {
-      await axios.delete(`http://localhost:3000/class/${classId}`);
+      await axios.delete(`http://192.168.0.103:3000/class/${classId}`);
       fetchClassesByTeacher(selectedTeacherId);
     } catch (error) {
       console.error('Error deleting class:', error);

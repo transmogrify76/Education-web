@@ -15,7 +15,7 @@ const SubjectManagement = () => {
         // Fetch classes data
         const fetchClasses = async () => {
             try {
-                const response = await fetch('http://localhost:3000/class');
+                const response = await fetch('http://192.168.0.103:3000/class');
                 const data = await response.json();
 
                 // Check if the response is an array before using .map()
@@ -38,7 +38,7 @@ const SubjectManagement = () => {
         const fetchSubjects = async () => {
             if (selectedClass) {
                 try {
-                    const response = await fetch(`http://localhost:3000/subjects/class/${selectedClass}`);
+                    const response = await fetch(`http://192.168.0.103:3000/subjects/class/${selectedClass}`);
                     const data = await response.json();
 
                     // Check if the response is an array before updating the subjects state
@@ -68,7 +68,7 @@ const SubjectManagement = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/subjects/create', {
+            const response = await fetch('http://192.168.0.103:3000/subjects/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

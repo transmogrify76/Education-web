@@ -32,7 +32,7 @@ const TransportRequest = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/transport-request', formData);
+            const response = await axios.post('http://192.168.0.103:3000/transport-request', formData);
             setResponseMessage('Request submitted successfully!');
             setFormData({
                 studentName: '',
@@ -138,7 +138,7 @@ const TransportRequest = () => {
                     <ul>
                         <li><strong>Morning Pickup:</strong> 7:00 AM - 8:00 AM</li>
                         <li><strong>Afternoon Drop-off:</strong> 4:30 PM - 6:00 PM</li>
-                        <li><strong>Charges:</strong> $100 per month</li>
+                        <li><strong>Charges:</strong> 3000 per month</li>
                         <li><strong>Contact for Queries:</strong> transport@ourschool.edu</li>
                     </ul>
                 </div>

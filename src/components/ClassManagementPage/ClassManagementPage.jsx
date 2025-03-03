@@ -18,7 +18,7 @@ const ClassManagementPage = () => {
 
   const fetchClasses = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/class/teacher/${teacherId}`);
+      const response = await axios.get(`http://192.168.0.103:3000/class/teacher/${teacherId}`);
       setClasses(response.data);
     } catch (error) {
       console.error('Error fetching classes:', error);
@@ -32,12 +32,12 @@ const ClassManagementPage = () => {
     try {
       if (editMode) {
         // Update existing class (PATCH method)
-        await axios.patch(`http://localhost:3000/class/${editClassId}`, payload);
+        await axios.patch(`http://192.168.0.103:3000/class/${editClassId}`, payload);
         setEditMode(false);
         setEditClassId(null);
       } else {
         // Create new class (POST method)
-        await axios.post('http://localhost:3000/class', payload);
+        await axios.post('http://192.168.0.103:3000/class', payload);
       }
       setClassName('');
       setSubject('');
@@ -56,7 +56,7 @@ const ClassManagementPage = () => {
 
   const handleDelete = async (classId) => {
     try {
-      await axios.delete(`http://localhost:3000/class/${classId}`);
+      await axios.delete(`http://192.168.0.103:3000/class/${classId}`);
       fetchClasses();
     } catch (error) {
       console.error('Error deleting class:', error);

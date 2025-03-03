@@ -13,7 +13,7 @@ const ExitSlipUpdate = () => {
 
   // Fetch exit slips on component mount
   useEffect(() => {
-    axios.get('http://localhost:3000/exit-slip')
+    axios.get('http://192.168.0.103:3000/exit-slip')
       .then(response => {
         setExitSlips(response.data);
         setError(null);
@@ -51,7 +51,7 @@ const ExitSlipUpdate = () => {
       formData.append('adminAttachment', replyAttachment[id]);
     }
 
-    axios.patch(`http://localhost:3000/exit-slip/${id}/admin-reply`, formData, {
+    axios.patch(`http://192.168.0.103:3000/exit-slip/${id}/admin-reply`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -121,7 +121,7 @@ const ExitSlipUpdate = () => {
                 <td>
                   {request.attachment && (
                     <button 
-                      onClick={() => window.open(`http://localhost:3000/${request.attachment}`, '_blank')}
+                      onClick={() => window.open(`http://192.168.0.103:3000/${request.attachment}`, '_blank')}
                       className="view-attachment-button"
                     >
                       View Attachment

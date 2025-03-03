@@ -35,7 +35,7 @@ const CounselingRequest = () => {
         const parentId = decodedToken.id; // Assuming 'id' is the parentId in the token
 
         // Fetch parent data using the decoded parentId
-        axios.get(`http://localhost:3000/parent/${parentId}`)
+        axios.get(`http://192.168.0.103:3000/parent/${parentId}`)
           .then((response) => {
             setParentData({
               parentId: parentId,
@@ -100,7 +100,7 @@ const CounselingRequest = () => {
     formDataToSend.append('phoneNo', parentData.phoneNo);
 
     try {
-      const response = await axios.post('http://localhost:3000/counseling-request', formDataToSend, {
+      const response = await axios.post('http://192.168.0.103:3000/counseling-request', formDataToSend, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -25,13 +25,13 @@ const AdminFeeReminderPage = () => {
     }
 
     // Fetch fee reminders
-    axios.get('http://localhost:3000/fee-reminder')
+    axios.get('http://192.168.0.103:3000/fee-reminder')
       .then(response => setFeeReminders(response.data))
       .catch(error => console.error('Error fetching fee reminders:', error));
 
     // Fetch students' data (with authorization token)
     if (storedToken) {
-      axios.get('http://localhost:3000/student', {
+      axios.get('http://192.168.0.103:3000/student', {
         headers: {
           Authorization: `Bearer ${storedToken}`,
         }
@@ -45,10 +45,10 @@ const AdminFeeReminderPage = () => {
 
   const handleApproval = (studentId, status) => {
     // Send patch request to update the fee reminder status
-    axios.patch(`http://localhost:3000/fee-reminder/update-latest/${studentId}`, { status })
+    axios.patch(`http://192.168.0.103:3000/fee-reminder/update-latest/${studentId}`, { status })
       .then(() => {
         // Refresh fee reminders
-        axios.get('http://localhost:3000/fee-reminder')
+        axios.get('http://192.168.0.103:3000/fee-reminder')
           .then(response => setFeeReminders(response.data))
           .catch(error => console.error('Error fetching updated fee reminders:', error));
       })
@@ -58,7 +58,7 @@ const AdminFeeReminderPage = () => {
   const handleCreate = (e) => {
     e.preventDefault();
     // Send POST request to create a new fee reminder with the studentId selected
-    axios.post('http://localhost:3000/fee-reminder', newReminder, {
+    axios.post('http://192.168.0.103:3000/fee-reminder', newReminder, {
       headers: {
         Authorization: `Bearer ${token}`, // Pass the authorization token in headers
       }

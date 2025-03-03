@@ -41,7 +41,7 @@ const ParentRegisterPage = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/parent/register', {
+            const response = await fetch('http://192.168.0.103:3000/parent/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

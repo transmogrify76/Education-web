@@ -21,11 +21,11 @@ const ParentMessages = () => {
           const parentId = decodedToken.id;
 
           // Fetch messages for the parent
-          const messagesResponse = await axios.get(`http://localhost:3000/communication/communication-records/parent/${parentId}`);
+          const messagesResponse = await axios.get(`http://192.168.0.103:3000/communication/communication-records/parent/${parentId}`);
           setMessages(messagesResponse.data);
 
           // Fetch parent details to get the name
-          const parentResponse = await axios.get(`http://localhost:3000/parent/${parentId}`);
+          const parentResponse = await axios.get(`http://192.168.0.103:3000/parent/${parentId}`);
           setParentName(parentResponse.data.name);
 
           setLoading(false);

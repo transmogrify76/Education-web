@@ -16,7 +16,7 @@
 //   useEffect(() => {
 //     const fetchClassNames = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:3000/class');
+//         const response = await axios.get('http://192.168.0.103:3000/class');
 //         setClassNames(response.data);
 //       } catch (error) {
 //         console.error('There was an error fetching the class names:', error);
@@ -34,7 +34,7 @@
 //     const fetchExistingMeeting = async () => {
 //       if (selectedClass) {
 //         try {
-//           const response = await axios.get(`http://localhost:3000/meeting/${selectedClass}`);
+//           const response = await axios.get(`http://192.168.0.103:3000/meeting/${selectedClass}`);
 //           if (response.data) {
 //             setExistingMeetingId(response.data.id);
 //           } else {
@@ -83,7 +83,7 @@
 //       let response;
 //       if (existingMeetingId) {
 //         // Update existing meeting
-//         response = await axios.patch(`http://localhost:3000/meeting/${existingMeetingId}`, {
+//         response = await axios.patch(`http://192.168.0.103:3000/meeting/${existingMeetingId}`, {
 //           googleMeetLink: googleMeetLink,
 //           title: meetingTitle, // Include title in the update
 //         });
@@ -91,7 +91,7 @@
 //         setMessage("Meeting updated successfully!");
 //       } else {
 //         // Create new meeting
-//         response = await axios.post('http://localhost:3000/meeting', {
+//         response = await axios.post('http://192.168.0.103:3000/meeting', {
 //           classId: selectedClass,
 //           googleMeetLink: googleMeetLink,
 //           title: meetingTitle, // Include title in the creation
@@ -201,7 +201,7 @@ const CreateMeeting = () => {
   useEffect(() => {
     const fetchClassNames = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/class');
+        const response = await axios.get('http://192.168.0.103:3000/class');
         setClassNames(response.data);
       } catch (error) {
         console.error('Error fetching class names:', error);
@@ -219,7 +219,7 @@ const CreateMeeting = () => {
     const fetchMeetings = async () => {
       if (selectedClass) {
         try {
-          const response = await axios.get(`http://localhost:3000/meeting/${selectedClass}`);
+          const response = await axios.get(`http://192.168.0.103:3000/meeting/${selectedClass}`);
           if (response.data && response.data.length > 0) {
             setMeetings(response.data); // Store meetings for the selected class
           } else {
@@ -271,7 +271,7 @@ const CreateMeeting = () => {
       let response;
       if (existingMeetingId) {
         // Update existing meeting
-        response = await axios.patch(`http://localhost:3000/meeting/${existingMeetingId}`, {
+        response = await axios.patch(`http://192.168.0.103:3000/meeting/${existingMeetingId}`, {
           googleMeetLink: googleMeetLink,
           title: meetingTitle,
         });
@@ -279,7 +279,7 @@ const CreateMeeting = () => {
         setMessage("Meeting updated successfully!");
       } else {
         // Create new meeting
-        response = await axios.post('http://localhost:3000/meeting', {
+        response = await axios.post('http://192.168.0.103:3000/meeting', {
           classId: selectedClass,
           googleMeetLink: googleMeetLink,
           title: meetingTitle,

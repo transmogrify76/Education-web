@@ -17,7 +17,7 @@ const UploadTeacherResults = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get('http://localhost:3000/class');
+        const response = await axios.get('http://192.168.0.103:3000/class');
         setClassNames(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         setError('Error fetching class names');
@@ -36,7 +36,7 @@ const UploadTeacherResults = () => {
         setLoading(true);
         setError(null);
         try {
-          const response = await axios.get(`http://localhost:3000/class/${selectedClass}`);
+          const response = await axios.get(`http://192.168.0.103:3000/class/${selectedClass}`);
           const studentsData = Array.isArray(response.data.students) ? response.data.students : [];
           const sortedStudents = studentsData.sort((a, b) => a.name.localeCompare(b.name));
           setStudents(sortedStudents);
@@ -127,7 +127,7 @@ const UploadTeacherResults = () => {
 
       // POST request to upload results
       for (const data of payload) {
-        await axios.post('http://localhost:3000/result/upload', data);
+        await axios.post('http://192.168.0.103:3000/result/upload', data);
       }
       
       alert('Results uploaded successfully!');
