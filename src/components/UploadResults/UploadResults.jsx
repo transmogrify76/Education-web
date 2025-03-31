@@ -172,7 +172,7 @@
 //         )}
 
 //         {/* Error and Loading States */}
-//         {loading && <p>Loading...</p>}
+//         {loading && <p></p>}
 //         {error && <p>{error}</p>}
 //       </div>
 //     </div>
@@ -397,7 +397,7 @@ const UploadResults = () => {
         )}
 
         {/* Error and Loading States */}
-        {loading && <p>Loading...</p>}
+        {loading && <p></p>}
         {error && <p>{error}</p>}
       </div>
     </div>

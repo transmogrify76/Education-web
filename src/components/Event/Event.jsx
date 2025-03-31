@@ -9,7 +9,7 @@ const Event = () => {
     fetch('http://192.168.0.103:3000/notification')
       .then(response => response.json())
       .then(data => {
-        console.log('Notifications data:', data); // Debugging line
+        console.log('Notifications data:', data); 
         setNotifications(data);
       })
       .catch(error => console.error('Error fetching notifications:', error));

@@ -1,121 +1,141 @@
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-body, html {
+body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
+  transition: margin-top 0.3s ease; 
 }
 
-.navbar {
+.header-container {
   display: flex;
-  height: 60px;
   justify-content: space-between;
   align-items: center;
-  background-color: #1a4bee;
   padding: 10px 20px;
+  background-color: #083b86;
   color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; 
 }
 
-.navbar-left {
-  font-size: 1.5em;
-  font-family: 'Lobster', cursive;
-  font-weight: bold;
-}
-
-.navbar-right {
-  margin-right: 2%;
+.header-left {
   display: flex;
   align-items: center;
-  font-size: large;
-  font-family: 'Lobster', cursive;
-  font-weight: bold;
 }
 
-.navbar-right a {
+.header-logo {
+  height: 60px; 
+  max-height: 60px; 
+  width: auto; 
+}
+
+.header-tagline {
+  margin-left: 10px;
+  font-size: 16px;
+  color: white;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-link {
   color: white;
   text-decoration: none;
-  margin-left: 15px;
-  padding: 5px 10px;
-  transition: background-color 0.3s;
+  margin: 0 10px;
 }
 
-.navbar-right a:hover {
-  background: linear-gradient(135deg, #4961e2, #6b8ff2);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
+.nav-links {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
+.dashboard-nav-button {
+  /* margin-right: 1%; */
+  /* background-color: #9028a7;  */
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
 }
 
-.dropbtn {
+
+.menu-icon {
+  display: none;
+  font-size: 24px;
   cursor: pointer;
   color: white;
-  background: linear-gradient(135deg, #6b8ff2, #4961e2);
+  margin-left: 20px;
+}
+
+
+.login-dropdown, .logout-dropdown {
+  position: relative;
+}
+
+.login-dropbtn, .logout-dropbtn {
+  background-color: #007bff; 
+  color: white;
+  padding: 10px;
   border: none;
-  padding: 10px 20px;
-  margin-left: 15px;
-  border-radius: 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+  cursor: pointer;
 }
 
-.dropbtn:hover {
-  background: linear-gradient(135deg, #4961e2, #6b8ff2);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
-
-
-.dropdown-content {
-  margin-top: 10px;
-  display: block;
+.login-dropdown-content, .logout-dropdown-content {
   position: absolute;
-  background-color: white;
+  top: 40px;
+  background-color: #333; 
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
 }
 
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+.login-role-button, .confirm-logout-button, .cancel-logout-button {
+  
+   width:70%;
+   padding :10px ;
+   background-color :#17a2b8 ; 
+   border :none ;
+   color :white ;
+   cursor:pointer ;
+   text-align:left ;
 }
 
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
+.login-role-button:hover, .confirm-logout-button:hover, .cancel-logout-button:hover {
+  
+   background-color :#0056b3 ; 
 }
 
+/* Mobile Styles */
+@media (max-width:768px) {
+  
+   .header-left {
+      flex-direction :column ;
+      text-align:center ;
+   }
 
-.dropdown-content {
-  display: none;
-}
+   .nav-links {
+      display:none ;
+      flex-direction :column ;
+      width :100% ;
+      text-align:center ;
+      margin-top :10px ;
+   }
 
+   .nav-links.active {
+      display:flex ;
+   }
 
-.dropdown .dropdown-content {
-  display: block;
+   .menu-icon {
+      display:block ;
+   }
+
+   .header-link, .dashboard-nav-button {
+      margin :10px auto ; 
+   }
+
+   body.menu-open {
+      margin-top :80px ; 
+   }
 }
-.navbar-logo{
-  padding-top: 35px;
-  padding-left: 10px;
-  height: 140px;
-  width : 150px;
-}
-.tagline{
-  position: absolute;
-  top: 26px;
-  left: 150px;
-  font-style: italic;
-  color: #f1f1f1;
-  font-size: smaller;
-}
-.login-button{
-  width: 85%;
-}
-.logout-buttons{
-  width: 80%;
-} 

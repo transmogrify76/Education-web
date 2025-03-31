@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {jwtDecode} from 'jwt-decode'; // Import jwt-decode to decode the token
+import {jwtDecode} from 'jwt-decode';
 import './StudentProfilePage.css';
 import Header from '../Header/Header';
 
@@ -8,23 +8,21 @@ const StudentProfilePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get the authToken from localStorage
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       try {
-        // Decode the token to get the parentId
         const decodedToken = jwtDecode(authToken);
-        const parentId = decodedToken.id; // Extract parentId from the decoded token
+        const parentId = decodedToken.id; 
 
         const fetchStudentData = async () => {
-          console.log('Fetching data for parentId:', parentId); // Debug log
+          console.log('Fetching data for parentId:', parentId);
           try {
             const response = await fetch(`http://192.168.0.103:3000/parent/${parentId}`);
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            console.log('Fetched data:', data); // Debug log
+            console.log('Fetched data:', data); 
             setStudentData(data.students || []);
           } catch (error) {
             console.error('Error fetching student data:', error);
@@ -33,19 +31,19 @@ const StudentProfilePage = () => {
           }
         };
 
-        fetchStudentData(); // Fetch data for the parentId
+        fetchStudentData(); 
       } catch (error) {
         console.error('Failed to decode authToken:', error);
-        setLoading(false); // Stop loading even if decoding fails
+        setLoading(false);
       }
     } else {
       console.error('No authToken found in localStorage');
-      setLoading(false); // Stop loading if no token is found
+      setLoading(false); 
     }
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p></p>;
   }
 
   if (studentData.length === 0) {

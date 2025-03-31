@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';  // Correct import
+import { jwtDecode } from 'jwt-decode';  
 import './TeacherStudentManagementPage.css';
 import Header from '../Header/Header';
 
@@ -14,15 +14,13 @@ const TeacherStudentManagementPage = () => {
   const [classIdToAdd, setClassIdToAdd] = useState('');
   const [studentIdToRemove, setStudentIdToRemove] = useState('');
   const [classIdToRemove, setClassIdToRemove] = useState('');
-  const [authToken, setAuthToken] = useState(localStorage.getItem('authToken')); // Assuming the authToken is saved in localStorage
+  const [authToken, setAuthToken] = useState(localStorage.getItem('authToken'));
 
-  // Decode JWT token and check expiry
   const isTokenValid = (token) => {
     if (!token) return false;
-
-    const decodedToken = jwtDecode(token);  // Use named function `jwtDecode`
-    const currentTime = Date.now() / 1000;  // Current time in seconds
-    return decodedToken.exp > currentTime;  // Check if the token is still valid
+    const decodedToken = jwtDecode(token);  
+    const currentTime = Date.now() / 1000; 
+    return decodedToken.exp > currentTime;  
   };
 
   useEffect(() => {
@@ -31,7 +29,6 @@ const TeacherStudentManagementPage = () => {
     } else {
       console.error('Token is invalid or expired');
       alert('Your session has expired. Please log in again.');
-      // Optionally, redirect to login page or clear the token
       localStorage.removeItem('authToken');
     }
   }, [authToken]);
@@ -47,7 +44,6 @@ const TeacherStudentManagementPage = () => {
     };
     fetchClassNames();
   }, []);
-
   useEffect(() => {
     const fetchStudentsByClass = async () => {
       if (selectedClassId) {
@@ -58,12 +54,11 @@ const TeacherStudentManagementPage = () => {
           console.error('There was an error fetching the students:', error);
         }
       } else {
-        setStudents([]); // Reset the students list if no class is selected
+        setStudents([]); 
       }
     };
     fetchStudentsByClass();
   }, [selectedClassId]);
-
   useEffect(() => {
     const fetchClassDetails = async () => {
       if (selectedClassId) {
@@ -74,23 +69,20 @@ const TeacherStudentManagementPage = () => {
           console.error('There was an error fetching the class details:', error);
         }
       } else {
-        setClassDetails(null); // Clear class details if no class is selected
+        setClassDetails(null); 
       }
     };
     fetchClassDetails();
   }, [selectedClassId]);
-
   const handleClassChange = (e) => {
     setSelectedClassId(e.target.value);
   };
-
   const handleStudentChange = async (e) => {
     const studentId = e.target.value;
     if (studentId) {
       try {
         const studentResponse = await axios.get(`http://192.168.0.103:3000/management/students/${studentId}`);
         setStudentDetails(studentResponse.data);
-
         if (studentResponse.data.classId) {
           const classResponse = await axios.get(`http://192.168.0.103:3000/management/students/class/${studentResponse.data.classId}`);
           setClassDetails(classResponse.data);
@@ -105,7 +97,6 @@ const TeacherStudentManagementPage = () => {
       setClassDetails(null);
     }
   };
-
   const handleAddStudent = async () => {
     if (studentIdToAdd && classIdToAdd) {
       try {
@@ -116,8 +107,8 @@ const TeacherStudentManagementPage = () => {
         alert('Student added successfully');
         setStudentIdToAdd('');
         setClassIdToAdd('');
-        handleStudentChange({ target: { value: studentIdToAdd } }); // Refresh student details
-        handleClassChange({ target: { value: classIdToAdd } }); // Refresh class details
+        handleStudentChange({ target: { value: studentIdToAdd } }); 
+        handleClassChange({ target: { value: classIdToAdd } }); 
       } catch (error) {
         console.error('There was an error adding the student:', error);
       }
@@ -125,7 +116,6 @@ const TeacherStudentManagementPage = () => {
       alert('Please enter both Student ID and Class ID');
     }
   };
-
   const handleRemoveStudent = async () => {
     if (studentIdToRemove && classIdToRemove) {
       try {
@@ -135,8 +125,8 @@ const TeacherStudentManagementPage = () => {
         alert('Student removed successfully');
         setStudentIdToRemove('');
         setClassIdToRemove('');
-        handleStudentChange({ target: { value: studentIdToRemove } }); // Refresh student details
-        handleClassChange({ target: { value: classIdToRemove } }); // Refresh class details
+        handleStudentChange({ target: { value: studentIdToRemove } }); 
+        handleClassChange({ target: { value: classIdToRemove } }); 
       } catch (error) {
         console.error('There was an error removing the student:', error);
       }
@@ -144,13 +134,11 @@ const TeacherStudentManagementPage = () => {
       alert('Please enter both Student ID and Class ID');
     }
   };
-
   return (
     <div>
       <Header />
       <div className="teacher-student-management-page">
         <h1 className="page-title">Teacher Student Management</h1>
-
         <div className="class-selection-container">
           <label className="class-selection-label">Select Class: </label>
           <select
@@ -166,7 +154,6 @@ const TeacherStudentManagementPage = () => {
             ))}
           </select>
         </div>
-
         {classDetails && (
           <div className="class-details-card">
             <h3>Class Details</h3>
@@ -175,7 +162,6 @@ const TeacherStudentManagementPage = () => {
             <p><strong>Teacher:</strong> {classDetails.teacher?.name}</p>
           </div>
         )}
-
         {students.length > 0 && (
           <div className="students-list-container">
             <h3 className='class-student'>Students in this Class</h3>
@@ -189,11 +175,9 @@ const TeacherStudentManagementPage = () => {
             </ul>
           </div>
         )}
-
         {students.length === 0 && selectedClassId && (
           <p>No students found for this class.</p>
         )}
-
         <div className="add-student-container">
           <h3>Add New Student to Class</h3>
           <label className="input-label">Student ID: </label>
@@ -214,7 +198,6 @@ const TeacherStudentManagementPage = () => {
             Add Student
           </button>
         </div>
-
         <div className="remove-student-container">
           <h3>Remove Student from Class</h3>
           <label className="input-label">Student ID: </label>
@@ -239,5 +222,4 @@ const TeacherStudentManagementPage = () => {
     </div>
   );
 };
-
 export default TeacherStudentManagementPage;

@@ -1,0 +1,129 @@
+/* Main container */
+.profile-container {
+    width: 70%;
+    margin: 30px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header Section */
+  .profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ececec;
+  }
+  
+  .profile-header h1 {
+    font-size: 38px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .profile-header p {
+    font-size: 20px;
+    color: #777;
+    margin-top: 5px;
+    font-weight: 300;
+  }
+  
+  /* Profile Info Section */
+  .profile-info {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  .profile-info p {
+    margin: 12px 0;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .profile-info strong {
+    font-weight: bold;
+    color: #0073e6; /* Blue color for emphasis */
+  }
+  
+  /* Parent Info Section */
+  .parent-info {
+    font-size: 18px;
+    margin-bottom: 30px;
+    padding-top: 30px;
+    border-top: 2px solid #ececec;
+  }
+  
+  .parent-info h2 {
+    font-size: 24px;
+    color: #0073e6;
+    margin-bottom: 15px;
+  }
+  
+  .parent-info p {
+    margin: 10px 0;
+    color: #555;
+    font-size: 18px;
+  }
+  
+  .parent-info strong {
+    color: #0073e6;
+  }
+  
+  /* Class Info Section */
+  .class-info {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  .class-info h2 {
+    font-size: 24px;
+    color: #0073e6;
+    margin-bottom: 15px;
+  }
+  
+  .class-info p {
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  /* General Button Styling (for future buttons, like Edit or Save) */
+  button {
+    background-color: #0073e6;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #005bb5;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .profile-container {
+      width: 90%;
+    }
+  
+    .profile-header h1 {
+      font-size: 28px;
+    }
+  
+    .profile-info p, .parent-info p, .class-info p {
+      font-size: 16px;
+    }
+  
+    .parent-info h2, .class-info h2 {
+      font-size: 20px;
+    }
+  }
+  

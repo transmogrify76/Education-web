@@ -26,7 +26,18 @@ const TeacherRegister = () => {
           throw new Error('Network response was not ok');
         }
         const result = await response.json();
-        setSubjectsList(result); // Set the subjects list after fetching
+
+        // Filter out duplicate subjects (case insensitive and trim whitespaces)
+        const uniqueSubjectsMap = new Map();
+        result.forEach(subject => {
+          const subjectNameNormalized = subject.name.trim().toLowerCase(); // Normalize by trimming and converting to lowercase
+          if (!uniqueSubjectsMap.has(subjectNameNormalized)) {
+            uniqueSubjectsMap.set(subjectNameNormalized, subject);
+          }
+        });
+
+        // Convert the Map back to an array
+        setSubjectsList(Array.from(uniqueSubjectsMap.values())); // Set the unique subjects list after filtering
       } catch (error) {
         console.error('Error fetching subjects:', error);
       }
@@ -50,15 +61,14 @@ const TeacherRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare teacher data including selected subjects
     const teacherData = {
       ...formData,
       roleType: 'teacher',
-      id: 2, // Static ID for now, can be dynamic if needed
+      id: 2, 
       password: await hashPassword(formData.password),
     };
 
-    const authToken = localStorage.getItem('authToken'); // Get the auth token from localStorage
+    const authToken = localStorage.getItem('authToken'); 
 
     try {
       const response = await fetch('http://192.168.0.103:3000/teacher/register', {
@@ -78,7 +88,7 @@ const TeacherRegister = () => {
       console.log('Registration successful:', result);
       setShowPopup(true);
       setTimeout(() => {
-        navigate('/tlogin'); // Redirect to login page after 2 seconds
+        navigate('/tlogin'); 
       }, 2000);
     } catch (error) {
       console.error('Error registering teacher:', error);
@@ -86,106 +96,106 @@ const TeacherRegister = () => {
   };
 
   const hashPassword = async (password) => {
-    return password; // Simulating password hashing, replace with actual hash function
+    return password; 
   };
 
   return (
     <div>
       <Header />
-    <div className="teacher-register-container">
-      <div className="teacher-register-card">
-        <h2>Teacher Registration</h2>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Phone No:
-            <input
-              type="tel"
-              name="phoneNo"
-              value={formData.phoneNo}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Address:
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </label>
-          <label>
-            Gender:
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </label>
-          <label>
-            Subjects:
-            <select
-              name="subjects"
-              multiple
-              value={formData.subjects} // Bind the value to the subjects array
-              onChange={handleChange}
-              required
-            >
-              {subjectsList.map((subject) => (
-                <option key={subject.id} value={subject.name}>
-                  {subject.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button type="submit">Register</button>
-        </form>
-        {showPopup && (
-          <div className="popup">
-            <span className="popup-icon">✔</span>
-            <span className="popup-message">Registration successful!</span>
-          </div>
-        )}
+      <div className="teacher-register-container">
+        <div className="teacher-register-card">
+          <h2>Teacher Registration</h2>
+          <form onSubmit={handleSubmit}>
+            <label>
+              Name:
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Email:
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Phone No:
+              <input
+                type="tel"
+                name="phoneNo"
+                value={formData.phoneNo}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Address:
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Password:
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <label>
+              Gender:
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </label>
+            <label>
+              Subjects:
+              <select
+                name="subjects"
+                multiple
+                value={formData.subjects} 
+                onChange={handleChange}
+                required
+              >
+                {subjectsList.map((subject) => (
+                  <option key={subject.id} value={subject.name}>
+                    {subject.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button type="submit">Register</button>
+          </form>
+          {showPopup && (
+            <div className="popup">
+              <span className="popup-icon">✔</span>
+              <span className="popup-message">Registration successful!</span>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 };

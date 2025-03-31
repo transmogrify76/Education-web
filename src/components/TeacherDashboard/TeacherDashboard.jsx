@@ -23,7 +23,7 @@ const TeacherDashboard = () => {
     { name: 'E-Book Upload', icon: faBook, className: 'btn-10', link: '/ebookpage' },
     { name: 'Google Meeting Link', icon: faLink, className: 'btn-100', link: '/CreateMeeting' },
     { name: 'Subject Add ', icon: faFolderOpen, className: 'btn-25', link: '/SubjectEdit' },
-    { name: 'Attendance', icon: faCheckCircle, className: 'btn-11', link: '/AttendancePage' } // Added Attendance option
+    { name: 'Attendance', icon: faCheckCircle, className: 'btn-11', link: '/AttendancePage' } 
   ];
 
   return (

@@ -216,20 +216,26 @@ const ClassCreate = () => {
               </tr>
             </thead>
             <tbody>
-              {classes.map((classItem) => (
-                <tr key={classItem.id}>
-                  <td>{classItem.className}</td>
-                  <td>{classItem.teachers?.map((teacher) => teacher.name).join(', ')}</td>
-                  <td>
-                    <button onClick={() => handleEdit(classItem)} className="edit-button">
-                      Edit
-                    </button>
-                    <button onClick={() => handleDelete(classItem.id)} className="delete-button">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {classes
+                .sort((a, b) => {
+                  if (a.className === '1' && b.className !== '1') return -1; // a comes first
+                  if (a.className === '2' && b.className !== '2') return a.className === '1' ? -1 : +1; 
+                  return a.className.localeCompare(b.className); // Keep original order for other classes
+                })
+                .map((classItem) => (
+                  <tr key={classItem.id}>
+                    <td>{classItem.className}</td>
+                    <td>{classItem.teachers?.map((teacher) => teacher.name).join(', ')}</td>
+                    <td>
+                      <button onClick={() => handleEdit(classItem)} className="edit-button">
+                        Edit
+                      </button>
+                      <button onClick={() => handleDelete(classItem.id)} className="delete-button">
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

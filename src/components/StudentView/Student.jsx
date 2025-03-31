@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SideNav from '../SideNav/SideNav'; 
-import { FaFileAlt, FaHandsHelping, FaComments, FaClipboardCheck, FaLink, FaBook } from 'react-icons/fa';
-import './Student.css'; // Import the CSS file for Student
+import { FaFileAlt, FaHandsHelping, FaComments,FaClipboardCheck,FaLink,FaBook } from 'react-icons/fa';
+import './Student.css'; 
 import Header from '../Header/Header';
-import {jwtDecode} from 'jwt-decode'; // Import jwt-decode to decode JWT tokens
+import {jwtDecode} from 'jwt-decode'; 
 
 function Student() {
-  const [studentId, setStudentId] = useState(null); // State to store studentId from JWT token
+  const [studentId, setStudentId] = useState(null); 
   const navigate = useNavigate();
 
-  // Decode the JWT token and extract the studentId when the component mounts
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       try {
-        const decodedToken = jwtDecode(authToken); // Decode the JWT token
-        setStudentId(decodedToken.id); // Set studentId from the decoded token
+        const decodedToken = jwtDecode(authToken); 
+        setStudentId(decodedToken.id); 
       } catch (error) {
         console.error('Failed to decode authToken:', error);
       }
@@ -29,10 +28,8 @@ function Student() {
     <div className='for-header'>
       <Header/>
       <div className="dashboard-containers">
-        {/* Pass the decoded studentId to SideNav */}
         <SideNav studentId={studentId} /> 
         
-        {/* Main content */}
         <div className="main-contents">
           <header className="dashboard-header">Dashboard</header>
           <div className="button-grid">
@@ -75,12 +72,14 @@ function Student() {
             <div onClick={() => navigate(`/ParentClassDataPage`)} className="dashboard-button dark-violet">
               <FaLink className="button-icon" /> Virtual Meeting Link
             </div>
+            <div onClick={() => navigate(`/Profile`)} className="dashboard-button dark-blue">
+               Student Profile
+            </div>
           </div>
           <div className="alerts-section">
             <h2 className="alerts-header">
               ALERTS <span className="alerts-subheader">(Newest 5)</span>
             </h2>
-            {/* Alerts content can be added here */}
           </div>
         </div>
       </div>

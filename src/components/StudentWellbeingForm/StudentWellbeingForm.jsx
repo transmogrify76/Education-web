@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; // Import jwt-decode
+import {jwtDecode} from 'jwt-decode'; 
 import Sidebar from '../SideNav/SideNav';
 import Header from '../Header/Header';
 import './StudentWellbeingForm.css';
@@ -15,77 +15,63 @@ const StudentWellbeingForm = () => {
     problemSolvingMessage: '',
     helpOptions: []
   });
-
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [studentId, setStudentId] = useState(null); // Store the decoded studentId
-
-  // Decode the JWT token to get studentId
+  const [studentId, setStudentId] = useState(null);
   useEffect(() => {
-    const token = localStorage.getItem('authToken'); // Get token from localStorage
+    const token = localStorage.getItem('authToken');
     if (token) {
       try {
-        const decodedToken = jwtDecode(token); // Decode the token
-        setStudentId(decodedToken.Id); // Set the studentId from decoded token
+        const decodedToken = jwtDecode(token);  
+        setStudentId(decodedToken.Id);  
       } catch (error) {
         console.error('Failed to decode JWT token:', error);
         setError('Failed to decode JWT token');
+        setLoading(false); 
       }
     } else {
       setError('No token found');
+      setLoading(false); 
     }
   }, []);
-
-  // Fetch student wellbeing data once studentId is available
   useEffect(() => {
     if (studentId) {
-      console.log('Fetching data for studentId:', studentId); // Log studentId for debugging
-
       const fetchStudentData = async () => {
         try {
-          // Get the auth token from localStorage
           const token = localStorage.getItem('authToken');
           if (!token) {
             setError('No auth token found');
             setLoading(false);
             return;
           }
-
-          // Add token to Authorization header
           const config = {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           };
-
-          // Fetch student wellbeing data based on studentId
-          const studentResponse = await axios.get(`http://192.168.0.103:3000/student-wellbeing/${studentId}`, config);
-          const studentDetails = studentResponse.data;
-
-          // If data is available, update studentData state
-          if (studentDetails) {
+          const studentResponse = await axios.get(`http://192.168.0.103:3000/student-wellbeing`, config);
+          if (studentResponse.data) {
             setStudentData((prevState) => ({
               ...prevState,
-              name: studentDetails.name,
-              enroll: studentDetails.enrollmentNo,
-              class: studentDetails.class,
+              name: studentResponse.data.name,
+              enroll: studentResponse.data.enrollmentNo,
+              class: studentResponse.data.class,
             }));
+          } else {
+            setError('Wellbeing record not found');
           }
-
           setLoading(false);
         } catch (err) {
-          console.error('Error fetching student wellbeing data:', err); // Log the detailed error
-          setError('Error fetching student wellbeing data: ' + (err.response?.data?.message || err.message)); // Show more detailed error
+          console.error('Error fetching student wellbeing data:', err);
+          setError('Error fetching student wellbeing data: ' + (err.response?.data?.message || err.message));
           setLoading(false);
         }
       };
-
       fetchStudentData();
     } else {
-      setLoading(false); // Stop loading if no studentId
+      setLoading(false); // Stop loading if there's no studentId
     }
   }, [studentId]);
-
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;
     setStudentData((prevState) => {
@@ -102,12 +88,9 @@ const StudentWellbeingForm = () => {
       }
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const helpOption = studentData.helpOptions.join(', ') || 'No help needed';
-
     const payload = {
       studentId: studentId,
       name: studentData.name,
@@ -118,34 +101,30 @@ const StudentWellbeingForm = () => {
       problemSolvingMessage: studentData.problemSolvingMessage,
       helpOption: helpOption
     };
-
     try {
       const token = localStorage.getItem('authToken');
       if (!token) {
         setError('No auth token found');
         return;
       }
-
       const config = {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       };
-
       const response = await axios.post('http://192.168.0.103:3000/student-wellbeing', payload, config);
-
-      if (response.ok) {
+      if (response.status === 200) {
         alert('Wellbeing form submitted successfully');
-        // Reset the user input fields while keeping name and enroll populated
-        setStudentData((prevState) => ({
-          ...prevState,
+        setStudentData({
+          name: '',
+          enroll: '',
           class: '',
           difficultyMessage: '',
           talkBrieflyMessage: '',
           problemSolvingMessage: '',
           helpOptions: []
-        }));
+        });
       } else {
         throw new Error('Failed to submit form');
       }
@@ -153,15 +132,12 @@ const StudentWellbeingForm = () => {
       setError('Error submitting form: ' + error.message);
     }
   };
-
   if (loading) {
     return <div>Loading...</div>;
   }
-
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
-
   return (
     <div className='for-header'>
       <Header />
@@ -169,7 +145,6 @@ const StudentWellbeingForm = () => {
         <Sidebar studentId={studentId} />
         <div className="student-wellbeing-form">
           <h2 className="form-heading">Student Wellbeing</h2>
-
           <div className="form-group">
             <div className="form-fields">
               <label htmlFor="name">Name:</label>
@@ -264,14 +239,15 @@ const StudentWellbeingForm = () => {
             <button
               className="cancel-button"
               onClick={() =>
-                setStudentData((prevState) => ({
-                  ...prevState,
+                setStudentData({
+                  name: '',
+                  enroll: '',
                   class: '',
                   difficultyMessage: '',
                   talkBrieflyMessage: '',
                   problemSolvingMessage: '',
                   helpOptions: []
-                }))
+                })
               }
             >
               Cancel

@@ -55,7 +55,7 @@ const ThirdPartyServicesStudent = () => {
         <div className="student-details">
           {/* Conditional rendering based on loading, error, and studentData */}
           {loading ? (
-            <p>Loading...</p>
+            <p></p>
           ) : error ? (
             <p>Error: {error.message}</p>
           ) : studentData ? (

@@ -1,24 +1,19 @@
-/* Container for overall alignment and spacing */
+
 .teacher-student-management {
     padding: 20px;
     font-family: Arial, sans-serif;
-    max-width: 1200px; /* Adjust as needed for your layout */
+    max-width: 1200px;
     margin: 0 auto;
   }
-  
-  /* Center align the page title */
+
   .page-title {
     text-align: center;
     margin-bottom: 30px;
   }
-  
-  /* Center and style dropdown container */
   .dropdown-container {
     margin-bottom: 20px;
-    text-align: center; /* Center the dropdown */
+    text-align: center; 
   }
-  
-  /* Center and style class details card */
   .class-details-card {
     background: #fff;
     padding: 20px;
@@ -28,49 +23,42 @@
     max-width: 600px;
     text-align: center;
   }
-  
-  /* Center and style students list */
   .students-list {
     margin-bottom: 20px;
     text-align: center;
   }
-  
-  /* Center and style form containers */
   .add-student-container, .remove-student-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align children horizontally */
+    align-items: center; 
     background: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    max-width: 600px; /* Optional: control the max-width */
-    margin: 0 auto; /* Center container horizontally */
+    max-width: 600px; 
+    margin: 0 auto; 
   }
-  
-  /* Style input labels */
+
   .input-label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
   }
-  
-  /* Style input fields */
+
   .class-name-input, .student-id-input, .class-id-input {
     padding: 10px;
     margin-bottom: 10px;
-    width: 100%; /* Full width of the container */
-    max-width: 400px; /* Control the input width */
+    width: 100%; 
+    max-width: 400px; 
     border: 1px solid #ddd;
     border-radius: 5px;
-    box-sizing: border-box; /* Ensure padding is included in the width */
+    box-sizing: border-box; 
   }
-  
-  /* Style buttons */
+
   .add-student-button, .remove-student-button {
-    width: 100%; /* Full width of the container */
-    max-width: 300px; /* Control the maximum button width */
+    width: 100%; 
+    max-width: 300px; 
     background: #4a90e2;
     color: #fff;
     border: none;
@@ -79,11 +67,10 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s, transform 0.3s;
-    text-align: center; /* Center text inside the button */
+    text-align: center;
     margin-top: 10px;
   }
   
-  /* Button hover effects */
   .add-student-button:hover {
     background: #0078d4;
     transform: scale(1.05);
@@ -93,8 +80,7 @@
     background: #e94e77;
     transform: scale(1.05);
   }
-  
-  /* Style lists */
+
   .class-options-container ul, .class-details-container ul {
     list-style-type: none;
     padding: 0;

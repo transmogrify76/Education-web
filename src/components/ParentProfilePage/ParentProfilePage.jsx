@@ -45,7 +45,7 @@ const ParentProfilePage = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p></p>;
   }
 
   if (!parentData) {

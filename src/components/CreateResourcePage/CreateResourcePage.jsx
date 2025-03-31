@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {jwtDecode}from 'jwt-decode'; // Import jwt-decode for decoding the token
+import { jwtDecode } from 'jwt-decode'; // Import jwt-decode for decoding the token
 import './CreateResourcePage.css';
 import Header from '../Header/Header';
 
@@ -11,7 +11,8 @@ const CreateResourcePage = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [type, setType] = useState('document');
-  const [content, setContent] = useState('');
+  const [file, setFile] = useState(null); // Store selected file
+  const [content, setContent] = useState(''); // Store content URL for link type
   const [classId, setClassId] = useState(''); // Store the selected classId
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -54,48 +55,61 @@ const CreateResourcePage = () => {
     }
   }, [teacherId]); // Re-run the effect when teacherId is set
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const resourceData = {
-      title,
-      description,
-      type,
-      content,
-      classId: parseInt(classId, 10), // Use the selected classId
-    };
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('type', type);
+    formData.append('classId', classId);
 
-    axios.post('http://192.168.0.103:3000/resources', resourceData, {
-      params: { teacherId }
-    })
-      .then(response => {
-        alert('Resource created successfully!');
-        setTitle('');
-        setDescription('');
-        setType('document');
-        setContent('');
-        setClassId('');
-        // Refresh resources list
-        return axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
-      })
-      .then(response => setResources(response.data))
-      .catch(error => console.error('Error creating resource:', error));
-  };
+    if (type === 'document' && file) {
+      formData.append('file', file); // Append the selected file
+    } else if (type === 'link' && content) {
+      formData.append('content', content); // Append the URL content for links
+    }
 
-  const handleDelete = (resourceId) => {
-    if (window.confirm('Are you sure you want to delete this resource?')) {
-      axios.delete(`http://192.168.0.103:3000/resources/${resourceId}`)
-        .then(response => {
-          alert('Resource deleted successfully!');
-          // Refresh resources list
-          return axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
-        })
-        .then(response => setResources(response.data))
-        .catch(error => console.error('Error deleting resource:', error));
+    try {
+      await axios.post('http://192.168.0.103:3000/resources', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set the correct content type for file uploads
+          params: { teacherId }
+        }
+      });
+
+      alert('Resource created successfully!');
+      setTitle('');
+      setDescription('');
+      setType('document');
+      setContent('');
+      setClassId('');
+      setFile(null); // Reset file input
+
+      // Refresh resources list
+      const updatedResources = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
+      setResources(updatedResources.data);
+    } catch (error) {
+      console.error('Error creating resource:', error);
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  const handleDelete = async (resourceId) => {
+    if (window.confirm('Are you sure you want to delete this resource?')) {
+      try {
+        await axios.delete(`http://192.168.0.103:3000/resources/${resourceId}`);
+        alert('Resource deleted successfully!');
+
+        // Refresh resources list
+        const updatedResources = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
+        setResources(updatedResources.data);
+      } catch (error) {
+        console.error('Error deleting resource:', error);
+      }
+    }
+  };
+
+  if (loading) return <p></p>;
   if (error) return <p>{error}</p>;
 
   return (
@@ -134,6 +148,7 @@ const CreateResourcePage = () => {
               <option value="link">Link</option>
             </select>
           </div>
+
           {type === 'link' ? (
             <div>
               <label htmlFor="content">Link URL:</label>
@@ -146,15 +161,16 @@ const CreateResourcePage = () => {
             </div>
           ) : (
             <div>
-              <label htmlFor="content">Document Path:</label>
+              <label htmlFor="file">Document File:</label>
               <input
-                id="content"
-                type="text"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
+                id="file"
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+                required={type === 'document'} // Make it required for document type
               />
             </div>
           )}
+
           <div>
             <label htmlFor="classId">Select Class:</label>
             <select
@@ -166,7 +182,7 @@ const CreateResourcePage = () => {
               <option value="">Select Class...</option>
               {classes.map((classItem) => (
                 <option key={classItem.id} value={classItem.id}>
-                  {classItem.className} {/* Display className */}
+                  {classItem.className}
                 </option>
               ))}
             </select>
@@ -175,28 +191,26 @@ const CreateResourcePage = () => {
         </form>
 
         <h2>Resources for Teacher {teacherId}</h2>
-<ul>
-  {resources.length > 0 ? (
-    resources.map((resource) => {
-      // Find the class object that matches the resource's classId
-      const classItem = classes.find(cls => cls.id === resource.classId);
+        <ul>
+          {resources.length > 0 ? (
+            resources.map((resource) => {
+              const classItem = classes.find(cls => cls.id === resource.classId);
 
-      return (
-        <li key={resource.id}>
-          <h3>{resource.title}</h3>
-          <p>{resource.description}</p>
-          <p>Type: {resource.type}</p>
-          <p>Content: {resource.content}</p>
-          <p>Class: {classItem ? classItem.className : 'Class not found'}</p> {/* Display className */}
-          <button onClick={() => handleDelete(resource.id)}>Delete</button>
-        </li>
-      );
-    })
-  ) : (
-    <p>No resources found for this teacher.</p>
-  )}
-</ul>
-
+              return (
+                <li key={resource.id}>
+                  <h3>{resource.title}</h3>
+                  <p>{resource.description}</p>
+                  <p>Type: {resource.type}</p>
+                  <p>Content: {resource.content}</p>
+                  <p>Class: {classItem ? classItem.className : 'Class not found'}</p>
+                  <button onClick={() => handleDelete(resource.id)}>Delete</button>
+                </li>
+              );
+            })
+          ) : (
+            <p>No resources found for this teacher.</p>
+          )}
+        </ul>
       </div>
     </div>
   );

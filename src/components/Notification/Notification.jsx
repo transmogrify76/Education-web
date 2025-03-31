@@ -160,7 +160,7 @@ const Notification = () => {
   };
 
   if (loading) {
-    return <Container><LoadingMessage>Loading...</LoadingMessage></Container>;
+    return <Container><LoadingMessage></LoadingMessage></Container>;
   }
 
   if (error) {

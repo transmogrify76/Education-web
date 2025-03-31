@@ -71,7 +71,7 @@ const BehaviorAssessmentTool = () => {
     setSelectedStudentId(e.target.value);
   };
 
-  if (loading) return <p className="loading-message">Loading...</p>;
+  if (loading) return <p className="loading-message"></p>;
 
   if (error) return <div className="error-message">{error}</div>;
 

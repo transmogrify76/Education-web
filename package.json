@@ -9,16 +9,19 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/default-layout": "^3.12.0",
+    "@tailwindcss/cli": "^4.0.14",
+    "@tailwindcss/vite": "^4.0.14",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "font-awesome": "^4.7.0",
     "format": "^0.2.2",
+    "framer-motion": "^12.5.0",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",
     "jsonwebtoken": "^9.0.2",
-    "jspdf": "^2.5.1",
+    "jspdf": "^3.0.1",
     "jwt-decode": "^4.0.0",
     "pdfjs-dist": "^3.11.174",
     "razorpay": "^2.9.4",
@@ -33,13 +36,15 @@
     "react-select": "^5.8.0",
     "react-toastify": "^10.0.5",
     "styled-components": "^6.1.12",
+    "tailwindcss": "^4.0.14",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "tailwind-init": "tailwindcss init"
   },
   "eslintConfig": {
     "extends": [
@@ -60,6 +65,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3"
   }
 }

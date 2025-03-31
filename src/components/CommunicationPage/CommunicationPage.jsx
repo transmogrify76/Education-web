@@ -1,168 +1,11 @@
-
-
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { useParams } from 'react-router-dom';
-// import Header from '../Header/Header';
-
-// const CommunicationPage = () => {
-//     const { teacherId } = useParams(); // Access route parameter here
-//     const [recipientType, setRecipientType] = useState('student');
-//     const [recipients, setRecipients] = useState([]); // Store students or parents
-//     const [title, setTitle] = useState('');
-//     const [content, setContent] = useState('');
-//     const [recipientId, setRecipientId] = useState('');
-//     const [selectedClass, setSelectedClass] = useState('');
-//     const [classes, setClasses] = useState([]); // Store available classes
-//     const [parentInfo, setParentInfo] = useState(null); // Store parent information when student is selected
-
-//     const token = localStorage.getItem('authToken'); // Assuming the auth token is stored in local storage
-
-//     // Fetch available classes
-//     useEffect(() => {
-//         axios.get('http://192.168.0.103:3000/class', {
-//             headers: { Authorization: `Bearer ${token}` }
-//         })
-//         .then(response => setClasses(response.data))
-//         .catch(error => console.error('Error fetching classes:', error));
-//     }, [token]);
-
-//     // Fetch students for a specific class
-//     const fetchStudentsForClass = async (classId) => {
-//         try {
-//             const response = await axios.get(`http://192.168.0.103:3000/class/${classId}`, {
-//                 headers: { Authorization: `Bearer ${token}` }
-//             });
-
-//             // Map the students to include their parent's name along with the student's info
-//             const studentsWithParents = response.data.students.map(student => ({
-//                 ...student,
-//                 parentName: student.parent ? student.parent.name : 'N/A' // Add parent's name
-//             }));
-
-//             setRecipients(studentsWithParents); // Set students along with parent names
-//         } catch (error) {
-//             console.error('Error fetching students for class:', error);
-//         }
-//     };
-
-//     // Fetch students when class is selected
-//     useEffect(() => {
-//         if (selectedClass) {
-//             fetchStudentsForClass(selectedClass); // Fetch students for the selected class
-//         } else {
-//             setRecipients([]); // Clear recipients if no class is selected
-//         }
-//     }, [selectedClass]);
-
-//     // Handle recipient selection (whether student or parent)
-//     const handleRecipientChange = (e) => {
-//         const selectedRecipient = e.target.value;
-//         setRecipientId(selectedRecipient);
-
-//         // If student is selected, fetch parent info
-//         if (recipientType === 'student') {
-//             const selectedStudent = recipients.find(student => student.id === selectedRecipient);
-//             if (selectedStudent) {
-//                 setParentInfo(selectedStudent.parent); // Store parent info
-//             }
-//         }
-//     };
-
-//     // Handle sending the communication (without the selected class)
-//     const handleSendCommunication = () => {
-//         const communicationData = {
-//             title,
-//             content,
-//             recipientType,
-//             recipientId,
-//             // Do not include selectedClass in the payload here
-//         };
-
-//         axios.post(`http://192.168.0.103:3000/communication/send-communication/${teacherId}`, communicationData)
-//             .then(response => alert('Communication sent successfully!'))
-//             .catch(error => console.error('Error sending communication:', error));
-//     };
-
-//     return (
-//         <div>
-//             <Header />
-//             <div className="communication-container">
-//                 <h1>Create Communication</h1>
-//                 <form onSubmit={(e) => e.preventDefault()}>
-//                     <div>
-//                         <label>Recipient Type:</label>
-//                         <select value={recipientType} onChange={(e) => setRecipientType(e.target.value)}>
-//                             <option value="student">Student</option>
-//                             <option value="parent">Parent</option>
-//                         </select>
-//                     </div>
-//                     <div>
-//                         <label>Title:</label>
-//                         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-//                     </div>
-//                     <div>
-//                         <label>Content:</label>
-//                         <textarea value={content} onChange={(e) => setContent(e.target.value)} />
-//                     </div>
-
-//                     <div>
-//                         <label>Select Class (Frontend Only):</label>
-//                         <select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)}>
-//                             <option value="">Select Class...</option>
-//                             {classes.map((classItem) => (
-//                                 <option key={classItem.id} value={classItem.id}>
-//                                     {classItem.className}
-//                                 </option>
-//                             ))}
-//                         </select>
-//                     </div>
-
-//                     <div>
-//                         <label>Select Recipient:</label>
-//                         <select value={recipientId} onChange={handleRecipientChange}>
-//                             <option value="">Select...</option>
-//                             {recipients.length > 0 ? (
-//                                 recipients.map((recipient) => (
-//                                     recipientType === 'student' ? (
-//                                         <option key={recipient.id} value={recipient.id}>
-//                                             {recipient.name} {/* Display student name */}
-//                                         </option>
-//                                     ) : (
-//                                         // If recipient type is 'parent', display both parent and student names
-//                                         <option key={recipient.id} value={recipient.id}>
-//                                             {recipient.parentName} - {recipient.name} {/* Display parent and student names */}
-//                                         </option>
-//                                     )
-//                                 ))
-//                             ) : (
-//                                 <option value="">No recipients available</option>
-//                             )}
-//                         </select>
-//                     </div>
-
-//                     {recipientType === 'student' && parentInfo && (
-//                         <div>
-//                             <label>Parent: </label>
-//                             <input type="text" value={parentInfo.name} readOnly />
-//                         </div>
-//                     )}
-
-//                     <button type="button" onClick={handleSendCommunication}>Send Communication</button>
-//                 </form>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default CommunicationPage;
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode'; // Correct the import here
+import { jwtDecode } from 'jwt-decode';
 import Header from '../Header/Header';
+import './CommunicationPage.css'; // Import the CSS file for styles
 
 const CommunicationPage = () => {
-    const [teacherId, setTeacherId] = useState(null); // Store the teacher ID
+    const [teacherId, setTeacherId] = useState(null);
     const [recipientType, setRecipientType] = useState('student');
     const [recipients, setRecipients] = useState([]);
     const [title, setTitle] = useState('');
@@ -174,19 +17,17 @@ const CommunicationPage = () => {
 
     const token = localStorage.getItem('authToken');
 
-    // Decode the JWT token and extract the teacherId
     useEffect(() => {
         if (token) {
             try {
                 const decodedToken = jwtDecode(token);
-                setTeacherId(decodedToken.id); // Assuming teacherId is in the token's payload
+                setTeacherId(decodedToken.id);
             } catch (error) {
                 console.error('Error decoding JWT token:', error);
             }
         }
     }, [token]);
 
-    // Fetch available classes
     useEffect(() => {
         if (teacherId) {
             axios.get('http://192.168.0.103:3000/class', {
@@ -254,77 +95,76 @@ const CommunicationPage = () => {
     };
 
     return (
-        <div>
+        <div style={{ padding: '20px', backgroundColor: '#f4f6f8', minHeight: '100vh', fontFamily: "'Open Sans', sans-serif" }}>
             <Header />
-            <div className="communication-container">
-                <h1>Create Communication</h1>
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <div>
-                        <label>Recipient Type:</label>
-                        <select value={recipientType} onChange={(e) => setRecipientType(e.target.value)}>
-                            <option value="student">Student</option>
-                            <option value="parent">Parent</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>Title:</label>
-                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                    </div>
-                    <div>
-                        <label>Content:</label>
-                        <textarea value={content} onChange={(e) => setContent(e.target.value)} />
-                    </div>
+            <h1 style={{ fontSize: '24px', fontWeight: '600', marginBottom: '20px', color: '#2c3e50' }}>Create Communication</h1>
+            <form onSubmit={(e) => e.preventDefault()} style={{ maxWidth: '600px', margin: '0 auto', backgroundColor: '#ffffff', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)' }}>
+                <div>
+                    <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', marginBottom: '5px', color: '#34495e' }}>Recipient Type:</label>
+                    <select value={recipientType} onChange={(e) => setRecipientType(e.target.value)} style={{ padding: '10px', margin: '10px 0', borderRadius: '5px', fontSize: '14px', border: '2px solid #BDC3C7' }}>
+                        <option value="student">Student</option>
+                        <option value="parent">Parent</option>
+                    </select>
+                </div>
+                <div>
+                    <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', marginBottom: '5px', color: '#34495e' }}>Title:</label>
+                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} style={{ padding: '10px', margin: '10px 0', borderRadius: '5px', fontSize: '14px', border: '2px solid #BDC3C7' }} />
+                </div>
+                <div>
+                    <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', marginBottom: '5px', color: '#34495e' }}>Content:</label>
+                    <textarea value={content} onChange={(e) => setContent(e.target.value)} style={{ padding: '10px', margin: '10px 0', borderRadius: '5px', fontSize: '14px', border: '2px solid #BDC3C7', minHeight: '120px' }} />
+                </div>
 
-                    <div>
-                        <label>Select Class (Frontend Only):</label>
-                        <select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)}>
-                            <option value="">Select Class...</option>
-                            {classes.map((classItem) => (
-                                <option key={classItem.id} value={classItem.id}>
-                                    {classItem.className}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                <div>
+                    <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', marginBottom: '5px', color: '#34495e' }}>Select Class:</label>
+                    <select value={selectedClass} onChange={(e) => setSelectedClass(e.target.value)} style={{ padding: '10px', margin: '10px 0', borderRadius: '5px', fontSize: '14px', border: '2px solid #BDC3C7' }}>
+                        <option value="">Select Class...</option>
+                        {classes.map((classItem) => (
+                            <option key={classItem.id} value={classItem.id}>
+                                {classItem.className}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
-                    <div>
-                        <label>Select Recipient:</label>
-                        <select value={recipientId} onChange={handleRecipientChange}>
-                            <option value="">Select...</option>
-                            {recipients.length > 0 ? (
-                                recipients.map((recipient) => (
-                                    recipientType === 'student' ? (
-                                        <option key={recipient.id} value={recipient.id}>
-                                            {recipient.name}
+                <div>
+                    <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', marginBottom: '5px', color: '#34495e' }}>Select Recipient:</label>
+                    <select value={recipientId} onChange={handleRecipientChange} style={{ padding: '10px', margin: '10px 0', borderRadius: '5px', fontSize: '14px', border: '2px solid #BDC3C7' }}>
+                        <option value="">Select...</option>
+                        {recipients.length > 0 ? (
+                            recipients.map((recipient) => (
+                                recipientType === 'student' ? (
+                                    <option key={recipient.id} value={recipient.id}>
+                                        {recipient.name}
+                                    </option>
+                                ) : (
+                                    recipient.parentId && (
+                                        <option key={recipient.parentId} value={recipient.parentId}>
+                                            {recipient.parentName} - {recipient.name}
                                         </option>
-                                    ) : (
-                                        recipient.parentId && (
-                                            <option key={recipient.parentId} value={recipient.parentId}>
-                                                {recipient.parentName} - {recipient.name}
-                                            </option>
-                                        )
                                     )
-                                ))
-                            ) : (
-                                <option value="">No recipients available</option>
-                            )}
-                        </select>
+                                )
+                            ))
+                        ) : (
+                            <option value="">No recipients available</option>
+                        )}
+                    </select>
+                </div>
+
+                {recipientType === 'student' && parentInfo && (
+                    <div>
+                        <label style={{ display: 'block', fontSize: '16px', fontWeight: '500', marginBottom: '5px', color: '#34495e' }}>Parent: </label>
+                        <input type="text" value={parentInfo.name} readOnly style={{ padding: '10px', margin: '10px 0', borderRadius: '5px', fontSize: '14px', border: '2px solid #BDC3C7' }} />
                     </div>
+                )}
 
-                    {recipientType === 'student' && parentInfo && (
-                        <div>
-                            <label>Parent: </label>
-                            <input type="text" value={parentInfo.name} readOnly />
-                        </div>
-                    )}
-
-                    <button type="button" onClick={handleSendCommunication}>Send Communication</button>
-                </form>
-            </div>
+                {/* Updated Button */}
+                <button type="button" onClick={handleSendCommunication} className="send-button">
+                    <span>Send Communication</span>
+                </button>
+            </form>
         </div>
     );
 };
 
 export default CommunicationPage;
-
-

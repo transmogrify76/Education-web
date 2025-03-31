@@ -4,11 +4,11 @@ import Header from '../Header/Header';
 import axios from 'axios';
 
 const TeacherList = () => {
-  const [teachers, setTeachers] = useState([]);  // Store all teachers
-  const [classes, setClasses] = useState([]);    // Store class data
-  const [selectedClassId, setSelectedClassId] = useState('');  // Store selected class ID
-  const [filteredTeachers, setFilteredTeachers] = useState([]);  // Store filtered teachers based on class
-  const [selectedTeacherId, setSelectedTeacherId] = useState('');  // Store selected teacher ID for editing
+  const [teachers, setTeachers] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [selectedClassId, setSelectedClassId] = useState('');
+  const [filteredTeachers, setFilteredTeachers] = useState([]);
+  const [selectedTeacherId, setSelectedTeacherId] = useState('');
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,23 +17,21 @@ const TeacherList = () => {
     gender: "",
     subjects: [],
   });
-  const [showEditModal, setShowEditModal] = useState(false);  // Flag to show/hide edit modal
-  const [loading, setLoading] = useState(true);  // Flag to indicate data loading status
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // Get the authToken from localStorage
-  const authToken = localStorage.getItem('authToken');  // Make sure the token is in the localStorage
+  const authToken = localStorage.getItem('authToken');
 
-  // Fetching teachers data from API
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
         const response = await fetch('http://192.168.0.103:3000/teacher', {
           headers: {
-            'Authorization': `Bearer ${authToken}`,  // Add token to Authorization header
+            'Authorization': `Bearer ${authToken}`,
           },
         });
         const data = await response.json();
-        setTeachers(data);  // Populate teachers list
+        setTeachers(data); 
       } catch (error) {
         console.error('Error fetching teachers:', error);
       }
@@ -42,17 +40,16 @@ const TeacherList = () => {
     fetchTeachers();
   }, [authToken]);
 
-  // Fetching class data from API
   useEffect(() => {
     const fetchClasses = async () => {
       try {
         const response = await fetch('http://192.168.0.103:3000/class', {
           headers: {
-            'Authorization': `Bearer ${authToken}`,  // Add token to Authorization header
+            'Authorization': `Bearer ${authToken}`,
           },
         });
         const data = await response.json();
-        setClasses(data);  // Populate class list
+        setClasses(data);  
       } catch (error) {
         console.error('Error fetching classes:', error);
       }
@@ -61,24 +58,20 @@ const TeacherList = () => {
     fetchClasses();
   }, [authToken]);
 
-  // Handle class selection and filter teachers based on the selected class
   const handleClassChange = (e) => {
     const classId = e.target.value;
     setSelectedClassId(classId);
 
     if (classId) {
-      // Fetch teachers for the selected class from the API
       const fetchTeachersForClass = async () => {
         try {
           const response = await fetch(`http://192.168.0.103:3000/teacher/class/${classId}`, {
             headers: {
-              'Authorization': `Bearer ${authToken}`,  // Add token to Authorization header
+              'Authorization': `Bearer ${authToken}`,
             },
           });
-
           const data = await response.json();
-          console.log('Teachers for selected class:', data);  // Log response data
-          setFilteredTeachers(data.teachers);  // Populate filtered teachers based on the selected class
+          setFilteredTeachers(data.teachers);  
         } catch (error) {
           console.error('Error fetching teachers by class:', error);
         }
@@ -86,27 +79,25 @@ const TeacherList = () => {
 
       fetchTeachersForClass();
     } else {
-      setFilteredTeachers([]);  // If no class is selected, show no filtered teachers
+      setFilteredTeachers([]);
     }
   };
 
-  // Handle Delete Teacher action
   const handleDeleteTeacher = async (teacherId) => {
     try {
       await fetch(`http://192.168.0.103:3000/teacher/${teacherId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${authToken}`,  // Add token to Authorization header
+          'Authorization': `Bearer ${authToken}`,
         },
       });
-      setTeachers(teachers.filter(teacher => teacher.id !== teacherId));  // Update the UI
+      setTeachers(teachers.filter(teacher => teacher.id !== teacherId));  
       alert('Teacher deleted successfully');
     } catch (error) {
       console.error('Error deleting teacher:', error);
     }
   };
 
-  // Fetch teacher details for editing
   const fetchTeacherDetails = async (id) => {
     if (!id || !authToken) return;
     try {
@@ -130,14 +121,12 @@ const TeacherList = () => {
     }
   };
 
-  // Handle Edit Teacher action
   const handleEditTeacher = (teacherId) => {
     setSelectedTeacherId(teacherId);
     fetchTeacherDetails(teacherId);
     setShowEditModal(true);
   };
 
-  // Handle input changes in the edit form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -146,7 +135,6 @@ const TeacherList = () => {
     }));
   };
 
-  // Handle adding a new subject
   const handleAddSubject = () => {
     const newSubject = prompt("Enter a new subject");
     if (newSubject && newSubject.trim() !== "") {
@@ -157,7 +145,6 @@ const TeacherList = () => {
     }
   };
 
-  // Handle removing a subject
   const handleRemoveSubject = (subjectToRemove) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -165,7 +152,6 @@ const TeacherList = () => {
     }));
   };
 
-  // Handle submitting the edit form
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -186,7 +172,6 @@ const TeacherList = () => {
       );
       alert("Teacher data updated successfully!");
 
-      // Update the teachers list
       const updatedTeachers = teachers.map(teacher => {
         if (teacher.id === selectedTeacherId) {
           return {
@@ -203,7 +188,6 @@ const TeacherList = () => {
       });
       setTeachers(updatedTeachers);
 
-      // Update filtered teachers if applicable
       if (filteredTeachers.length > 0) {
         const updatedFilteredTeachers = filteredTeachers.map(teacher => {
           if (teacher.id === selectedTeacherId) {
@@ -235,7 +219,6 @@ const TeacherList = () => {
       <div className="teacher-list-container">
         <h1>Teacher List</h1>
 
-        {/* Class Selection Dropdown */}
         <div className="class-dropdown">
           <label htmlFor="classId">Select Class:</label>
           <select
@@ -252,43 +235,43 @@ const TeacherList = () => {
           </select>
         </div>
 
-        {/* All Teachers Table */}
-        <div className="teacher-table-container">
-          <h2>All Teachers</h2>
-          <table className="teacher-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Subjects</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teachers.length > 0 ? (
-                teachers.map((teacher) => (
-                  <tr key={teacher.id}>
-                    <td>{teacher.name}</td>
-                    <td>{teacher.email}</td>
-                    <td>
-                      {teacher.subjects.map(subject => subject.name).join(', ')}
-                    </td>
-                    <td>
-                      <button onClick={() => handleEditTeacher(teacher.id)}>Edit</button>
-                      <button onClick={() => handleDeleteTeacher(teacher.id)}>Delete</button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
+        {!selectedClassId && (
+          <div className="teacher-table-container">
+            <h2>All Teachers</h2>
+            <table className="teacher-table">
+              <thead>
                 <tr>
-                  <td colSpan="4">No teachers available.</td>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Subjects</th>
+                  <th>Actions</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {teachers.length > 0 ? (
+                  teachers.map((teacher) => (
+                    <tr key={teacher.id}>
+                      <td>{teacher.name}</td>
+                      <td>{teacher.email}</td>
+                      <td>
+                        {teacher.subjects.map(subject => subject.name).join(', ')}
+                      </td>
+                      <td>
+                        <button onClick={() => handleEditTeacher(teacher.id)}>Edit</button>
+                        <button onClick={() => handleDeleteTeacher(teacher.id)}>Delete</button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4">No teachers available.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
 
-        {/* Classwise Teachers Table */}
         {selectedClassId && (
           <div className="teacher-table-container">
             <h2>Teachers for Selected Class</h2>
@@ -326,7 +309,6 @@ const TeacherList = () => {
           </div>
         )}
 
-        {/* Edit Teacher Modal */}
         {showEditModal && (
           <div className="modal-overlay">
             <div className="modal-content">

@@ -18,15 +18,13 @@ const AdminBehaviorAssessment = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Retrieve the auth token from localStorage (or wherever it's stored)
   const token = localStorage.getItem('authToken');
 
-  // Fetch students from the behavior assessment endpoint
   useEffect(() => {
     const fetchStudents = async () => {
       try {
         const response = await axios.get('http://192.168.0.103:3000/student', {
-          headers: { Authorization: `Bearer ${token}` } // Add the token to the header
+          headers: { Authorization: `Bearer ${token}` } 
         });
         const studentList = response.data.map((entry) => ({
           id: entry.id,
@@ -48,19 +46,16 @@ const AdminBehaviorAssessment = () => {
     }
   }, [token]);
 
-  // Filter students based on the search query
+
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = students.filter((student) =>
       student.name.toLowerCase().includes(lowercasedQuery)
     );
-
-    // Sort filtered students alphabetically
     filtered.sort((a, b) => a.name.localeCompare(b.name));
     setFilteredStudents(filtered);
   }, [searchQuery, students]);
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -82,11 +77,10 @@ const AdminBehaviorAssessment = () => {
 
     try {
       await axios.post('http://192.168.0.103:3000/behavior-assessment', behaviorData, {
-        headers: { Authorization: `Bearer ${token}` } // Add token to the header for the post request
+        headers: { Authorization: `Bearer ${token}` } 
       });
       setSuccess('Behavior assessment submitted successfully!');
       setError('');
-      // Reset form after successful submission
       setSearchQuery('');
       setSelectedStudentId('');
       setWeek('');

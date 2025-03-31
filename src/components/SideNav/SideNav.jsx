@@ -23,7 +23,7 @@ function SideNav() {
 
   // If studentId is not available, show a loading message or handle the error
   if (!studentId) {
-    return <div>Loading...</div>; // Or handle it in another way
+    return <div></div>; // Or handle it in another way
   }
 
   return (

@@ -76,6 +76,7 @@ const TeacherPage = () => {
       }
 
       setEventMessage('');
+      setError("How about this thing");
       setEventDescription('');
       setEventDate('');
       setSuccess(true);
@@ -116,52 +117,52 @@ const TeacherPage = () => {
   return (
     <div>
       <Header />
-      <div className="event-post-container">
-        <header className="header">
-          <div className="header-title">Post Event</div>
+      <div className="event-dashboard">
+        <header className="title-bars">
+          <div className="page-titles">Post Event</div>
         </header>
-        <main className="main-contenth">
-          <form onSubmit={handleSubmit} className="event-form">
-            <label htmlFor="eventMessage" className="form-label">Event Message</label>
+        <main className="page-content">
+          <form onSubmit={handleSubmit} className="event-creator-form">
+            <label htmlFor="eventMessage" className="form-label-text">Event Message</label>
             <textarea
               id="eventMessage"
               value={eventMessage}
               onChange={handleEventMessageChange}
               required
-              className="form-textarea"
+              className="textarea-input"
             ></textarea>
-            <label htmlFor="eventDescription" className="form-label">Event Description</label>
+            <label htmlFor="eventDescription" className="form-label-text">Event Description</label>
             <textarea
               id="eventDescription"
               value={eventDescription}
               onChange={handleEventDescriptionChange} // Handle description change
               required
-              className="form-textarea"
+              className="textarea-input"
             ></textarea>
-            <label htmlFor="eventDate" className="form-label">Event Date</label>
+            <label htmlFor="eventDate" className="form-label-text">Event Date</label>
             <input
               type="date"
               id="eventDate"
               value={eventDate}
               onChange={handleEventDateChange}
               required
-              className="form-input"
+              className="date-input"
             />
-            <button type="submit" className="submit-button" disabled={loading}>
+            <button type="submit" className="submit-event-btn" disabled={loading}>
               {loading ? 'Posting...' : 'Post Event'}
             </button>
-            {success && <p className="success-message">Event posted successfully!</p>}
-            {error && <p className="error-message">Error: {error}</p>}
+            {success && <p className="success-notification">Event posted successfully!</p>}
+            {error && <p className="error-notification">Error: {error}</p>}
           </form>
-          <div className="event-list">
+          <div className="event-display">
             <h2>Existing Events</h2>
             {loading && <p>Loading events...</p>}
-            {error && <p className="error-message">Error: {error}</p>}
+            {error && <p className="error-notification">Error: {error}</p>}
             {events.length === 0 ? (
               <p>No events available.</p>
             ) : (
               events.map((event) => (
-                <div key={event.id} className="event-item">
+                <div key={event.id} className="event-card">
                   <p><strong>ID:</strong> {event.id}</p>
                   <p><strong>Message:</strong> {event.message}</p>
                   <p><strong>Description:</strong> {event.description}</p> {/* Display description */}
@@ -170,7 +171,7 @@ const TeacherPage = () => {
                   <button 
                     onClick={() => handleDelete(event.id)} 
                     disabled={loading}
-                    className="delete-button"
+                    className="remove-event-btn"
                   >
                     {loading ? 'Deleting...' : 'Delete'}
                   </button>
@@ -179,7 +180,7 @@ const TeacherPage = () => {
             )}
           </div>
         </main>
-        <footer className="footer">
+        <footer className="footer-section">
           <p className="footer-text">© 2024 Edu_Web. All rights reserved.</p>
         </footer>
       </div>

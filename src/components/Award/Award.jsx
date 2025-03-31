@@ -1,7 +1,5 @@
-// Award.js
 import React from 'react';
 import './Award.css';
-
 import Header from '../Header/Header';
 import award1 from '../Assets/best.jpg';
 import award2 from '../Assets/teacherex.jpg';

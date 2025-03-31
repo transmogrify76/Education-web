@@ -106,8 +106,8 @@ h1 {
   100% { opacity: 0; }
 }
 
-.table-container {
-  width: 45%;
+.table-container-one {
+  width: 70%;
   padding: 20px;
   background-color: #f4f6f7;
   border-radius: 12px;

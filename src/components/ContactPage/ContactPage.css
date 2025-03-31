@@ -1,0 +1,129 @@
+.contact-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #f0f4f8 30%, #e1e7ef 100%);
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    animation: fadeIn 1s ease-out;
+}
+
+.contact-page__heading {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #1F3A8A;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.contact-page__range-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.contact-page__range-label {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.contact-page__range-input-field {
+    padding: 10px;
+    font-size: 1.1em;
+    width: 200px;
+    border-radius: 8px;
+    border: 2px solid #6c7b8b;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease;
+}
+
+.contact-page__range-input-field:focus {
+    border-color: #4e7bfc;
+    outline: none;
+}
+
+.contact-page__range-button {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    background-color: #4e7bfc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-page__range-button:hover {
+    background-color: #3d63c1;
+}
+
+.contact-page__list {
+    margin-top: 40px;
+    padding: 0;
+}
+
+.contact-page__item {
+    padding: 20px;
+    background: #ffffff;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 5px solid #4e7bfc;
+}
+
+.contact-page__item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.contact-page__item-name,
+.contact-page__item-email,
+.contact-page__item-message,
+.contact-page__item-phone {
+    font-size: 1.1em;
+    color: #555;
+    margin: 10px 0;
+}
+
+.contact-page__item-name i,
+.contact-page__item-email i,
+.contact-page__item-message i,
+.contact-page__item-phone i {
+    margin-right: 10px;
+    color: #4e7bfc;
+    font-size: 1.4em;
+}
+
+.contact-page__item-name {
+    color: #1F3A8A;
+    font-weight: bold;
+}
+
+.contact-page__loading {
+    text-align: center;
+    font-size: 1.2em;
+    color: #4e7bfc;
+}
+
+.contact-page__error {
+    color: #ff5b5b;
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: 500;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

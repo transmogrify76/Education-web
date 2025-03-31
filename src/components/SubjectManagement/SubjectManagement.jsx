@@ -1,162 +1,225 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import { useParams } from 'react-router-dom';
-// import SideNav from '../SideNav/SideNav';
+import './SubjectManagement.css';
 
-const SubjectManagement = () => {
-    const { studentId } = useParams();
-    const [classes, setClasses] = useState([]);  // Ensure classes is initialized as an empty array
-    const [selectedClass, setSelectedClass] = useState('');
-    const [subjectName, setSubjectName] = useState('');
-    const [message, setMessage] = useState('');
-    const [subjects, setSubjects] = useState([]);  // State for storing subjects for the selected class
+const SubjectManagementPage = () => {
+  const { studentId } = useParams();
+  const [classOptions, setClassOptions] = useState([]);
+  const [selectedClassOption, setSelectedClassOption] = useState('');
+  const [subjectTitle, setSubjectTitle] = useState('');
+  const [notification, setNotification] = useState('');
+  const [classSubjects, setClassSubjects] = useState([]);
+  const [editingSubject, setEditingSubject] = useState(null);
+  const [newSubjectName, setNewSubjectName] = useState('');
 
-    useEffect(() => {
-        // Fetch classes data
-        const fetchClasses = async () => {
-            try {
-                const response = await fetch('http://192.168.0.103:3000/class');
-                const data = await response.json();
-
-                // Check if the response is an array before using .map()
-                if (Array.isArray(data)) {
-                    setClasses(data);  // Set the classes if it's a valid array
-                } else {
-                    setMessage('Error: Classes data is not in the expected format.');
-                }
-            } catch (error) {
-                console.error('Error fetching classes:', error);
-                setMessage('Error fetching classes. Please try again later.');
-            }
-        };
-
-        fetchClasses();
-    }, []);
-
-    // Fetch subjects whenever the selected class changes
-    useEffect(() => {
-        const fetchSubjects = async () => {
-            if (selectedClass) {
-                try {
-                    const response = await fetch(`http://192.168.0.103:3000/subjects/class/${selectedClass}`);
-                    const data = await response.json();
-
-                    // Check if the response is an array before updating the subjects state
-                    if (Array.isArray(data)) {
-                        setSubjects(data);  // Set the subjects for the selected class
-                    } else {
-                        setMessage('Error: Subjects data is not in the expected format.');
-                    }
-                } catch (error) {
-                    console.error('Error fetching subjects:', error);
-                    setMessage('Error fetching subjects. Please try again later.');
-                }
-            } else {
-                setSubjects([]);  // Clear subjects if no class is selected
-            }
-        };
-
-        fetchSubjects();
-    }, [selectedClass]);  // Run this effect whenever `selectedClass` changes
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (!selectedClass || !subjectName) {
-            setMessage('Please fill in all fields.');
-            return;
+  useEffect(() => {
+    const fetchClassOptions = async () => {
+      try {
+        const response = await fetch('http://192.168.0.103:3000/class');
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          setClassOptions(data);
+        } else {
+          setNotification('Error: Classes data is not in the expected format.');
         }
-
-        try {
-            const response = await fetch('http://192.168.0.103:3000/subjects/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: subjectName,
-                    classId: parseInt(selectedClass),
-                }),
-            });
-
-            if (response.ok) {
-                const newSubject = await response.json();  // Get the new subject from the response
-                setSubjects((prevSubjects) => [...prevSubjects, newSubject]);  // Add the new subject to the list
-                setMessage('Subject added successfully!');
-                setSubjectName('');  // Clear the input field for the subject name
-            } else {
-                const data = await response.json();
-                setMessage(`Error: ${data.message || 'Something went wrong'}`);
-            }
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            setMessage('Error submitting the form. Please try again.');
-        }
+      } catch (error) {
+        console.error('Error fetching classes:', error);
+        setNotification('Error fetching classes. Please try again later.');
+      }
     };
+    fetchClassOptions();
+  }, []);
 
-    return (
-        <div className="subject-edit-page">
-            <div>
-                <Header />
-            </div>
-            {/* <SideNav studentId={studentId} /> */}
-            <h1>Add Subject to Class</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="classSelect">Select Class</label>
-                    <select
-                        id="classSelect"
-                        value={selectedClass}
-                        onChange={(e) => setSelectedClass(e.target.value)}
-                        required
-                    >
-                        <option value="">Select a class</option>
-                        {Array.isArray(classes) && classes.length > 0 ? (
-                            classes.map((cls) => (
-                                <option key={cls.id} value={cls.id}>
-                                    {cls.className}
-                                </option>
-                            ))
-                        ) : (
-                            <option disabled>No classes available</option>
-                        )}
-                    </select>
-                </div>
+  useEffect(() => {
+    const fetchClassSubjects = async () => {
+      if (selectedClassOption) {
+        try {
+          const response = await fetch(`http://192.168.0.103:3000/subjects/class/${selectedClassOption}`);
+          const data = await response.json();
+          if (Array.isArray(data)) {
+            setClassSubjects(data);
+          } else {
+            setNotification('Error: Subjects data is not in the expected format.');
+          }
+        } catch (error) {
+          console.error('Error fetching subjects:', error);
+          setNotification('Error fetching subjects. Please try again later.');
+        }
+      } else {
+        setClassSubjects([]);
+      }
+    };
+    fetchClassSubjects();
+  }, [selectedClassOption]);
 
-                <div className="form-group">
-                    <label htmlFor="subjectName">Subject Name</label>
-                    <input
-                        type="text"
-                        id="subjectName"
-                        value={subjectName}
-                        onChange={(e) => setSubjectName(e.target.value)}
-                        placeholder="Enter subject name"
-                        required
-                    />
-                </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedClassOption || !subjectTitle) {
+      setNotification('Please fill in all fields.');
+      return;
+    }
 
-                <button type="submit">Add Subject</button>
-            </form>
+    try {
+      const response = await fetch('http://192.168.0.103:3000/subjects/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: subjectTitle,
+          classId: parseInt(selectedClassOption),
+        }),
+      });
 
-            {message && <div className="message">{message}</div>}
+      if (response.ok) {
+        const newSubject = await response.json();
+        setClassSubjects((prevSubjects) => [...prevSubjects, newSubject]);
+        setNotification('Subject added successfully!');
+        setSubjectTitle('');
+      } else {
+        const data = await response.json();
+        setNotification(`Error: ${data.message || 'Something went wrong'}`);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setNotification('Error submitting the form. Please try again.');
+    }
+  };
 
-            {/* Show the list of subjects if a class is selected */}
-            {selectedClass && (
-                <div className="subjects-list">
-                    <h2>Subjects in this Class:</h2>
-                    {subjects.length > 0 ? (
-                        <ul>
-                            {subjects.map((subject) => (
-                                <li key={subject.id}>{subject.name}</li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No subjects available for this class.</p>
-                    )}
-                </div>
-            )}
+  const handleDeleteSubject = async (classId, subjectId) => {
+    try {
+      const response = await fetch(`http://192.168.0.103:3000/subjects/class/${classId}/subject/${subjectId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setClassSubjects((prevSubjects) => prevSubjects.filter(subject => subject.id !== subjectId));
+        setNotification('Subject deleted successfully!');
+      } else {
+        const data = await response.json();
+        setNotification(`Error: ${data.message || 'Something went wrong'}`);
+      }
+    } catch (error) {
+      console.error('Error deleting subject:', error);
+      setNotification('Error deleting the subject. Please try again.');
+    }
+  };
+
+  const handleUpdateSubject = async (classId, subjectId) => {
+    try {
+      const response = await fetch(`http://192.168.0.103:3000/subjects/class/${classId}/subject/${subjectId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: newSubjectName,
+        }),
+      });
+
+      if (response.ok) {
+        const updatedSubject = await response.json();
+        setClassSubjects((prevSubjects) => prevSubjects.map(subject => subject.id === subjectId ? updatedSubject : subject));
+        setNotification('Subject updated successfully!');
+        setEditingSubject(null);
+        setNewSubjectName('');
+      } else {
+        const data = await response.json();
+        setNotification(`Error: ${data.message || 'Something went wrong'}`);
+      }
+    } catch (error) {
+      console.error('Error updating subject:', error);
+      setNotification('Error updating the subject. Please try again.');
+    }
+  };
+
+  const handleEditSubject = (subject) => {
+    setEditingSubject(subject);
+    setNewSubjectName(subject.name);
+  };
+
+  return (
+    <div className="subject-management-container">
+      <Header />
+      <div className="subject-management-content-one">
+        <h1 className="heading-main">Add Subject to Class</h1>
+
+        <form onSubmit={handleSubmit} className="subject-form">
+          <div className="form-field-one">
+            <label htmlFor="classSelect">Select Class</label>
+            <select
+              id="classSelect"
+              value={selectedClassOption}
+              onChange={(e) => setSelectedClassOption(e.target.value)}
+              required
+            >
+              <option value="">Select a class</option>
+              {classOptions.map((cls) => (
+                <option key={cls.id} value={cls.id}>
+                  {cls.className}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="form-field-one">
+            <label htmlFor="subjectName">Subject Name</label>
+            <input
+              type="text"
+              id="subjectName"
+              value={subjectTitle}
+              onChange={(e) => setSubjectTitle(e.target.value)}
+              placeholder="Enter subject name"
+              required
+            />
+          </div>
+
+          <div className="submit-div" onClick={handleSubmit}>Add Subject</div>
+        </form>
+
+        {notification && <div className="notification-banner">{notification}</div>}
+
+        <div className="subject-list-container">
+          {selectedClassOption && (
+            <>
+              <h2>Subjects in this Class</h2>
+              <div className="subject-cards-container">
+                {classSubjects.length > 0 ? (
+                  classSubjects.map((subject) => (
+                    <div key={subject.id} className="subject-card">
+                      {editingSubject && editingSubject.id === subject.id ? (
+                        <div className="subject-edit-form">
+                          <input
+                            type="text"
+                            value={newSubjectName}
+                            onChange={(e) => setNewSubjectName(e.target.value)}
+                          />
+                          <div className="submit-div" onClick={() => handleUpdateSubject(selectedClassOption, subject.id)}>
+                            Update
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <h3>{subject.name}</h3>
+                          <div className="subject-actions-container">
+                            <div onClick={() => handleEditSubject(subject)} className="edit-div">Edit</div>
+                            <div onClick={() => handleDeleteSubject(selectedClassOption, subject.id)} className="delete-div">Delete</div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <p>No subjects available for this class.</p>
+                )}
+              </div>
+            </>
+          )}
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
-export default SubjectManagement;
+export default SubjectManagementPage;

@@ -13,7 +13,7 @@ const EbookPage = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [message, setMessage] = useState('');
 
-  // Fetch the class options from the backend
+
   useEffect(() => {
     const fetchClassOptions = async () => {
       try {
@@ -27,38 +27,37 @@ const EbookPage = () => {
     fetchClassOptions();
   }, []);
 
-  // Handle input field changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle file input change
+
   const handleFileChange = (e) => {
     setPdfFile(e.target.files[0]);
   };
 
-  // Handle class selection change
+
   const handleClassChange = (e) => {
     setFormData({ ...formData, classId: e.target.value });
   };
 
-  // Handle form submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Ensure only the classId (numeric ID) is sent
+  
     const classId = formData.classId;
 
-    // Create form data to be sent to the backend
+    
     const data = new FormData();
     data.append('title', formData.title);
     data.append('description', formData.description);
-    data.append('classId', classId); // Ensure we're only sending the classId
+    data.append('classId', classId); 
     data.append('file', pdfFile);
 
     try {
-      // Make the POST request to the backend
+    
       await axios.post('http://192.168.0.103:3000/ebooks', data, {
         headers: {
           'Content-Type': 'multipart/form-data',

@@ -1,10 +1,10 @@
-body {
+/* body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: #f5f5f5;
-}
+} */
 
 .curriculum-container {
     display: flex;

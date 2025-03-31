@@ -89,7 +89,7 @@ const StudentGradesPage = () => {
     fetchGradesAndStudentName();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p></p>;
   if (error) return <p>{error}</p>;
 
   return (

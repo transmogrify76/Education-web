@@ -1,113 +1,162 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './AttendancePage.css';
+import Header from '../Header/Header';
 
 const AttendancePage = () => {
-  const [studentName, setStudentName] = useState('');
-  const [className, setClassName] = useState('');
-  const [date, setDate] = useState('');
-  const [present, setPresent] = useState(false);
-  const [responseData, setResponseData] = useState(null);
+  const [formData, setFormData] = useState({
+    studentName: '',
+    className: '',
+    date: '',
+    present: false,
+  });
+
+  const [classNames, setClassNames] = useState([]);  // State for storing class names
+  const [students, setStudents] = useState([]);  // State for storing students
+  const [selectedClass, setSelectedClass] = useState('');  // Store the selected class id
+  const [selectedStudent, setSelectedStudent] = useState('');  // Store the selected student id
   const [error, setError] = useState(null);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // Fetch the class names from the backend
+  useEffect(() => {
+    const fetchClassNames = async () => {
+      try {
+        const response = await axios.get('http://192.168.0.103:3000/class');
+        console.log('Fetched class names:', response.data);  // Inspect the fetched data
+        setClassNames(response.data);  // Set the class names here
+      } catch (error) {
+        console.error('There was an error fetching the class names:', error);
+        setError('Failed to fetch class names.');
+      }
+    };
 
-    // Mapping the student name and class name to appropriate IDs
-    // You may need to replace this with a real method to map names to IDs from your backend
-    const studentId = getStudentIdByName(studentName);
-    const classId = getClassIdByName(className);
+    fetchClassNames();
+  }, []);  // Empty dependency array means it runs once when the component mounts
 
+  // Handle input field changes
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value,
+    });
+  };
+
+  // Fetch students for the selected class
+  const fetchStudentsForClass = async (classId) => {
+    try {
+      const response = await axios.get(`http://192.168.0.103:3000/class/${classId}`);
+      setStudents(response.data.students);
+    } catch (error) {
+      console.error('Error fetching students for class:', error);
+      setError('Failed to fetch students for this class.');
+    }
+  };
+
+  // Handle class selection
+  const handleClassChange = (e) => {
+    const selectedClassId = e.target.value;
+    setSelectedClass(selectedClassId);
+    fetchStudentsForClass(selectedClassId);  // Fetch students based on the selected class
+  };
+
+  // Handle student selection
+  const handleStudentChange = (e) => {
+    setSelectedStudent(e.target.value);
+  };
+
+  // Handle attendance submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const payload = {
-      studentId: studentId,
-      classId: classId,
-      date: date,
-      present: present,
+      studentId: selectedStudent,
+      classId: selectedClass,
+      date: formData.date,
+      present: formData.present,
     };
 
     try {
       const response = await axios.post('http://192.168.0.103:3000/attendance', payload);
-      setResponseData(response.data);
+      console.log('Attendance submitted:', response.data);
       setError(null);
-    } catch (err) {
-      setError('An error occurred while posting attendance.');
-      setResponseData(null);
+    } catch (error) {
+      console.error('Error submitting attendance:', error);
+      setError('Failed to submit attendance.');
     }
   };
 
-  // Dummy methods to simulate fetching IDs by names
-  const getStudentIdByName = (name) => {
-    const students = [
-      { id: 6, name: 'Chitradeep Ghosh' }, // Example data
-    ];
-    const student = students.find((student) => student.name === name);
-    return student ? student.id : null;
-  };
-
-  const getClassIdByName = (className) => {
-    const classes = [
-      { id: 2, name: 'Math' }, // Example data
-    ];
-    const classObj = classes.find((classItem) => classItem.name === className);
-    return classObj ? classObj.id : null;
-  };
-
   return (
-    <div className="attendance-form">
-      <h1>Mark Attendance</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="studentName">Student Name:</label>
-          <input
-            type="text"
-            id="studentName"
-            value={studentName}
-            onChange={(e) => setStudentName(e.target.value)}
+    <div>
+      <Header/>
+    <div className="attendance-page">
+      <h1 className="page-title">Mark Attendance</h1>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
+      <form onSubmit={handleSubmit} className="child-selection">
+        <div className="select-class">
+          <label htmlFor="classSelect">Select Class:</label>
+          <select
+            id="classSelect"
+            value={selectedClass}
+            onChange={handleClassChange}
             required
-          />
+          >
+            <option value="">--Select a Class--</option>
+            {classNames.map((classItem) => (
+              <option key={classItem.id} value={classItem.id}>
+                {classItem.className}  {/* Access className directly */}
+              </option>
+            ))}
+          </select>
         </div>
-        <div>
-          <label htmlFor="className">Class:</label>
-          <input
-            type="text"
-            id="className"
-            value={className}
-            onChange={(e) => setClassName(e.target.value)}
-            required
-          />
-        </div>
+
+        {selectedClass && (
+          <div className="select-student">
+            <label htmlFor="studentSelect">Select Student:</label>
+            <select
+              id="studentSelect"
+              value={selectedStudent}
+              onChange={handleStudentChange}
+              required
+            >
+              <option value="">--Select a Student--</option>
+              {students.map((student) => (
+                <option key={student.id} value={student.id}>
+                  {student.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <div>
           <label htmlFor="date">Date:</label>
           <input
             type="date"
             id="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            name="date"
+            value={formData.date}
+            onChange={handleInputChange}
             required
           />
         </div>
+
         <div>
           <label htmlFor="present">Present:</label>
           <input
             type="checkbox"
             id="present"
-            checked={present}
-            onChange={(e) => setPresent(e.target.checked)}
+            name="present"
+            checked={formData.present}
+            onChange={handleInputChange}
           />
         </div>
-        <button type="submit">Submit Attendance</button>
+
+        <button type="submit" className="scan-button">Submit Attendance</button>
       </form>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      {responseData && (
-        <div className="response">
-          <h3>Attendance Recorded</h3>
-          <p>Date: {responseData.date}</p>
-          <p>Student: {responseData.student.name}</p>
-          <p>Class: {responseData.classEntity.className} - {responseData.classEntity.subject}</p>
-          <p>Present: {responseData.present ? 'Yes' : 'No'}</p>
-        </div>
-      )}
+      {error && <div className="error">{error}</div>}
+    </div>
     </div>
   );
 };

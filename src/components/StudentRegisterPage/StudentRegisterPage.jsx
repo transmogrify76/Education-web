@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Initialize useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import './StudentRegisterPage.css';
 import Header from '../Header/Header';
 
@@ -8,21 +8,20 @@ const StudentRegisterPage = () => {
         firstName: '',
         lastName: '',
         dob: '',
-        className: '', // Default to empty until user selects a class
+        className: '', 
         studentId: '',
         email: '',
         password: '',
         parentEmail: '',
         address: '',
-        gender: '', // New field for gender
-        rollNo: '' // Added roll number field
+        gender: '', 
+        rollNo: '' 
     });
 
     const [showPopup, setShowPopup] = useState(false);
-    const [classes, setClasses] = useState([]); // To store fetched classes
-    const navigate = useNavigate(); // Initialize useNavigate
+    const [classes, setClasses] = useState([]); 
+    const navigate = useNavigate(); 
 
-    // Fetch classes from the API when the component mounts
     useEffect(() => {
         const fetchClasses = async () => {
             try {
@@ -30,7 +29,7 @@ const StudentRegisterPage = () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    setClasses(data); // Assuming the response contains an array of classes
+                    setClasses(data); 
                 } else {
                     console.error('Failed to fetch classes:', data.message);
                 }
@@ -40,7 +39,7 @@ const StudentRegisterPage = () => {
         };
 
         fetchClasses();
-    }, []); // Empty dependency array ensures this runs once when the component mounts
+    }, []); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -54,7 +53,7 @@ const StudentRegisterPage = () => {
         e.preventDefault();
 
         try {
-            const token = localStorage.getItem('authToken'); // Get token from localStorage (if needed)
+            const token = localStorage.getItem('authToken'); 
 
             if (!token) {
                 alert('You must be logged in as an admin to register a student');
@@ -65,7 +64,7 @@ const StudentRegisterPage = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`, // Add Authorization header with Bearer token
+                    'Authorization': `Bearer ${token}`, 
                 },
                 body: JSON.stringify({
                     name: `${formData.firstName} ${formData.lastName}`,
@@ -75,28 +74,26 @@ const StudentRegisterPage = () => {
                     dob: formData.dob,
                     password: formData.password,
                     address: formData.address,
-                    gender: formData.gender, // Include gender in the request
+                    gender: formData.gender, 
                     roleType: 'student',
-                    class: formData.className, // Send selected class
-                    rollNo: formData.rollNo, // Send roll number
+                    class: formData.className, 
+                    rollNo: formData.rollNo,
                 }),
             });
 
             if (response.ok) {
                 setShowPopup(true);
 
-                // Redirect to StudentView page after a short delay to show the popup
                 setTimeout(() => {
-                    navigate('/admindashboard'); // Adjust this to your desired route
+                    navigate('/admindashboard'); 
+
                 }, 1500);
             } else {
                 const errorData = await response.json();
                 console.error('Registration failed:', errorData.message);
-                // Handle error message appropriately
             }
         } catch (error) {
             console.error('Fetch error:', error);
-            // Handle fetch error appropriately
         }
     };
 
@@ -106,7 +103,6 @@ const StudentRegisterPage = () => {
         <div className="register-page-containers">
             <form className="register-forms" onSubmit={handleSubmit}>
                 <h1 className="register-title">Student Registration</h1>
-                {/* Form Fields */}
                 <label>
                     First Name:
                     <input
@@ -148,7 +144,7 @@ const StudentRegisterPage = () => {
                         <option value="">Select a Class</option>
                         {classes.map((classItem, index) => (
                             <option key={index} value={classItem.className}>
-                                {classItem.className} {/* Assuming `className` is the field in the API response */}
+                                {classItem.className}
                             </option>
                         ))}
                     </select>

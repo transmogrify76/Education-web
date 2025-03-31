@@ -17,6 +17,7 @@ const AdminTimeTable = () => {
   const [subjectOptions, setSubjectOptions] = useState([]); 
   const [teacherOptions, setTeacherOptions] = useState([]); // Teacher options
   const [timetable, setTimetable] = useState([]);
+  const [selectedClass, setSelectedClass] = useState(''); // Store selected class for filtering
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -79,6 +80,10 @@ const AdminTimeTable = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleClassFilterChange = (e) => {
+    setSelectedClass(e.target.value); // Update selected class for filtering
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const selectedTeacher = teacherOptions.find(teacher => teacher.id === Number(formData.professor));
@@ -134,6 +139,11 @@ const AdminTimeTable = () => {
       console.error('Error deleting timetable:', error);
     }
   };
+
+  // Filter the timetable based on the selected class
+  const filteredTimetable = selectedClass
+    ? timetable.filter((item) => item.class.id === Number(selectedClass))
+    : timetable;
 
   return (
     <div>
@@ -254,7 +264,20 @@ const AdminTimeTable = () => {
           </form>
         </div>
 
-        <div className="table-container">
+        {/* Class filter dropdown */}
+        <div className="class-filter">
+          <h2>Filter Timetable by Class</h2>
+          <select value={selectedClass} onChange={handleClassFilterChange}>
+            <option value="">Select Class</option>
+            {classOptions.map((classItem) => (
+              <option key={classItem.id} value={classItem.id}>
+                {classItem.className}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="table-container-one">
           <h2>Timetable List</h2>
           <table className="timetable-table">
             <thead>
@@ -268,8 +291,8 @@ const AdminTimeTable = () => {
               </tr>
             </thead>
             <tbody>
-              {timetable.length > 0 ? (
-                timetable.map((item) => (
+              {filteredTimetable.length > 0 ? (
+                filteredTimetable.map((item) => (
                   <tr key={item.id}>
                     <td>{item.day}</td>
                     <td>{item.time}</td>

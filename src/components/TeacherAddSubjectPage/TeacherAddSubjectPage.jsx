@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './TeacherAddSubjectPage.css'; // Assuming you will add this CSS file
+import './TeacherAddSubjectPage.css'; 
 import Header from '../Header/Header';
 
 const TeacherAddSubjectPage = () => {

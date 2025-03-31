@@ -11,9 +11,9 @@
     background-size: cover;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* Ensure it covers at least the full viewport height */
-    padding: 20px; /* Optionally add padding to prevent content from touching the edges */
-    box-sizing: border-box; /* Ensure padding is included in the element's total height */
+    min-height: 100vh;
+    padding: 20px; 
+    box-sizing: border-box; 
 }
 
 
@@ -67,7 +67,7 @@
 
 .popup {
     position: absolute;
-    top: 20px; /* Position above the form */
+    top: 20px; 
     left: 50%;
     transform: translateX(-50%);
     border: 2px solid blue;
@@ -79,7 +79,7 @@
     font-size: 1rem;
     display: flex;
     align-items: center;
-    border: 2px solid #218838; /* Adding a border to the popup */
+    border: 2px solid #218838; 
 }
 
 .popup-icon {
@@ -96,7 +96,7 @@
     margin-right: 0.5rem;
 }
 
-/* Responsive Styles */
+
 @media (max-width: 768px) {
     .register-form {
         padding: 1rem;
@@ -107,6 +107,6 @@
     }
 
     .popup {
-        top: 10px; /* Adjust position for smaller screens */
+        top: 10px;
     }
 }

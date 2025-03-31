@@ -1,136 +1,173 @@
 /* TeacherPage.css */
 
+/* Resetting basic styles */
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-  }
-  
-  .event-post-container {
-    max-width: 30%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-  }
-  
-  .header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .header-title {
-    font-size: 2rem;
-    color: #333;
-    margin: 0;
-  }
-  
-  .main-content {
-    padding: 20px;
-  }
-  
-  .event-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .form-label {
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  .form-textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    resize: vertical;
-  }
-  
-  .form-input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-  }
-  
-  .submit-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submit-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  .submit-button:hover:enabled {
-    background-color: #0056b3;
-  }
-  
-  .success-message {
-    color: #28a745;
-    margin-top: 10px;
-  }
-  
-  .error-message {
-    color: #dc3545;
-    margin-top: 10px;
-  }
-  
-  .event-list {
-    margin-top: 40px;
-  }
-  
-  .event-item {
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-  }
-  
-  .event-item p {
-    margin: 5px 0;
-    color: #555;
-  }
-  
-  .delete-button {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .delete-button:hover {
-    background-color: #c82333;
-  }
-  
-  .footer {
-    text-align: center;
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #f1f1f1;
-    border-top: 1px solid #ddd;
-  }
-  
-  .footer-text {
-    color: #777;
-    font-size: 0.9rem;
-  }
-  
+  font-family: 'Arial', sans-serif;
+  background-color: #fafafa;
+  color: #333;
+  line-height: 1.6;
+} */
+
+/* Container for the event form */
+.event-dashboard {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 40px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.event-dashboard:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header section */
+.title-bars {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.page-titles {
+  font-size: 2.5rem;
+  color: #d4ff00;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Main content styling */
+.page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Form styling */
+.event-creator-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-label-text {
+  font-size: 1.2rem;
+  color: #444;
+  font-weight: 600;
+}
+
+.textarea-input,
+.date-input {
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.textarea-input:focus,
+.date-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Submit button styling */
+.submit-event-btn {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.submit-event-btn:disabled {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+
+.submit-event-btn:hover:enabled {
+  background-color: #0056b3;
+}
+
+/* Success and Error messages */
+.success-notification {
+  color: #28a745;
+  font-weight: 600;
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+.error-notification {
+  color: #dc3545;
+  font-weight: 600;
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+/* Event list styling */
+.event-display {
+  margin-top: 40px;
+  font-size: 1.1rem;
+}
+
+.event-card {
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+
+.event-card:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-card p {
+  margin: 8px 0;
+  color: #555;
+}
+
+/* Delete button styling */
+.remove-event-btn {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.remove-event-btn:hover {
+  background-color: #c82333;
+}
+
+/* Footer section */
+.footer-section {
+  text-align: center;
+  padding: 15px;
+  background-color: #f8f8f8;
+  margin-top: 40px;
+  border-top: 1px solid #ddd;
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  color: #777;
+}

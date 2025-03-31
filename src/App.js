@@ -102,6 +102,9 @@ import SubjectManagement from './components/SubjectManagement/SubjectManagement'
 import AdminTeacherList from './components/TeacherList/TeacherList';
 import TeacherAddSubjectPage from './components/TeacherAddSubjectPage/TeacherAddSubjectPage';
 import ParentList from './components/ParentList/ParentList';
+import ContactPage from './components/ContactPage/ContactPage';
+import Profile from './components/StudentProfilePage/StudentProfilePage'
+import ProfilePage from './components/StudentProfile/ProfilePage';
 function App() {
   return (
     <Router>
@@ -214,6 +217,8 @@ function App() {
           <Route path="/subjectadd" element={<SubjectManagement/>} />          
           <Route path="/subject-teacher" element={<TeacherAddSubjectPage/>} />          
           <Route path="/ParentList" element={<ParentList/>} />          
+          <Route path="/ContactPage" element={<ContactPage/>} />          
+          <Route path="/Profile" element={<ProfilePage/>} />          
 
         </Routes>
       </div>

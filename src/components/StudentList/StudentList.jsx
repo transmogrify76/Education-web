@@ -6,7 +6,7 @@ import './StudentList.css';
 
 const StudentListPage = () => {
   const [students, setStudents] = useState([]);
-  const [allStudents, setAllStudents] = useState([]); 
+  const [allStudents, setAllStudents] = useState([]);
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [error, setError] = useState('');
@@ -20,7 +20,7 @@ const StudentListPage = () => {
     dob: '',
     className: '',
     address: '',
-    rollNo: '' // Added rollNo to the editFormData state
+    rollNo: ''
   });
 
   const token = localStorage.getItem('authToken');
@@ -143,11 +143,17 @@ const StudentListPage = () => {
           id="classSelect"
           value={selectedClass}
           onChange={(e) => {
-            setSelectedClass(e.target.value);
-            fetchStudentsForClass(e.target.value); // Fetch students for selected class
+            const classId = e.target.value;
+            setSelectedClass(classId);
+
+            if (classId === 'all') {
+              setStudents(allStudents); // Show all students
+            } else {
+              fetchStudentsForClass(classId); // Fetch students for selected class
+            }
           }}
         >
-          <option value="">--Select a Class--</option>
+          <option value="all">--All Students--</option> {/* All option */}
           {classes.map((classItem) => (
             <option key={classItem.id} value={classItem.id}>
               {classItem.className}

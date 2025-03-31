@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './GradePage.css';
 import Header from '../Header/Header';
 
 const GradePage = () => {
-  const [students, setStudents] = useState([]);
-  const [selectedStudent, setSelectedStudent] = useState('');
+  const [classes, setClasses] = useState([]); 
+  const [students, setStudents] = useState([]); 
+  const [selectedClass, setSelectedClass] = useState(''); 
+  const [selectedStudent, setSelectedStudent] = useState(''); 
   const [subject, setSubject] = useState('');
   const [assignmentName, setAssignmentName] = useState('');
   const [grade, setGrade] = useState('');
@@ -13,31 +16,53 @@ const GradePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Retrieve the token from localStorage
   const authToken = localStorage.getItem('authToken');
 
-  // Helper function to get headers with the Bearer token
+
   const getAuthHeaders = () => {
     return {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authToken}`,  // Add the token in the Authorization header
+      'Authorization': `Bearer ${authToken}`,  
     };
   };
 
   useEffect(() => {
-    fetch('http://192.168.0.103:3000/student', {
-      headers: getAuthHeaders(),  // Include the token in the request header
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          setStudents(data);
+    axios
+      .get('http://192.168.0.103:3000/class', {
+        headers: getAuthHeaders(),
+      })
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          setClasses(response.data);
         } else {
-          console.error('Expected an array of students');
+          console.error('Expected an array of classes');
         }
       })
-      .catch(error => console.error('Error fetching students:', error));
+      .catch((error) => console.error('Error fetching classes:', error));
   }, []);
+
+
+  const fetchStudentsForClass = async (classId) => {
+    try {
+      const response = await axios.get(`http://192.168.0.103:3000/class/${classId}`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      setStudents(response.data.students);
+    } catch (error) {
+      console.error('Error fetching students for class:', error);
+      setError('Failed to fetch students for this class.');
+    }
+  };
+
+
+  useEffect(() => {
+    if (selectedClass) {
+      fetchStudentsForClass(selectedClass);
+    } else {
+      setStudents([]);
+    }
+  }, [selectedClass]);
+
 
   useEffect(() => {
     if (selectedStudent) {
@@ -80,7 +105,7 @@ const GradePage = () => {
     setLoading(true);
     fetch('http://192.168.0.103:3000/grading', {
       method: 'POST',
-      headers: getAuthHeaders(),  // Include the token in the request header
+      headers: getAuthHeaders(),  
       body: JSON.stringify({
         studentId: selectedStudent,
         subject,
@@ -106,6 +131,7 @@ const GradePage = () => {
       });
   };
 
+  // Fetch grades for a specific student
   const fetchGrades = () => {
     fetch(`http://192.168.0.103:3000/grading/student/${selectedStudent}`, {
       headers: getAuthHeaders(),  // Include the token in the request header
@@ -119,7 +145,7 @@ const GradePage = () => {
     setLoading(true);
     fetch(`http://192.168.0.103:3000/grading/student/${selectedStudent}/subject/${subject}`, {
       method: 'PATCH',
-      headers: getAuthHeaders(),  // Include the token in the request header
+      headers: getAuthHeaders(),  
       body: JSON.stringify(updatedGrade),
     })
       .then(() => {
@@ -132,7 +158,6 @@ const GradePage = () => {
       });
   };
 
-  // Find the name of the selected student based on the selectedStudent ID
   const selectedStudentName = students.find(student => student.id === selectedStudent)?.name;
 
   return (
@@ -141,7 +166,25 @@ const GradePage = () => {
       <div className="student-grading-page">
         <h1>Create and Update Grade Remarks</h1>
         {error && <p className="error">{error}</p>}
+        
         <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="class">Class</label>
+            <select
+              id="class"
+              value={selectedClass}
+              onChange={(e) => setSelectedClass(e.target.value)}
+              required
+            >
+              <option value="">Select a class</option>
+              {classes.map(cls => (
+                <option key={cls.id} value={cls.id}>
+                  {cls.className}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className="form-group">
             <label htmlFor="student">Student</label>
             <select
@@ -209,12 +252,11 @@ const GradePage = () => {
         </form>
 
         {loading ? (
-          <p>Loading...</p>
+          <p></p>
         ) : (
           selectedStudent && (
             <div>
-              {/* Display student's name fetched from the grades data */}
-              <h2>Grades : {grades.length > 0 ? grades[0].student.name : selectedStudentName}</h2> 
+              <h2>Grades : {grades.length > 0 ? grades[0].student.name : selectedStudentName}</h2>
               {grades.length === 0 && !error ? (
                 <p>No grades available for this student.</p>
               ) : (

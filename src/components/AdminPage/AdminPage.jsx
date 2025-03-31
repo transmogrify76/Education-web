@@ -27,10 +27,11 @@ const AdminPage = () => {
     { name: 'Report Card Update', icon: 'fas fa-file', className: 'btn-16', link: '/' },
     // { name: 'Student Messages', icon: 'fas fa-comments', className: 'btn-13', link: `/AdminChat` },
     { name: 'Student Wellbeing Request', icon: 'fas fa-heart', className: 'btn-17', link: '/AdminWellbeingRequests' },
-    { name: 'Behavior Assessment Tools', icon: 'fas fa-behavior', className: 'btn-18', link: '/AdminBehaviorAssessment' },
+    { name: 'Behavior Assessment Tools', icon: 'fas fa-user', className: 'btn-11', link: '/AdminBehaviorAssessment' },
     { name: 'Result Upload', icon: 'fas fa-upload', className: 'btn-19', link: '/UploadResults' },
     { name: 'Fee Reminder Update', icon: 'fas fa-money-bill-alt', className: 'btn-20', link: '/AdminFeeReminderPage' },
-    { name: 'Add subject on Teacher', icon: 'fas fa-external-link-alt', className: 'btn-21', link: '/subject-teacher' }
+    { name: 'Add subject on Teacher', icon: 'fas fa-external-link-alt', className: 'btn-21', link: '/subject-teacher' },
+    { name: 'All contact us query', icon: 'fas fa-external-link-alt', className: 'btn-22', link: '/ContactPage' }
   ];
 
   return (

@@ -115,31 +115,29 @@ import axios from 'axios';
 import './SubmittedAssignment.css';
 
 const SubmittedAssignment = () => {
-  const [classes, setClasses] = useState([]); // State to hold class data
-  const [selectedClassId, setSelectedClassId] = useState(null); // Selected class ID
-  const [assignments, setAssignments] = useState([]); // State for assignments
-  const [error, setError] = useState(null); // State for any fetch errors
+  const [classes, setClasses] = useState([]);
+  const [selectedClassId, setSelectedClassId] = useState(null);
+  const [assignments, setAssignments] = useState([]);
+  const [error, setError] = useState(null);
 
-  // Fetch all classes when the component mounts
   useEffect(() => {
     const fetchClasses = async () => {
       try {
         const response = await axios.get('http://192.168.0.103:3000/class');
-        setClasses(response.data); // Set classes in state
+        setClasses(response.data); 
       } catch (error) {
-        setError('Failed to fetch classes.'); // Set error message
+        setError('Failed to fetch classes.'); 
       }
     };
     fetchClasses();
   }, []);
 
-  // Fetch assignments based on selected class ID
   useEffect(() => {
     if (selectedClassId) {
       const fetchAssignments = async () => {
         try {
           const response = await axios.get(`http://192.168.0.103:3000/assignments/class/${selectedClassId}`);
-          setAssignments(response.data); // Set assignments in state
+          setAssignments(response.data); 
         } catch (error) {
           setError('Failed to fetch assignments for the selected class.');
         }
@@ -162,9 +160,8 @@ const SubmittedAssignment = () => {
       >
         <option value="" disabled>Select a class</option>
         {classes.map((classItem) => (
-          // Display class name but send class id
           <option key={classItem.id} value={classItem.id}>
-            {classItem.className || `Class ${classItem.id}`}  {/* Display class name */}
+            {classItem.className || `Class ${classItem.id}`}
           </option>
         ))}
       </select>

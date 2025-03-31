@@ -142,7 +142,7 @@ const UploadTeacherResults = () => {
     <div className="upload-container">
       <h2 className="upload-container__heading">Upload Results</h2>
       <form onSubmit={handleSubmit}>
-        {loading && <div className="loading">Loading...</div>}
+        {loading && <div className="loading"></div>}
         {error && <div className="error-message">{error}</div>}
 
         <div className="form-group">

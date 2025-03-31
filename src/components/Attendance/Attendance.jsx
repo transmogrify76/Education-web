@@ -93,7 +93,7 @@ const Attendance = () => {
 
   // If loading, display loading message
   if (loading) {
-    return <p>Loading...</p>;
+    return <p></p>;
   }
 
   // If there's an error, display error message

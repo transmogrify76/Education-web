@@ -61,7 +61,6 @@
   background-color: #003f7f;
 }
 
-/* Message for no teachers or classes available */
 .teacher-table td[colspan="5"], .teacher-table td[colspan="6"] {
   text-align: center;
   color: #888;

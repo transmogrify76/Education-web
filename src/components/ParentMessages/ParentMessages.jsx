@@ -41,7 +41,7 @@ const ParentMessages = () => {
     fetchMessagesAndParentName(); // Fetch messages and parent info
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p></p>;
   if (error) return <p>{error}</p>;
 
   return (
