@@ -17,7 +17,6 @@ const Header = () => {
       setIsLoggedIn(true);
     }
   }, []);
-
   const toggleDropdown = (type) => {
     if (type === 'login') {
       setIsDropdownOpen(!isDropdownOpen);
@@ -27,7 +26,6 @@ const Header = () => {
       setIsDropdownOpen(false);
     }
   };
-
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');

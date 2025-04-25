@@ -6,7 +6,6 @@ import Header from '../Header/Header';
 const ParentRegisterPage = () => {
     const [formData, setFormData] = useState({
         name: '',
-        // studentName: '',
         email: '',
         phoneNo: '',
         address: '',
@@ -67,7 +66,7 @@ const ParentRegisterPage = () => {
                 setShowPopup(true);
                 setTimeout(() => {
                     setShowPopup(false);
-                    navigate(`/plogin`); // Redirect to Plogin with parentId
+                    navigate(`/admindashboard`); // Redirect to Plogin with parentId
                 }, 2000); // Adjust the delay as needed
             } else {
                 const errorData = await response.json();

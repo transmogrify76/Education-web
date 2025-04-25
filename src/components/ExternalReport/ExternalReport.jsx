@@ -1,97 +1,106 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { jwtDecode } from 'jwt-decode'; // Import jwt-decode to decode the token
+import { jwtDecode } from 'jwt-decode';
 import html2pdf from 'html2pdf.js';
-import logo from '../Assets/logo.png'; // Adjust this path as needed
+import logo from '../Assets/logo.png';
 import './ExternalReport.css';
 
 const ExternalReport = () => {
   const [studentInfo, setStudentInfo] = useState({ name: '', enrollmentNo: '', className: '' });
-  const [results, setResults] = useState({}); // Store results by subject
+  const [allResults, setAllResults] = useState([]); // All raw results
+  const [filteredResults, setFilteredResults] = useState({});
+  const [studentId, setStudentId] = useState(null);
+  const [year, setYear] = useState('');
+  const [availableYears, setAvailableYears] = useState([]);
   const pdfRef = useRef();
-  const [studentId, setStudentId] = useState(null); // State to store the decoded studentId
 
   useEffect(() => {
-    // Fetch studentId from the JWT token (localStorage)
+    // Get studentId from JWT
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        setStudentId(decodedToken.Id); // Set the studentId from decoded token
+        setStudentId(decodedToken.Id);
       } catch (error) {
         console.error('Failed to decode JWT token:', error);
       }
     }
+  }, []);
 
-    if (studentId) {
-      // Fetch student class data and results once studentId is available
-      const fetchClassData = async () => {
-        try {
-          const classResponse = await fetch('http://192.168.0.103:3000/class');
-          const classData = await classResponse.json();
+  useEffect(() => {
+    if (!studentId) return;
 
-          let foundClass = '';
-          classData.forEach(cls => {
-            const studentInClass = cls.students.find(student => student.id === studentId);
-            if (studentInClass) {
-              foundClass = cls.className;
-              setStudentInfo(prevInfo => ({
-                ...prevInfo,
-                name: studentInClass.name,
-                enrollmentNo: studentInClass.enrollmentNo,
-                className: foundClass,
-              }));
-            }
-          });
-          if (!foundClass) {
-            console.error("Student not found in any class.");
+    const fetchClassData = async () => {
+      try {
+        const classResponse = await fetch('http://192.168.0.103:3000/class');
+        const classData = await classResponse.json();
+
+        for (const cls of classData) {
+          const student = cls.students.find((s) => s.id === studentId);
+          if (student) {
+            setStudentInfo({
+              name: student.name,
+              enrollmentNo: student.enrollmentNo,
+              className: cls.className,
+            });
+            break;
           }
-        } catch (error) {
-          console.error("Error fetching class data:", error);
         }
-      };
+      } catch (error) {
+        console.error("Error fetching class data:", error);
+      }
+    };
 
-      const fetchResults = async () => {
-        try {
-          const response = await fetch(`http://192.168.0.103:3000/results/student/${studentId}`);
-          const data = await response.json();
+    const fetchResults = async () => {
+      try {
+        const response = await fetch(`http://192.168.0.103:3000/results/student/${studentId}`);
+        const data = await response.json();
 
-          const subjectMap = {};
+        setAllResults(data);
 
-          for (let i = 0; i < data.length; i++) {
-            const { subject, marks, id } = data[i];
+        // Extract available years
+        const years = Array.from(new Set(data.map((res) => res.year)));
+        setAvailableYears(years.sort((a, b) => b - a));
 
-            if (!subjectMap[subject.name]) {
-              subjectMap[subject.name] = { marks, id };
-            } else {
-              if (id > subjectMap[subject.name].id) {
-                subjectMap[subject.name] = { marks, id };
-              }
-            }
-          }
-
-          setResults(subjectMap);
-        } catch (error) {
-          console.error("Error fetching result data:", error);
+        // Set default selected year to latest
+        if (years.length > 0) {
+          setYear(years[0]);
         }
-      };
+      } catch (error) {
+        console.error("Error fetching result data:", error);
+      }
+    };
 
-      fetchClassData();
-      fetchResults();
+    fetchClassData();
+    fetchResults();
+  }, [studentId]);
+
+  // Filter results when year or allResults change
+  useEffect(() => {
+    if (!year || allResults.length === 0) return;
+
+    const subjectMap = {};
+
+    const filtered = allResults.filter((res) => res.year === Number(year));
+
+    for (let i = 0; i < filtered.length; i++) {
+      const { subject, marks, id } = filtered[i];
+      if (!subjectMap[subject.name] || id > subjectMap[subject.name].id) {
+        subjectMap[subject.name] = { marks, id };
+      }
     }
 
-  }, [studentId]); // Re-run effect when studentId is set
+    setFilteredResults(subjectMap);
+  }, [year, allResults]);
 
   const generatePDF = () => {
     const element = pdfRef.current;
-
-    // Hide the PDF button while generating the PDF
     document.querySelector(".pdf-button").style.display = "none";
 
     const opt = {
-      margin:       1,
-      filename:     `Result_${studentInfo.name}.pdf`,
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      margin: 1,
+      filename: `Result_${studentInfo.name}_${year}.pdf`,
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     };
 
     html2pdf()
@@ -105,7 +114,6 @@ const ExternalReport = () => {
 
   return (
     <div className="result-page" ref={pdfRef}>
-      {/* This content will be hidden on screen but included in PDF */}
       <div className="pdf-header">
         <img src={logo} alt="EDU Web Logo" className="navbar-logo" />
         <h2>Edu Web School</h2>
@@ -116,6 +124,20 @@ const ExternalReport = () => {
       <h4>Enrollment Number: {studentInfo.enrollmentNo}</h4>
       <h4>Class: {studentInfo.className}</h4>
 
+      {/* Year selector */}
+      <div className="form-group">
+        <label htmlFor="yearSelect">Select Year</label>
+        <select
+          id="yearSelect"
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+        >
+          {availableYears.map((yr) => (
+            <option key={yr} value={yr}>{yr}</option>
+          ))}
+        </select>
+      </div>
+
       <table className="result-table">
         <thead>
           <tr>
@@ -124,12 +146,18 @@ const ExternalReport = () => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(results).map((subjectName, index) => (
-            <tr key={index}>
-              <td>{subjectName}</td>
-              <td>{results[subjectName].marks ? results[subjectName].marks : 'N/A'}</td>
+          {Object.keys(filteredResults).length > 0 ? (
+            Object.keys(filteredResults).map((subjectName, index) => (
+              <tr key={index}>
+                <td>{subjectName}</td>
+                <td>{filteredResults[subjectName].marks ?? 'N/A'}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="2">No results found for {year}</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 

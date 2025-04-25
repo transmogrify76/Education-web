@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Plogin.css';
 import Header from '../Header/Header';
+
 export default function Plogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,8 +14,10 @@ export default function Plogin() {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       setIsLoggedIn(true);
+      // Redirect directly if the user is already logged in
+      navigate('/parentdashboard');
     }
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -39,7 +42,6 @@ export default function Plogin() {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('authToken', data.token); // Store the token
-        const parentId = data.parentId;
         setMessage('Login successful!');
         setIsLoggedIn(true);
 
@@ -57,56 +59,40 @@ export default function Plogin() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('authToken'); 
-    setIsLoggedIn(false);
-    setMessage('You have logged out.');
-  };
-
   return (
     <div>
       <Header />
-    <div className="plogin-container">
-      <div className="plogin-card">
-        <h2>Parents Login</h2>
-        {isLoggedIn ? (
-          <div>
-            <p>You are logged in.</p>
-            <button onClick={handleLogout} className="logout-button">Logout</button>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="input-groups">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-groups">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button className="submit" type="submit">Login</button>
-          </form>
-        )}
-        <div className="button-bottom">
-          <div className="forgot-password-div" onClick={() => navigate('/forgetpassword')}>
-            Forgot Password?
-          </div>
+      <div className="plogin-container">
+        <div className="plogin-card">
+          <h2>Parents Login</h2>
+          {!isLoggedIn ? (
+            <form onSubmit={handleSubmit}>
+              <div className="input-groups">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="input-groups">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button className="submit" type="submit">Login</button>
+            </form>
+          ) : null}
+          <p className="message">{message}</p>
         </div>
-        <p className="message">{message}</p>
       </div>
-    </div>
     </div>
   );
 }

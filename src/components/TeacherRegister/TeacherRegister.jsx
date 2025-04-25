@@ -88,7 +88,7 @@ const TeacherRegister = () => {
       console.log('Registration successful:', result);
       setShowPopup(true);
       setTimeout(() => {
-        navigate('/tlogin'); 
+        navigate('/admindashboard'); 
       }, 2000);
     } catch (error) {
       console.error('Error registering teacher:', error);
