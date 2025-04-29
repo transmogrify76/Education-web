@@ -81,6 +81,9 @@ function Student() {
               ALERTS <span className="alerts-subheader">(Newest 5)</span>
             </h2>
           </div>
+          <div className="instruction-circle" onClick={() => navigate('/StudentInstructionPage')}> 
+             ?
+          </div>
         </div>
       </div>
     </div>

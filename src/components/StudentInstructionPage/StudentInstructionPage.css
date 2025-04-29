@@ -1,0 +1,56 @@
+.instruction-page {
+    max-width: 960px;
+    margin: 50px auto;
+    padding: 50px 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2e3a59;
+    line-height: 1.8;
+  }
+  
+  .instruction-page h1 {
+    font-size: 34px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 40px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    letter-spacing: 0.5px;
+  }
+  
+  .instruction-page ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  .instruction-page li {
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    color: #374151;
+  }
+  
+  .instruction-page li::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background-color: #5817fe;
+    border-radius: 50%;
+  }
+  
+  .instruction-page strong {
+    font-weight: 600;
+    font-size: 19px;
+    color: #1f2937;
+    margin-bottom: 6px;
+    display: inline-block;
+  }
+  

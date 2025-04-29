@@ -12,31 +12,13 @@ const UploadResults = () => {
   const [selectedClass, setSelectedClass] = useState('');
   const [selectedStudent, setSelectedStudent] = useState('');
   const [marks, setMarks] = useState({});
-  const [year, setYear] = useState(new Date().getFullYear()); 
+  const [year, setYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch all classes
+  // ✅ Fetch teacher details, classes, and subjects
   useEffect(() => {
-    const fetchClassNames = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await axios.get('http://192.168.0.103:3000/class');
-        setClassNames(Array.isArray(response.data) ? response.data : []);
-      } catch (error) {
-        setError('Error fetching class names');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchClassNames();
-  }, []);
-
-  // Fetch teacher's subjects
-  useEffect(() => {
-    const fetchTeacherSubjects = async () => {
+    const fetchTeacherDetails = async () => {
       try {
         const token = localStorage.getItem('authToken');
         if (!token) return;
@@ -45,20 +27,26 @@ const UploadResults = () => {
         const teacherId = decoded?.id;
 
         if (teacherId) {
-          const response = await axios.get(`http://192.168.0.103:3000/teacher/subjects/${teacherId}`);
-          const subjectDetails = Array.isArray(response.data.subjectDetails) ? response.data.subjectDetails : [];
-          setTeacherSubjects(subjectDetails);
-          setSubjects(subjectDetails);
+          const response = await axios.get(`http://192.168.0.103:3000/teacher/${teacherId}`);
+          const teacher = response.data;
+
+          const teacherClasses = Array.isArray(teacher.classes) ? teacher.classes : [];
+          const teacherSubjects = Array.isArray(teacher.subjects) ? teacher.subjects : [];
+
+          setClassNames(teacherClasses);
+          setTeacherSubjects(teacherSubjects);
+          setSubjects(teacherSubjects);
         }
       } catch (error) {
-        console.error('Error fetching teacher subjects:', error);
+        console.error('Error fetching teacher details:', error);
+        setError('Error fetching teacher details');
       }
     };
 
-    fetchTeacherSubjects();
+    fetchTeacherDetails();
   }, []);
 
-  // Fetch students for selected class
+  // ✅ Fetch students when class changes
   useEffect(() => {
     const fetchClassDetails = async () => {
       if (selectedClass) {
@@ -66,9 +54,12 @@ const UploadResults = () => {
         setError(null);
         try {
           const studentsResponse = await axios.get(`http://192.168.0.103:3000/class/${selectedClass}`);
-          const studentsData = Array.isArray(studentsResponse.data.students) ? studentsResponse.data.students : [];
+          const studentsData = Array.isArray(studentsResponse.data.students)
+            ? studentsResponse.data.students
+            : [];
           setStudents(studentsData);
 
+          // Initialize marks state
           const initialMarks = studentsData.reduce((acc, student) => {
             acc[student.id] = teacherSubjects.reduce((subAcc, subject) => {
               subAcc[subject.id] = '';
@@ -78,6 +69,7 @@ const UploadResults = () => {
           }, {});
           setMarks(initialMarks);
         } catch (error) {
+          console.error('Error fetching students:', error);
           setError('Error fetching class details (students)');
         } finally {
           setLoading(false);
@@ -91,6 +83,7 @@ const UploadResults = () => {
     fetchClassDetails();
   }, [selectedClass, teacherSubjects]);
 
+  // ✅ Handle marks entry
   const handleMarksChange = (studentId, subjectId, value) => {
     setMarks(prevMarks => ({
       ...prevMarks,
@@ -105,6 +98,7 @@ const UploadResults = () => {
     setSelectedStudent(studentId);
   };
 
+  // ✅ Submit results
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -123,7 +117,7 @@ const UploadResults = () => {
             subjectId,
             classId: selectedClass,
             marks: parseFloat(marks[studentId][subjectId]),
-            year: parseInt(year), // 🆕 Include year
+            year: parseInt(year)
           };
 
           if (resultData.marks !== '' && !isNaN(resultData.marks)) {
@@ -153,7 +147,7 @@ const UploadResults = () => {
       <div className="upload-results-container">
         <h1>Upload Student Results</h1>
 
-        {/* Class selection */}
+        {/* ✅ Class Selection */}
         <div className="form-group">
           <label htmlFor="class">Select Class</label>
           <select
@@ -170,7 +164,7 @@ const UploadResults = () => {
           </select>
         </div>
 
-        {/* Year selection */}
+        {/* ✅ Year Selection */}
         <div className="form-group">
           <label htmlFor="year">Select Year</label>
           <input
@@ -185,7 +179,7 @@ const UploadResults = () => {
           />
         </div>
 
-        {/* Student selection */}
+        {/* ✅ Student Selection */}
         {selectedClass && (
           <div className="form-group">
             <label htmlFor="student">Select Student</label>
@@ -204,7 +198,7 @@ const UploadResults = () => {
           </div>
         )}
 
-        {/* Results Table */}
+        {/* ✅ Marks Input Table */}
         {selectedClass && selectedStudent && subjects.length > 0 && (
           <form onSubmit={handleSubmit}>
             <div className="table-container">
@@ -243,7 +237,7 @@ const UploadResults = () => {
           </form>
         )}
 
-        {/* Error and Loading States */}
+        {/* ✅ Loading and Error Messages */}
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
       </div>

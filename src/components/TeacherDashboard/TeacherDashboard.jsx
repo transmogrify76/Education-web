@@ -1,6 +1,6 @@
 // Dashboard.js
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { faChalkboardTeacher, faUserGraduate, faClipboardList, faFileUpload, faComments, faCalendarAlt, faBook, faStar, faFolderOpen, faLink, faCheckCircle } from '@fortawesome/free-solid-svg-icons'; // Added faCheckCircle
@@ -9,6 +9,7 @@ import Header from '../Header/Header';
 
 const TeacherDashboard = () => {
   const { teacherId } = useParams();
+  const navigate = useNavigate();
 
   const icons = [
     // { name: 'Class Management', icon: faChalkboardTeacher, className: 'btn-1', link: `/ClassManagementPage` },
@@ -37,6 +38,9 @@ const TeacherDashboard = () => {
           </Link>
         ))}
       </div>
+      <div className="instruction-circle" onClick={() => navigate('/TeacherInstructionPage')}> 
+             ?
+          </div>
     </div>
   );
 };

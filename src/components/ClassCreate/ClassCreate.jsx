@@ -218,9 +218,13 @@ const ClassCreate = () => {
             <tbody>
               {classes
                 .sort((a, b) => {
-                  if (a.className === '1' && b.className !== '1') return -1; // a comes first
-                  if (a.className === '2' && b.className !== '2') return a.className === '1' ? -1 : +1; 
-                  return a.className.localeCompare(b.className); // Keep original order for other classes
+                  // Compare numeric values of className
+                  const classA = parseInt(a.className, 10);
+                  const classB = parseInt(b.className, 10);
+
+                  if (isNaN(classA) && !isNaN(classB)) return 1; // NaN goes after numbers
+                  if (!isNaN(classA) && isNaN(classB)) return -1; // Numbers go before NaN
+                  return classA - classB; // Normal numeric comparison for other cases
                 })
                 .map((classItem) => (
                   <tr key={classItem.id}>

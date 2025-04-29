@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import './StudentProfilePage.css';
 import Header from '../Header/Header';
 
@@ -12,7 +12,7 @@ const StudentProfilePage = () => {
     if (authToken) {
       try {
         const decodedToken = jwtDecode(authToken);
-        const parentId = decodedToken.id; 
+        const parentId = decodedToken.id;
 
         const fetchStudentData = async () => {
           console.log('Fetching data for parentId:', parentId);
@@ -22,7 +22,7 @@ const StudentProfilePage = () => {
               throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            console.log('Fetched data:', data); 
+            console.log('Fetched data:', data);
             setStudentData(data.students || []);
           } catch (error) {
             console.error('Error fetching student data:', error);
@@ -31,36 +31,43 @@ const StudentProfilePage = () => {
           }
         };
 
-        fetchStudentData(); 
+        fetchStudentData();
       } catch (error) {
         console.error('Failed to decode authToken:', error);
         setLoading(false);
       }
     } else {
       console.error('No authToken found in localStorage');
-      setLoading(false); 
+      setLoading(false);
     }
   }, []);
 
   if (loading) {
-    return <p></p>;
+    return <p>Loading...</p>;
   }
 
   if (studentData.length === 0) {
     return <p>No student data available.</p>;
   }
 
+  // Sorting the students by class number in ascending order
+  const sortedStudentData = studentData.sort((a, b) => {
+    return parseInt(a.class.className) - parseInt(b.class.className);
+  });
+
   return (
     <div>
       <Header />
       <div className="student-profile-container">
         <h1>Student Profiles</h1>
-        {studentData.map((student) => (
+        {sortedStudentData.map((student) => (
           <div className="profile-card" key={student.id}>
             <div className="profile-field"><strong>ID:</strong> {student.id}</div>
             <div className="profile-field"><strong>Name:</strong> {student.name}</div>
             <div className="profile-field"><strong>Enrollment No:</strong> {student.enrollmentNo}</div>
             <div className="profile-field"><strong>Email:</strong> {student.email}</div>
+            <div className="profile-field"><strong>Roll No:</strong> {student.rollNo}</div> {/* Added roll number */}
+            <div className="profile-field"><strong>Class:</strong> {student.class.className}</div> {/* Added class */}
             <div className="profile-field"><strong>Date of Birth:</strong> {new Date(student.dob).toLocaleDateString()}</div>
             <div className="profile-field"><strong>Address:</strong> {student.address}</div>
           </div>

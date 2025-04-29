@@ -1,5 +1,5 @@
-// Dashboard.js
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaLink } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
 import informedConsentIcon from '../Assets/accept.png';
@@ -31,8 +31,8 @@ import Header from '../Header/Header';
 
 const Dashboard = () => {
   const { parentId } = useParams();
+  const navigate = useNavigate();
 
-  // Helper function to render image or icon
   const renderIcon = (image) => {
     return typeof image === 'string' ? (
       <img src={image} className="icon" alt="icon" />
@@ -41,21 +41,17 @@ const Dashboard = () => {
     );
   };
 
-  // Define icon buttons with links and icons
   const icons = [
     { name: 'Consent forms', image: informedConsentIcon, className: 'btn-1', link: `/consent` },
-    { name: 'Time Table', image: timeIcon, className: 'btn-2', link: `/TimeTable`},
+    { name: 'Time Table', image: timeIcon, className: 'btn-2', link: `/TimeTable` },
     { name: 'Exit Slip Request', image: menuIcon, className: 'btn-3', link: `/ExitSlipRequest` },
-    { name: 'Registration Info', image: registrationIcon, className: 'btn-4', link: `/ParentProfilePage` },
-    { name: 'Report Card PDF', image: resultIcon, className: 'btn-5', link: '/reportc' },
-    { name: 'TC Request', image: tcIcon, className: 'btn-6', link:`/TimeOfRequest` },
-    { name: 'Transport request', image: roadIcon, className: 'btn-7', link:`/TransportRequest` },
+    { name: 'Virtual Meeting Link', image: FaLink, className: 'btn-25', link: `/ParentClassDataPage` },
+    { name: 'TC Request', image: tcIcon, className: 'btn-6', link: `/TimeOfRequest` },
+    { name: 'Transport request', image: roadIcon, className: 'btn-7', link: `/TransportRequest` },
     { name: 'Student profile', image: studentIcon, className: 'btn-8', link: `/StudentProfilePage` },
-    { name: 'External report', image: externalIcon, className: 'btn-9', link: '/Externalr' },
-    { name: 'Notifications', image: notilIcon, className: 'btn-10', link:'/Notification' },
-    { name: 'Third Party Optional Services', image: thirdIcon, className:'btn-11', link : `/ThirdPartyServices` },
+    { name: 'Notifications', image: notilIcon, className: 'btn-10', link: '/Notification' },
+    { name: 'Third Party Optional Services', image: thirdIcon, className: 'btn-11', link: `/ThirdPartyServices` },
     { name: 'Parent Profile', image: childIcon, className: 'btn-12' },
-    { name: 'Circular', image: circularIcon, className: 'btn-13', link: '/Circular' },
     { name: 'Clubs', image: chatIcon, className: 'btn-14', link: '/ClubPage' },
     { name: 'Medical', image: medIcon, className: 'btn-15', link: '/Medical' },
     { name: 'Student ID Card', image: idIcon, className: 'btn-16', link: `/StudentIdCardPage` },
@@ -65,9 +61,8 @@ const Dashboard = () => {
     { name: 'Fee Reminder', image: feeremIcon, className: 'btn-20', link: `/FeeReminderPage` },
     { name: 'Student Leave Application', image: leaveIcon, className: 'btn-21', link: '/Leave' },
     { name: 'Parent counselling request', image: counIcon, className: 'btn-22', link: `/CounselingRequest` },
-    { name: 'Behaviour assessment tool', image: behavIcon, className: 'btn-23', link:`/BehaviorAssessmentTool` },
-    { name: 'Communication With Teacher', image: learningIcon, className: 'btn-24', link: `/ParentMessages` },
-    { name: 'Virtual Meeting Link', image: FaLink, className: 'btn-25', link: `/ParentClassDataPage` },
+    { name: 'Behaviour assessment tool', image: behavIcon, className: 'btn-23', link: `/BehaviorAssessmentTool` },
+    { name: 'Communication With Teacher',  className: 'btn-24', link: `/ParentMessages` },
   ];
 
   return (
@@ -77,12 +72,15 @@ const Dashboard = () => {
         {icons.map(({ name, image, className, link }, index) => (
           <Link key={index} to={link} className={`button-card ${className}`}>
             {renderIcon(image)}
-            {name}
+            <span>{name}</span>
           </Link>
         ))}
       </div>
+      <div className="instruction-circle" onClick={() => navigate('/ParentInstructionPage')}> 
+        ?
+      </div>
     </div>
   );
-}
+};
 
 export default Dashboard;

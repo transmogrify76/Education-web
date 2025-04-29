@@ -93,7 +93,7 @@ const Attendance = () => {
 
   // If loading, display loading message
   if (loading) {
-    return <p></p>;
+    return <p>Loading...</p>;
   }
 
   // If there's an error, display error message
@@ -142,7 +142,7 @@ const Attendance = () => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="3">No attendance records found</td>
+                      <td colSpan="3">No attendance found</td>
                     </tr>
                   )}
                 </tbody>

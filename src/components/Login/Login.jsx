@@ -52,6 +52,9 @@ export default function Login() {
         // Optionally, save any other necessary data to localStorage
         localStorage.setItem('studentId', studentId);
 
+        // Show success alert before redirecting
+        alert('Login successful! Redirecting to your student dashboard...');
+
         // Redirect to student view after a short delay
         setTimeout(() => {
           navigate('/StudentView', { replace: true });

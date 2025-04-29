@@ -1,59 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; // Import jwt-decode for decoding the token
+import { jwtDecode } from 'jwt-decode';
 import './CreateResourcePage.css';
 import Header from '../Header/Header';
 
 const CreateResourcePage = () => {
-  const [teacherId, setTeacherId] = useState(null); // Store teacherId from the token
-  const [classes, setClasses] = useState([]); // Store all classes
+  const [teacherId, setTeacherId] = useState(null);
+  const [classes, setClasses] = useState([]);
   const [resources, setResources] = useState([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [type, setType] = useState('document');
-  const [file, setFile] = useState(null); // Store selected file
-  const [content, setContent] = useState(''); // Store content URL for link type
-  const [classId, setClassId] = useState(''); // Store the selected classId
+  const [file, setFile] = useState(null);
+  const [content, setContent] = useState('');
+  const [classId, setClassId] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const token = localStorage.getItem('authToken'); // Get the token from localStorage
+  const token = localStorage.getItem('authToken');
 
-  // Decode the JWT token and extract the teacherId
+  // Get teacherId from token
   useEffect(() => {
     if (token) {
       try {
-        const decodedToken = jwtDecode(token); // Decode the token
-        setTeacherId(decodedToken.id); // Assuming teacherId is in the token
+        const decoded = jwtDecode(token);
+        setTeacherId(decoded?.id);
       } catch (error) {
         console.error('Error decoding JWT token:', error);
       }
     }
   }, [token]);
 
-  // Fetch classes and resources on component mount
+  // Fetch only teacher's classes and their resources
   useEffect(() => {
-    if (teacherId) {
-      const fetchClassesAndResources = async () => {
-        try {
-          // Fetch all classes
-          const classesResponse = await axios.get('http://192.168.0.103:3000/class');
-          setClasses(classesResponse.data);
+    if (!teacherId) return;
 
-          // Fetch resources for the teacher
-          const resourcesResponse = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
-          setResources(resourcesResponse.data);
-        } catch (error) {
-          setError('Error fetching data');
-          console.error('Error fetching data:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
+    const fetchTeacherClassesAndResources = async () => {
+      try {
+        // Fetch teacher details (including their assigned classes)
+        const teacherResponse = await axios.get(`http://192.168.0.103:3000/teacher/${teacherId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-      fetchClassesAndResources();
-    }
-  }, [teacherId]); // Re-run the effect when teacherId is set
+        let teacherClasses = Array.isArray(teacherResponse.data.classes) ? teacherResponse.data.classes : [];
+
+        // Sort classes numerically by className
+        teacherClasses = teacherClasses.sort((a, b) => {
+          const numA = parseInt(a.className.match(/\d+/));
+          const numB = parseInt(b.className.match(/\d+/));
+          return numA - numB;
+        });
+
+        setClasses(teacherClasses);
+
+        // Fetch resources created by this teacher
+        const resourcesResponse = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
+        setResources(resourcesResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError('Error fetching data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeacherClassesAndResources();
+  }, [teacherId, token]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -65,17 +77,17 @@ const CreateResourcePage = () => {
     formData.append('classId', classId);
 
     if (type === 'document' && file) {
-      formData.append('file', file); // Append the selected file
+      formData.append('file', file);
     } else if (type === 'link' && content) {
-      formData.append('content', content); // Append the URL content for links
+      formData.append('content', content);
     }
 
     try {
       await axios.post('http://192.168.0.103:3000/resources', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // Set the correct content type for file uploads
-          params: { teacherId }
-        }
+          'Content-Type': 'multipart/form-data',
+        },
+        params: { teacherId },
       });
 
       alert('Resource created successfully!');
@@ -84,7 +96,7 @@ const CreateResourcePage = () => {
       setType('document');
       setContent('');
       setClassId('');
-      setFile(null); // Reset file input
+      setFile(null);
 
       // Refresh resources list
       const updatedResources = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
@@ -100,7 +112,7 @@ const CreateResourcePage = () => {
         await axios.delete(`http://192.168.0.103:3000/resources/${resourceId}`);
         alert('Resource deleted successfully!');
 
-        // Refresh resources list
+        // Refresh resources
         const updatedResources = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
         setResources(updatedResources.data);
       } catch (error) {
@@ -109,7 +121,7 @@ const CreateResourcePage = () => {
     }
   };
 
-  if (loading) return <p></p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (
@@ -166,7 +178,7 @@ const CreateResourcePage = () => {
                 id="file"
                 type="file"
                 onChange={(e) => setFile(e.target.files[0])}
-                required={type === 'document'} // Make it required for document type
+                required={type === 'document'}
               />
             </div>
           )}

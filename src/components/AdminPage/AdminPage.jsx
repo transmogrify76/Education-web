@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Header from '../Header/Header';
 import './AdminPage.css';
 
 const AdminPage = () => {
   // const { admin_id } = useParams();
-
+  const navigate = useNavigate();
   const icons = [
     { name: 'Parent Registration', icon: 'fas fa-user-tie', className: 'btn-1', link: '/Parentregisterpage' },
     { name: 'Student Registration', icon: 'fas fa-user-graduate', className: 'btn-2', link: '/studentregisterpage' },
@@ -45,6 +45,9 @@ const AdminPage = () => {
           </Link>
         ))}
       </div>
+      <div className="instruction-circle" onClick={() => navigate('/AdminInstructionPage')}> 
+             ?
+          </div>
     </div>
   );
 }

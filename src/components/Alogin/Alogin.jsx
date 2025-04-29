@@ -53,9 +53,12 @@ export default function Alogin() {
           // Set the logged-in status
           setIsLoggedIn(true);
 
-          // Redirect to the admin dashboard
+          // Show a success message (pop-up) before redirect
+          alert('Login successful! Redirecting to the admin dashboard...');
+
+          // Redirect to the admin dashboard after 2 seconds
           setTimeout(() => {
-            navigate('/admindashboard'); // Redirect to admin page
+            navigate('/admindashboard');
           }, 2000);
         } else {
           setMessage('Login failed: No token received');

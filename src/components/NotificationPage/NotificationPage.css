@@ -14,8 +14,8 @@
 }
 
 /* Header */
-.notification-page__header {
-  background-color: #1089d3;
+.notification-pageheader {
+  background-color: #3585b7;
   color: white;
   padding: 20px;
   text-align: center;

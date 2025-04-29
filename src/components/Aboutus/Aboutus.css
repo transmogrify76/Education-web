@@ -17,7 +17,8 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../Assets/OIP.jpg');
+    background-image: linear-gradient(to right, rgba(255, 146, 157, 0.676), rgba(0, 0, 255, 0.598)),
+    url('../Assets/aboutsc.jpeg');
     background-size: cover;
     background-position: center;
     color: rgb(255, 255, 255);

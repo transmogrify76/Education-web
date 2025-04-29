@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import html2pdf from 'html2pdf.js';
 import logo from '../Assets/logo.png';
+import Header from '../Header/Header';
+import SideNav from '../SideNav/SideNav';
 import './ExternalReport.css';
 
 const ExternalReport = () => {
@@ -113,6 +115,10 @@ const ExternalReport = () => {
   };
 
   return (
+    <div className='for-header'>
+    <Header/>
+<div className="behavior-tool-container">
+  <SideNav studentId={studentId} />
     <div className="result-page" ref={pdfRef}>
       <div className="pdf-header">
         <img src={logo} alt="EDU Web Logo" className="navbar-logo" />
@@ -162,6 +168,8 @@ const ExternalReport = () => {
       </table>
 
       <button className="pdf-button" onClick={generatePDF}>Download PDF</button>
+    </div>
+    </div>
     </div>
   );
 };

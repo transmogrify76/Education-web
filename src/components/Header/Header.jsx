@@ -7,9 +7,8 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); 
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); // Get the current route
 
   useEffect(() => {
     const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
@@ -17,6 +16,7 @@ const Header = () => {
       setIsLoggedIn(true);
     }
   }, []);
+
   const toggleDropdown = (type) => {
     if (type === 'login') {
       setIsDropdownOpen(!isDropdownOpen);
@@ -26,10 +26,12 @@ const Header = () => {
       setIsDropdownOpen(false);
     }
   };
+
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
-    const userType = localStorage.getItem('userType');
+
+    const userType = localStorage.getItem('userType'); // Check if this is a valid value
     localStorage.removeItem('userType');
     setIsLoggedIn(false);
 
@@ -82,7 +84,7 @@ const Header = () => {
   };
 
   const handleDashboardNavigate = () => {
-    const userType = localStorage.getItem('userType');
+    const userType = localStorage.getItem('userType'); // Ensure it's valid before using it
     if (userType) {
       switch (userType) {
         case 'student':
@@ -98,7 +100,7 @@ const Header = () => {
           navigate('/AdminDashboard');
           break;
         default:
-          navigate('/Login');
+          navigate('/Login'); // Fallback if userType is undefined
           break;
       }
     } else {
@@ -106,74 +108,62 @@ const Header = () => {
     }
   };
 
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-    document.body.classList.toggle('menu-open', !isMenuOpen);
-  };
-
   return (
-    <div className="header-container">
-      <div className="header-left">
+    <div className="navbar">
+      <div className="navbar-left">
         <a href="/">
-          <img src={logo} alt="EDU Web Logo" className="header-logo" />
+          <img src={logo} alt="EDU Web Logo" className="navbar-logo" />
+          <p className="tagline">"Padhega INDIA, Tabhi To Badhega INDIA"</p>
         </a>
-        <div>
-          <p className="header-tagline">"Padhega INDIA, Tabhi To Badhega INDIA"</p>
-        </div>
       </div>
+      <div className="navbar-right">
+        {/* Home Icon */}
+        <a href="/" className="home-icon">
+          <i className="fas fa-home"></i>
+        </a>
+        <a href="/Aboutus">About Us</a>
+        <a href="/Infrastructure">Infrastructure</a>
+        <a href="/Curriculum">Curriculum</a>
+        <a href="/Award">Award</a>
+        <a href="/Event">Event</a>
+        <a href="/Contactus">Contact Us</a>
 
-      <div className="header-right">
-        <div className="menu-icon" onClick={handleMenuToggle}>
-          <i className={isMenuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>
-        </div>
-
-        <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
-          <a href="/" className="home-icon-link">
-            <i className="fas fa-home"></i>
+        {/* Conditionally render the Dashboard button */}
+        {isLoggedIn && (
+          <a
+            href="#"
+            onClick={handleDashboardNavigate}
+            className="dashboard-button"
+          >
+            Dashboard
           </a>
-          <a href="/Aboutus" className="header-link">About Us</a>
-          <a href="/Infrastructure" className="header-link">Infrastructure</a>
-          <a href="/Curriculum" className="header-link">Curriculum</a>
-          <a href="/Award" className="header-link">Award</a>
-          <a href="/Event" className="header-link">Event</a>
-          <a href="/Contactus" className="header-link">Contact Us</a>
+        )}
 
-          {isLoggedIn && (
-            <a
-              href="#"
-              onClick={handleDashboardNavigate}
-              className="dashboard-nav-button"
-            >
-              Dashboard
-            </a>
-          )}
-
-          {!isLoggedIn ? (
-            <div className="login-dropdown">
-              <div onClick={() => toggleDropdown('login')} className="login-dropbtn">Log In</div>
-              {isDropdownOpen && (
-                <div className="login-dropdown-content">
-                  <button className='login-role-button' onClick={() => handleLoginNavigate('student')}>Student</button>
-                  <button className='login-role-button' onClick={() => handleLoginNavigate('parent')}>Parent</button>
-                  <button className='login-role-button' onClick={() => handleLoginNavigate('teacher')}>Teacher</button>
-                  <button className='login-role-button' onClick={() => handleLoginNavigate('admin')}>Admin</button>
+        {!isLoggedIn ? (
+          <div className="dropdown">
+            <div onClick={() => toggleDropdown('login')} className="dropbtn">Log In</div>
+            {isDropdownOpen && (
+              <div className="dropdown-content">
+                <button className='login-button' onClick={() => handleLoginNavigate('student')}>Student</button>
+                <button className='login-button' onClick={() => handleLoginNavigate('parent')}>Parent</button>
+                <button className='login-button' onClick={() => handleLoginNavigate('teacher')}>Teacher</button>
+                <button className='login-button' onClick={() => handleLoginNavigate('admin')}>Admin</button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="dropdown">
+            <div onClick={() => toggleDropdown('logout')} className="dropbtn">Log Out</div>
+            {isLogoutConfirmationOpen && (
+              <div className="dropdown-content logout-confirmation">
+                <div className="logout-buttons">
+                  <button onClick={handleLogout} className="logout-button">Logout</button>
+                  <button onClick={() => setIsLogoutConfirmationOpen(false)} className="cancel-button">Cancel</button>
                 </div>
-              )}
-            </div>
-          ) : (
-            <div className="logout-dropdown">
-              <div onClick={() => toggleDropdown('logout')} className="logout-dropbtn">Log Out</div>
-              {isLogoutConfirmationOpen && (
-                <div className="logout-dropdown-content logout-confirmation">
-                  <div className="logout-btns-container">
-                    <button onClick={handleLogout} className="confirm-logout-button">Logout</button>
-                    <button onClick={() => setIsLogoutConfirmationOpen(false)} className="cancel-logout-button">Cancel</button>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

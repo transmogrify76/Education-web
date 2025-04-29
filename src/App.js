@@ -105,6 +105,10 @@ import ParentList from './components/ParentList/ParentList';
 import ContactPage from './components/ContactPage/ContactPage';
 import Profile from './components/StudentProfilePage/StudentProfilePage'
 import ProfilePage from './components/StudentProfile/ProfilePage';
+import StudentInstructionPage from './components/StudentInstructionPage/StudentInstructionPage';
+import ParentInstructionPage from './components/ParentInstructionPage/ParentInstructionPage';
+import TeacherInstructionPage from './components/TeacherInstructionPage/TeacherInstructionPage';
+import AdminInstructionPage from './components/AdminInstructionPage/AdminInstructionPage';
 function App() {
   return (
     <Router>
@@ -219,6 +223,10 @@ function App() {
           <Route path="/ParentList" element={<ParentList/>} />          
           <Route path="/ContactPage" element={<ContactPage/>} />          
           <Route path="/Profile" element={<ProfilePage/>} />          
+          <Route path="/StudentInstructionPage" element={<StudentInstructionPage/>} />          
+          <Route path="/ParentInstructionPage" element={<ParentInstructionPage/>} />          
+          <Route path="/TeacherInstructionPage" element={<TeacherInstructionPage/>} />          
+          <Route path="/AdminInstructionPage" element={<AdminInstructionPage/>} />          
 
         </Routes>
       </div>
