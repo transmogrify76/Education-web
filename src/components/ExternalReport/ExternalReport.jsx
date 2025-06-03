@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';  // Fixed import, usually default export
 import html2pdf from 'html2pdf.js';
 import logo from '../Assets/logo.png';
 import Header from '../Header/Header';
@@ -21,7 +21,7 @@ const ExternalReport = () => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        setStudentId(decodedToken.Id);
+        setStudentId(decodedToken.Id || decodedToken.id); // handle case id or Id
       } catch (error) {
         console.error('Failed to decode JWT token:', error);
       }
@@ -60,7 +60,7 @@ const ExternalReport = () => {
         setAllResults(data);
 
         // Extract available years
-        const years = Array.from(new Set(data.map((res) => res.year)));
+        const years = Array.from(new Set(data.map((res) => String(res.year))));
         setAvailableYears(years.sort((a, b) => b - a));
 
         // Set default selected year to latest
@@ -82,7 +82,8 @@ const ExternalReport = () => {
 
     const subjectMap = {};
 
-    const filtered = allResults.filter((res) => res.year === Number(year));
+    // Filter with string comparison to avoid type mismatch
+    const filtered = allResults.filter((res) => String(res.year) === String(year));
 
     for (let i = 0; i < filtered.length; i++) {
       const { subject, marks, id } = filtered[i];
@@ -96,7 +97,8 @@ const ExternalReport = () => {
 
   const generatePDF = () => {
     const element = pdfRef.current;
-    document.querySelector(".pdf-button").style.display = "none";
+    const button = document.querySelector(".pdf-button");
+    if (button) button.style.display = "none";
 
     const opt = {
       margin: 1,
@@ -110,66 +112,66 @@ const ExternalReport = () => {
       .set(opt)
       .save()
       .then(() => {
-        document.querySelector(".pdf-button").style.display = "inline-block";
+        if (button) button.style.display = "inline-block";
       });
   };
 
   return (
     <div className='for-header'>
-    <Header/>
-<div className="behavior-tool-container">
-  <SideNav studentId={studentId} />
-    <div className="result-page" ref={pdfRef}>
-      <div className="pdf-header">
-        <img src={logo} alt="EDU Web Logo" className="navbar-logo" />
-        <h2>Edu Web School</h2>
-      </div>
+      <Header />
+      <div className="behavior-tool-container">
+        <SideNav studentId={studentId} />
+        <div className="result-page" ref={pdfRef}>
+          <div className="pdf-header">
+            <img src={logo} alt="EDU Web Logo" className="navbar-logo" />
+            <h2>Edu Web School</h2>
+          </div>
 
-      <h1>Student Results</h1>
-      <h3>Name: {studentInfo.name}</h3>
-      <h4>Enrollment Number: {studentInfo.enrollmentNo}</h4>
-      <h4>Class: {studentInfo.className}</h4>
+          <h1>Student Results</h1>
+          <h3>Name: {studentInfo.name}</h3>
+          <h4>Enrollment Number: {studentInfo.enrollmentNo}</h4>
+          <h4>Class: {studentInfo.className}</h4>
 
-      {/* Year selector */}
-      <div className="form-group">
-        <label htmlFor="yearSelect">Select Year</label>
-        <select
-          id="yearSelect"
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-        >
-          {availableYears.map((yr) => (
-            <option key={yr} value={yr}>{yr}</option>
-          ))}
-        </select>
-      </div>
+          {/* Year selector */}
+          <div className="form-group">
+            <label htmlFor="yearSelect">Select Year</label>
+            <select
+              id="yearSelect"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+            >
+              {availableYears.map((yr) => (
+                <option key={yr} value={yr}>{yr}</option>
+              ))}
+            </select>
+          </div>
 
-      <table className="result-table">
-        <thead>
-          <tr>
-            <th>Subject</th>
-            <th>Marks</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(filteredResults).length > 0 ? (
-            Object.keys(filteredResults).map((subjectName, index) => (
-              <tr key={index}>
-                <td>{subjectName}</td>
-                <td>{filteredResults[subjectName].marks ?? 'N/A'}</td>
+          <table className="result-table">
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Marks</th>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="2">No results found for {year}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {Object.keys(filteredResults).length > 0 ? (
+                Object.keys(filteredResults).map((subjectName, index) => (
+                  <tr key={index}>
+                    <td>{subjectName}</td>
+                    <td>{filteredResults[subjectName].marks ?? 'N/A'}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="2">No results found for {year}</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
 
-      <button className="pdf-button" onClick={generatePDF}>Download PDF</button>
-    </div>
-    </div>
+          <button className="pdf-button" onClick={generatePDF}>Download PDF</button>
+        </div>
+      </div>
     </div>
   );
 };

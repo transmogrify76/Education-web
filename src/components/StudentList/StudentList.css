@@ -110,35 +110,34 @@ button[type="button"]:hover {
 /* Action Buttons */
 .action-button {
   border: none;
-  background-color: transparent;
+  /* background-color: transparent; */
   cursor: pointer;
   padding: 5px;
   margin: 0 5px;
   transition: background-color 0.3s;
   width: 30px; /* Set small width */
   height: 30px; /* Set small height */
-  display: inline-flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   border-radius: 5px;
 }
 
-.view-button {
+.view-buttons {
   color: #007BFF;
 }
 
-.delete-button {
+.delete-buttons {
   color: #FF6347;
 }
 
-.edit-button {
+.edit-buttons {
   color: #FFA500;
 }
 
-.action-button:hover {
+.action-buttons:hover {
   background-color: #e1e1e1;
 }
 
-.action-button:focus {
+.action-buttons:focus {
   outline: none;
 }

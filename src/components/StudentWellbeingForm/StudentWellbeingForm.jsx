@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode';
 import Sidebar from '../SideNav/SideNav';
 import Header from '../Header/Header';
 import './StudentWellbeingForm.css';
@@ -18,11 +18,14 @@ const StudentWellbeingForm = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [studentId, setStudentId] = useState(null);
+
+  // Decode the token to get the studentId
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
         const decodedToken = jwtDecode(token);  
+        console.log(decodedToken); // Log the decoded token to check its structure
         setStudentId(decodedToken.Id);  
       } catch (error) {
         console.error('Failed to decode JWT token:', error);
@@ -34,6 +37,8 @@ const StudentWellbeingForm = () => {
       setLoading(false); 
     }
   }, []);
+
+  // Fetch student data using the studentId
   useEffect(() => {
     if (studentId) {
       const fetchStudentData = async () => {
@@ -49,21 +54,22 @@ const StudentWellbeingForm = () => {
               Authorization: `Bearer ${token}`,
             },
           };
-          const studentResponse = await axios.get(`http://192.168.0.103:3000/student-wellbeing`, config);
+          const studentResponse = await axios.get(`http://192.168.0.103:3000/student/${studentId}`, config);
+          console.log(studentResponse.data); // Log the response data to verify the structure
           if (studentResponse.data) {
             setStudentData((prevState) => ({
               ...prevState,
               name: studentResponse.data.name,
               enroll: studentResponse.data.enrollmentNo,
-              class: studentResponse.data.class,
+              class: studentResponse.data.class.className, // Access className from the 'class' object
             }));
           } else {
-            setError('Wellbeing record not found');
+            setError('Student not found');
           }
           setLoading(false);
         } catch (err) {
-          console.error('Error fetching student wellbeing data:', err);
-          setError('Error fetching student wellbeing data: ' + (err.response?.data?.message || err.message));
+          console.error('Error fetching student data:', err);
+          setError('Error fetching student data: ' + (err.response?.data?.message || err.message));
           setLoading(false);
         }
       };
@@ -72,6 +78,7 @@ const StudentWellbeingForm = () => {
       setLoading(false); // Stop loading if there's no studentId
     }
   }, [studentId]);
+
   const handleCheckboxChange = (e) => {
     const { value, checked } = e.target;
     setStudentData((prevState) => {
@@ -88,6 +95,7 @@ const StudentWellbeingForm = () => {
       }
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const helpOption = studentData.helpOptions.join(', ') || 'No help needed';
@@ -101,20 +109,27 @@ const StudentWellbeingForm = () => {
       problemSolvingMessage: studentData.problemSolvingMessage,
       helpOption: helpOption
     };
+
     try {
       const token = localStorage.getItem('authToken');
       if (!token) {
         setError('No auth token found');
         return;
       }
+
       const config = {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       };
+
       const response = await axios.post('http://192.168.0.103:3000/student-wellbeing', payload, config);
-      if (response.status === 200) {
+
+      console.log(response); // Log the full response to check the structure
+
+      // Check if response status is 201 (Created successfully)
+      if (response.status === 201) {
         alert('Wellbeing form submitted successfully');
         setStudentData({
           name: '',
@@ -129,17 +144,23 @@ const StudentWellbeingForm = () => {
         throw new Error('Failed to submit form');
       }
     } catch (error) {
-      setError('Error submitting form: ' + error.message);
+      console.error('Error submitting form:', error);
+      if (error.response && error.response.status !== 201) {
+        setError('Error submitting form: ' + (error.response?.data?.message || error.message));
+      }
     }
   };
+
   if (loading) {
     return <div>Loading...</div>;
   }
+
   if (error) {
     return <div className="error-message">{error}</div>;
   }
+
   return (
-    <div className='for-header'>
+    <div className="for-header">
       <Header />
       <div className="containerss">
         <Sidebar studentId={studentId} />
@@ -173,7 +194,7 @@ const StudentWellbeingForm = () => {
                 id="class"
                 className="input-box"
                 value={studentData.class}
-                onChange={(e) => setStudentData({ ...studentData, class: e.target.value })}
+                readOnly
               />
             </div>
           </div>

@@ -7,45 +7,21 @@ import Header from '../Header/Header';
 import { jwtDecode } from 'jwt-decode';
 
 const GoalSettingView = () => {
-  const [formData, setFormData] = useState({
-    arabicAchievement: '',
-    arabicMyTarget: '',
-    arabicSuggestedTarget: '',
-    englishAchievement: '',
-    englishMyTarget: '',
-    englishSuggestedTarget: '',
-    hindiAchievement: '',
-    hindiMyTarget: '',
-    hindiSuggestedTarget: '',
-    mathematicsAchievement: '',
-    mathematicsMyTarget: '',
-    mathematicsSuggestedTarget: '',
-    scienceAndTechnologyAchievement: '',
-    scienceAndTechnologyMyTarget: '',
-    scienceAndTechnologySuggestedTarget: '',
-    socialStudiesAchievement: '',
-    socialStudiesMyTarget: '',
-    socialStudiesSuggestedTarget: '',
-    myAchievementsForPreviousGrade: '',
-    myTargetForThisGrade: '',
-    suggestedTargetForCurrentGrade: ''
-  });
-  
-  const [studentId, setStudentId] = useState(null); 
+  const [subjectsData, setSubjectsData] = useState([]); // Stores subjects data dynamically from the API
+  const [studentId, setStudentId] = useState(null);
+
   useEffect(() => {
-    
     const token = localStorage.getItem('authToken');
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        setStudentId(decodedToken.Id); 
+        setStudentId(decodedToken.Id); // Get studentId from token
       } catch (error) {
         console.error('Failed to decode JWT token:', error);
       }
     }
-  }, []); 
+  }, []);
 
-  
   useEffect(() => {
     if (studentId) {
       const fetchData = async () => {
@@ -55,15 +31,11 @@ const GoalSettingView = () => {
             throw new Error('Network response was not ok');
           }
           const data = await response.json();
-          
 
+          // Assuming the response is an array of subjects
           if (Array.isArray(data) && data.length > 0) {
-            const [goalData] = data; 
-            console.log('Fetched data:', goalData); 
-            
-            const { id, studentId, ...rest } = goalData;
-            console.log('Processed goal data:', rest); 
-            setFormData(rest);
+            console.log('Fetched data:', data);
+            setSubjectsData(data);
           } else {
             console.error('Unexpected data format:', data);
           }
@@ -108,84 +80,23 @@ const GoalSettingView = () => {
                 <span className="text-green">My target for this grade</span>
               </div>
             </div>
-            <div className="goal-setting-row">
-              <div className="goal-setting-cell goal-setting-cell-sr">1</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">BENGALI</div>
-              <div className="goal-setting-cell">
-                <p>{formData.arabicAchievement}</p>
+
+            {/* Dynamic rendering of subjects */}
+            {subjectsData.map((subject, index) => (
+              <div className="goal-setting-row" key={subject.id}>
+                <div className="goal-setting-cell goal-setting-cell-sr">{index + 1}</div>
+                <div className="goal-setting-cell goal-setting-cell-subject">{subject.subject.toUpperCase()}</div>
+                <div className="goal-setting-cell">
+                  <p>{subject.achievement}</p> {/* Display achievement for previous grade */}
+                </div>
+                <div className="goal-setting-cell">
+                  <p>{subject.suggestedTarget}</p> {/* Display suggested target for current grade */}
+                </div>
+                <div className="goal-setting-cell">
+                  <p>{subject.myTarget}</p> {/* Display my target for this grade */}
+                </div>
               </div>
-              <div className="goal-setting-cell">
-                <p>{formData.arabicSuggestedTarget}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.arabicMyTarget}</p>
-              </div>
-            </div>
-            <div className="goal-setting-row">
-              <div className="goal-setting-cell goal-setting-cell-sr">2</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">ENGLISH</div>
-              <div className="goal-setting-cell">
-                <p>{formData.englishAchievement}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.englishSuggestedTarget}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.englishMyTarget}</p>
-              </div>
-            </div>
-            <div className="goal-setting-row">
-              <div className="goal-setting-cell goal-setting-cell-sr">3</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">SCIENCE & TECHNOLOGY</div>
-              <div className="goal-setting-cell">
-                <p>{formData.hindiAchievement}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.hindiSuggestedTarget}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.hindiMyTarget}</p>
-              </div>
-            </div>
-            <div className="goal-setting-row">
-              <div className="goal-setting-cell goal-setting-cell-sr">4</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">MATHEMATICS</div>
-              <div className="goal-setting-cell">
-                <p>{formData.mathematicsAchievement}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.mathematicsSuggestedTarget}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.mathematicsMyTarget}</p>
-              </div>
-            </div>
-            <div className="goal-setting-row">
-              <div className="goal-setting-cell goal-setting-cell-sr">5</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">HISTORY</div>
-              <div className="goal-setting-cell">
-                <p>{formData.scienceAndTechnologyAchievement}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.scienceAndTechnologySuggestedTarget}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.scienceAndTechnologyMyTarget}</p>
-              </div>
-            </div>
-            <div className="goal-setting-row">
-              <div className="goal-setting-cell goal-setting-cell-sr">6</div>
-              <div className="goal-setting-cell goal-setting-cell-subject">GEOGRAPHY</div>
-              <div className="goal-setting-cell">
-                <p>{formData.socialStudiesAchievement}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.socialStudiesSuggestedTarget}</p>
-              </div>
-              <div className="goal-setting-cell">
-                <p>{formData.socialStudiesMyTarget}</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

@@ -10,14 +10,14 @@ const ParentRegisterPage = () => {
         phoneNo: '',
         address: '',
         password: '',
-        roleType: 'parent', // Ensure this matches your API expectations
-        relationType: '', // Changed from 'relation' to 'relationType'
-        occupation: '', // Optional field for occupation
+        roleType: 'parent',
+        relationType: '',
+        occupation: '',
     });
 
-    const [message, setMessage] = useState('');
     const [showPopup, setShowPopup] = useState(false);
-    const navigate = useNavigate(); // Initialize useNavigate
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -29,13 +29,12 @@ const ParentRegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage(''); // Clear previous errors
 
-        // Retrieve the token from localStorage
         const token = localStorage.getItem('authToken');
 
-        // Check if the token exists, else show an error message
         if (!token) {
-            setMessage('Authorization token not found. Please log in as an admin.');
+            setErrorMessage('You must be logged in as an admin to register a parent.');
             return;
         }
 
@@ -44,37 +43,26 @@ const ParentRegisterPage = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`, // Add the token in the Authorization header
+                    'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify({
-                    name: formData.name,
-                    // studentName: formData.studentName,
-                    email: formData.email,
-                    phoneNo: formData.phoneNo,
-                    address: formData.address,
-                    password: formData.password,
-                    roleType: formData.roleType,
-                    relationType: formData.relationType, // Ensure this matches the backend
-                    occupation: formData.occupation, // Optional field for occupation
-                }),
+                body: JSON.stringify(formData),
             });
 
-            if (response.ok) {
-                const responseData = await response.json();
-                const parentId = responseData.id; // Assuming API response contains `id`
+            const data = await response.json();
 
+            if (response.ok && data.success) {
                 setShowPopup(true);
                 setTimeout(() => {
                     setShowPopup(false);
-                    navigate(`/admindashboard`); // Redirect to Plogin with parentId
-                }, 2000); // Adjust the delay as needed
+                    navigate('/admindashboard');
+                }, 2000);
             } else {
-                const errorData = await response.json();
-                setMessage(`Registration failed: ${errorData.message}`);
+                setErrorMessage(data.message || 'Registration failed. Please try again.');
+                console.error('Registration error:', data.message);
             }
         } catch (error) {
             console.error('Fetch error:', error);
-            setMessage(`Error: ${error.message}`);
+            setErrorMessage('An error occurred. Please try again later.');
         }
     };
 
@@ -84,6 +72,7 @@ const ParentRegisterPage = () => {
             <div className="register-page-containers">
                 <form className="register-forms" onSubmit={handleSubmit}>
                     <h1 className="register-title">Parent Registration</h1>
+
                     <label>
                         Name:
                         <input
@@ -94,16 +83,7 @@ const ParentRegisterPage = () => {
                             required
                         />
                     </label>
-                    {/* <label>
-                        Student Name:
-                        <input
-                            type="text"
-                            name="studentName"
-                            value={formData.studentName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label> */}
+
                     <label>
                         Email:
                         <input
@@ -114,6 +94,7 @@ const ParentRegisterPage = () => {
                             required
                         />
                     </label>
+
                     <label>
                         Phone Number:
                         <input
@@ -124,6 +105,7 @@ const ParentRegisterPage = () => {
                             required
                         />
                     </label>
+
                     <label>
                         Address:
                         <input
@@ -134,16 +116,18 @@ const ParentRegisterPage = () => {
                             required
                         />
                     </label>
+
                     <label>
-                        Relation (to student):
+                        Relation to Student:
                         <input
                             type="text"
-                            name="relationType" // Ensure the name matches the backend field
+                            name="relationType"
                             value={formData.relationType}
                             onChange={handleChange}
                             required
                         />
                     </label>
+
                     <label>
                         Occupation:
                         <input
@@ -151,9 +135,9 @@ const ParentRegisterPage = () => {
                             name="occupation"
                             value={formData.occupation}
                             onChange={handleChange}
-                            // Occupation is optional
                         />
                     </label>
+
                     <label>
                         Password:
                         <input
@@ -164,19 +148,21 @@ const ParentRegisterPage = () => {
                             required
                         />
                     </label>
+
                     <button type="submit" className="submit-button">Register</button>
                 </form>
+
                 {showPopup && (
                     <div className="popup">
                         <span className="popup-icon">✔</span>
                         <span className="popup-message">Parent registered successfully!</span>
                     </div>
                 )}
-                {message && <p className="message">{message}</p>}
+
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
         </div>
     );
 };
 
 export default ParentRegisterPage;
-

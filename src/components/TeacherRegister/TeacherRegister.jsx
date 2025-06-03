@@ -15,6 +15,7 @@ const TeacherRegister = () => {
   });
   const [showPopup, setShowPopup] = useState(false);
   const [subjectsList, setSubjectsList] = useState([]); // List to hold fetched subjects from the server
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,6 +41,7 @@ const TeacherRegister = () => {
         setSubjectsList(Array.from(uniqueSubjectsMap.values())); // Set the unique subjects list after filtering
       } catch (error) {
         console.error('Error fetching subjects:', error);
+        setErrorMessage('Failed to load subjects. Please try again later.');
       }
     };
 
@@ -80,23 +82,25 @@ const TeacherRegister = () => {
         body: JSON.stringify(teacherData),
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      const data = await response.json();
 
-      const result = await response.json();
-      console.log('Registration successful:', result);
-      setShowPopup(true);
-      setTimeout(() => {
-        navigate('/admindashboard'); 
-      }, 2000);
+      if (response.ok && data.success) {
+        setShowPopup(true);
+        setTimeout(() => {
+          navigate('/admindashboard'); 
+        }, 2000);
+      } else {
+        setErrorMessage(data.message || 'Registration failed. Please try again.');
+        console.error('Error registering teacher:', data.message);
+      }
     } catch (error) {
       console.error('Error registering teacher:', error);
+      setErrorMessage('An error occurred while registering. Please try again later.');
     }
   };
 
   const hashPassword = async (password) => {
-    return password; 
+    return password; // No actual password hashing here, this is a placeholder.
   };
 
   return (
@@ -175,7 +179,7 @@ const TeacherRegister = () => {
               <select
                 name="subjects"
                 multiple
-                value={formData.subjects} 
+                value={formData.subjects}
                 onChange={handleChange}
                 required
               >
@@ -192,6 +196,11 @@ const TeacherRegister = () => {
             <div className="popup">
               <span className="popup-icon">✔</span>
               <span className="popup-message">Registration successful!</span>
+            </div>
+          )}
+          {errorMessage && (
+            <div className="error-message">
+              <span>{errorMessage}</span>
             </div>
           )}
         </div>

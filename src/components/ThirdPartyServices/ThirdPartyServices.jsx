@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {jwtDecode} from 'jwt-decode'; // Import jwt-decode to decode the token
+import { jwtDecode } from 'jwt-decode';
 import './ThirdPartyServices.css';
 import Header from '../Header/Header';
 
@@ -12,63 +12,48 @@ const ThirdPartyServices = () => {
   });
   const [students, setStudents] = useState([]);
   const [status, setStatus] = useState('');
+  const [previousRequests, setPreviousRequests] = useState([]);
+  const [filteredRequests, setFilteredRequests] = useState([]);
+  const [parentId, setParentId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [cachedData, setCachedData] = useState({});
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       try {
-        // Decode the JWT token to get the parentId
         const decodedToken = jwtDecode(authToken);
         const parentId = decodedToken.id;
+        setParentId(parentId);
 
         const fetchData = async () => {
           try {
-            // Fetch parent data
-            const parentResponse = await fetch(`http://192.168.0.103:3000/parent/${parentId}`);
-            if (!parentResponse.ok) {
-              throw new Error('Network response was not ok');
-            }
-            const parentData = await parentResponse.json();
-            setFormData((prevFormData) => ({
-              ...prevFormData,
-              email: parentData.email || '',
-              phoneNo: parentData.phoneNo || '',
+            const response = await fetch(`http://192.168.0.103:3000/parent/${parentId}`);
+            const data = await response.json();
+
+            setFormData((prev) => ({
+              ...prev,
+              email: data.email || '',
+              phoneNo: data.phoneNo || '',
             }));
-
-            // Fetch student names
-            const studentResponse = await fetch(`http://192.168.0.103:3000/parent/${parentId}`);
-            if (!studentResponse.ok) {
-              throw new Error('Network response was not ok');
-            }
-            const studentData = await studentResponse.json();
-            setStudents(studentData.students || []);
-
-            // Fetch existing service requests for caching
-            const cachedResponse = await fetch(`http://192.168.0.103:3000/third-party-services?parentId=${parentId}`);
-            if (cachedResponse.ok) {
-              const cachedData = await cachedResponse.json();
-              setCachedData(cachedData);
-              setStatus(cachedData.status || '');
-            }
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            setError('Failed to fetch data.');
+            setStudents(data.students || []);
+          } catch (err) {
+            console.error(err);
+            setError('Failed to fetch parent/students data.');
           } finally {
             setLoading(false);
           }
         };
 
         fetchData();
-      } catch (error) {
-        console.error('Failed to decode authToken:', error);
-        setLoading(false); // Stop loading even if decoding fails
+      } catch (err) {
+        console.error('Failed to decode auth token:', err);
+        setLoading(false);
       }
     } else {
-      console.error('No authToken found in localStorage');
-      setLoading(false); // Stop loading if no token is found
+      setLoading(false);
     }
   }, []);
 
@@ -79,13 +64,10 @@ const ThirdPartyServices = () => {
         ...prevFormData,
         selectedServices: checked
           ? [...prevFormData.selectedServices, value]
-          : prevFormData.selectedServices.filter((service) => service !== value),
+          : prevFormData.selectedServices.filter((s) => s !== value),
       }));
     } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+      setFormData({ ...formData, [name]: value });
     }
   };
 
@@ -94,100 +76,107 @@ const ThirdPartyServices = () => {
     try {
       const response = await fetch('http://192.168.0.103:3000/third-party-services', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
-      }
+      if (!response.ok) throw new Error('Submission failed');
 
       const result = await response.json();
       setStatus(result.status || '');
-      console.log('Form submitted', result);
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setError('Failed to submit form.');
+    } catch (err) {
+      console.error('Submit error:', err);
+      setError('Failed to submit request.');
     }
   };
 
-  if (loading) {
-    return <p></p>;
-  }
+  const handleFilter = async () => {
+    if (!parentId || !selectedMonth || !selectedYear) return;
 
-  if (error) {
-    return <p>{error}</p>;
-  }
+    try {
+      const url = `http://192.168.0.103:3000/third-party-services/for-parent?parentId=${parentId}&month=${selectedMonth}&year=${selectedYear}`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch filtered requests');
+
+      const data = await response.json();
+      setFilteredRequests(data);
+    } catch (err) {
+      console.error('Filter fetch error:', err);
+      setError('Failed to fetch filtered data.');
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
       <Header />
-      <div className="container">
-        <h2 className="heading">Third Party Optional Services</h2>
-        <form className="form" onSubmit={handleSubmit}>
-          <label htmlFor="studentName">Student's Name:</label>
-          <select
-            name="studentName"
-            value={formData.studentName}
-            onChange={handleChange}
-            className="input"
-            required
-          >
+      <div className="tps-container">
+        <h2 className="tps-heading">Third Party Optional Services</h2>
+
+        <form className="tps-form" onSubmit={handleSubmit}>
+          <label>Student's Name:</label>
+          <select name="studentName" value={formData.studentName} onChange={handleChange} className="tps-input" required>
             <option value="">Select a student</option>
-            {students.map((student) => (
-              <option key={student.id} value={student.name}>
-                {student.name}
+            {students.map((s) => (
+              <option key={s.id} value={s.name}>
+                {s.name}
               </option>
             ))}
           </select>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email"
-            className="input"
-            required
-          />
-          <input
-            type="tel"
-            name="phoneNo"
-            value={formData.phoneNo}
-            onChange={handleChange}
-            placeholder="Phone Number"
-            className="input"
-            required
-          />
 
-          <div className="services">
-            <label className="service-label">Select Services:</label>
-            <div className="service-option">
-              <input
-                type="checkbox"
-                name="selectedServices"
-                value="Transport Service"
-                onChange={handleChange}
-                className="checkbox"
-              />
+          <input type="email" name="email" value={formData.email} onChange={handleChange} className="tps-input" required placeholder="Email" />
+          <input type="tel" name="phoneNo" value={formData.phoneNo} onChange={handleChange} className="tps-input" required placeholder="Phone Number" />
+
+          <div className="tps-services">
+            <label className="tps-service-label">Select Services:</label>
+            <div className="tps-service-option">
+              <input type="checkbox" name="selectedServices" value="Transport Service" onChange={handleChange} className="tps-checkbox" />
               <label>Transport Service</label>
             </div>
-            <div className="service-option">
-              <input
-                type="checkbox"
-                name="selectedServices"
-                value="Meal Plan"
-                onChange={handleChange}
-                className="checkbox"
-              />
+            <div className="tps-service-option">
+              <input type="checkbox" name="selectedServices" value="Meal Plan" onChange={handleChange} className="tps-checkbox" />
               <label>Meal Plan</label>
             </div>
           </div>
 
-          <button type="submit" className="submit-button">Submit Request</button>
+          <button type="submit" className="tps-submit-button">Submit Request</button>
         </form>
-        {status && <p className="status-message">Status: {status}</p>}
+
+        {status && <p className="tps-status-message">Current Status: {status}</p>}
+
+        <div className="tps-filter-section">
+          <h3>Filter Requests By Month & Year</h3>
+          <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)} className="tps-input">
+            <option value="">Month</option>
+            {[...Array(12)].map((_, i) => (
+              <option key={i} value={i + 1}>{i + 1}</option>
+            ))}
+          </select>
+          <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className="tps-input">
+            <option value="">Year</option>
+            {[2024, 2025, 2026].map((year) => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+          <button onClick={handleFilter} className="tps-submit-button">Filter</button>
+        </div>
+
+        {filteredRequests.length > 0 && (
+          <div className="tps-past-requests">
+            <ul>
+              {filteredRequests.map((req, index) => (
+                <li key={index} className="tps-request-item">
+                  <p>Student: {req.studentName}</p>
+                  <p>Services: {req.selectedServices?.join(', ')}</p>
+                  <p>Status: {req.status}</p>
+                  <p>Date: {new Date(req.createdAt).toLocaleDateString()}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import './CreateResourcePage.css';
 import Header from '../Header/Header';
 
@@ -11,7 +11,6 @@ const CreateResourcePage = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [type, setType] = useState('document');
-  const [file, setFile] = useState(null);
   const [content, setContent] = useState('');
   const [classId, setClassId] = useState('');
   const [loading, setLoading] = useState(true);
@@ -19,32 +18,36 @@ const CreateResourcePage = () => {
 
   const token = localStorage.getItem('authToken');
 
-  // Get teacherId from token
   useEffect(() => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
         setTeacherId(decoded?.id);
-      } catch (error) {
-        console.error('Error decoding JWT token:', error);
+      } catch (err) {
+        console.error('Error decoding token:', err);
+        setError('Invalid token.');
+        setLoading(false);
       }
+    } else {
+      setError('No token found.');
+      setLoading(false);
     }
   }, [token]);
 
-  // Fetch only teacher's classes and their resources
   useEffect(() => {
     if (!teacherId) return;
 
-    const fetchTeacherClassesAndResources = async () => {
+    const fetchData = async () => {
       try {
-        // Fetch teacher details (including their assigned classes)
+        setLoading(true);
+        setError('');
+
         const teacherResponse = await axios.get(`http://192.168.0.103:3000/teacher/${teacherId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
         let teacherClasses = Array.isArray(teacherResponse.data.classes) ? teacherResponse.data.classes : [];
 
-        // Sort classes numerically by className
         teacherClasses = teacherClasses.sort((a, b) => {
           const numA = parseInt(a.className.match(/\d+/));
           const numB = parseInt(b.className.match(/\d+/));
@@ -53,76 +56,99 @@ const CreateResourcePage = () => {
 
         setClasses(teacherClasses);
 
-        // Fetch resources created by this teacher
-        const resourcesResponse = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
+        const resourcesResponse = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setResources(resourcesResponse.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setError('Error fetching data');
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError('Failed to fetch data.');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchTeacherClassesAndResources();
+    fetchData();
   }, [teacherId, token]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('type', type);
-    formData.append('classId', classId);
+    if (!title.trim() || !description.trim() || !classId) {
+      alert('Please fill all required fields');
+      return;
+    }
 
-    if (type === 'document' && file) {
-      formData.append('file', file);
-    } else if (type === 'link' && content) {
-      formData.append('content', content);
+    if (type === 'document' && !content.trim()) {
+      alert('Please provide the document URL/path.');
+      return;
+    }
+    if (type === 'link' && !content.trim()) {
+      alert('Please provide the link URL.');
+      return;
     }
 
     try {
-      await axios.post('http://192.168.0.103:3000/resources', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        params: { teacherId },
-      });
+      const payload = {
+        title,
+        description,
+        type,
+        content,
+        classId: Number(classId),
+      };
+
+      await axios.post(
+        'http://192.168.0.103:3000/resources',
+        payload,
+        {
+          params: { teacherId: Number(teacherId) },
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       alert('Resource created successfully!');
+
+      // Clear form
       setTitle('');
       setDescription('');
       setType('document');
       setContent('');
       setClassId('');
-      setFile(null);
 
       // Refresh resources list
-      const updatedResources = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
+      const updatedResources = await axios.get(
+        `http://192.168.0.103:3000/resources/by-teacher/${teacherId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
       setResources(updatedResources.data);
-    } catch (error) {
-      console.error('Error creating resource:', error);
+    } catch (err) {
+      console.error('Error creating resource:', err);
+      alert('Failed to create resource.');
     }
   };
 
   const handleDelete = async (resourceId) => {
-    if (window.confirm('Are you sure you want to delete this resource?')) {
-      try {
-        await axios.delete(`http://192.168.0.103:3000/resources/${resourceId}`);
-        alert('Resource deleted successfully!');
+    if (!window.confirm('Are you sure you want to delete this resource?')) return;
 
-        // Refresh resources
-        const updatedResources = await axios.get(`http://192.168.0.103:3000/resources/by-teacher/${teacherId}`);
-        setResources(updatedResources.data);
-      } catch (error) {
-        console.error('Error deleting resource:', error);
-      }
+    try {
+      await axios.delete(`http://192.168.0.103:3000/resources/${resourceId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      alert('Resource deleted successfully!');
+
+      const updatedResources = await axios.get(
+        `http://192.168.0.103:3000/resources/by-teacher/${teacherId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setResources(updatedResources.data);
+    } catch (err) {
+      console.error('Error deleting resource:', err);
+      alert('Failed to delete resource.');
     }
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
     <div>
@@ -140,6 +166,7 @@ const CreateResourcePage = () => {
               required
             />
           </div>
+
           <div>
             <label htmlFor="description">Description:</label>
             <textarea
@@ -149,6 +176,7 @@ const CreateResourcePage = () => {
               required
             />
           </div>
+
           <div>
             <label htmlFor="type">Type:</label>
             <select
@@ -161,27 +189,18 @@ const CreateResourcePage = () => {
             </select>
           </div>
 
-          {type === 'link' ? (
-            <div>
-              <label htmlFor="content">Link URL:</label>
-              <input
-                id="content"
-                type="text"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-            </div>
-          ) : (
-            <div>
-              <label htmlFor="file">Document File:</label>
-              <input
-                id="file"
-                type="file"
-                onChange={(e) => setFile(e.target.files[0])}
-                required={type === 'document'}
-              />
-            </div>
-          )}
+          <div>
+            <label htmlFor="content">
+              {type === 'document' ? 'Document URL/Path:' : 'Link URL:'}
+            </label>
+            <input
+              id="content"
+              type="text"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
+            />
+          </div>
 
           <div>
             <label htmlFor="classId">Select Class:</label>
@@ -192,13 +211,14 @@ const CreateResourcePage = () => {
               required
             >
               <option value="">Select Class...</option>
-              {classes.map((classItem) => (
-                <option key={classItem.id} value={classItem.id}>
-                  {classItem.className}
+              {classes.map((cls) => (
+                <option key={cls.id} value={cls.id}>
+                  {cls.className}
                 </option>
               ))}
             </select>
           </div>
+
           <button type="submit">Create Resource</button>
         </form>
 
@@ -206,14 +226,22 @@ const CreateResourcePage = () => {
         <ul>
           {resources.length > 0 ? (
             resources.map((resource) => {
-              const classItem = classes.find(cls => cls.id === resource.classId);
-
+              const classItem = classes.find((cls) => cls.id === resource.classId);
               return (
                 <li key={resource.id}>
                   <h3>{resource.title}</h3>
                   <p>{resource.description}</p>
                   <p>Type: {resource.type}</p>
-                  <p>Content: {resource.content}</p>
+                  <p>
+                    Content:{' '}
+                    {resource.type === 'link' ? (
+                      <a href={resource.content} target="_blank" rel="noopener noreferrer">
+                        {resource.content}
+                      </a>
+                    ) : (
+                      resource.content
+                    )}
+                  </p>
                   <p>Class: {classItem ? classItem.className : 'Class not found'}</p>
                   <button onClick={() => handleDelete(resource.id)}>Delete</button>
                 </li>

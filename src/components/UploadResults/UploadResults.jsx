@@ -5,6 +5,7 @@ import './UploadResults.css';
 import Header from '../Header/Header';
 
 const UploadResults = () => {
+  const [teacherId, setTeacherId] = useState(null);
   const [classNames, setClassNames] = useState([]);
   const [students, setStudents] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -15,27 +16,47 @@ const UploadResults = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [uploadHistory, setUploadHistory] = useState([]);
 
-  // ✅ Fetch teacher details, classes, and subjects
+  // Decode JWT and set teacherId
   useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        if (decoded && decoded.id) {
+          setTeacherId(decoded.id);
+        } else {
+          throw new Error('Teacher ID not found in token');
+        }
+      } catch (err) {
+        console.error('Invalid token:', err);
+        setError('Authentication error. Please log in again.');
+      }
+    } else {
+      setError('Authentication token not found. Please log in.');
+    }
+  }, []);
+
+  // Fetch teacher details
+  useEffect(() => {
+    if (!teacherId) return;
+
     const fetchTeacherDetails = async () => {
       try {
-        const token = localStorage.getItem('authToken');
-        if (!token) return;
+        const response = await axios.get(`http://192.168.0.103:3000/teacher/${teacherId}`);
+        const teacher = response.data;
 
-        const decoded = jwtDecode(token);
-        const teacherId = decoded?.id;
+        const teacherClasses = Array.isArray(teacher.classes) ? teacher.classes : [];
+        const teacherSubjects = Array.isArray(teacher.subjects) ? teacher.subjects : [];
 
-        if (teacherId) {
-          const response = await axios.get(`http://192.168.0.103:3000/teacher/${teacherId}`);
-          const teacher = response.data;
+        setClassNames(teacherClasses);
+        setTeacherSubjects(teacherSubjects);
+        setSubjects(teacherSubjects);
 
-          const teacherClasses = Array.isArray(teacher.classes) ? teacher.classes : [];
-          const teacherSubjects = Array.isArray(teacher.subjects) ? teacher.subjects : [];
-
-          setClassNames(teacherClasses);
-          setTeacherSubjects(teacherSubjects);
-          setSubjects(teacherSubjects);
+        if (teacherClasses.length > 0) {
+          const firstClassId = teacherClasses[0].id;
+          setSelectedClass(firstClassId.toString());
         }
       } catch (error) {
         console.error('Error fetching teacher details:', error);
@@ -44,97 +65,95 @@ const UploadResults = () => {
     };
 
     fetchTeacherDetails();
-  }, []);
+  }, [teacherId]);
 
-  // ✅ Fetch students when class changes
+  // Fetch students and history when class or year changes
   useEffect(() => {
     const fetchClassDetails = async () => {
-      if (selectedClass) {
-        setLoading(true);
-        setError(null);
-        try {
-          const studentsResponse = await axios.get(`http://192.168.0.103:3000/class/${selectedClass}`);
-          const studentsData = Array.isArray(studentsResponse.data.students)
-            ? studentsResponse.data.students
-            : [];
-          setStudents(studentsData);
+      if (!selectedClass || !teacherId) return;
 
-          // Initialize marks state
-          const initialMarks = studentsData.reduce((acc, student) => {
-            acc[student.id] = teacherSubjects.reduce((subAcc, subject) => {
-              subAcc[subject.id] = '';
-              return subAcc;
-            }, {});
-            return acc;
+      setLoading(true);
+      try {
+        const classIdNum = Number(selectedClass);
+        const response = await axios.get(`http://192.168.0.103:3000/class/${classIdNum}`);
+        const studentsData = response.data.students || [];
+        setStudents(studentsData);
+
+        const initialMarks = studentsData.reduce((acc, student) => {
+          acc[student.id] = teacherSubjects.reduce((subAcc, subject) => {
+            subAcc[subject.id] = '';
+            return subAcc;
           }, {});
-          setMarks(initialMarks);
-        } catch (error) {
-          console.error('Error fetching students:', error);
-          setError('Error fetching class details (students)');
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        setStudents([]);
-        setMarks({});
+          return acc;
+        }, {});
+        setMarks(initialMarks);
+
+        fetchUploadHistory(classIdNum, teacherId, year);
+      } catch (error) {
+        console.error('Error fetching students:', error);
+        setError('Error fetching class details (students)');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchClassDetails();
-  }, [selectedClass, teacherSubjects]);
+  }, [selectedClass, teacherSubjects, teacherId, year]);
 
-  // ✅ Handle marks entry
+  // Fetch upload history (new API)
+  const fetchUploadHistory = async (classId, teacherIdParam, selectedYear) => {
+    if (!classId || !teacherIdParam || !selectedYear) return;
+
+    try {
+      const response = await axios.get('http://192.168.0.103:3000/results/by-teacher-class-year', {
+        params: {
+          teacherId: teacherIdParam,
+          classId: Number(classId),
+          year: Number(selectedYear),
+        },
+      });
+      setUploadHistory(response.data || []);
+    } catch (error) {
+      console.error('', error);
+      setError('');
+    }
+  };
+
   const handleMarksChange = (studentId, subjectId, value) => {
-    setMarks(prevMarks => ({
-      ...prevMarks,
-      [studentId]: {
-        ...prevMarks[studentId],
-        [subjectId]: value
-      }
+    setMarks(prev => ({
+      ...prev,
+      [studentId]: { ...prev[studentId], [subjectId]: value }
     }));
   };
 
-  const handleStudentSelect = (studentId) => {
-    setSelectedStudent(studentId);
-  };
-
-  // ✅ Submit results
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!selectedClass || Object.keys(marks).length === 0 || !year) {
-      alert('Please fill out all fields');
+    if (!selectedClass) {
+      alert('Please select a class before uploading results.');
       return;
     }
 
-    let uploadedSubjects = [];
-
     try {
+      const classIdNum = Number(selectedClass);
+
       for (const studentId in marks) {
         for (const subjectId in marks[studentId]) {
-          const resultData = {
-            studentId,
-            subjectId,
-            classId: selectedClass,
-            marks: parseFloat(marks[studentId][subjectId]),
-            year: parseInt(year)
-          };
-
-          if (resultData.marks !== '' && !isNaN(resultData.marks)) {
-            await axios.post('http://192.168.0.103:3000/results/create', resultData);
-            uploadedSubjects.push(subjectId);
+          const mark = parseFloat(marks[studentId][subjectId]);
+          if (!isNaN(mark)) {
+            await axios.post('http://192.168.0.103:3000/results/create', {
+              studentId: Number(studentId),
+              subjectId: Number(subjectId),
+              classId: classIdNum,
+              marks: mark,
+              year: parseInt(year, 10)
+            });
           }
         }
       }
 
-      uploadedSubjects.forEach(subjectId => {
-        const subject = subjects.find(sub => sub.id === subjectId);
-        if (subject) {
-          alert(`Marks for ${subject.name} uploaded successfully!`);
-        }
-      });
-
       alert('Results uploaded successfully!');
+      fetchUploadHistory(classIdNum, teacherId, year);
     } catch (error) {
       console.error('Error uploading results:', error);
       alert('Error uploading results');
@@ -147,99 +166,106 @@ const UploadResults = () => {
       <div className="upload-results-container">
         <h1>Upload Student Results</h1>
 
-        {/* ✅ Class Selection */}
+        {error && <p className="error">{error}</p>}
+
         <div className="form-group">
-          <label htmlFor="class">Select Class</label>
+          <label>Select Class</label>
           <select
-            id="class"
             value={selectedClass}
-            onChange={(e) => setSelectedClass(e.target.value)}
+            onChange={e => setSelectedClass(e.target.value)}
           >
-            <option value="">Select a class</option>
-            {classNames.map((classItem) => (
-              <option key={classItem.id} value={classItem.id}>
-                {classItem.className}
+            <option value="">Select class</option>
+            {classNames.map(cls => (
+              <option key={cls.id} value={cls.id}>
+                {cls.className}
               </option>
             ))}
           </select>
         </div>
 
-        {/* ✅ Year Selection */}
         <div className="form-group">
-          <label htmlFor="year">Select Year</label>
+          <label>Year</label>
           <input
             type="number"
-            id="year"
             value={year}
-            onChange={(e) => setYear(e.target.value)}
-            placeholder="Enter year"
-            min="2000"
-            max={new Date().getFullYear()}
-            required
+            onChange={e => setYear(e.target.value)}
           />
         </div>
 
-        {/* ✅ Student Selection */}
-        {selectedClass && (
-          <div className="form-group">
-            <label htmlFor="student">Select Student</label>
-            <select
-              id="student"
-              value={selectedStudent}
-              onChange={(e) => handleStudentSelect(e.target.value)}
-            >
-              <option value="">Select a student</option>
-              {students.map((student) => (
-                <option key={student.id} value={student.id}>
-                  {student.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+        <div className="form-group">
+          <label>Select Student</label>
+          <select
+            value={selectedStudent}
+            onChange={e => setSelectedStudent(e.target.value)}
+          >
+            <option value="">Select student</option>
+            {students.map(st => (
+              <option key={st.id} value={st.id}>
+                {st.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-        {/* ✅ Marks Input Table */}
-        {selectedClass && selectedStudent && subjects.length > 0 && (
+        {selectedStudent && (
           <form onSubmit={handleSubmit}>
-            <div className="table-container">
-              <table className="upload-table">
-                <thead>
-                  <tr>
-                    <th>Student</th>
-                    {subjects.map((subject) => (
-                      <th key={subject.id}>{subject.name}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {students.map((student) => (
-                    <tr key={student.id}>
-                      <td>{student.name}</td>
-                      {subjects.map((subject) => (
-                        <td key={subject.id}>
-                          <input
-                            type="number"
-                            value={marks[student.id]?.[subject.id] || ''}
-                            onChange={(e) =>
-                              handleMarksChange(student.id, subject.id, e.target.value)
-                            }
-                            placeholder="Enter marks"
-                          />
-                        </td>
-                      ))}
-                    </tr>
+            <table className="upload-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  {subjects.map(sub => (
+                    <th key={sub.id}>{sub.name}</th>
                   ))}
-                </tbody>
-              </table>
-            </div>
-
-            <button type="submit">Upload Results</button>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{students.find(st => st.id === Number(selectedStudent))?.name}</td>
+                  {subjects.map(sub => (
+                    <td key={sub.id}>
+                      <input
+                        type="number"
+                        value={marks[selectedStudent]?.[sub.id] || ''}
+                        onChange={e =>
+                          handleMarksChange(selectedStudent, sub.id, e.target.value)
+                        }
+                      />
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+            <button type="submit">Upload</button>
           </form>
         )}
 
-        {/* ✅ Loading and Error Messages */}
+        <h2>Upload History</h2>
+        {uploadHistory.length > 0 ? (
+          <table className="history-table">
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Subject</th>
+                <th>Marks</th>
+                <th>Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              {uploadHistory.map(res => (
+                <tr key={res.id}>
+                  <td>{res.student?.name}</td>
+                  <td>{res.subject?.name}</td>
+                  <td>{res.marks}</td>
+                  <td>{res.year}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No history</p>
+        )}
+
         {loading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './EbookPage.css';
 import Header from '../Header/Header';
+import { jwtDecode } from 'jwt-decode';
 
 const EbookPage = () => {
   const [classOptions, setClassOptions] = useState([]);
@@ -12,60 +13,78 @@ const EbookPage = () => {
   });
   const [pdfFile, setPdfFile] = useState(null);
   const [message, setMessage] = useState('');
+  const [teacherId, setTeacherId] = useState(null);
 
+  const token = localStorage.getItem('authToken');
+
+  useEffect(() => {
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setTeacherId(decoded.id);
+      } catch (err) {
+        console.error('Error decoding token:', err);
+      }
+    }
+  }, [token]);
 
   useEffect(() => {
     const fetchClassOptions = async () => {
+      if (!teacherId) return;
+
       try {
-        const response = await axios.get('http://192.168.0.103:3000/class');
-        console.log(response.data);
-        setClassOptions(response.data); 
+        const response = await axios.get(`http://192.168.0.103:3000/teacher/${teacherId}`);
+        const teacherClasses = response.data.classes || [];
+
+        // Sort classes by number in className (e.g., Class 1, Class 2)
+        teacherClasses.sort((a, b) => {
+          const aNum = parseInt(a.className.match(/\d+/));
+          const bNum = parseInt(b.className.match(/\d+/));
+          return aNum - bNum;
+        });
+
+        setClassOptions(teacherClasses);
       } catch (error) {
-        console.error('There was an error fetching the class options:', error);
+        console.error('Error fetching class options:', error);
       }
     };
+
     fetchClassOptions();
-  }, []);
+  }, [teacherId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-
   const handleFileChange = (e) => {
     setPdfFile(e.target.files[0]);
   };
-
 
   const handleClassChange = (e) => {
     setFormData({ ...formData, classId: e.target.value });
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-  
-    const classId = formData.classId;
-
-    
     const data = new FormData();
     data.append('title', formData.title);
     data.append('description', formData.description);
-    data.append('classId', classId); 
+    data.append('classId', formData.classId);
     data.append('file', pdfFile);
 
     try {
-    
       await axios.post('http://192.168.0.103:3000/ebooks', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       setMessage('Ebook created successfully!');
+      setFormData({ title: '', description: '', classId: '' });
+      setPdfFile(null);
     } catch (error) {
-      console.error('Error occurred while creating the ebook:', error);
+      console.error('Error creating ebook:', error);
       setMessage('Failed to create ebook.');
     }
   };

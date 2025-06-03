@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import {jwtDecode} from 'jwt-decode'; // Import jwt-decode to decode the token
+import { jwtDecode } from 'jwt-decode'; // Import jwt-decode to decode the token
 import './CounselingRequest.css';
 import Header from '../Header/Header';
 
@@ -14,15 +14,15 @@ const CounselingRequest = () => {
     frequency: '',
     supportRequiredFrom: '',
     expectedSupport: '',
-    supportingMedicalRecords: null,
-    externalAssessmentReport: null,
-    otherDocuments: null,
+    supportingMedicalRecords: '',
+    externalAssessmentReport: '',
+    otherDocuments: '',
   });
   const [parentData, setParentData] = useState({
     parentId: '',
     parentName: '',
     email: '',
-    phoneNo: ''
+    phoneNo: '',
   });
 
   useEffect(() => {
@@ -64,13 +64,6 @@ const CounselingRequest = () => {
     });
   };
 
-  const handleFileUpload = (e, fieldName) => {
-    setFormData({
-      ...formData,
-      [fieldName]: e.target.files[0],
-    });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -79,30 +72,18 @@ const CounselingRequest = () => {
       areaOfConcern: formData.areaOfConcern || 'Academic',
     };
 
-    const formDataToSend = new FormData();
-    formDataToSend.append('areaOfConcern', finalFormData.areaOfConcern);
-    formDataToSend.append('description', finalFormData.description);
-    formDataToSend.append('frequency', finalFormData.frequency);
-    formDataToSend.append('supportRequiredFrom', finalFormData.supportRequiredFrom);
-    formDataToSend.append('expectedSupport', finalFormData.expectedSupport);
-    if (finalFormData.supportingMedicalRecords) {
-      formDataToSend.append('supportingMedicalRecords', finalFormData.supportingMedicalRecords);
-    }
-    if (finalFormData.externalAssessmentReport) {
-      formDataToSend.append('externalAssessmentReport', finalFormData.externalAssessmentReport);
-    }
-    if (finalFormData.otherDocuments) {
-      formDataToSend.append('otherDocuments', finalFormData.otherDocuments);
-    }
-    formDataToSend.append('studentId', selectedStudentId);
-    formDataToSend.append('parentName', parentData.parentName);
-    formDataToSend.append('email', parentData.email);
-    formDataToSend.append('phoneNo', parentData.phoneNo);
+    const requestData = {
+      ...finalFormData,
+      studentId: selectedStudentId,
+      parentName: parentData.parentName,
+      email: parentData.email,
+      phoneNo: parentData.phoneNo,
+    };
 
     try {
-      const response = await axios.post('http://192.168.0.103:3000/counseling-request', formDataToSend, {
+      const response = await axios.post('http://192.168.0.103:3000/counseling-request', requestData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
         },
       });
 
@@ -187,6 +168,8 @@ const CounselingRequest = () => {
                 onChange={handleChange}
               ></textarea>
             </div>
+
+            {/* Select Student */}
             <div className="form-group left">
               <label htmlFor="studentId">Select Student</label>
               <select
@@ -204,32 +187,8 @@ const CounselingRequest = () => {
               </select>
             </div>
           </div>
-          <div className="form-group">
-            <label>Upload relevant documents as applicable:</label>
-            <div className="upload-buttons">
-              <div className="upload-btn-wrapper">
-                <input
-                  type="file"
-                  onChange={(e) => handleFileUpload(e, 'supportingMedicalRecords')}
-                />
-                <span>Supporting medical records</span>
-              </div>
-              <div className="upload-btn-wrapper">
-                <input
-                  type="file"
-                  onChange={(e) => handleFileUpload(e, 'externalAssessmentReport')}
-                />
-                <span>External assessment report (from a Psychologist/Clinical Psychologist)</span>
-              </div>
-              <div className="upload-btn-wrapper">
-                <input
-                  type="file"
-                  onChange={(e) => handleFileUpload(e, 'otherDocuments')}
-                />
-                <span>Any other supportive documents</span>
-              </div>
-            </div>
-          </div>
+
+          {/* Submit Buttons */}
           <div className="form-actions">
             <button type="submit" className="save-btn">
               Save

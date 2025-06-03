@@ -109,6 +109,9 @@ import StudentInstructionPage from './components/StudentInstructionPage/StudentI
 import ParentInstructionPage from './components/ParentInstructionPage/ParentInstructionPage';
 import TeacherInstructionPage from './components/TeacherInstructionPage/TeacherInstructionPage';
 import AdminInstructionPage from './components/AdminInstructionPage/AdminInstructionPage';
+import TeacherProfile from './components/TeacherProfile/TeacherProfile';
+import AttendanceAdmin from './components/AttendanceAdmin/AttendanceAdmin';
+import CounselingRequestsPage from './components/CounselingRequestsPage/CounselingRequestsPage';
 function App() {
   return (
     <Router>
@@ -227,6 +230,9 @@ function App() {
           <Route path="/ParentInstructionPage" element={<ParentInstructionPage/>} />          
           <Route path="/TeacherInstructionPage" element={<TeacherInstructionPage/>} />          
           <Route path="/AdminInstructionPage" element={<AdminInstructionPage/>} />          
+          <Route path="/TeacherProfile" element={<TeacherProfile/>} />          
+          <Route path="/AttendanceAdmin" element={<AttendanceAdmin/>} />          
+          <Route path="/CounselingRequestsPage" element={<CounselingRequestsPage/>} />          
 
         </Routes>
       </div>

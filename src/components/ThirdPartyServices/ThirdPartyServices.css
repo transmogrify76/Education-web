@@ -1,99 +1,116 @@
-/* From Uiverse.io by Smit-Prajapati */
-.container {
-    max-width: 400px;
-    background: #F8F9FD;
-    background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
-    border-radius: 40px;
-    padding: 25px 35px;
-    border: 5px solid rgb(255, 255, 255);
-    box-shadow: rgba(133, 189, 215, 0.8) 0px 30px 30px -20px;
-    margin: 20px auto;
-  }
-  
-  .heading {
-    text-align: center;
-    font-weight: 900;
-    font-size: 28px;
-    color: rgb(16, 137, 211);
-  }
-  
-  .form {
-    margin-top: 20px;
-  }
-  
-  .form .input,
-  .form .textarea,
-  .submit-button { /* Ensures all fields and button are the same width */
-    background: white;
-    border: none;
-    padding: 15px 20px;
-    border-radius: 20px;
-    margin-top: 15px;
-    box-shadow: #cff0ff 0px 10px 10px -5px;
-    border-inline: 2px solid transparent;
-    font-size: 16px;
-  }
-  
-  .form .input::-moz-placeholder {
-    color: rgb(170, 170, 170);
-  }
-  
-  .form .input::placeholder {
-    color: rgb(0, 0, 0);
-  }
-  
-  .form .input:focus,
-  .form .textarea:focus {
-    outline: none;
-    border-inline: 2px solid #12B1D1;
-  }
-  
-  .form .textarea {
-    resize: vertical;
-    height: 120px;
-  }
-  
-  .services {
-    margin-top: 15px;
-  }
-  
-  .service-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .service-option {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .checkbox {
-    margin-bottom: 8px;
-    margin-right: 10px;
-  }
-  
-  .submit-button {
-    font-weight: bold;
-    background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
-    color: white;
-    padding: 15px;
-    margin: 20px auto;
-    border-radius: 20px;
-    box-shadow: rgba(133, 189, 215, 0.8) 0px 20px 10px -15px;
-    border: none;
-    transition: all 0.2s ease-in-out;
-    font-size: 16px;
-  }
-  
-  .submit-button:hover {
-    transform: scale(1.03);
-    box-shadow: rgba(133, 189, 215, 0.8) 0px 23px 10px -20px;
-  }
-  
-  .submit-button:active {
-    transform: scale(0.95);
-    box-shadow: rgba(133, 189, 215, 0.8) 0px 15px 10px -10px;
-  }
-  
+/* ThirdPartyServices.css */
+
+.tps-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tps-heading {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 25px;
+}
+
+.tps-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tps-input,
+.tps-textarea,
+select {
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.tps-input:focus,
+select:focus {
+  border-color: #007bff;
+}
+
+.tps-services {
+  margin-top: 10px;
+}
+
+.tps-service-label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.tps-service-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0;
+}
+
+.tps-checkbox {
+  transform: scale(1.2);
+}
+
+.tps-submit-button {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tps-submit-button:hover {
+  background-color: #0056b3;
+}
+
+.tps-status-message {
+  margin-top: 20px;
+  color: green;
+  font-weight: bold;
+  text-align: center;
+}
+
+.tps-filter-section {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.tps-filter-section h3 {
+  margin-bottom: 10px;
+  color: #34495e;
+  font-size: 20px;
+}
+
+.tps-past-requests {
+  margin-top: 30px;
+}
+
+.tps-past-requests ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tps-request-item {
+  background: #f8f9fa;
+  border-left: 4px solid #007bff;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 4px;
+}
+
+.tps-request-item p {
+  margin: 4px 0;
+}

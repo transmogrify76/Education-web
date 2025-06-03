@@ -22,7 +22,7 @@ function AdminInstructionPage() {
         </li>
         <li>
           <strong>📚 Class Management:</strong>
-          If a new class needs to be created, this section allows you to create a class and assign a teacher to it. If the class already exists, you can select the teacher and update the class accordingly.
+          If a new class needs to be created, CLASS NAME SHOULD ONLY CONTAIN AND BE ARABIC NUMBERALS. E.G "5", not "CLASS V" OR ANYTHING ELSE, this section allows you to create a class and assign a teacher to it. If the class already exists, you can select the teacher and update the class accordingly.
         </li>
         <li>
           <strong>👨‍🎓 Student List:</strong>

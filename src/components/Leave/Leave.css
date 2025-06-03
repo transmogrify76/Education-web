@@ -108,3 +108,21 @@
 .success-text {
   color: #28a745;
 }
+
+/* Additional styles for leave status */
+.leave-status-container {
+  margin-top: 20px;
+}
+
+.leave-status-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.leave-status-item {
+  background: white;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  box-shadow: #cff0ff 0px 10px 10px -5px;
+}

@@ -1,19 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode'; // Import jwt-decode to decode the token
 import './AssignmentSubmissionPage.css'; // Make sure to add styles for the new elements
 import Header from '../Header/Header';
 import SideNav from '../SideNav/SideNav';
 
 const AssignmentSubmissionPage = () => {
-  const { studentId } = useParams();
   const [classes, setClasses] = useState([]);
   const [assignments, setAssignments] = useState([]);
   const [filteredAssignments, setFilteredAssignments] = useState([]);
-  const [selectedClassId, setSelectedClassId] = useState('');
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [content, setContent] = useState('');
-  const [classroomLink, setClassroomLink] = useState(''); // State for Classroom Link
+  const [classroomLink, setClassroomLink] = useState('');
+  const [student, setStudent] = useState(null); // State for student details
+  const [studentClassId, setStudentClassId] = useState(''); // Store student’s class ID
+
+  // Extract student details from JWT token
+  useEffect(() => {
+    const token = localStorage.getItem('authToken'); // Assuming the token is stored in localStorage
+    if (token) {
+      const decodedToken = jwtDecode(token); // Decode the JWT token
+      const { Id, studentName, enrollmentNo, rollNo, class: studentClass } = decodedToken; // Extract necessary details
+
+      // Set student details from decoded token (as we have the required details already)
+      setStudent({
+        studentId: Id,
+        studentName,
+        enrollmentNo,
+        rollNo,
+        classId: studentClass.id,
+        className: studentClass.className
+      });
+
+      // Set the student classId
+      setStudentClassId(studentClass.id);
+    }
+  }, []);
 
   // Fetch all classes on component mount
   useEffect(() => {
@@ -28,62 +50,54 @@ const AssignmentSubmissionPage = () => {
     fetchClasses();
   }, []);
 
-  // Fetch assignments by class ID whenever selectedClassId changes
+  // Fetch assignments for the student's class automatically
   useEffect(() => {
-    if (!selectedClassId) return; // Do nothing if no class is selected
+    if (!studentClassId) return; // Don't fetch assignments if classId isn't available
 
     const fetchAssignmentsByClass = async () => {
       try {
-        const response = await axios.get(`http://192.168.0.103:3000/assignments/class/${selectedClassId}`);
+        const response = await axios.get(`http://192.168.0.103:3000/assignments/class/${studentClassId}`);
         setAssignments(response.data);
       } catch (error) {
         console.error('Error fetching assignments:', error);
       }
     };
     fetchAssignmentsByClass();
-  }, [selectedClassId]);
+  }, [studentClassId]);
 
-  // Filter assignments whenever assignments data or selectedClassId changes
+  // Filter assignments by classId (this might not be necessary if we are directly fetching by studentClassId)
   useEffect(() => {
-    if (selectedClassId) {
-      const filtered = assignments.filter(assignment => assignment.classId === Number(selectedClassId));
+    if (studentClassId) {
+      const filtered = assignments.filter(assignment => assignment.classId === studentClassId);
       setFilteredAssignments(filtered);
     } else {
       setFilteredAssignments([]); // Clear assignments if no class is selected
     }
-  }, [selectedClassId, assignments]);
+  }, [studentClassId, assignments]);
 
-  const handleClassChange = (e) => {
-    setSelectedClassId(e.target.value);
-    setSelectedAssignment(null); // Clear selected assignment when class changes
-  };
-
+  // Handle assignment change
   const handleAssignmentChange = (e) => {
     const selectedId = e.target.value;
     const assignment = filteredAssignments.find(a => a.id === Number(selectedId));
     setSelectedAssignment(assignment);
   };
 
-  const handleClassroomLinkChange = (e) => {
-    setClassroomLink(e.target.value); // Update the Classroom Link
-  };
-
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
       content,
-      studentId,
+      studentId: student.studentId, // Use the decoded studentId
       classroomLink: classroomLink || '', // Ensure classroomLink is always sent as an empty string if not provided
     };
 
     try {
       await axios.post(`http://192.168.0.103:3000/assignments/${selectedAssignment.id}/submit`, formData);
       alert('Assignment submitted successfully!');
-      // Reset form fields
       setContent('');
       setClassroomLink('');
-      setSelectedAssignment(null); // Reset selected assignment
+      setSelectedAssignment(null);
     } catch (error) {
       console.error('Error submitting assignment:', error);
       alert('Failed to submit assignment.');
@@ -94,27 +108,21 @@ const AssignmentSubmissionPage = () => {
     <div className="assignment-submission-page">
       <Header />
       <div className="for-navbar">
-        <SideNav studentId={studentId} />
+        <SideNav studentId={student?.studentId} />
         <div className="assignment-submission-container">
           <h1>Submit Assignment</h1>
 
-          <div className="class-dropdown-container">
-            <label htmlFor="classDropdown">Select a Class:</label>
-            <select
-              id="classDropdown"
-              value={selectedClassId}
-              onChange={handleClassChange}
-            >
-              <option value="">Select a class</option>
-              {classes.map((classItem) => (
-                <option key={classItem.id} value={classItem.id}>
-                  {classItem.className} (ID: {classItem.id})
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* {student && (
+            <div className="student-details">
+              <h3>Student Details</h3>
+              <p><strong>Name:</strong> {student.studentName}</p>
+              <p><strong>Enrollment Number:</strong> {student.enrollmentNo}</p>
+              <p><strong>Roll Number:</strong> {student.rollNo}</p>
+              <p><strong>Class:</strong> {student.className}</p>
+            </div>
+          )} */}
 
-          {selectedClassId && (
+          {studentClassId && (
             <div className="assignment-dropdown-container">
               <label htmlFor="assignmentDropdown">Select Assignment:</label>
               <select
@@ -159,7 +167,7 @@ const AssignmentSubmissionPage = () => {
               <label htmlFor="content_w">Please Write Your Name and Roll Number in this box first </label>
               <textarea
                 id="content"
-                value={content}
+                value={`Name: ${student?.studentName || ''}\nEnrollment No: ${student?.enrollmentNo || ''}\nRoll No: ${student?.rollNo || ''}\n`}
                 onChange={(e) => setContent(e.target.value)}
                 required
                 rows="5"
@@ -174,7 +182,7 @@ const AssignmentSubmissionPage = () => {
                 id="classroomLink"
                 placeholder="Enter Google Classroom Link"
                 value={classroomLink}
-                onChange={handleClassroomLinkChange}
+                onChange={(e) => setClassroomLink(e.target.value)}
               />
             </div>
 

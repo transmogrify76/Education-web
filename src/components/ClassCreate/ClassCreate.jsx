@@ -106,6 +106,10 @@ const ClassCreate = () => {
   // Handle Edit button click
   const handleEdit = (classItem) => {
     fetchClassById(classItem.id); // Fetch and set class details
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', // Scroll smoothly to the top of the page
+    });
   };
 
   // Handle Delete button click

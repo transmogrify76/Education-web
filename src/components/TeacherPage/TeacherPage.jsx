@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 const TeacherPage = () => {
   const [events, setEvents] = useState([]);
   const [eventMessage, setEventMessage] = useState('');
-  const [eventDescription, setEventDescription] = useState(''); // Added description state
+  const [eventDescription, setEventDescription] = useState('');
   const [eventDate, setEventDate] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,7 +19,7 @@ const TeacherPage = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://192.168.0.103:3000/notification'); 
+      const response = await fetch('http://192.168.0.103:3000/notification');
       if (!response.ok) throw new Error('Failed to fetch events');
       const data = await response.json();
       console.log('Fetched events:', data);
@@ -36,7 +36,7 @@ const TeacherPage = () => {
   };
 
   const handleEventDescriptionChange = (event) => {
-    setEventDescription(event.target.value); // Handle description change
+    setEventDescription(event.target.value);
   };
 
   const handleEventDateChange = (event) => {
@@ -55,7 +55,7 @@ const TeacherPage = () => {
       return;
     }
 
-    const postTime = new Date().toISOString(); // Get current date and time as post time
+    const postTime = new Date().toISOString();
 
     try {
       const response = await fetch('http://192.168.0.103:3000/notification', {
@@ -65,9 +65,9 @@ const TeacherPage = () => {
         },
         body: JSON.stringify({
           message: eventMessage,
-          description: eventDescription, // Include description in the request body
+          description: eventDescription,
           date: eventDate,
-          postTime, // Include the post time in the request body
+          postTime,
         }),
       });
 
@@ -76,7 +76,6 @@ const TeacherPage = () => {
       }
 
       setEventMessage('');
-      setError("How about this thing");
       setEventDescription('');
       setEventDate('');
       setSuccess(true);
@@ -88,30 +87,9 @@ const TeacherPage = () => {
     }
   };
 
+  // Disable delete for teachers by alerting no permission
   const handleDelete = async (id) => {
-    if (!id) {
-      setError('Invalid event ID');
-      return;
-    }
-    setLoading(true);
-    setError(null);
-    try {
-      console.log(`Attempting to delete event with ID: ${id}`); 
-      const response = await fetch(`http://192.168.0.103:3000/notification/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        const errorText = await response.text(); 
-        throw new Error(`Failed to delete event: ${errorText}`);
-      }
-      setEvents((prevEvents) =>
-        prevEvents.filter((event) => event.id !== id)
-      );
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
+    alert('You do not have permission to delete notifications.');
   };
 
   return (
@@ -123,7 +101,9 @@ const TeacherPage = () => {
         </header>
         <main className="page-content">
           <form onSubmit={handleSubmit} className="event-creator-form">
-            <label htmlFor="eventMessage" className="form-label-text">Event Message</label>
+            <label htmlFor="eventMessage" className="form-label-text">
+              Event Message
+            </label>
             <textarea
               id="eventMessage"
               value={eventMessage}
@@ -131,15 +111,19 @@ const TeacherPage = () => {
               required
               className="textarea-input"
             ></textarea>
-            <label htmlFor="eventDescription" className="form-label-text">Event Description</label>
+            <label htmlFor="eventDescription" className="form-label-text">
+              Event Description
+            </label>
             <textarea
               id="eventDescription"
               value={eventDescription}
-              onChange={handleEventDescriptionChange} // Handle description change
+              onChange={handleEventDescriptionChange}
               required
               className="textarea-input"
             ></textarea>
-            <label htmlFor="eventDate" className="form-label-text">Event Date</label>
+            <label htmlFor="eventDate" className="form-label-text">
+              Event Date
+            </label>
             <input
               type="date"
               id="eventDate"
@@ -165,16 +149,10 @@ const TeacherPage = () => {
                 <div key={event.id} className="event-card">
                   <p><strong>ID:</strong> {event.id}</p>
                   <p><strong>Message:</strong> {event.message}</p>
-                  <p><strong>Description:</strong> {event.description}</p> {/* Display description */}
+                  <p><strong>Description:</strong> {event.description}</p>
                   <p><strong>Date:</strong> {event.date}</p>
-                  <p><strong>Post Time:</strong> {event.postTime}</p> {/* Display post time */}
-                  <button 
-                    onClick={() => handleDelete(event.id)} 
-                    disabled={loading}
-                    className="remove-event-btn"
-                  >
-                    {loading ? 'Deleting...' : 'Delete'}
-                  </button>
+                  <p><strong>Post Time:</strong> {event.postTime}</p>
+                  {/* Delete button removed for teachers */}
                 </div>
               ))
             )}

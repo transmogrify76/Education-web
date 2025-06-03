@@ -1,3 +1,4 @@
+/* Overall layout */
 .admin-timetable-page {
   max-width: 1200px;
   margin: 40px auto;
@@ -8,23 +9,37 @@
   font-family: 'Poppins', sans-serif;
   display: flex;
   gap: 30px;
-}
-
-.form-container {
-  width: 50%;
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 h1 {
   text-align: center;
-  font-size: 28px;
+  font-size: 30px;
   color: #2c3e50;
   margin-bottom: 30px;
+  font-weight: 600;
 }
 
+.form-container {
+  width: 40%; /* Decreased width of the form container */
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-container-one {
+  flex-grow: 1; /* Ensures the timetable takes up remaining space */
+  min-width: 500px; /* Prevents shrinking too much */
+  padding: 20px;
+  background-color: #f4f6f7;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+/* Form fields */
 .form-field {
   margin-bottom: 20px;
 }
@@ -40,7 +55,7 @@ h1 {
 .form-field select,
 .form-field input {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   font-size: 16px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -55,6 +70,7 @@ h1 {
   outline: none;
 }
 
+/* Time input container */
 .time-inputs {
   display: flex;
   align-items: center;
@@ -69,6 +85,7 @@ h1 {
   text-align: center;
 }
 
+/* Submit button */
 .submit-button {
   width: 100%;
   padding: 15px;
@@ -87,6 +104,7 @@ h1 {
   transform: scale(1.05);
 }
 
+/* Popup message */
 .popup-message {
   position: absolute;
   top: 20px;
@@ -106,34 +124,29 @@ h1 {
   100% { opacity: 0; }
 }
 
-.table-container-one {
-  width: 70%;
-  padding: 20px;
-  background-color: #f4f6f7;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  overflow-x: auto;
-}
-
+/* Table styling */
 .timetable-table {
   width: 100%;
   border-collapse: collapse;
 }
 
 .timetable-table th, .timetable-table td {
-  padding: 12px;
+  padding: 15px;
   text-align: left;
   border: 1px solid #ddd;
+  font-size: 16px;
 }
 
 .timetable-table th {
   background-color: #ecf0f1;
+  font-weight: 600;
 }
 
 .timetable-table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
+/* Delete button */
 .delete-button-one {
   background-color: #e74c3c;
   color: #fff;
@@ -141,19 +154,66 @@ h1 {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-weight: 600;
 }
 
-.delete-button:hover {
+.delete-button-one:hover {
   background-color: #c0392b;
 }
 
+/* Filter and mobile responsiveness */
+.class-filter {
+  margin-bottom: 20px;
+}
+
+.class-filter select {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ecf0f1;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.class-filter select:focus {
+  border-color: #3498db;
+  background-color: #eaf2f8;
+  outline: none;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .admin-timetable-page {
     flex-direction: column;
     gap: 20px;
+    padding: 20px;
   }
 
-  .form-container, .table-container {
+  .form-container,
+  .table-container-one {
     width: 100%;
+  }
+
+  .form-field input,
+  .form-field select {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .submit-button {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .popup-message {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .timetable-table th,
+  .timetable-table td {
+    padding: 10px;
+    font-size: 14px;
   }
 }

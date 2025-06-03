@@ -1,131 +1,97 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode"; // Import jwt-decode to decode the token
-import './ParentClassDataPage.css'; // Custom styles
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import Header from '../Header/Header';
+import './ParentClassDataPage.css'; // Add your styles here
 
 const ParentClassDataPage = () => {
-  const [classNames, setClassNames] = useState([]);
-  const [selectedClassId, setSelectedClassId] = useState("");
-  const [selectedClassName, setSelectedClassName] = useState(""); // Store class name
-  const [meetingData, setMeetingData] = useState([]);
-  const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [studentClassId, setStudentClassId] = useState('');
+  const [className, setClassName] = useState('');
+  const [meetings, setMeetings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
 
-  // Get the parentId from the JWT token
-  const getParentIdFromToken = () => {
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      const decodedToken = jwtDecode(authToken);
-      return decodedToken.Id; // Assuming 'id' in the token refers to the parentId
-    }
-    return null;
-  };
-
-  const parentId = getParentIdFromToken(); // Get parentId from JWT
-
-  // Fetch class names when the component mounts
+  // Decode token and extract student's class ID
   useEffect(() => {
-    const fetchClassNames = async () => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
       try {
-        // Assuming your backend may use parentId to fetch class data
-        const response = await axios.get('http://192.168.0.103:3000/class', {
-          params: { parentId } // Send parentId if needed
-        });
-        setClassNames(response.data);
+        const decoded = jwtDecode(token);
+        const classId = decoded.class?.id;
+        const className = decoded.class?.className;
+        setStudentClassId(classId);
+        setClassName(className);
       } catch (error) {
-        console.error('Error fetching class names:', error);
+        console.error('Failed to decode token:', error);
         setMessageType('error');
-        setMessage("Failed to load class names. Please try again.");
+        setMessage('Invalid session. Please log in again.');
+        setLoading(false);
       }
-    };
+    }
+  }, []);
 
-    fetchClassNames();
-  }, [parentId]);
-
-  // Fetch meeting data when a class is selected
+  // Fetch meetings for the student's class
   useEffect(() => {
-    const fetchMeetingData = async () => {
-      if (selectedClassId) {
-        setIsLoading(true);
-        try {
-          const response = await axios.get(`http://192.168.0.103:3000/meeting/${selectedClassId}`, {
-            params: { parentId } // Send parentId if needed
-          });
-          if (response.data && response.data.title) {
-            setMeetingData([response.data]);
-          } else if (Array.isArray(response.data) && response.data.length > 0) {
-            setMeetingData(response.data);
-          } else {
-            setMessageType('warning');
-            setMessage("No meetings available for this class.");
-          }
-        } catch (error) {
-          setMessageType('error');
-          setMessage("Failed to fetch meeting data.");
-        } finally {
-          setIsLoading(false);
+    const fetchMeetings = async () => {
+      if (!studentClassId) return;
+
+      setLoading(true);
+      try {
+        const response = await axios.get(`http://192.168.0.103:3000/meeting/${studentClassId}`);
+        if (Array.isArray(response.data)) {
+          setMeetings(response.data);
+        } else if (response.data && typeof response.data === 'object') {
+          setMeetings([response.data]);
+        } else {
+          setMeetings([]);
         }
+      } catch (error) {
+        console.error('Error fetching meetings:', error);
+        setMessageType('error');
+        setMessage('Failed to fetch meeting data.');
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchMeetingData();
-  }, [selectedClassId, parentId]); // Add parentId as dependency to refetch if parentId changes
-
-  // Handle class selection
-  const handleClassChange = (e) => {
-    const selectedId = parseInt(e.target.value, 10);
-    const selectedClass = classNames.find(classItem => classItem.id === selectedId);
-    setSelectedClassId(selectedId);
-    setSelectedClassName(selectedClass ? selectedClass.className : ""); // Update class name
-    setMessage("");
-    setMeetingData([]);
-  };
+    fetchMeetings();
+  }, [studentClassId]);
 
   return (
     <div>
       <Header />
+      <div className="student-meeting-page">
+        <h1 style={{ color: '#ffffff', textAlign: 'center' }}>Virtual Class Meetings</h1>
 
-      <div className="parent-class-data-page">
-        <h1 className="page-header">Class Meeting Data</h1>
-        <div className="input-group">
-          <label htmlFor="class-dropdown" className="input-label">Select Class</label>
-          <select
-            id="class-dropdown"
-            value={selectedClassId}
-            onChange={handleClassChange}
-            className="input-select"
-            disabled={isLoading}
-          >
-            <option value="">Select a class</option>
-            {classNames.map((classItem) => (
-              <option key={classItem.id} value={classItem.id}>
-                {classItem.className} {/* Display only class name */}
-              </option>
-            ))}
-          </select>
-          {isLoading && <p className="loading-text">Loading class data...</p>}
-        </div>
-
-        {message && (
-          <p className={`status-message ${messageType}`}>
-            {message}
-          </p>
+        {className && (
+          <p className="class-info">Showing meetings for Class <strong>{className}</strong></p>
         )}
 
-        {meetingData.length > 0 && (
-          <div className="meeting-list">
-            <h2>Meetings for {selectedClassName}</h2> {/* Display selected class name */}
-            {meetingData.map((meeting) => (
-              <div key={meeting.id} className="meeting-item">
-                <h3>{meeting.title}</h3>
-                <a href={meeting.googleMeetLink} target="_blank" rel="noopener noreferrer" className="join-link">
-                  Join Google Meet
-                </a>
+        {loading ? (
+          <p>Loading meetings...</p>
+        ) : (
+          <>
+            {message && <p className={`status-message ${messageType}`}>{message}</p>}
+
+            {meetings.length > 0 ? (
+              <div className="meeting-list">
+                {meetings.map(meeting => (
+                  <div key={meeting.id} className="meeting-card">
+                    <h3>{meeting.title}</h3>
+                    <p>
+                      <strong>Google Meet:</strong>{' '}
+                      <a href={meeting.googleMeetLink} target="_blank" rel="noopener noreferrer">
+                        Join Meeting
+                      </a>
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            ) : (
+              <p>No meetings available for your class.</p>
+            )}
+          </>
         )}
       </div>
     </div>

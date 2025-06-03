@@ -11,7 +11,7 @@ const FeeReminderPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedPaymentMode, setSelectedPaymentMode] = useState('');
- 
+
   const paymentOptions = [
     'Credit Card',
     'Debit Card',
@@ -93,10 +93,13 @@ const FeeReminderPage = () => {
 
   const handlePayment = async (feeId, term, amount) => {
     if (selectedPaymentMode === 'Razorpay') {
+      // Convert amount to paise (1 INR = 100 paise)
+      const amountInPaise = amount * 100;
+
       // Razorpay payment configuration
       const options = {
         key: 'rzp_test_nzmqxQYhvCH9rD', // Replace with your Razorpay test/live key
-        amount: amount, // Amount in paise (100 paise = 1 INR)
+        amount: amountInPaise, // Amount in paise (100 paise = 1 INR)
         currency: 'INR',
         name: 'School Fees Payment',
         description: 'Payment for school fees',
@@ -155,7 +158,7 @@ const FeeReminderPage = () => {
     }
   };
 
-  if (loading) return <p></p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
   return (

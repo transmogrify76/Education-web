@@ -6,9 +6,9 @@ import Header from '../Header/Header';
 const ExitSlipUpdate = () => {
   const [exitSlips, setExitSlips] = useState([]);
   const [statusUpdate, setStatusUpdate] = useState({});
-  const [error, setError] = useState(null);
-  const [replyAttachment, setReplyAttachment] = useState({});
   const [replies, setReplies] = useState({});
+  const [replyAttachment, setReplyAttachment] = useState({});
+  const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
   // Fetch exit slips on component mount
@@ -18,55 +18,69 @@ const ExitSlipUpdate = () => {
         setExitSlips(response.data);
         setError(null);
       })
-      .catch(error => {
-        console.error('Error fetching exit slips:', error);
+      .catch(err => {
+        console.error('Error fetching exit slips:', err);
         setError('Failed to fetch exit slip requests.');
       });
   }, []);
 
   const handleStatusChange = (id, status) => {
-    setStatusUpdate(prevState => ({ ...prevState, [id]: status }));
+    setStatusUpdate(prev => ({ ...prev, [id]: status }));
   };
 
   const handleReplyChange = (id, reply) => {
-    setReplies(prevState => ({
-      ...prevState,
-      [id]: reply,
-    }));
+    setReplies(prev => ({ ...prev, [id]: reply }));
   };
 
   const handleReplyAttachmentChange = (id, event) => {
-    setReplyAttachment(prevState => ({
-      ...prevState,
-      [id]: event.target.files[0],
-    }));
+    setReplyAttachment(prev => ({ ...prev, [id]: event.target.files[0] }));
   };
 
   const handleReplySubmit = (id) => {
     const formData = new FormData();
-    formData.append('status', statusUpdate[id] || 'Pending');
+    formData.append('status', statusUpdate[id] || exitSlips.find(slip => slip.id === id)?.status || 'Pending');
     formData.append('reply', replies[id] || '');
 
     if (replyAttachment[id]) {
       formData.append('adminAttachment', replyAttachment[id]);
     }
 
-    axios.patch(`http://192.168.0.103:3000/exit-slip/${id}/admin-reply`, formData, {
+    axios.patch(`http://192.168.0.103:3000/exit-slip/update/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
       .then(response => {
-        setExitSlips(prevSlips => 
-          prevSlips.map(slip => 
+        setExitSlips(prevSlips =>
+          prevSlips.map(slip =>
             slip.id === id ? { ...slip, ...response.data } : slip
           )
         );
         setSuccessMessage('Reply, status, and attachment saved successfully');
         setError(null);
+
+        // Clear inputs for this id after successful update
+        setReplies(prev => {
+          const newReplies = { ...prev };
+          delete newReplies[id];
+          return newReplies;
+        });
+        setReplyAttachment(prev => {
+          const newAttachments = { ...prev };
+          delete newAttachments[id];
+          return newAttachments;
+        });
+        setStatusUpdate(prev => {
+          const newStatus = { ...prev };
+          delete newStatus[id];
+          return newStatus;
+        });
+
+        // Clear success message after 3 seconds
+        setTimeout(() => setSuccessMessage(null), 3000);
       })
-      .catch(error => {
-        console.error('Error saving reply, status, and attachment:', error);
+      .catch(err => {
+        console.error('Error saving reply, status, and attachment:', err);
         setError('Failed to save reply, status, and attachment.');
       });
   };
@@ -78,7 +92,7 @@ const ExitSlipUpdate = () => {
         <h2>Exit Slip Request Management</h2>
         {error && <p className="error-message">{error}</p>}
         {successMessage && <p className="success-message">{successMessage}</p>}
-        
+
         <table>
           <thead>
             <tr>
@@ -113,14 +127,14 @@ const ExitSlipUpdate = () => {
                     <textarea
                       placeholder="Write a reply"
                       value={replies[request.id] || ''}
-                      onChange={(e) => handleReplyChange(request.id, e.target.value)}
+                      onChange={e => handleReplyChange(request.id, e.target.value)}
                       className="reply-textarea"
                     />
                   )}
                 </td>
                 <td>
                   {request.attachment && (
-                    <button 
+                    <button
                       onClick={() => window.open(`http://192.168.0.103:3000/${request.attachment}`, '_blank')}
                       className="view-attachment-button"
                     >
@@ -130,23 +144,27 @@ const ExitSlipUpdate = () => {
                   <input
                     type="file"
                     accept="application/pdf"
-                    onChange={(e) => handleReplyAttachmentChange(request.id, e)}
+                    onChange={e => handleReplyAttachmentChange(request.id, e)}
                     className="file-upload"
                   />
                 </td>
                 <td>
                   <select
-                    onChange={(e) => handleStatusChange(request.id, e.target.value)}
+                    onChange={e => handleStatusChange(request.id, e.target.value)}
                     value={statusUpdate[request.id] || request.status}
                   >
                     <option value="Pending">Pending</option>
                     <option value="Approved">Approved</option>
                     <option value="Declined">Declined</option>
                   </select>
-                  <button 
-                    onClick={() => handleReplySubmit(request.id)} 
+                  <button
+                    onClick={() => handleReplySubmit(request.id)}
                     className="reply-button"
-                    disabled={!replies[request.id] && !replyAttachment[request.id] && !statusUpdate[request.id]}
+                    disabled={
+                      !replies[request.id] &&
+                      !replyAttachment[request.id] &&
+                      !statusUpdate[request.id]
+                    }
                   >
                     Submit Reply
                   </button>

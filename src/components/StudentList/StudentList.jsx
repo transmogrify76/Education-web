@@ -309,7 +309,7 @@ const StudentListPage = () => {
                 />
               </label>
               <button type="submit">Save</button>
-              <button type="button" onClick={() => setEditStudent(null)}>Cancel</button>
+              <buttons type="button" onClick={() => setEditStudent(null)}>Cancel</buttons>
             </form>
           </div>
         </div>

@@ -64,11 +64,11 @@ const UpdateTc = () => {
               </td>
               <td>
                 {/* Show actions only if the status is not already 'Accepted' or 'Declined' */}
-                {(request.status !== 'Accepted' && request.status !== 'Declined') && (
+                {(request.status !== 'accepted' && request.status !== 'Declined') && (
                   <>
                     <div
                       className="action accept"
-                      onClick={() => handleStatusChange(request.id, 'Accepted')}
+                      onClick={() => handleStatusChange(request.id, 'accepted')}
                     >
                       Accept
                     </div>

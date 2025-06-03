@@ -104,6 +104,12 @@ function SideNav() {
             E Books
           </Link>
         </li>
+        <li className="sidebar-item">
+          <Link to={`/Profile`}>
+            <FaClipboardCheck className="sidebar-icon" />
+            Profile
+          </Link>
+        </li>
       </ul>
     </nav>
   );

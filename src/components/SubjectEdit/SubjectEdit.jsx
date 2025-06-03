@@ -2,25 +2,47 @@ import React, { useState, useEffect } from 'react';
 import Header from '../Header/Header';
 import { useParams } from 'react-router-dom';
 import SideNav from '../SideNav/SideNav';
+import { jwtDecode } from 'jwt-decode'; // For decoding the token
 
 const SubjectEdit = () => {
   const { studentId } = useParams();
-  const [classes, setClasses] = useState([]);  
+  const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState('');
   const [subjectName, setSubjectName] = useState('');
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
+  const [teacherId, setTeacherId] = useState(null);
+
+  const token = localStorage.getItem('authToken');
+
+  useEffect(() => {
+    if (token) {
+      try {
+        const decoded = jwtDecode(token);
+        setTeacherId(decoded.id);
+      } catch (err) {
+        console.error('Error decoding token:', err);
+      }
+    }
+  }, [token]);
 
   useEffect(() => {
     const fetchClasses = async () => {
+      if (!teacherId) return;
+      setLoading(true);
+
       try {
-        setLoading(true); 
-        const response = await fetch('http://192.168.0.103:3000/class');
+        const response = await fetch(`http://192.168.0.103:3000/teacher/${teacherId}`);
         const data = await response.json();
-        if (Array.isArray(data)) {
-          setClasses(data);
+        if (Array.isArray(data.classes)) {
+          const sorted = [...data.classes].sort((a, b) => {
+            const aNum = parseInt(a.className.match(/\d+/));
+            const bNum = parseInt(b.className.match(/\d+/));
+            return aNum - bNum;
+          });
+          setClasses(sorted);
         } else {
-          setMessage('Error: Classes data is not in the expected format.');
+          setMessage('Classes data is not in the expected format.');
         }
       } catch (error) {
         console.error('Error fetching classes:', error);
@@ -31,7 +53,7 @@ const SubjectEdit = () => {
     };
 
     fetchClasses();
-  }, []);
+  }, [teacherId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,7 +107,7 @@ const SubjectEdit = () => {
               required
             >
               <option value="">Select a class</option>
-              {Array.isArray(classes) && classes.length > 0 ? (
+              {classes.length > 0 ? (
                 classes.map((cls) => (
                   <option key={cls.id} value={cls.id}>
                     {cls.className}
@@ -112,7 +134,6 @@ const SubjectEdit = () => {
           <button type="submit">Add Subject</button>
         </form>
       )}
-
       {message && <div className="message">{message}</div>}
     </div>
   );

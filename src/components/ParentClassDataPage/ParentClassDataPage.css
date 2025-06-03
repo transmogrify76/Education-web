@@ -1,81 +1,97 @@
-.parent-class-data-page {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .page-header {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  .input-group {
-    margin-bottom: 1rem;
-  }
-  
-  .input-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-  
-  .input-select {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .status-message {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-  .status-message.success {
-    background-color: #d4edda;
-    color: #155724;
-  }
-  
-  .status-message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  
-  .meeting-list {
-    margin-top: 20px;
-  }
-  
-  .meeting-item {
-    background-color: #f0f8ff;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-  
-  .meeting-item h3 {
-    font-size: 1.5rem;
-    color: #007acc;
-    margin-bottom: 0.5rem;
-  }
-  
-  .join-link {
-    font-size: 1.2rem;
-    color: #007acc;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .join-link:hover {
-    text-decoration: underline;
-  }
-  
-  .loading-text {
-    font-size: 1.2rem;
-    color: #888;
-  }
-  
+.student-meeting-page {
+  padding: 2rem;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+  min-height: 100vh;
+  color: #f0f8ff;
+}
+
+.page-header {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px #00ffe7;
+}
+
+.class-info {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #ffeeaa;
+  text-shadow: 0 0 5px #f093fb;
+}
+
+.meeting-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.meeting-card {
+  background: linear-gradient(145deg, #f093fb, #f5576c);
+  border-radius: 15px;
+  padding: 1.5rem;
+  width: 300px;
+  color: #fff;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.meeting-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px #ff9a9e, 0 0 30px #fad0c4;
+}
+
+.meeting-card h3 {
+  margin-top: 0;
+  color: #fff;
+  text-shadow: 0 0 4px #ff6ec4;
+}
+
+.meeting-card a {
+  color: #00ffcc;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 8px 14px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 10px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.meeting-card a:hover {
+  background-color: rgba(0, 255, 204, 0.3);
+  transform: scale(1.05);
+}
+
+.status-message {
+  text-align: center;
+  font-size: 1.1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.status-message.success {
+  background-color: #a2f5a2;
+  color: #065f46;
+  box-shadow: 0 0 12px #32ff7e;
+}
+
+.status-message.error {
+  background-color: #ffb3b3;
+  color: #600;
+  box-shadow: 0 0 12px #ff6b6b;
+}
+
+.status-message.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  box-shadow: 0 0 12px #ffd93d;
+}
