@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Header.css';
 import logo from '../Assets/logo.png';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(null); // To store user type (student, parent, teacher, admin)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isLogoutConfirmationOpen, setIsLogoutConfirmationOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState('');
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current route
 
   useEffect(() => {
     const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
-    if (token) {
+    const storedUserType = localStorage.getItem('userType');
+    if (token && storedUserType) {
       setIsLoggedIn(true);
+      setUserType(storedUserType);
     }
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      setCurrentTime(timeString);
+    }, 1000);
+
+    return () => clearInterval(timer);
   }, []);
 
   const toggleDropdown = (type) => {
@@ -30,51 +43,25 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     sessionStorage.removeItem('authToken');
-
-    const userType = localStorage.getItem('userType'); // Check if this is a valid value
     localStorage.removeItem('userType');
     setIsLoggedIn(false);
-
-    if (!userType) {
-      navigate('/Login', { replace: true });
-      return;
-    }
-
-    switch (userType) {
-      case 'student':
-        navigate('/Login', { replace: true });
-        break;
-      case 'parent':
-        navigate('/Plogin', { replace: true });
-        break;
-      case 'teacher':
-        navigate('/tlogin', { replace: true });
-        break;
-      case 'admin':
-        navigate('/Adminregister', { replace: true });
-        break;
-      default:
-        navigate('/Login', { replace: true });
-        break;
-    }
+    setUserType(null);
+    navigate('/Login', { replace: true });
   };
 
   const handleLoginNavigate = (role) => {
+    localStorage.setItem('userType', role);
     switch (role) {
       case 'student':
-        localStorage.setItem('userType', 'student');
         navigate('/Login');
         break;
       case 'parent':
-        localStorage.setItem('userType', 'parent');
         navigate('/Plogin');
         break;
       case 'teacher':
-        localStorage.setItem('userType', 'teacher');
         navigate('/tlogin');
         break;
       case 'admin':
-        localStorage.setItem('userType', 'admin');
         navigate('/Adminregister');
         break;
       default:
@@ -84,7 +71,6 @@ const Header = () => {
   };
 
   const handleDashboardNavigate = () => {
-    const userType = localStorage.getItem('userType'); // Ensure it's valid before using it
     if (userType) {
       switch (userType) {
         case 'student':
@@ -100,7 +86,7 @@ const Header = () => {
           navigate('/AdminDashboard');
           break;
         default:
-          navigate('/Login'); // Fallback if userType is undefined
+          navigate('/Login');
           break;
       }
     } else {
@@ -111,54 +97,66 @@ const Header = () => {
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <a href="/">
-          <img src={logo} alt="EDU Web Logo" className="navbar-logo" />
-          <p className="tagline">"Padhega INDIA, Tabhi To Badhega INDIA"</p>
+        <a href="/" className="navbar-left-link">
+          <p className="tagline">EDU WEB</p>
+          <span className="digital-clock">{currentTime}</span>
         </a>
       </div>
       <div className="navbar-right">
-        {/* Home Icon */}
+        {/* Home Icon with text */}
         <a href="/" className="home-icon">
-          <i className="fas fa-home"></i>
+          <i className="fas fa-home"></i> Home
         </a>
-        <a href="/Aboutus">About Us</a>
-        <a href="/Infrastructure">Infrastructure</a>
-        <a href="/Curriculum">Curriculum</a>
-        <a href="/Award">Award</a>
-        <a href="/Event">Event</a>
-        <a href="/Contactus">Contact Us</a>
 
-        {/* Conditionally render the Dashboard button */}
+        <a href="/Aboutus"><i className="fas fa-info-circle"></i> About Us</a>
+        <a href="/Infrastructure"><i className="fas fa-building"></i> Infrastructure</a>
+        <a href="/Curriculum"><i className="fas fa-book"></i> Curriculum</a>
+        <a href="/Award"><i className="fas fa-award"></i> Award</a>
+        <a href="/Event"><i className="fas fa-calendar-alt"></i> Event</a>
+        <a href="/Contactus"><i className="fas fa-envelope"></i> Contact Us</a>
+
         {isLoggedIn && (
-          <a
-            href="#"
-            onClick={handleDashboardNavigate}
-            className="dashboard-button"
-          >
-            Dashboard
+          <a href="#" onClick={handleDashboardNavigate} className="dashboard-button">
+            <i className="fas fa-tachometer-alt"></i> Dashboard
           </a>
         )}
 
         {!isLoggedIn ? (
           <div className="dropdown">
-            <div onClick={() => toggleDropdown('login')} className="dropbtn">Log In</div>
+            <div onClick={() => toggleDropdown('login')} className="dropbtn">
+              Log In <i className="fas fa-chevron-down"></i>
+            </div>
             {isDropdownOpen && (
               <div className="dropdown-content">
-                <button className='login-button' onClick={() => handleLoginNavigate('student')}>Student</button>
-                <button className='login-button' onClick={() => handleLoginNavigate('parent')}>Parent</button>
-                <button className='login-button' onClick={() => handleLoginNavigate('teacher')}>Teacher</button>
-                <button className='login-button' onClick={() => handleLoginNavigate('admin')}>Admin</button>
+                <button className="login-button" onClick={() => handleLoginNavigate('student')}>
+                  Student
+                </button>
+                <button className="login-button" onClick={() => handleLoginNavigate('parent')}>
+                  Parent
+                </button>
+                <button className="login-button" onClick={() => handleLoginNavigate('teacher')}>
+                  Teacher
+                </button>
+                <button className="login-button" onClick={() => handleLoginNavigate('admin')}>
+                  Admin
+                </button>
               </div>
             )}
           </div>
         ) : (
           <div className="dropdown">
-            <div onClick={() => toggleDropdown('logout')} className="dropbtn">Log Out</div>
+            <div onClick={() => toggleDropdown('logout')} className="dropbtn">
+              {userType === 'admin' ? 'Admin' : userType.charAt(0).toUpperCase() + userType.slice(1)} <i className="fas fa-chevron-down"></i>
+            </div>
             {isLogoutConfirmationOpen && (
               <div className="dropdown-content logout-confirmation">
                 <div className="logout-buttons">
-                  <button onClick={handleLogout} className="logout-button">Logout</button>
-                  <button onClick={() => setIsLogoutConfirmationOpen(false)} className="cancel-button">Cancel</button>
+                  <button onClick={handleLogout} className="logout-button">
+                    Logout
+                  </button>
+                  <button onClick={() => setIsLogoutConfirmationOpen(false)} className="cancel-button">
+                    Cancel
+                  </button>
                 </div>
               </div>
             )}

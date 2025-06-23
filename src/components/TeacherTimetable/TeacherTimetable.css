@@ -1,0 +1,39 @@
+.timetable-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.dropdown {
+  padding: 8px;
+  margin-left: 10px;
+}
+
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.timetable th,
+.timetable td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.timetable th {
+  background-color: #f2f2f2;
+}
+
+.error {
+  color: red;
+  background: #ffe6e6;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}

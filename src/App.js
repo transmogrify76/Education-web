@@ -112,6 +112,10 @@ import AdminInstructionPage from './components/AdminInstructionPage/AdminInstruc
 import TeacherProfile from './components/TeacherProfile/TeacherProfile';
 import AttendanceAdmin from './components/AttendanceAdmin/AttendanceAdmin';
 import CounselingRequestsPage from './components/CounselingRequestsPage/CounselingRequestsPage';
+import TeacherFeedback from './components/TeacherFeedback/TeacherFeedback';
+import TeacherFeedbackPage from './components/TeacherFeedbackPage/TeacherFeedbackPage';
+import AdminTeacherFeedback from './components/AdminTeacherFeedback/AdminTeacherFeedback';
+import TeacherTimetable from './components/TeacherTimetable/TeacherTimetable';
 function App() {
   return (
     <Router>
@@ -233,6 +237,10 @@ function App() {
           <Route path="/TeacherProfile" element={<TeacherProfile/>} />          
           <Route path="/AttendanceAdmin" element={<AttendanceAdmin/>} />          
           <Route path="/CounselingRequestsPage" element={<CounselingRequestsPage/>} />          
+          <Route path="/TeacherFeedback" element={<TeacherFeedback/>} />          
+          <Route path="/TeacherFeedbackPage" element={<TeacherFeedbackPage/>} />          
+          <Route path="/AdminTeacherFeedback" element={<AdminTeacherFeedback/>} />          
+          <Route path="/TeacherTimetable" element={<TeacherTimetable/>} />          
 
         </Routes>
       </div>

@@ -32,7 +32,8 @@ const AdminPage = () => {
     { name: 'Counselling Request', icon: 'fas fa-upload', className: 'btn-19', link: '/CounselingRequestsPage' },
     { name: 'Fee Reminder Update', icon: 'fas fa-money-bill-alt', className: 'btn-20', link: '/AdminFeeReminderPage' },
     { name: 'Add subject on Teacher', icon: 'fas fa-external-link-alt', className: 'btn-21', link: '/subject-teacher' },
-    { name: 'All contact us query', icon: 'fas fa-external-link-alt', className: 'btn-22', link: '/ContactPage' }
+    { name: 'All contact us query', icon: 'fas fa-external-link-alt', className: 'btn-22', link: '/ContactPage' },
+    { name: 'AdminTeacherFeedback', icon: 'fas fa-comments', className: 'btn-4', link: '/AdminTeacherFeedback' }
   ];
 
   return (

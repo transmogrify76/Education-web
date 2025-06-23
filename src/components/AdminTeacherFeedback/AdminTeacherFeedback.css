@@ -1,0 +1,19 @@
+.feedback-page-container {
+  padding: 20px;
+}
+
+.class-dropdown {
+  margin-bottom: 20px;
+}
+
+.teacher-feedback-list ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.teacher-feedback-list li {
+  background-color: #f0f0f0;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}

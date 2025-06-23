@@ -63,6 +63,7 @@ const Dashboard = () => {
     { name: 'Parent counselling request', image: counIcon, className: 'btn-22', link: `/CounselingRequest` },
     { name: 'Behaviour assessment tool', image: behavIcon, className: 'btn-23', link: `/BehaviorAssessmentTool` },
     { name: 'Communication With Teacher',  className: 'btn-24', link: `/ParentMessages` },
+    { name: 'Feedback for Teachers',  className: 'btn-24', link: `/TeacherFeedback` },
   ];
 
   return (

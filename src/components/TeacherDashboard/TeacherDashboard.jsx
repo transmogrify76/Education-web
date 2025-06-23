@@ -3,14 +3,13 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
-import { faChalkboardTeacher, faUserGraduate, faClipboardList, faFileUpload, faComments, faCalendarAlt, faBook, faStar, faFolderOpen, faLink, faCheckCircle } from '@fortawesome/free-solid-svg-icons'; // Added faCheckCircle
+import { faChalkboardTeacher, faUserGraduate, faClipboardList, faFileUpload, faComments, faCalendarAlt, faBook, faStar, faFolderOpen, faLink, faCheckCircle, faCalendar, faClock } from '@fortawesome/free-solid-svg-icons'; // Added faCheckCircle
 import './TeacherDashboard.css';
 import Header from '../Header/Header';
 
-const TeacherDashboard = () => {
+const TeacherDashboard = () => { 
   const { teacherId } = useParams();
   const navigate = useNavigate();
-
   const icons = [
     // { name: 'Class Management', icon: faChalkboardTeacher, className: 'btn-1', link: `/ClassManagementPage` },
     { name: 'Profile', icon: faBook, className: 'btn-1', link: '/TeacherProfile' },
@@ -24,7 +23,9 @@ const TeacherDashboard = () => {
     { name: 'E-Book Upload', icon: faBook, className: 'btn-10', link: '/ebookpage' },
     { name: 'Google Meeting Link', icon: faLink, className: 'btn-100', link: '/CreateMeeting' },
     // { name: 'Subject Add ', icon: faFolderOpen, className: 'btn-25', link: '/SubjectEdit' },
-    { name: 'Attendance', icon: faCheckCircle, className: 'btn-11', link: '/AttendancePage' } 
+    { name: 'Attendance', icon: faCheckCircle, className: 'btn-11', link: '/AttendancePage' }, 
+    { name: 'Teacher Feedback Page', icon: faClipboardList, className: 'btn-3', link: '/TeacherFeedbackPage' },
+    { name: 'Teacher Time Table', icon: faClock, className: 'btn-2', link: '/TeacherTimeTable' } 
   ];
 
   return (
